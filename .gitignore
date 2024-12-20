@@ -1,0 +1,7 @@
+.github
+.devcontainer
+__pycache__
+runs/*.pkl
+*.egg-info/
+.env
+logs/
