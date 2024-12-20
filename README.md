@@ -10,10 +10,17 @@ existing methodologies, but it also contains original and novel ideas.
 
 ## Installation
 
-You can install the package from this repository:
+1. Install the package from this repository:
 
 ```
 pip install git+https://github.com/matus-pikuliak/gender_bench
+cd gender_bench
+```
+
+2. Setup the config `.env` file. Follow the example file.
+
+```
+cp .env.example .env
 ```
 
 ## Usage
