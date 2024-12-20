@@ -1,12 +1,8 @@
 # GenderBench - Evaluation suite for gender biases in LLMs
 
-
-`GenderBench` is an evaluation suite that comprehensively benchmarks gender biases
-in large language models (LLMs). `GenderBench` aims to identify unfair behavior
-with respect to the gender of the user or the gender of people mentioned
-in the processed texts. `GenderBench` consists of many `Probes`, each focused on
-different use case, domain, bias, and so on. `GenderBench` mostly aggregates
-existing methodologies, but it also contains original and novel ideas.
+`GenderBench` is an evaluation suite that comprehensively benchmarks gender
+biases in large language models. `GenderBench` consists of many `Probes`, each
+focused on a different unfair behavior.
 
 ## Installation
 
@@ -49,9 +45,7 @@ probe.run(generator)
 >> }
 ```
 
-Each probe returns a set of appropriate scores that need to be interpreted. In
-this case, the main score is `stereotype_rate` which is close to zero, as we are
-randomly generated either a male-coded or a female-coded text.
+Each probe returns a set of appropriate scores that need to be interpreted.
 
 ### Harnesses
 
@@ -143,14 +137,13 @@ used. [Documentation](./src/gender_bench/probes/opinion/gest/README.md).
 
 ## Design philosophy
 
-- We want to cover as many possibilities of using LLMs as possible.
+- We want to cover as many types of behavior as possible.
 - Data and methodological _quality_ are of utmost importance. Each data source
-is manually evaluated and judged.
+is manually evaluated and judged. The evaluation is mostly done with 
+_trustworthy_ rule-based systems and not with other LLMs.
 - Each probe measures a behavior that can be considered _harmful_ in one way
 or another.
-- The analysis of the results should be _trustworthy_. Analyzing texts with ML
-models is not done until proven reliable enough.
-- If possible, non-binary genders should be included.
+- If possible, non-binary genders are included.
 
 ## Probe design
 
