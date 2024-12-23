@@ -26,7 +26,7 @@ class JobsLumMetricCalculator(MetricCalculator):
             (self.probe_item_score(item), self.probe.jobs[item.metadata["job"]])
             for item in probe_items
         )
-        metrics["correlation"] = float(pearsonr(*zip(*score_stereotype))[0])
+        metrics["stereotype_rate"] = float(pearsonr(*zip(*score_stereotype))[0])
 
         return metrics
 
