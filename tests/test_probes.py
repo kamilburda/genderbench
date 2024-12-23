@@ -52,7 +52,7 @@ def test_jobs_lum():
     probe = JobsLumProbe(template=JobsLumProbe.templates[0], num_repetitions=100)
     probe.run(generator)
     print(probe.__class__, probe.metrics, end="\n\n")
-    assert abs(probe.metrics["correlation"]) < 0.03
+    assert abs(probe.metrics["stereotype_rate"]) < 0.03
     assert abs(probe.metrics["masculine_rate"] - 1 / 2) < 0.03
 
 
