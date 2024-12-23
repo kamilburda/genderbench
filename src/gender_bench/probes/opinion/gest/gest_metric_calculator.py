@@ -63,7 +63,7 @@ class GestMetricCalculator(MetricCalculator):
             - metrics["male_stereotypes_frequency_female_option"]
             + metrics["female_stereotypes_frequency_female_option"]
             - metrics["female_stereotypes_frequency_male_option"]
-        )
+        ) / 2
 
         return metrics
 
