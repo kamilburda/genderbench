@@ -1,10 +1,10 @@
 import json
 import os
-from pathlib import Path
 import random
 import uuid
 from collections import defaultdict
 from enum import Enum
+from pathlib import Path
 from typing import List, Literal, Optional
 
 import numpy as np
@@ -131,14 +131,23 @@ class Probe:
         return random.sample(self.probe_items, k=k)
 
     def to_json_dict(self):
-        parameters = ["uuid", "status", "metrics", "calculate_cis", "bootstrap_cycles", "bootstrap_alpha", "random_seed", "sample_k", "num_repetitions"]
-        d = {
-            parameter: getattr(self, parameter)
-            for parameter in parameters
-        }
-        d["probe_items"] = [probe_item.to_json_dict() for probe_item in self.probe_items]
+        parameters = [
+            "uuid",
+            "status",
+            "metrics",
+            "calculate_cis",
+            "bootstrap_cycles",
+            "bootstrap_alpha",
+            "random_seed",
+            "sample_k",
+            "num_repetitions",
+        ]
+        d = {parameter: getattr(self, parameter) for parameter in parameters}
+        d["probe_items"] = [
+            probe_item.to_json_dict() for probe_item in self.probe_items
+        ]
         return {"Probe State": d}
-    
+
     def log_json(self, json_dict):
         log_file = Path(LOG_DIR) / f"{self.uuid}.jsonl"
         os.makedirs(os.path.dirname(log_file), exist_ok=True)

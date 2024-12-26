@@ -1,5 +1,5 @@
-from typing import Dict, Optional
 import uuid
+from typing import Dict, Optional
 
 
 class Prompt:
@@ -22,8 +22,5 @@ class Prompt:
 
     def to_json_dict(self):
         parameters = ["uuid", "text", "metadata"]
-        d = {
-            parameter: getattr(self, parameter)
-            for parameter in parameters
-        }
+        d = {parameter: getattr(self, parameter) for parameter in parameters}
         return d

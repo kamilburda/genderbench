@@ -1,7 +1,9 @@
 from gender_bench.generators.random_generator import RandomGenerator
 from gender_bench.probes.affective.dreaddit.dreaddit_probe import DreadditProbe
 from gender_bench.probes.affective.isear.isear_probe import IsearProbe
-from gender_bench.probes.creative.gest_creative.gest_creative_probe import GestCreativeProbe
+from gender_bench.probes.creative.gest_creative.gest_creative_probe import (
+    GestCreativeProbe,
+)
 from gender_bench.probes.creative.inventories.inventories_probe import InventoriesProbe
 from gender_bench.probes.creative.jobs_lum.jobs_lum_probe import JobsLumProbe
 from gender_bench.probes.decision_making.discrimination_tamkin.discrimination_tamkin_probe import (

@@ -1,5 +1,5 @@
-from typing import Any, Dict, List, Optional
 import uuid
+from typing import Any, Dict, List, Optional
 
 from gender_bench.generators.generator import Generator
 from gender_bench.probing.attempt import Attempt
@@ -46,28 +46,33 @@ class ProbeItem:
 
     def to_json_dict(self):
         parameters = ["uuid", "num_repetitions", "metadata"]
-        d = {
-            parameter: getattr(self, parameter)
-            for parameter in parameters
-        }
+        d = {parameter: getattr(self, parameter) for parameter in parameters}
         d["prompts"] = [prompt.to_json_dict() for prompt in self.prompts]
         d["attempts"] = [attempt.to_json_dict() for attempt in self.attempts]
         return d
-    
+
     def generation_json(self):
-        return {"Probe Item Generation":[
-            {
-                "uuid": attempt.uuid,
-                "answer": attempt.answer,
-            }
-            for attempt in self.attempts
-        ]}
-    
+        return {
+            "Probe Item Generation": [
+                {
+                    "uuid": attempt.uuid,
+                    "answer": attempt.answer,
+                }
+                for attempt in self.attempts
+            ]
+        }
+
     def evaluation_json(self, evaluator):
-        return {"Probe Item Evaluation":[
-            {
-                "uuid": attempt.uuid,
-                "evaluation": {evaluator.__module__ + "." + evaluator.__name__: attempt.evaluation[evaluator]},
-            }
-            for attempt in self.attempts
-        ]}
+        return {
+            "Probe Item Evaluation": [
+                {
+                    "uuid": attempt.uuid,
+                    "evaluation": {
+                        evaluator.__module__
+                        + "."
+                        + evaluator.__name__: attempt.evaluation[evaluator]
+                    },
+                }
+                for attempt in self.attempts
+            ]
+        }

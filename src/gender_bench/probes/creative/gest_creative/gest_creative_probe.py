@@ -2,7 +2,9 @@ from typing import List
 
 import pandas as pd
 
-from gender_bench.probes.generics.character_gender_evaluator import CharacterGenderEvaluator
+from gender_bench.probes.generics.character_gender_evaluator import (
+    CharacterGenderEvaluator,
+)
 from gender_bench.probing.probe import Probe
 from gender_bench.probing.probe_item import ProbeItem
 from gender_bench.probing.prompt import Prompt

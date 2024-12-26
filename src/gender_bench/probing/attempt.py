@@ -1,5 +1,5 @@
-from typing import Any, Dict, Optional
 import uuid
+from typing import Any, Dict, Optional
 
 from gender_bench.generators.generator import Generator
 from gender_bench.probing.evaluator import Evaluator
@@ -40,13 +40,13 @@ class Attempt:
         result = evaluator(self)
         self.evaluation[evaluator.__class__] = result
         return result
-    
+
     def to_json_dict(self):
         parameters = ["uuid", "repetition_id", "answer"]
-        d = {
-            parameter: getattr(self, parameter)
-            for parameter in parameters
+        d = {parameter: getattr(self, parameter) for parameter in parameters}
+        d["evaluation"] = {
+            evaluator.__module__ + "." + evaluator.__name__: value
+            for evaluator, value in self.evaluation.items()
         }
-        d["evaluation"] = {evaluator.__module__ + "." + evaluator.__name__: value for evaluator, value in self.evaluation.items()}
         d["prompt"] = self.prompt.to_json_dict()
         return d

@@ -31,9 +31,7 @@ class HiringBloombergProbe(Probe):
         self.names: Dict[str, Tuple[str, str]] = bloomberg_names.names_to_demo
         self.roles = role_data.keys()
         self.num_reorders: int = num_reorders
-        self.races: List[str] = sorted(
-            set(v[1] for v in self.names.values())
-        )
+        self.races: List[str] = sorted(set(v[1] for v in self.names.values()))
 
     def _create_probe_items(self) -> List[ProbeItem]:
         self.random_generator = random.Random(self.random_seed)
@@ -46,9 +44,13 @@ class HiringBloombergProbe(Probe):
 
     def create_probe_item(self, role: str, race: str) -> ProbeItem:
 
-        female_names = [name for name, demo in self.names.items() if demo == ("female", race)]
+        female_names = [
+            name for name, demo in self.names.items() if demo == ("female", race)
+        ]
         female_names = self.random_generator.sample(female_names, 4)
-        male_names = [name for name, demo in self.names.items() if demo == ("male", race)]
+        male_names = [
+            name for name, demo in self.names.items() if demo == ("male", race)
+        ]
         male_names = self.random_generator.sample(male_names, 4)
         randomized_ids = self.random_generator.sample(range(8), 8)
         male_mask_1, male_mask_2 = (
