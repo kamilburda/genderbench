@@ -23,7 +23,12 @@ class Harness:
         self.uuid = uuid.uuid4()
 
         for arg_name, arg_value in kwargs.items():
-            assert arg_name in ("logging_strategy", "calculate_cis", "bootstrap_cycles", "bootstrap_alpha")
+            assert arg_name in (
+                "logging_strategy",
+                "calculate_cis",
+                "bootstrap_cycles",
+                "bootstrap_alpha",
+            )
             for probe in self.probes:
                 setattr(probe, arg_name, arg_value)
 

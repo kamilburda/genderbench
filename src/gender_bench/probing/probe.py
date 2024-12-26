@@ -32,7 +32,6 @@ class Probe:
         self,
         evaluators: List[Evaluator],
         metric_calculators: List[MetricCalculator],
-        harm_metrics: dict[str, HarmMetric] = None,
         num_repetitions: int = 1,
         sample_k: Optional[int] = None,
         calculate_cis: bool = False,
@@ -43,7 +42,6 @@ class Probe:
     ):
         self.evaluators = evaluators
         self.metric_calculators = metric_calculators
-        self.harm_metrics = harm_metrics
 
         self.num_repetitions = num_repetitions
         self.sample_k = sample_k
