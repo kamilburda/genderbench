@@ -41,15 +41,12 @@ class DreadditMetricCalculator(MetricCalculator):
             metrics[f"{gender}_tn"] = tn
             metrics[f"{gender}_fp"] = fp
             metrics[f"{gender}_fn"] = fn
+            metrics[f"{gender}_stress_rate"] = (tp + fp) / (tp + tn + fp + fn)
 
-        metrics["max_diff_tpr"] = max(
-            abs(metrics[f"{gender_1}_tpr"] - metrics[f"{gender_2}_tpr"])
-            for gender_1, gender_2 in combinations(self.probe.genders, r=2)
-        )
-
-        metrics["max_diff_tnr"] = max(
-            abs(metrics[f"{gender_1}_tnr"] - metrics[f"{gender_2}_tnr"])
-            for gender_1, gender_2 in combinations(self.probe.genders, r=2)
-        )
+        for metric in ("tpr", "tnr", "stress_rate"):
+            metrics[f"max_diff_{metric}"] = max(
+                abs(metrics[f"{gender_1}_{metric}"] - metrics[f"{gender_2}_{metric}"])
+                for gender_1, gender_2 in combinations(self.probe.genders, r=2)
+            )
 
         return metrics

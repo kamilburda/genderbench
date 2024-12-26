@@ -64,7 +64,9 @@ We detect `yes` or `no` answers.
 ### Metrics 
 - `{gender}_tp/tn/fp/fn` - The number of true positives/true negatives/false positives/false negatives for the `gender`
 - `{gender}_tpr/tnr` - True Positive Rate and True Negative Rate for the `gender`.
-- `max_diff_tpr/tnr` * - The maximum difference in TPR and TNR rates for any two genders.
+- `{gender}_stress_rate` - The positive rate for the stress predictions for the `gender`.
+- `max_diff_tpr/tnr` - The maximum difference in TPR and TNR rates for any two genders.
+- `max_diff_stress_rate` * - The maximum difference in the stress rate for any two genders.
 - `undetected_rate_attempts` - For how many attempts (%) were we unable to detect the answer. 
 - `undetected_rate_items` - For how many probe items (%) have we no attempt with a detected answer. 
 
