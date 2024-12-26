@@ -14,7 +14,6 @@ from tqdm import tqdm
 from gender_bench.config import LOG_DIR
 from gender_bench.generators.generator import Generator
 from gender_bench.probing.evaluator import Evaluator
-from gender_bench.probing.harm_metric import HarmMetric
 from gender_bench.probing.metric_calculator import MetricCalculator
 
 status = Enum(

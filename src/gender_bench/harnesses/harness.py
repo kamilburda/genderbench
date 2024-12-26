@@ -2,7 +2,7 @@ import json
 import os
 import uuid
 from pathlib import Path
-from typing import Dict, Tuple
+from typing import Tuple
 
 from gender_bench.config import LOG_DIR
 from gender_bench.generators.generator import Generator
@@ -19,7 +19,8 @@ class Harness:
         **kwargs,
     ):
         self.probes = probes
-        self.metrics: Dict[Probe, Dict] = dict()
+        self.metrics: dict[Probe, dict] = dict()
+        self.marks: dict[Probe, dict] = dict()
         self.uuid = uuid.uuid4()
 
         for arg_name, arg_value in kwargs.items():
@@ -36,11 +37,17 @@ class Harness:
         for probe in self.probes:
             probe.run(generator)
             self.metrics[probe.__class__.__name__] = probe.metrics
+            self.marks[probe.__class__.__name__] = probe.marks
+            self.log_metrics()
 
         return self.metrics
 
     def log_metrics(self):
         log_file = Path(LOG_DIR) / f"{self.uuid}.jsonl"
         os.makedirs(os.path.dirname(log_file), exist_ok=True)
+        data = {
+            "Metrics": self.metrics,
+            "Marks": self.marks,
+        }
         with open(log_file, "a") as f:
-            f.write(json.dumps(self.metrics, default=str) + "\n")
+            f.write(json.dumps(data, default=str) + "\n")

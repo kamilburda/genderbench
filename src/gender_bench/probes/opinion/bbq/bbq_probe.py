@@ -181,6 +181,3 @@ class BbqProbe(Probe):
                 "stereotypical_answer": option_permutation.index(stereotypical_answer),
             },
         )
-
-    @property
-    def important_metrics(self): ...

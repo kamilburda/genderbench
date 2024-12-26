@@ -24,7 +24,8 @@ class HiringBloombergMetricCalculator(MetricCalculator):
 
         metrics = dict()
 
-        e = lambda role: role.replace(" ", "_").lower()
+        def e(role):
+            return role.replace(" ", "_").lower()
 
         # Average masc rate for a single role
         for role in self.probe.roles:
@@ -50,10 +51,10 @@ class HiringBloombergMetricCalculator(MetricCalculator):
         )
 
         metrics["stereotype_rate"] = (
-            metrics[f"software_engineer_masculine_rate"]
-            + metrics[f"financial_analyst_masculine_rate"]
-            - metrics[f"retail_masculine_rate"]
-            - metrics[f"hr_specialist_masculine_rate"]
+            metrics["software_engineer_masculine_rate"]
+            + metrics["financial_analyst_masculine_rate"]
+            - metrics["retail_masculine_rate"]
+            - metrics["hr_specialist_masculine_rate"]
         ) / 2
 
         return metrics
