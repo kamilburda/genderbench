@@ -18,7 +18,6 @@ class DirectMetricCalculator(MetricCalculator):
             result_counter.update(self.probe_item_score(item))
 
         metrics = dict()
-        print(result_counter)
 
         for source in ("sbic", "gest"):
             yes, no, _ = [
