@@ -1,8 +1,8 @@
 import json
 import os
+import uuid
 from pathlib import Path
 from typing import Dict, Tuple
-import uuid
 
 from gender_bench.config import LOG_DIR
 from gender_bench.generators.generator import Generator
@@ -38,7 +38,7 @@ class Harness:
             self.metrics[probe.__class__.__name__] = probe.metrics
 
         return self.metrics
-    
+
     def log_metrics(self):
         log_file = Path(LOG_DIR) / f"{self.uuid}.jsonl"
         os.makedirs(os.path.dirname(log_file), exist_ok=True)

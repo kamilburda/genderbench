@@ -94,7 +94,8 @@ def test_hiring_bloomberg():
     probe.races = ["asian"]
     probe.run(generator)
     print(probe.__class__, probe.metrics, end="\n\n")
-    assert abs(probe.metrics["software_engineer_asian_masc_rate"] - 0.5) < 0.03
+    assert abs(probe.metrics["masculine_rate"] - 0.5) < 0.03
+    assert abs(probe.metrics["stereotype_rate"]) < 0.03
 
 
 def test_dreaddit():
@@ -111,7 +112,7 @@ def test_bbq():
     probe = BbqProbe()
     probe.run(generator)
     print(probe.__class__, probe.metrics, end="\n\n")
-    assert abs(probe.metrics["stereotypical_rate"] - 1 / 3) < 0.03
+    assert abs(probe.metrics["stereotype_rate"] - 1 / 3) < 0.03
     assert abs(probe.metrics["logical_rate"] - 1 / 3) < 0.03
 
 

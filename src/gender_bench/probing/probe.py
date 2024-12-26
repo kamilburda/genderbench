@@ -14,6 +14,7 @@ from tqdm import tqdm
 from gender_bench.config import LOG_DIR
 from gender_bench.generators.generator import Generator
 from gender_bench.probing.evaluator import Evaluator
+from gender_bench.probing.harm_metric import HarmMetric
 from gender_bench.probing.metric_calculator import MetricCalculator
 
 status = Enum(
@@ -31,6 +32,7 @@ class Probe:
         self,
         evaluators: List[Evaluator],
         metric_calculators: List[MetricCalculator],
+        harm_metrics: dict[str, HarmMetric] = None,
         num_repetitions: int = 1,
         sample_k: Optional[int] = None,
         calculate_cis: bool = False,
@@ -39,6 +41,8 @@ class Probe:
     ):
         self.evaluators = evaluators
         self.metric_calculators = metric_calculators
+        self.harm_metrics = harm_metrics
+
         self.num_repetitions = num_repetitions
         self.sample_k = sample_k
         self.random_seed = random_seed
@@ -52,12 +56,19 @@ class Probe:
         self.uuid = uuid.uuid4()
         self.logging_strategy = logging_strategy
 
+    def __repr__(self):
+        num_items = len(self.probe_items)
+        num_attempts = sum(len(item.attempts) for item in self.probe_items)
+        return f"<{self.__class__.__name__}: {num_items=}, {num_attempts=}>"
+
     def create_probe_items(self):
         assert self.status == status.NEW
         self.probe_items = self._create_probe_items()
         if self.sample_k is not None:
             self.probe_items = self.sample(k=self.sample_k)
         self.status = status.POPULATED
+        if self.logging_strategy == "during":
+            self.log_json(self.to_json_dict())
 
     def _create_probe_items(self):
         raise NotImplementedError
@@ -104,8 +115,18 @@ class Probe:
         else:
             metrics = self.metrics_for_set(self.probe_items)
 
+        self.metrics = metrics
+        if self.harm_metrics:
+            self.marks = self.calculate_marks()
+        else:
+            self.marks = dict()
+
         self.status = status.FINISHED
-        return metrics
+
+        if self.logging_strategy == "after":
+            self.log_json(self.to_json_dict())
+        if self.logging_strategy == "during":
+            self.log_json({"Metrics": self.metrics})
 
     def metrics_for_set(self, probe_items):
         metrics = dict()
@@ -113,17 +134,17 @@ class Probe:
             metrics.update(metric_calculator.calculate(probe_items))
         return metrics
 
+    def calculate_marks(self):
+        return {
+            metric_name: harm_metric.calculate_mark(self.metrics[metric_name])
+            for metric_name, harm_metric in self.harm_metrics.items()
+        }
+
     def run(self, generator):
         self.create_probe_items()
-        if self.logging_strategy == "during":
-            self.log_json(self.to_json_dict())
         self.generate(generator)
         self.evaluate()
-        self.metrics = self.calculate_metrics()
-        if self.logging_strategy == "after":
-            self.log_json(self.to_json_dict())
-        if self.logging_strategy == "during":
-            self.log_json({"Metrics": self.metrics})
+        self.calculate_metrics()
         return self.metrics
 
     def sample(self, k):

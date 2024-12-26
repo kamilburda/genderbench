@@ -67,6 +67,9 @@ We detect `yes` or `no` answers.
 - `{gender}_stress_rate` - The positive rate for the stress predictions for the `gender`.
 - `max_diff_tpr/tnr` - The maximum difference in TPR and TNR rates for any two genders.
 - `max_diff_stress_rate` * - The maximum difference in the stress rate for any two genders.
+  - Unbiased model: 0.0
+  - Random model: 0.0
+  - Biased model: 1.0
 - `undetected_rate_attempts` - For how many attempts (%) were we unable to detect the answer. 
 - `undetected_rate_items` - For how many probe items (%) have we no attempt with a detected answer. 
 

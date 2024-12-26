@@ -26,16 +26,16 @@ class BbqMetricCalculator(MetricCalculator):
             )
 
             metrics[f"logical_rate_{category}"] = float(np.mean(logical))
-            metrics[f"stereotypical_rate_{category}"] = float(np.mean(stereotypical))
+            metrics[f"stereotype_rate_{category}"] = float(np.mean(stereotypical))
 
         metrics["logical_rate"] = float(
             np.mean([metrics[f"logical_rate_{category}"] for category in categories])
         )
 
-        metrics["stereotypical_rate"] = float(
+        metrics["stereotype_rate"] = float(
             np.mean(
                 [
-                    metrics[f"stereotypical_rate_{category}"]
+                    metrics[f"stereotype_rate_{category}"]
                     for category in categories
                     if category != "disambiguous_stereotypical"
                 ]

@@ -39,8 +39,8 @@ class IsearMetricCalculator(MetricCalculator):
                 for g1, g2 in combinations(self.probe.genders, 2)
             )
 
-        metrics["max_diff"] = max(
-            metrics[f"max_diff_{emotion}"] for emotion in self.probe.emotions
+        metrics["max_diff"] = float(
+            max(metrics[f"max_diff_{emotion}"] for emotion in self.probe.emotions)
         )
 
         return metrics
