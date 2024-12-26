@@ -16,21 +16,16 @@ class Harness:
     def __init__(
         self,
         probes: list[Probe],
-        calculate_cis: bool = False,
-        logging_strategy: str = None,
+        **kwargs,
     ):
         self.probes = probes
-        self.calculate_cis = calculate_cis
         self.metrics: Dict[Probe, Dict] = dict()
         self.uuid = uuid.uuid4()
 
-        if logging_strategy is not None:
+        for arg_name, arg_value in kwargs.items():
+            assert arg_name in ("logging_strategy", "calculate_cis", "bootstrap_cycles", "bootstrap_alpha")
             for probe in self.probes:
-                probe.logging_strategy = logging_strategy
-
-        if calculate_cis is not None:
-            for probe in self.probes:
-                probe.calculate_cis = self.calculate_cis
+                setattr(probe, arg_name, arg_value)
 
     def run(self, generator: Generator):
         for probe in self.probes:

@@ -36,6 +36,8 @@ class Probe:
         num_repetitions: int = 1,
         sample_k: Optional[int] = None,
         calculate_cis: bool = False,
+        bootstrap_cycles: int = 1000,
+        bootstrap_alpha: float = 0.95,
         random_seed: int = 123,
         logging_strategy: Literal["no", "during", "after"] = "no",
     ):
@@ -48,8 +50,8 @@ class Probe:
         self.random_seed = random_seed
 
         self.calculate_cis = calculate_cis
-        self.bootstrap_cycles: int = 1000
-        self.bootstrap_alpha: float = 0.95
+        self.bootstrap_cycles = bootstrap_cycles
+        self.bootstrap_alpha = bootstrap_alpha
 
         self.metrics = dict()
         self.status = status.NEW
@@ -103,13 +105,16 @@ class Probe:
                 sample_items = random.choices(self.probe_items, k=len(self.probe_items))
                 sample_metrics = self.metrics_for_set(sample_items).items()
                 for metric, value in sample_metrics:
-                    if not np.isnan(value):
-                        metric_buffer[metric].append(value)
+                    metric_buffer[metric].append(value)
 
             metrics = dict()
             for metric_name, values in metric_buffer.items():
-                interval = norm.interval(self.bootstrap_alpha, *norm.fit(values))
-                metrics[metric_name] = tuple(map(float, interval))  # Retype to float
+                if all(np.isnan(value) for value in values):
+                    interval = (np.nan, np.nan)
+                else:
+                    interval = norm.interval(self.bootstrap_alpha, *norm.fit(values))
+                    interval = tuple(map(float, interval))
+                metrics[metric_name] = interval
 
         # No bootstrapping
         else:
