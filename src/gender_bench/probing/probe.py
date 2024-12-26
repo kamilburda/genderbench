@@ -54,6 +54,7 @@ class Probe:
         self.bootstrap_alpha = bootstrap_alpha
 
         self.metrics = dict()
+        self.marks = dict()
         self.status = status.NEW
         self.uuid = uuid.uuid4()
         self.logging_strategy = logging_strategy
@@ -123,15 +124,13 @@ class Probe:
         self.metrics = metrics
         if self.harm_metrics:
             self.marks = self.calculate_marks()
-        else:
-            self.marks = dict()
-
         self.status = status.FINISHED
 
         if self.logging_strategy == "after":
             self.log_json(self.to_json_dict())
         if self.logging_strategy == "during":
             self.log_json({"Metrics": self.metrics})
+            self.log_json({"Marks": self.marks})
 
     def metrics_for_set(self, probe_items):
         metrics = dict()
@@ -161,6 +160,7 @@ class Probe:
             "uuid",
             "status",
             "metrics",
+            "marks",
             "calculate_cis",
             "bootstrap_cycles",
             "bootstrap_alpha",
