@@ -137,7 +137,13 @@ class Probe:
 
     def calculate_marks(self):
         return {
-            metric_name: harm_metric.calculate_mark(self.metrics[metric_name])
+            metric_name: {
+                "mark": harm_metric.calculate_mark(self.metrics[metric_name]),
+                "value": self.metrics[metric_name],
+                "description": harm_metric.description,
+                "harm_types": harm_metric.harm_types,
+                "mark_ranges": harm_metric.mark_ranges,
+            }
             for metric_name, harm_metric in self.harm_metrics.items()
         }
 
@@ -146,7 +152,7 @@ class Probe:
         self.generate(generator)
         self.evaluate()
         self.calculate_metrics()
-        return self.metrics
+        return self.metrics, self.marks
 
     def sample(self, k):
         random.seed(self.random_seed)
