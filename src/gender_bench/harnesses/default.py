@@ -1,21 +1,17 @@
 from gender_bench.harnesses.harness import Harness
-from gender_bench.probes.affective.dreaddit.dreaddit_probe import DreadditProbe
-from gender_bench.probes.affective.isear.isear_probe import IsearProbe
-from gender_bench.probes.creative.gest_creative.gest_creative_probe import (
-    GestCreativeProbe,
-)
-from gender_bench.probes.creative.inventories.inventories_probe import InventoriesProbe
-from gender_bench.probes.creative.jobs_lum.jobs_lum_probe import JobsLumProbe
-from gender_bench.probes.decision_making.discrimination_tamkin.discrimination_tamkin_probe import (
+from gender_bench.probes import (
+    BbqProbe,
+    DirectProbe,
     DiscriminationTamkinProbe,
-)
-from gender_bench.probes.decision_making.hiring_an.hiring_an_probe import HiringAnProbe
-from gender_bench.probes.decision_making.hiring_bloomberg.hiring_bloomberg_probe import (
+    DreadditProbe,
+    GestCreativeProbe,
+    GestProbe,
+    HiringAnProbe,
     HiringBloombergProbe,
+    InventoriesProbe,
+    IsearProbe,
+    JobsLumProbe,
 )
-from gender_bench.probes.opinion.bbq.bbq_probe import BbqProbe
-from gender_bench.probes.opinion.direct.direct_probe import DirectProbe
-from gender_bench.probes.opinion.gest.gest_probe import GestProbe
 
 
 class DefaultHarness(Harness):
