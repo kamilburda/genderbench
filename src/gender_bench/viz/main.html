@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenderBench Results</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script>
+
+        function createChart(canvasId, model_names, intervals, ranges) {
+    
+            const allPoints = Object.values(ranges).flat().flat();
+            const mmin = Math.min(...allPoints);
+            const mmax = Math.max(...allPoints);
+    
+            const ctx = document.getElementById(canvasId).getContext('2d');
+    
+            const scatter_points = intervals.flatMap(([start, end], index) => [
+                { x: start, y: index },
+                { x: end, y: index }
+            ]).flat();
+    
+            const data = {
+                datasets: [{
+                    data: scatter_points,
+                    type: 'line',
+                    showLine: true,
+                    pointRadius: 0,
+                    segment: {
+                        borderColor: (ctx) => {
+                            return ctx.p0.parsed.y === ctx.p1.parsed.y ? 'rgba(75, 75, 75, 1)' : 'transparent';
+                        }
+                    }
+                }]
+            };
+    
+            colors = ["rgb(40, 167, 69, 0.25)", "rgb(255, 193, 7, 0.25)","rgb(253, 126, 20, 0.25)","rgb(220, 53, 69, 0.25)",];
+    
+            const annotations = Object.fromEntries(
+                Object.entries(ranges).flatMap(([key, intervals]) =>
+                    intervals.map((interval, index) => {
+                    const [a, b] = interval;
+                    const boxId = `box_${key}_${index}`; // Unique box ID
+                    return [
+                        boxId,
+                        {
+                        type: 'box',
+                        xMin: a,
+                        xMax: b,
+                        yMin: -0.5,
+                        yMax: 4.5,
+                        borderWidth: 0,
+                        backgroundColor: colors[key],
+                        },
+                    ];
+                    })
+                )
+                );
+    
+            const config = {
+                type: 'scatter',
+                data: data,
+                options: {
+                    animation: false,
+                    scales: {
+                        x: {
+                            grid: {
+                                drawBorder: false,
+                                drawOnChartArea: false,
+                            },
+                            min: mmin,
+                            max: mmax,
+                            border: {
+                                display: false,
+                            }
+                        },
+                        y: {
+                            reverse: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return model_names[value];
+                                },
+                            },
+                            min: -0.5,
+                            max: model_names.length - 0.5,
+                            grid: {
+                                drawBorder: false,
+                            },
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                        annotation: {
+                            annotations: annotations
+                        }
+                    }
+                }
+            };
+    
+            const myChart = new Chart(ctx, config);
+        }
+    </script>
+    <style>
+        /* Global Styles */
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Centered Column Layout */
+        .container {
+            width: 80%;
+            max-width: 1000px;
+            background-color: #ffffff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 120%;
+        }
+
+        p {
+            text-align: center;
+            font-size: 1rem;
+            margin-bottom: 30px;
+        }
+
+        canvas {
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 10px; /* Space between cells */
+            margin-top: 20px;
+        }
+
+        th {
+            text-align: center;
+            font-weight: 600;
+            padding: 10px 0;
+        }
+
+        td {
+            text-align: center;
+            padding: 10px;
+        }
+
+        td.mark-A,
+        td.mark-B,
+        td.mark-C,
+        td.mark-D {
+            padding: 5px 0;
+            font-weight: 600;
+            border-radius: 8px;
+            color: #ffffff;
+            margin: auto; /* Center the button-like marks within the cell */
+            text-align: center;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        td.mark-A {
+            background-color: rgb(40, 167, 69); /* Green */
+        }
+
+        td.mark-B {
+            background-color: rgb(255, 193, 7); /* Yellow */
+            color: #333;
+        }
+
+        td.mark-C {
+            background-color: rgb(253, 126, 20); /* Orange */
+        }
+
+        td.mark-D {
+            background-color: rgb(220, 53, 69); /* Dark Red */
+        }
+
+        /* Tooltip Container */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            color: #007bff;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 5px 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%; /* Position above the element */
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.1s;
+        }
+
+        .tooltip .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%; /* Arrow pointing down */
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #333 transparent transparent transparent;
+        }
+
+        .tooltip:hover .tooltip-text,
+        .tooltip:focus .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .canvas-wrapper {
+            display: flex; /* Align canvas and description in a row */
+            align-items: center; /* Center align items vertically */
+            margin-bottom: 20px; /* Space between each canvas-description pair */
+        }
+
+        .description {
+            margin-left: 10px; /* Space between canvas and description */
+            flex: 1;
+        }
+
+        .tag {
+            display: inline-block; /* Makes the tag fit its content */
+            padding: 8px 12px; /* Adds space inside the tag */
+            background-color: #007bff; /* Background color */
+            color: white; /* Text color */
+            border-radius: 14px; /* Rounded corners */
+            font-size: 10px; /* Font size */
+            font-weight: bold; /* Bold text */
+            text-align: center; /* Center the text */
+            margin: 5px; /* Space between tags */
+            cursor: pointer; /* Changes cursor to pointer on hover */
+            transition: background-color 0.3s; /* Smooth transition for hover effect */
+            clear: left;
+            padding: 2px 10px;
+        }
+
+        canvas {
+            width: 90%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>GenderBench Results</h1>
+        We use 4-tier system to categorize harms. The tiers are as follows:
+        <ul>
+            <li>A - Healthy system.</li>
+            <li>B - There are signs of harmful behavior, but the intensity is low and a regular user might not even notice it. We recommend monitoring the situation.</li>
+            <li>C - The intensity of harmful behavior becomes noticeable. We recommend applying mitigating measures.</li>
+            <li>D - The intensity is critical and harmful behavior is present in most of the samples.</li>
+        </ul>
+        In general, the marks should be considered <em>optimistic</em> estimates. Despite our effors, our probes only cover a limited <em>threat</em> space. It is entirely possible that there are gender harms we have not managed to uncover with GenderBench.
+        <table id="safetyTable">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>
+                        DM
+                        <span class="tooltip">
+                            ⓘ
+                            <span class="tooltip-text">How fair and equitable is the decision making of the model.</span>
+                        </span>
+                    </th>
+                    <th>
+                        CW
+                        <span class="tooltip">
+                            ⓘ
+                            <span class="tooltip-text">How does the model handle stereotypes and representation in creative writing.</span>
+                        </span>
+                    </th>
+                    <th>
+                        MO
+                        <span class="tooltip">
+                            ⓘ
+                            <span class="tooltip-text">Are the opinions of the model when asked biased.</span>
+                        </span>
+                    </th>
+                    <th>
+                        AC
+                        <span class="tooltip">
+                            ⓘ
+                            <span class="tooltip-text">Does the model make different assumptions about the emotional state of the user based on their gender.</span>
+                        </span>
+                    </th>
+                    
+                    <th>Overall</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in global_table %}
+                <tr>
+                    {% for item in row %}
+                        <td class="mark-{{ item }}">{{ item }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% set chart_count = namespace(value=0) %}
+    <div class="container">
+        <h1>Decision Making</h1>
+        How fair and equitable is the decision making of the model.
+        {{rendered_sections.decision_making}}
+    </div>
+    <div class="container">
+        <h1>Creative writing</h1>
+        {{rendered_sections.creative}}
+    </div>
+    <div class="container">
+        <h1>Manifested Opinions</h1>
+        {{rendered_sections.opinion}}
+    </div>
+    <div class="container">
+        <h1>Affective Computing</h1>
+        {{rendered_sections.affective}}
+
+    </div>
+
+
+</body>
+</html>

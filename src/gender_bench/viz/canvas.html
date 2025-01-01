@@ -1,0 +1,16 @@
+<div class="canvas-wrapper">
+    <div class="description"><canvas id="chart_{{data.probe}}.{{data.metric}}"></canvas></div>
+
+    <div class="description">
+        {{data.description}}
+        <div>
+            {% for tag in data.tags %}
+                <div class="tag">{{tag}}</div>
+            {% endfor %}
+        </div>
+        <a href="{{data.path}}">{{data.probe}}.{{data.metric}}</a>
+    </div>
+</div>
+<script>
+createChart("chart_{{data.probe}}.{{data.metric}}", {{data.model_names}}, {{data.intervals}}, {{data.ranges}});
+</script>
