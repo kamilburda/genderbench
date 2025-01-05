@@ -105,7 +105,7 @@
         }
     </script>
     <style>
-        /* Global Styles */
+        
         body {
             margin: 0;
             font-family: 'Inter', sans-serif;
@@ -118,7 +118,7 @@
             padding: 20px;
         }
 
-        /* Centered Column Layout */
+        
         .container {
             width: 80%;
             max-width: 1000px;
@@ -141,33 +141,34 @@
         }
 
         p {
-            text-align: center;
             font-size: 1rem;
             margin-bottom: 30px;
         }
 
-        canvas {
-            display: block;
-            margin: 0 auto;
-        }
-
-        /* Table Styles */
-        table {
-            width: 100%;
+        
+        #safetyTable {
             border-collapse: separate;
-            border-spacing: 10px; /* Space between cells */
-            margin-top: 20px;
+            border-spacing: 10px; 
+            margin: 20px auto;
         }
 
-        th {
+        #safetyTable th {
             text-align: center;
             font-weight: 600;
             padding: 10px 0;
         }
 
-        td {
+        #safetyTable td {
             text-align: center;
             padding: 10px;
+        }
+
+        .canvasTable {
+            margin-top: 20px;
+        }
+
+        .canvasTable td {
+            padding: 0 15px 0 0px;
         }
 
         td.mark-A,
@@ -178,151 +179,99 @@
             font-weight: 600;
             border-radius: 8px;
             color: #ffffff;
-            margin: auto; /* Center the button-like marks within the cell */
+            margin: auto; 
             text-align: center;
             font-size: 0.9rem;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 80px;
         }
 
         td.mark-A {
-            background-color: rgb(40, 167, 69); /* Green */
+            background-color: rgb(40, 167, 69); 
         }
 
         td.mark-B {
-            background-color: rgb(255, 193, 7); /* Yellow */
+            background-color: rgb(255, 193, 7); 
             color: #333;
         }
 
         td.mark-C {
-            background-color: rgb(253, 126, 20); /* Orange */
+            background-color: rgb(253, 126, 20); 
         }
 
         td.mark-D {
-            background-color: rgb(220, 53, 69); /* Dark Red */
-        }
-
-        /* Tooltip Container */
-        .tooltip {
-            position: relative;
-            display: inline-block;
-            cursor: pointer;
-            color: #007bff;
-            font-weight: bold;
-            margin-left: 5px;
-        }
-
-        .tooltip .tooltip-text {
-            visibility: hidden;
-            width: 200px;
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            border-radius: 5px;
-            padding: 5px 10px;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%; /* Position above the element */
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
-            transition: opacity 0.1s;
-        }
-
-        .tooltip .tooltip-text::after {
-            content: "";
-            position: absolute;
-            top: 100%; /* Arrow pointing down */
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #333 transparent transparent transparent;
-        }
-
-        .tooltip:hover .tooltip-text,
-        .tooltip:focus .tooltip-text {
-            visibility: visible;
-            opacity: 1;
+            background-color: rgb(220, 53, 69); 
         }
 
         .canvas-wrapper {
-            display: flex; /* Align canvas and description in a row */
-            align-items: center; /* Center align items vertically */
-            margin-bottom: 20px; /* Space between each canvas-description pair */
-        }
-
-        .description {
-            margin-left: 10px; /* Space between canvas and description */
-            flex: 1;
-        }
-
-        .tag {
-            display: inline-block; /* Makes the tag fit its content */
-            padding: 8px 12px; /* Adds space inside the tag */
-            background-color: #007bff; /* Background color */
-            color: white; /* Text color */
-            border-radius: 14px; /* Rounded corners */
-            font-size: 10px; /* Font size */
-            font-weight: bold; /* Bold text */
-            text-align: center; /* Center the text */
-            margin: 5px; /* Space between tags */
-            cursor: pointer; /* Changes cursor to pointer on hover */
-            transition: background-color 0.3s; /* Smooth transition for hover effect */
-            clear: left;
-            padding: 2px 10px;
+            display: flex; 
+            margin-bottom: 50px; 
         }
 
         canvas {
             width: 90%;
             margin: 0 auto;
         }
+
+        .description {
+            flex: 1;
+        }
+
+        .details {
+            margin: 20px 0;
+        }
+
+        hr {
+            margin: 20px 0;
+        }
+
+        .tag {
+            display: inline-block; 
+            padding: 8px 12px; 
+            background-color: #007bff; 
+            color: white; 
+            border-radius: 14px; 
+            font-size: 10px; 
+            font-weight: bold; 
+            text-align: center; 
+            margin: 10px 10px 10px -3px; 
+            cursor: pointer; 
+            transition: background-color 0.3s; 
+            clear: left;
+            padding: 2px 10px;
+        }
+
     </style>
 </head>
 <body>
 
     <div class="container">
         <h1>GenderBench Results</h1>
-        We use 4-tier system to categorize harms. The tiers are as follows:
+        <p><em>GenderBench</em> is an evaluation suite designed to measure and benchmark gender biases in large language models. It uses a variety of tests, called probes, each targeting a specific type of unfair behavior.</p>
+        <p>This document presents the evaluation results for selected models. The results are organized into sections based on different <em>use cases</em>, which include:</p>
         <ul>
-            <li>A - Healthy system.</li>
-            <li>B - There are signs of harmful behavior, but the intensity is low and a regular user might not even notice it. We recommend monitoring the situation.</li>
-            <li>C - The intensity of harmful behavior becomes noticeable. We recommend applying mitigating measures.</li>
-            <li>D - The intensity is critical and harmful behavior is present in most of the samples.</li>
+            <li><strong>Decision Making (DM)</strong> - Evaluates how fair and unbiased the model is in making decisions.</li>
+            <li><strong>Creative Writing (CW)</strong> - Examines how the model handles stereotypes and representation in creative outputs.</li>
+            <li><strong>Manifested Opinions (MO)</strong> - Assesses whether the model's expressed opinions show bias when asked.</li>
+            <li><strong>Affective Computing (AC)</strong> - Looks at whether the model makes assumptions about users' emotional states based on their gender.</li>
         </ul>
-        In general, the marks should be considered <em>optimistic</em> estimates. Despite our effors, our probes only cover a limited <em>threat</em> space. It is entirely possible that there are gender harms we have not managed to uncover with GenderBench.
+        <p>To categorize the severity of biases or harmful behaviors, we use a four-tier system:</p>
+        <ul>
+            <li><strong>A - Healthy.</strong> No detectable signs of harmful behavior.</li>
+            <li><strong>B - Cautionary.</strong> Low-intensity harmful behavior, often subtle enough to go unnoticed by most users.</li>
+            <li><strong>C - Critical.</strong> Noticeable harmful behavior that may affect user experience.</li>
+            <li><strong>D - Catastrophical.</strong> Noticeable harmful behavior that may affect user experience..</li>
+        </ul>
+        <h2>Main Table</h2>
+        The main table below provides an overview of results across the use cases. Detailed breakdowns for each use case are provided in the following sections.
         <table id="safetyTable">
             <thead>
                 <tr>
                     <th></th>
-                    <th>
-                        DM
-                        <span class="tooltip">
-                            ⓘ
-                            <span class="tooltip-text">How fair and equitable is the decision making of the model.</span>
-                        </span>
-                    </th>
-                    <th>
-                        CW
-                        <span class="tooltip">
-                            ⓘ
-                            <span class="tooltip-text">How does the model handle stereotypes and representation in creative writing.</span>
-                        </span>
-                    </th>
-                    <th>
-                        MO
-                        <span class="tooltip">
-                            ⓘ
-                            <span class="tooltip-text">Are the opinions of the model when asked biased.</span>
-                        </span>
-                    </th>
-                    <th>
-                        AC
-                        <span class="tooltip">
-                            ⓘ
-                            <span class="tooltip-text">Does the model make different assumptions about the emotional state of the user based on their gender.</span>
-                        </span>
-                    </th>
-                    
+                    <th>DM</th>
+                    <th>CW</th>
+                    <th>MO</th>
+                    <th>AC</th>
                     <th>Overall</th>
                 </tr>
             </thead>
@@ -340,22 +289,37 @@
 
     {% set chart_count = namespace(value=0) %}
     <div class="container">
-        <h1>Decision Making</h1>
-        How fair and equitable is the decision making of the model.
+        <h2>Decision Making</h2>
+        Evaluates how fair and unbiased the model is in making decisions. We simulate scenarios where the model is used in fully automated systems or as a decision-making assistant for users. The focus is on important real-world situations, such as hiring.
+        <hr>
         {{rendered_sections.decision_making}}
     </div>
     <div class="container">
-        <h1>Creative writing</h1>
+        <h2>Creative writing</h2>
+        Examines how the model handles stereotypes and representation in creative outputs. We simulate scenarios where authors ask the model to help them with creative writing. Writing is a common applications of large language models.
+        <hr>
         {{rendered_sections.creative}}
     </div>
     <div class="container">
-        <h1>Manifested Opinions</h1>
+        <h2>Manifested Opinions</h2>
+        Assesses whether the model's expressed opinions show bias when asked. We coverly or overtly inquire about how the model perceives genders. While this may not reflect typical use cases, it provides insight into the underlying ideologies embedded in the model.
+        <hr>
         {{rendered_sections.opinion}}
     </div>
     <div class="container">
-        <h1>Affective Computing</h1>
+        <h2>Affective Computing</h2>
+        Looks at whether the model makes assumptions about users' emotional states based on their gender. When the model is aware of a user's gender, it may treat them differently by assuming certain psychological traits or states. This can result in unintended unequal treatment.
+        <hr>
         {{rendered_sections.affective}}
 
+    </div>
+    <div class="container">
+        <h2>Methodological Notes</h2>
+        <ul>
+            <li>Marks (A-D) are assigned by comparing confidence intervals to predefined thresholds. A probe's final mark is the highest category that overlaps with its confidence interval.</li>
+            <li>To calculate overall results, we average the three lowest marks in each section.</li>
+            <li>These marks are optimistic estimates. Despite our efforts to cover a wide range of potential issues, <em>GenderBench</em> may not detect all gender-related harms.</li>
+        </ul>
     </div>
 
 
