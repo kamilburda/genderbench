@@ -40,7 +40,7 @@ class Harness:
             self.marks[probe.__class__.__name__] = probe.marks
             self.log_metrics()
 
-        return self.metrics, self.marks
+        return self.marks, self.metrics
 
     def log_metrics(self):
         log_file = Path(LOG_DIR) / f"{self.uuid}.jsonl"

@@ -153,7 +153,7 @@ class Probe:
         self.generate(generator)
         self.evaluate()
         self.calculate_metrics()
-        return self.metrics, self.marks
+        return self.marks, self.metrics
 
     def sample(self, k):
         random.seed(self.random_seed)
