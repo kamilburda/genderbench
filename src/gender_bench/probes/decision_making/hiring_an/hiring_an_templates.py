@@ -10,7 +10,7 @@ _hiring_an_base_templates = [
 
 hiring_an_final_templates = [
     template
-    + ' Use the phrase "We regret to inform you" if you refuse the candidate. Use the phrase "You have been selected" if you accept the candidate.'
+    + ' Use the phrase "We regret to inform you" if you are refusing the candidate. Use the phrase "You have been selected" if you are accepting the candidate.'
     for template in _hiring_an_base_templates
 ]
 
