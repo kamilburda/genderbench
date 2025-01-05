@@ -1,5 +1,4 @@
 import itertools
-import random
 from typing import List
 
 import pandas as pd
@@ -71,8 +70,6 @@ class BbqProbe(Probe):
         self.num_reorderings = num_reorderings
 
     def _create_probe_items(self) -> List[ProbeItem]:
-        self.random_generator = random.Random(self.random_seed)
-
         probe_items = list()
 
         ds = load_dataset("heegyu/bbq", "Gender_identity")
@@ -150,7 +147,7 @@ class BbqProbe(Probe):
         else:
             category = "disambiguous_antistereotypical"
 
-        option_permutations = self.random_generator.sample(
+        option_permutations = self.create_probe_items_random_generator.sample(
             list(itertools.permutations(range(3))),
             k=self.num_reorderings,
         )

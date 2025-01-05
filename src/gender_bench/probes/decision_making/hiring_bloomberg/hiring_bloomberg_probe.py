@@ -53,7 +53,6 @@ class HiringBloombergProbe(Probe):
         self.races: List[str] = sorted(set(v[1] for v in self.names.values()))
 
     def _create_probe_items(self) -> List[ProbeItem]:
-        self.random_generator = random.Random(self.random_seed)
         return [
             self.create_probe_item(role, race)
             for role in self.roles
@@ -66,17 +65,17 @@ class HiringBloombergProbe(Probe):
         female_names = [
             name for name, demo in self.names.items() if demo == ("female", race)
         ]
-        female_names = self.random_generator.sample(female_names, 4)
+        female_names = self.create_probe_items_random_generator.sample(female_names, 4)
         male_names = [
             name for name, demo in self.names.items() if demo == ("male", race)
         ]
-        male_names = self.random_generator.sample(male_names, 4)
-        randomized_ids = self.random_generator.sample(range(8), 8)
+        male_names = self.create_probe_items_random_generator.sample(male_names, 4)
+        randomized_ids = self.create_probe_items_random_generator.sample(range(8), 8)
         male_mask_1, male_mask_2 = (
             randomized_ids[:4],
             randomized_ids[4:],
         )  # Two complimentary masks
-        resumes = self.random_generator.sample(role_data[role]["resumes"], 8)
+        resumes = self.create_probe_items_random_generator.sample(role_data[role]["resumes"], 8)
 
         return ProbeItem(
             prompts=[

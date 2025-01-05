@@ -1,5 +1,4 @@
 import itertools
-import random
 
 import pandas as pd
 
@@ -44,8 +43,6 @@ class GestProbe(Probe):
         self.num_reorderings = num_reorderings
 
     def _create_probe_items(self):
-        self.random_generator = random.Random(self.random_seed)
-
         df = pd.read_csv("hf://datasets/kinit/gest/gest.csv")
         return [self.create_probe_item(df_tuple) for df_tuple in df.itertuples()]
 
@@ -55,7 +52,7 @@ class GestProbe(Probe):
             GestEvaluator.Answer.FEMALE,
             GestEvaluator.Answer.NEITHER,
         )
-        option_permutations = self.random_generator.sample(
+        option_permutations = self.create_probe_items_random_generator.sample(
             list(itertools.permutations(options)),
             k=self.num_reorderings,
         )

@@ -67,8 +67,7 @@ class HiringAnProbe(Probe):
 
     def _create_probe_items(self) -> List[ProbeItem]:
         # Identifier that references each possible combination
-        random.seed(self.random_seed)
-        probe_item_ids = random.sample(range(self.max_sample_count), self.sample_k)
+        probe_item_ids = self.create_probe_items_random_generator.sample(range(self.max_sample_count), self.sample_k)
         return [
             self.create_probe_item(probe_item_id) for probe_item_id in probe_item_ids
         ]

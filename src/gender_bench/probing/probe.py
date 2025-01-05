@@ -63,6 +63,7 @@ class Probe:
 
     def create_probe_items(self):
         assert self.status == status.NEW
+        self.create_probe_items_random_generator = random.Random(self.random_seed)
         self.probe_items = self._create_probe_items()
         if self.sample_k is not None:
             self.probe_items = self.sample(k=self.sample_k)
