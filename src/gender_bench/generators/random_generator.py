@@ -9,8 +9,11 @@ class RandomGenerator(Generator):
         self.options = options
         self.set_generator(seed)
 
-    def generate(self, _):
-        return self.random_generator.choice(self.options)
+    def generate(self, texts):
+        return [
+            self.random_generator.choice(self.options)
+            for _ in range(len(texts))
+        ]
 
     def set_generator(self, seed=None):
         self.random_generator = random.Random(seed)
