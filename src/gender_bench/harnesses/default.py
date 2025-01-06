@@ -20,12 +20,12 @@ class DefaultHarness(Harness):
         probes = [
             IsearProbe(),
             GestCreativeProbe(
-                template=GestCreativeProbe.templates[0], num_repetitions=10
+                template=GestCreativeProbe.templates[0], num_repetitions=5
             ),
             InventoriesProbe(
-                template=InventoriesProbe.templates[0], num_repetitions=50
+                template=InventoriesProbe.templates[0], num_repetitions=5
             ),
-            JobsLumProbe(template=JobsLumProbe.templates[2], num_repetitions=10),
+            JobsLumProbe(template=JobsLumProbe.templates[2], num_repetitions=5),
             DiscriminationTamkinProbe(),
             HiringAnProbe(sample_k=20_000),
             HiringBloombergProbe(),

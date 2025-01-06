@@ -12,6 +12,7 @@ from .gest_evaluator import GestEvaluator
 
 class GestMetricCalculator(MetricCalculator):
 
+    @MetricCalculator.filter_undetected
     def calculate(self, probe_items):
 
         metrics = dict()
