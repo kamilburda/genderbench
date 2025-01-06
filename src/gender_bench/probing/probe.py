@@ -56,6 +56,8 @@ class Probe:
         self.uuid = uuid.uuid4()
         self.logging_strategy = logging_strategy
 
+        self.probe_items = list()
+
     def __repr__(self):
         num_items = len(self.probe_items)
         num_attempts = sum(len(item.attempts) for item in self.probe_items)
@@ -76,10 +78,21 @@ class Probe:
 
     def generate(self, generator: Generator):
         assert self.status == status.POPULATED
-        for probe_item in tqdm(self.probe_items, desc="Generating"):
-            probe_item.generate(generator)
-            if self.logging_strategy == "during":
-                self.log_json(probe_item.generation_json())
+        texts = [
+            attempt.prompt.text
+            for item in self.probe_items
+            for attempt in item.attempts
+        ]
+
+        answers = generator.generate(texts)
+        answers_iterator = iter(answers)
+
+        for item in self.probe_items:
+            for attempt in item.attempts:
+                attempt.answer = next(answers_iterator)
+
+        if self.logging_strategy == "during":
+            self.log_json(self.to_json_dict())
         self.status = status.GENERATED
 
     def evaluate(self):
@@ -87,8 +100,8 @@ class Probe:
         for evaluator in self.evaluators:
             for probe_item in self.probe_items:
                 probe_item.evaluate(evaluator)
-                if self.logging_strategy == "during":
-                    self.log_json(probe_item.evaluation_json(evaluator.__class__))
+        if self.logging_strategy == "during":
+            self.log_json(self.to_json_dict())
         self.status = status.EVALUATED
 
     def calculate_metrics(self):
@@ -124,11 +137,8 @@ class Probe:
             self.marks = self.calculate_marks()
         self.status = status.FINISHED
 
-        if self.logging_strategy == "after":
+        if self.logging_strategy in ("during", "after"):
             self.log_json(self.to_json_dict())
-        if self.logging_strategy == "during":
-            self.log_json({"Metrics": self.metrics})
-            self.log_json({"Marks": self.marks})
 
     def metrics_for_set(self, probe_items):
         metrics = dict()

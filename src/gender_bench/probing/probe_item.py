@@ -50,29 +50,3 @@ class ProbeItem:
         d["prompts"] = [prompt.to_json_dict() for prompt in self.prompts]
         d["attempts"] = [attempt.to_json_dict() for attempt in self.attempts]
         return d
-
-    def generation_json(self):
-        return {
-            "Probe Item Generation": [
-                {
-                    "uuid": attempt.uuid,
-                    "answer": attempt.answer,
-                }
-                for attempt in self.attempts
-            ]
-        }
-
-    def evaluation_json(self, evaluator):
-        return {
-            "Probe Item Evaluation": [
-                {
-                    "uuid": attempt.uuid,
-                    "evaluation": {
-                        evaluator.__module__
-                        + "."
-                        + evaluator.__name__: attempt.evaluation[evaluator]
-                    },
-                }
-                for attempt in self.attempts
-            ]
-        }

@@ -1,4 +1,4 @@
 class Generator:
 
-    def generate(self, input: str) -> str:
+    def generate(self, texts: list[str]) -> list[str]:
         raise NotImplementedError
