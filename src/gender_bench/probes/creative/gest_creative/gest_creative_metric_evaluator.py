@@ -59,8 +59,5 @@ class GestCreativeMetricCalculator(MetricCalculator):
         Male rate
         """
         counter = Counter(attempt.evaluation for attempt in probe_item.attempts)
-        male, female = (
-            counter["male"],
-            counter["female"],
-        )
+        male, female = counter["male"], counter["female"]
         return male / (male + female)

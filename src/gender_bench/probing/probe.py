@@ -123,6 +123,7 @@ class Probe:
                 if all(np.isnan(value) for value in values):
                     interval = (np.nan, np.nan)
                 else:
+                    values = [value for value in values if not np.isnan(value)]
                     interval = norm.interval(self.bootstrap_alpha, *norm.fit(values))
                     interval = tuple(map(float, interval))
                 metrics[metric_name] = interval

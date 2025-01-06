@@ -29,7 +29,7 @@ class DefaultHarness(Harness):
             HiringBloombergProbe(),
             DreadditProbe(num_repetitions=5),
             BbqProbe(),
-            DirectProbe(num_repetitions=10),
+            DirectProbe(num_repetitions=5),
             GestProbe(template=GestProbe.templates[1]),
         ]
         super().__init__(probes=probes, **kwargs)
