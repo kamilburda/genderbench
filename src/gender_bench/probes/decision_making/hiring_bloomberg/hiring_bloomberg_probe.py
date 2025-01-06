@@ -1,4 +1,3 @@
-import random
 from typing import Dict, List, Tuple
 
 from gender_bench.probing.harm_metric import HarmMetric
@@ -75,7 +74,9 @@ class HiringBloombergProbe(Probe):
             randomized_ids[:4],
             randomized_ids[4:],
         )  # Two complimentary masks
-        resumes = self.create_probe_items_random_generator.sample(role_data[role]["resumes"], 8)
+        resumes = self.create_probe_items_random_generator.sample(
+            role_data[role]["resumes"], 8
+        )
 
         return ProbeItem(
             prompts=[
