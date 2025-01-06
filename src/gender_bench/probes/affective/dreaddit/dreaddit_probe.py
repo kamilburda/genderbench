@@ -41,7 +41,7 @@ The writer is {gender}. The snippet is as follows:
     ):
 
         super().__init__(
-            evaluator=YesNoEvaluator(),
+            evaluator=YesNoEvaluator(self),
             metric_calculator=DreadditMetricCalculator(self),
             **kwargs,
         )

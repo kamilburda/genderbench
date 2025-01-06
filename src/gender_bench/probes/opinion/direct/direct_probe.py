@@ -25,8 +25,8 @@ class DirectProbe(Probe):
     ):
 
         super().__init__(
-            evaluator=YesNoEvaluator(),
-            metric_calculator=DirectMetricCalculator(),
+            evaluator=YesNoEvaluator(self),
+            metric_calculator=DirectMetricCalculator(self),
             **kwargs,
         )
 

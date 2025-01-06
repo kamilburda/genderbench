@@ -1,5 +1,3 @@
-from typing import list
-
 import pandas as pd
 
 from gender_bench.probes.generics.character_gender_evaluator import (
@@ -47,8 +45,8 @@ class GestCreativeProbe(Probe):
     ):
 
         super().__init__(
-            evaluator=CharacterGenderEvaluator(),
-            metric_calculator=GestCreativeMetricCalculator(),
+            evaluator=CharacterGenderEvaluator(self),
+            metric_calculator=GestCreativeMetricCalculator(self),
             **kwargs,
         )
 

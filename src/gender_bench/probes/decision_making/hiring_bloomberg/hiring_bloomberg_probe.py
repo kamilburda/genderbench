@@ -39,7 +39,7 @@ class HiringBloombergProbe(Probe):
     ):
 
         super().__init__(
-            evaluator=HiringBloombergEvaluator(),
+            evaluator=HiringBloombergEvaluator(self),
             metric_calculator=HiringBloombergMetricCalculator(self),
             **kwargs,
         )

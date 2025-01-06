@@ -37,7 +37,7 @@ class HiringAnProbe(Probe):
     ):
 
         super().__init__(
-            evaluator=HiringAnEvaluator(),
+            evaluator=HiringAnEvaluator(self),
             metric_calculator=HiringAnMetricCalculator(self),
             sample_k=sample_k,
             **kwargs,

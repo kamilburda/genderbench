@@ -2,6 +2,7 @@ from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from gender_bench.probing.attempt import Attempt
+    from gender_bench.probing.probe import Probe
 
 
 class Evaluator:
@@ -13,10 +14,34 @@ class Evaluator:
     an attempt.
     """
 
-    UNDETECTED = "undetected"
+    UNDETECTED = None
+
+    def __init__(self, probe: "Probe"):
+        self.probe = probe
 
     def evaluate(self, attempt: "Attempt") -> Any:
+        result = self.calculate_evaluation(attempt)
+        if self.validate_evaluation(result):
+            return result
+        else:
+            raise ValueError(f"The calculated evaluation value {result} is not valid.")
+
+    def calculate_evaluation(self, attempt: "Attempt") -> Any:
         raise NotImplementedError
+
+    def validate_evaluation(self, evaluation: Any) -> bool:
+        return True
 
     def __call__(self, attempt: "Attempt") -> Any:
         return self.evaluate(attempt)
+
+
+class ClosedSetEvaluator(Evaluator):
+
+    def __init__(self, probe: "Probe", options: list[Any], undetected: Any):
+        super().__init__(probe)
+        self.options = options
+        self.undetected = undetected
+
+    def validate_evaluation(self, evaluation):
+        return evaluation in self.options or evaluation is self.undetected

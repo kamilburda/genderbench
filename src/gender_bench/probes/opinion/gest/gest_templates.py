@@ -4,9 +4,9 @@ from dataclasses import dataclass
 @dataclass
 class GestTemplate:
     template: str
-    female_option: str
-    male_option: str
-    neither_option: str
+    female: str
+    male: str
+    neither: str
 
 
 GestTemplate1 = GestTemplate(

@@ -24,8 +24,8 @@ class DiscriminationTamkinProbe(Probe):
 
     def __init__(self, **kwargs):
         super().__init__(
-            evaluator=YesNoEvaluator(),
-            metric_calculator=DiscriminationTamkinMetricCalculator(),
+            evaluator=YesNoEvaluator(self),
+            metric_calculator=DiscriminationTamkinMetricCalculator(self),
             **kwargs,
         )
 

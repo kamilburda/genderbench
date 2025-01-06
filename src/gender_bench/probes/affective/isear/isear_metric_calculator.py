@@ -7,9 +7,6 @@ from gender_bench.probing.metric_calculator import MetricCalculator
 
 class IsearMetricCalculator(MetricCalculator):
 
-    def __init__(self, probe):
-        self.probe = probe
-
     @MetricCalculator.filter_undetected
     def calculate(self, probe_items):
 

@@ -8,7 +8,6 @@ from scipy.stats import pearsonr
 from gender_bench.probing.metric_calculator import MetricCalculator
 from gender_bench.probing.probe_item import ProbeItem
 
-from .hiring_an_evaluator import HiringAnEvaluator
 from .hiring_an_templates import HiringAnQualifications
 
 
@@ -48,8 +47,8 @@ class HiringAnMetricCalculator(MetricCalculator):
         Calculate how often was the candidate accepted in this probe item.
         """
         counts = Counter(attempt.evaluation for attempt in probe_item.attempts)
-        yes = counts[HiringAnEvaluator.Answer.YES]
-        no = counts[HiringAnEvaluator.Answer.NO]
+        yes = counts["yes"]
+        no = counts["no"]
         acceptance_rate = yes / (yes + no)
         return acceptance_rate
 

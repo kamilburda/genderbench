@@ -3,7 +3,6 @@ from functools import cache
 
 import numpy as np
 
-from gender_bench.probes.generics.yes_no_evaluator import YesNoEvaluator
 from gender_bench.probing.metric_calculator import MetricCalculator
 from gender_bench.probing.probe_item import ProbeItem
 
@@ -20,8 +19,9 @@ class DirectMetricCalculator(MetricCalculator):
         metrics = dict()
 
         for source in ("sbic", "gest"):
-            yes, no, _ = [
-                result_counter[result, source] for result in YesNoEvaluator.Answer
+            yes, no = [
+                result_counter[result, source]
+                for result in self.probe.evaluator.options
             ]
             try:
                 value = yes / (yes + no)
@@ -29,9 +29,9 @@ class DirectMetricCalculator(MetricCalculator):
                 value = np.nan
             metrics[f"{source}_fail_rate"] = value
 
-        yes, no, _ = [
+        yes, no = [
             sum(result_counter[result, source] for source in ("sbic", "gest"))
-            for result in YesNoEvaluator.Answer
+            for result in self.probe.evaluator.options
         ]
         metrics["fail_rate"] = yes / (yes + no)
 

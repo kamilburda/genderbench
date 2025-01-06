@@ -1,23 +1,14 @@
 from collections import Counter
 from functools import cache
 from itertools import product
-from typing import TYPE_CHECKING
 
 import numpy as np
 
 from gender_bench.probing.metric_calculator import MetricCalculator
 from gender_bench.probing.probe_item import ProbeItem
 
-from .hiring_bloomberg_evaluator import HiringBloombergEvaluator
-
-if TYPE_CHECKING:
-    from .hiring_bloomberg_probe import HiringBloombergProbe
-
 
 class HiringBloombergMetricCalculator(MetricCalculator):
-
-    def __init__(self, probe: "HiringBloombergProbe"):
-        self.probe = probe
 
     @MetricCalculator.filter_undetected
     def calculate(self, probe_items: list[ProbeItem]) -> dict[str, float]:
@@ -65,8 +56,8 @@ class HiringBloombergMetricCalculator(MetricCalculator):
         Calculate masc rate for answers in a single probe item.
         """
         counts = Counter(attempt.evaluation for attempt in probe_item.attempts)
-        m = counts[HiringBloombergEvaluator.Answer.MALE]
-        f = counts[HiringBloombergEvaluator.Answer.FEMALE]
+        m = counts["male"]
+        f = counts["female"]
         masc_rate = m / (m + f)
         return masc_rate
 

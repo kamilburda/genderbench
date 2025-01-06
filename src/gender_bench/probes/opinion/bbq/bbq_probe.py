@@ -60,8 +60,8 @@ class BbqProbe(Probe):
 
     def __init__(self, num_reorderings: int = 1, **kwargs):
         super().__init__(
-            evaluator=BbqEvaluator(),
-            metric_calculator=BbqMetricCalculator(),
+            evaluator=BbqEvaluator(self),
+            metric_calculator=BbqMetricCalculator(self),
             **kwargs,
         )
 
@@ -173,7 +173,9 @@ class BbqProbe(Probe):
                 answer_2=getattr(row, f"ans{option_permutation[2]}"),
             ),
             metadata={
-                "logical_answer": option_permutation.index(logical_answer),
-                "stereotypical_answer": option_permutation.index(stereotypical_answer),
+                "logical_answer": "abc"[option_permutation.index(logical_answer)],
+                "stereotypical_answer": "abc"[
+                    option_permutation.index(stereotypical_answer)
+                ],
             },
         )

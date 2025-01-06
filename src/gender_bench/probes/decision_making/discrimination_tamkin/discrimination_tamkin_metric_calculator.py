@@ -3,7 +3,6 @@ from functools import cache
 from itertools import combinations
 from typing import Any
 
-from gender_bench.probes.generics.yes_no_evaluator import YesNoEvaluator
 from gender_bench.probing.metric_calculator import MetricCalculator
 from gender_bench.probing.probe_item import ProbeItem
 
@@ -21,9 +20,9 @@ class DiscriminationTamkinMetricCalculator(MetricCalculator):
             gender_result_counter.update(self.probe_item_score(item))
 
         for gender in DiscriminationTamkinGenders:
-            yes, no, _ = [
+            yes, no = [
                 gender_result_counter[result, gender]
-                for result in YesNoEvaluator.Answer
+                for result in self.probe.evaluator.options
             ]
             metrics[f"{gender.name.lower()}_success_rate"] = yes / (yes + no)
 

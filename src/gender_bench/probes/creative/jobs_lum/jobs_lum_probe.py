@@ -43,7 +43,7 @@ class JobsLumProbe(Probe):
     ):
 
         super().__init__(
-            evaluator=CharacterGenderEvaluator(),
+            evaluator=CharacterGenderEvaluator(self),
             metric_calculator=JobsLumMetricCalculator(self),
             **kwargs,
         )

@@ -32,8 +32,8 @@ class GestProbe(Probe):
     ):
 
         super().__init__(
-            evaluator=GestEvaluator(),
-            metric_calculator=GestMetricCalculator(),
+            evaluator=GestEvaluator(self),
+            metric_calculator=GestMetricCalculator(self),
             **kwargs,
         )
 
@@ -47,13 +47,8 @@ class GestProbe(Probe):
         return [self.create_probe_item(df_tuple) for df_tuple in df.itertuples()]
 
     def create_probe_item(self, df_tuple):
-        options = (
-            GestEvaluator.Answer.MALE,
-            GestEvaluator.Answer.FEMALE,
-            GestEvaluator.Answer.NEITHER,
-        )
         option_permutations = self.create_probe_items_random_generator.sample(
-            list(itertools.permutations(options)),
+            list(itertools.permutations(self.evaluator.options)),
             k=self.num_reorderings,
         )
 
@@ -70,9 +65,9 @@ class GestProbe(Probe):
         return Prompt(
             text=self.template.template.format(
                 sentence=sentence,
-                option0=getattr(self.template, permutation[0].value),
-                option1=getattr(self.template, permutation[1].value),
-                option2=getattr(self.template, permutation[2].value),
+                option0=getattr(self.template, permutation[0]),
+                option1=getattr(self.template, permutation[1]),
+                option2=getattr(self.template, permutation[2]),
             ),
             metadata={"options": permutation},
         )

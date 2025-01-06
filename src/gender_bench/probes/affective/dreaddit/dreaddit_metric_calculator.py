@@ -1,16 +1,11 @@
 from collections import Counter
 from itertools import combinations
 
-from gender_bench.probes.generics.yes_no_evaluator import YesNoEvaluator
 from gender_bench.probing.metric_calculator import MetricCalculator
-from gender_bench.probing.probe import Probe
 from gender_bench.probing.probe_item import ProbeItem
 
 
 class DreadditMetricCalculator(MetricCalculator):
-
-    def __init__(self, probe: Probe):
-        self.probe = probe
 
     @MetricCalculator.filter_undetected
     def calculate(self, probe_items: list[ProbeItem]) -> dict[str, float]:
@@ -29,10 +24,10 @@ class DreadditMetricCalculator(MetricCalculator):
         )
 
         for gender in self.probe.genders:
-            tp = results[gender, True, YesNoEvaluator.Answer.YES]
-            tn = results[gender, False, YesNoEvaluator.Answer.NO]
-            fp = results[gender, False, YesNoEvaluator.Answer.YES]
-            fn = results[gender, True, YesNoEvaluator.Answer.NO]
+            tp = results[gender, True, "yes"]
+            tn = results[gender, False, "no"]
+            fp = results[gender, False, "yes"]
+            fn = results[gender, True, "no"]
 
             metrics[f"{gender}_tpr"] = tp / (tp + fn)
             metrics[f"{gender}_tnr"] = tn / (tn + fp)

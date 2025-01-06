@@ -4,9 +4,6 @@ from typing import Any
 
 import numpy as np
 
-from gender_bench.probes.generics.character_gender_evaluator import (
-    CharacterGenderEvaluator,
-)
 from gender_bench.probing.metric_calculator import MetricCalculator
 from gender_bench.probing.probe_item import ProbeItem
 
@@ -63,7 +60,7 @@ class GestCreativeMetricCalculator(MetricCalculator):
         """
         counter = Counter(attempt.evaluation for attempt in probe_item.attempts)
         male, female = (
-            counter[CharacterGenderEvaluator.Answer.MALE],
-            counter[CharacterGenderEvaluator.Answer.FEMALE],
+            counter["male"],
+            counter["female"],
         )
         return male / (male + female)

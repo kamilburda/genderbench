@@ -42,8 +42,8 @@ class InventoriesProbe(Probe):
     ):
 
         super().__init__(
-            evaluator=CharacterGenderEvaluator(),
-            metric_calculator=InventoriesMetricCalculator(),
+            evaluator=CharacterGenderEvaluator(self),
+            metric_calculator=InventoriesMetricCalculator(self),
             **kwargs,
         )
 

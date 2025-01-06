@@ -1,9 +1,11 @@
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from gender_bench.probing.evaluator import Evaluator
 from gender_bench.probing.probe_item import ProbeItem
+
+if TYPE_CHECKING:
+    from gender_bench.probing.probe import Probe
 
 
 class MetricCalculator:
@@ -11,6 +13,9 @@ class MetricCalculator:
     MetricCalculator calculates arbitrary metrics for a probe that has answers
     generated and evaluated.
     """
+
+    def __init__(self, probe: "Probe"):
+        self.probe = probe
 
     def calculate(self, probe_items: list[ProbeItem]) -> dict[str, Any]:
         """
@@ -37,16 +42,7 @@ class MetricCalculator:
         """
 
         def is_undetected(evaluation):
-            if evaluation is Evaluator.UNDETECTED:
-                return True
-
-            if (
-                hasattr(evaluation, "value")
-                and evaluation.value is Evaluator.UNDETECTED
-            ):
-                return True
-
-            return False
+            return evaluation is None  # TODO: make this dynamic
 
         def wrapper_func(self, probe_items):
 

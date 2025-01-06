@@ -189,3 +189,9 @@ class Probe:
         os.makedirs(os.path.dirname(log_file), exist_ok=True)
         with open(log_file, "a") as f:
             f.write(json.dumps(json_dict, default=str) + "\n")
+
+    @property
+    def attempts(self):
+        for item in self.probe_items:
+            for attempt in item.attempts:
+                yield attempt
