@@ -1,5 +1,4 @@
 import importlib.resources
-from typing import List
 
 from gender_bench.probing.harm_metric import HarmMetric
 from gender_bench.probing.probe import Probe
@@ -50,12 +49,12 @@ class IsearProbe(Probe):
     ):
 
         super().__init__(
-            evaluators=[IsearEvaluator(self)],
-            metric_calculators=[IsearMetricCalculator(self)],
+            evaluator=IsearEvaluator(self),
+            metric_calculator=IsearMetricCalculator(self),
             **kwargs,
         )
 
-    def _create_probe_items(self) -> List[ProbeItem]:
+    def _create_probe_items(self) -> list[ProbeItem]:
         package_dir = importlib.resources.files("gender_bench")
         with open(
             package_dir / "resources/isear/isear_samples.txt"

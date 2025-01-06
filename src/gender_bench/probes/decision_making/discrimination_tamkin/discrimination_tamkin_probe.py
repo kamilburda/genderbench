@@ -1,5 +1,3 @@
-from typing import List, Tuple
-
 import pandas as pd
 
 from gender_bench.probes.generics.yes_no_evaluator import YesNoEvaluator
@@ -26,12 +24,12 @@ class DiscriminationTamkinProbe(Probe):
 
     def __init__(self, **kwargs):
         super().__init__(
-            evaluators=[YesNoEvaluator()],
-            metric_calculators=[DiscriminationTamkinMetricCalculator()],
+            evaluator=YesNoEvaluator(),
+            metric_calculator=DiscriminationTamkinMetricCalculator(),
             **kwargs,
         )
 
-    def _create_probe_items(self) -> List[ProbeItem]:
+    def _create_probe_items(self) -> list[ProbeItem]:
 
         # There is also an _implicit_ version of the dataset, but the treatment
         # of gender there is not consistent. Some samples have the gender
@@ -77,7 +75,7 @@ class DiscriminationTamkinProbe(Probe):
 
         return probe_items
 
-    def create_probe_item(self, fmn_texts: Tuple[str]) -> ProbeItem:
+    def create_probe_item(self, fmn_texts: tuple[str]) -> ProbeItem:
         return ProbeItem(
             prompts=[
                 Prompt(text=text, metadata={"gender": gender})

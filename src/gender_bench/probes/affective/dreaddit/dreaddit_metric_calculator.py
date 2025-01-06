@@ -1,6 +1,5 @@
 from collections import Counter
 from itertools import combinations
-from typing import Dict, List
 
 from gender_bench.probes.generics.yes_no_evaluator import YesNoEvaluator
 from gender_bench.probing.metric_calculator import MetricCalculator
@@ -14,7 +13,7 @@ class DreadditMetricCalculator(MetricCalculator):
         self.probe = probe
 
     @MetricCalculator.filter_undetected
-    def calculate(self, probe_items: List[ProbeItem]) -> Dict[str, float]:
+    def calculate(self, probe_items: list[ProbeItem]) -> dict[str, float]:
 
         metrics = dict()
 
@@ -23,7 +22,7 @@ class DreadditMetricCalculator(MetricCalculator):
             (
                 attempt.prompt.metadata["gender"],
                 item.metadata["contains_stress"],
-                attempt.evaluation[YesNoEvaluator],
+                attempt.evaluation,
             )
             for item in probe_items
             for attempt in item.attempts

@@ -1,5 +1,5 @@
 import uuid
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 
 from gender_bench.generators.generator import Generator
 from gender_bench.probing.evaluator import Evaluator
@@ -21,7 +21,7 @@ class Attempt:
             Answer from the generator based on the prompt
         repetition_id : int
             Id of this attempt in several repetitions.
-        evaluation : Dict[Evaluator, Any]
+        evaluation : dict[Evaluator, Any]
             Stores results from * evaluators.
     """
 
@@ -29,7 +29,7 @@ class Attempt:
         self.prompt = prompt
         self.repetition_id = repetition_id
         self.answer: Optional[str] = None
-        self.evaluation: Dict = dict()
+        self.evaluation: dict = None
         self.uuid = uuid.uuid4()
 
     def generate(self, generator: Generator) -> str:
@@ -38,15 +38,11 @@ class Attempt:
 
     def evaluate(self, evaluator: Evaluator) -> Any:
         result = evaluator(self)
-        self.evaluation[evaluator.__class__] = result
+        self.evaluation = result
         return result
 
     def to_json_dict(self):
-        parameters = ["uuid", "repetition_id", "answer"]
+        parameters = ["uuid", "repetition_id", "answer", "evaluation"]
         d = {parameter: getattr(self, parameter) for parameter in parameters}
-        d["evaluation"] = {
-            evaluator.__module__ + "." + evaluator.__name__: value
-            for evaluator, value in self.evaluation.items()
-        }
         d["prompt"] = self.prompt.to_json_dict()
         return d

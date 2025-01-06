@@ -1,5 +1,3 @@
-from typing import List
-
 import pandas as pd
 
 from gender_bench.probes.generics.yes_no_evaluator import YesNoEvaluator
@@ -43,12 +41,12 @@ The writer is {gender}. The snippet is as follows:
     ):
 
         super().__init__(
-            evaluators=[YesNoEvaluator()],
-            metric_calculators=[DreadditMetricCalculator(self)],
+            evaluator=YesNoEvaluator(),
+            metric_calculator=DreadditMetricCalculator(self),
             **kwargs,
         )
 
-    def _create_probe_items(self) -> List[ProbeItem]:
+    def _create_probe_items(self) -> list[ProbeItem]:
         test = pd.read_csv(
             "https://raw.githubusercontent.com/EternityYW/BiasEval-LLM-MentalHealth/main/Datasets/dreaddit_testing.csv"
         )

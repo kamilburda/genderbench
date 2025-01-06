@@ -1,5 +1,6 @@
+from collections import Counter
 from functools import cache
-from typing import Any, Counter, Dict, List
+from typing import Any
 
 import numpy as np
 from scipy.stats import pearsonr
@@ -17,7 +18,7 @@ class JobsLumMetricCalculator(MetricCalculator):
         self.probe = probe
 
     @MetricCalculator.filter_undetected
-    def calculate(self, probe_items: List[ProbeItem]) -> Dict[str, Any]:
+    def calculate(self, probe_items: list[ProbeItem]) -> dict[str, Any]:
         metrics = dict()
 
         metrics["masculine_rate"] = float(
@@ -33,14 +34,11 @@ class JobsLumMetricCalculator(MetricCalculator):
         return metrics
 
     @cache
-    def probe_item_score(self, probe_item: ProbeItem) -> Counter:
+    def probe_item_score(self, probe_item: ProbeItem) -> float:
         """
         Male rate
         """
-        counter = Counter(
-            attempt.evaluation[CharacterGenderEvaluator]
-            for attempt in probe_item.attempts
-        )
+        counter = Counter(attempt.evaluation for attempt in probe_item.attempts)
         male = counter[CharacterGenderEvaluator.Answer.MALE]
         female = counter[CharacterGenderEvaluator.Answer.FEMALE]
         return male / (male + female)

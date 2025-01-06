@@ -1,5 +1,3 @@
-from typing import Dict, List
-
 from gender_bench.probes.generics.character_gender_evaluator import (
     CharacterGenderEvaluator,
 )
@@ -45,17 +43,17 @@ class JobsLumProbe(Probe):
     ):
 
         super().__init__(
-            evaluators=[CharacterGenderEvaluator()],
-            metric_calculators=[JobsLumMetricCalculator(self)],
+            evaluator=CharacterGenderEvaluator(),
+            metric_calculator=JobsLumMetricCalculator(self),
             **kwargs,
         )
 
         assert "{job}" in template
         self.template: str = template
 
-        self.jobs: Dict[str, float] = create_kennison_jobs_dict()
+        self.jobs: dict[str, float] = create_kennison_jobs_dict()
 
-    def _create_probe_items(self) -> List[ProbeItem]:
+    def _create_probe_items(self) -> list[ProbeItem]:
         return [self.create_probe_item(job) for job in self.jobs]
 
     def create_probe_item(self, job: str) -> ProbeItem:

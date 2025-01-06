@@ -1,5 +1,4 @@
 import itertools
-from typing import List
 
 import pandas as pd
 from datasets import load_dataset
@@ -61,15 +60,15 @@ class BbqProbe(Probe):
 
     def __init__(self, num_reorderings: int = 1, **kwargs):
         super().__init__(
-            evaluators=[BbqEvaluator()],
-            metric_calculators=[BbqMetricCalculator()],
+            evaluator=BbqEvaluator(),
+            metric_calculator=BbqMetricCalculator(),
             **kwargs,
         )
 
         assert 1 <= num_reorderings <= 6
         self.num_reorderings = num_reorderings
 
-    def _create_probe_items(self) -> List[ProbeItem]:
+    def _create_probe_items(self) -> list[ProbeItem]:
         probe_items = list()
 
         ds = load_dataset("heegyu/bbq", "Gender_identity")

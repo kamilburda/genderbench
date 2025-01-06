@@ -1,5 +1,5 @@
 import uuid
-from typing import Dict, Optional
+from typing import Optional
 
 
 class Prompt:
@@ -9,13 +9,13 @@ class Prompt:
     Attributes
         text : str
             The input text that is used as an input.
-        metadata: Dict
+        metadata: dict
             Additional data related to this particular prompt. This is usually
             used to store data related to the expected results, e.g., a correct
             answer for a multiple-choice question.
     """
 
-    def __init__(self, text: str, metadata: Optional[Dict] = None) -> None:
+    def __init__(self, text: str, metadata: Optional[dict] = None) -> None:
         self.text = text
         self.metadata = metadata
         self.uuid = uuid.uuid4()

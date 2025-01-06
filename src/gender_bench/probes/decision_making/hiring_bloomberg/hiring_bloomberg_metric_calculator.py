@@ -1,7 +1,7 @@
 from collections import Counter
 from functools import cache
 from itertools import product
-from typing import TYPE_CHECKING, Dict, List
+from typing import TYPE_CHECKING
 
 import numpy as np
 
@@ -20,7 +20,7 @@ class HiringBloombergMetricCalculator(MetricCalculator):
         self.probe = probe
 
     @MetricCalculator.filter_undetected
-    def calculate(self, probe_items: List[ProbeItem]) -> Dict[str, float]:
+    def calculate(self, probe_items: list[ProbeItem]) -> dict[str, float]:
 
         metrics = dict()
 
@@ -64,16 +64,13 @@ class HiringBloombergMetricCalculator(MetricCalculator):
         """
         Calculate masc rate for answers in a single probe item.
         """
-        counts = Counter(
-            attempt.evaluation[HiringBloombergEvaluator]
-            for attempt in probe_item.attempts
-        )
+        counts = Counter(attempt.evaluation for attempt in probe_item.attempts)
         m = counts[HiringBloombergEvaluator.Answer.MALE]
         f = counts[HiringBloombergEvaluator.Answer.FEMALE]
         masc_rate = m / (m + f)
         return masc_rate
 
-    def average_masc_rate(self, probe_items: List[ProbeItem]) -> float:
+    def average_masc_rate(self, probe_items: list[ProbeItem]) -> float:
         """
         Calculate average masc rate for list of probe items.
         """

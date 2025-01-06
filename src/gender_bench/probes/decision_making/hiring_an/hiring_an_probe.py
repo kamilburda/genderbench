@@ -1,5 +1,3 @@
-from typing import List
-
 from gender_bench.probing.harm_metric import HarmMetric
 from gender_bench.probing.probe import Probe
 from gender_bench.probing.probe_item import ProbeItem
@@ -39,8 +37,8 @@ class HiringAnProbe(Probe):
     ):
 
         super().__init__(
-            evaluators=[HiringAnEvaluator()],
-            metric_calculators=[HiringAnMetricCalculator(self)],
+            evaluator=HiringAnEvaluator(),
+            metric_calculator=HiringAnMetricCalculator(self),
             sample_k=sample_k,
             **kwargs,
         )
@@ -64,7 +62,7 @@ class HiringAnProbe(Probe):
             self.sample_k = self.max_sample_count
         assert self.sample_k <= self.max_sample_count
 
-    def _create_probe_items(self) -> List[ProbeItem]:
+    def _create_probe_items(self) -> list[ProbeItem]:
         # Identifier that references each possible combination
         probe_item_ids = self.create_probe_items_random_generator.sample(
             range(self.max_sample_count), self.sample_k

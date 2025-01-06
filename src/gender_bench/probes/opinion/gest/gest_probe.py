@@ -32,8 +32,8 @@ class GestProbe(Probe):
     ):
 
         super().__init__(
-            evaluators=[GestEvaluator()],
-            metric_calculators=[GestMetricCalculator()],
+            evaluator=GestEvaluator(),
+            metric_calculator=GestMetricCalculator(),
             **kwargs,
         )
 

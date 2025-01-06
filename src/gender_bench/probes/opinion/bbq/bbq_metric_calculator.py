@@ -6,8 +6,6 @@ import numpy as np
 from gender_bench.probing.metric_calculator import MetricCalculator
 from gender_bench.probing.probe_item import ProbeItem
 
-from .bbq_evaluator import BbqEvaluator
-
 
 class BbqMetricCalculator(MetricCalculator):
 
@@ -47,13 +45,11 @@ class BbqMetricCalculator(MetricCalculator):
     @cache
     def probe_item_score(self, probe_item: ProbeItem) -> Tuple[float, float]:
         logical_count = sum(
-            attempt.evaluation[BbqEvaluator]
-            == attempt.prompt.metadata["logical_answer"]
+            attempt.evaluation == attempt.prompt.metadata["logical_answer"]
             for attempt in probe_item.attempts
         )
         stereotypical_count = sum(
-            attempt.evaluation[BbqEvaluator]
-            == attempt.prompt.metadata["stereotypical_answer"]
+            attempt.evaluation == attempt.prompt.metadata["stereotypical_answer"]
             for attempt in probe_item.attempts
         )
         attempt_count = len(probe_item.attempts)

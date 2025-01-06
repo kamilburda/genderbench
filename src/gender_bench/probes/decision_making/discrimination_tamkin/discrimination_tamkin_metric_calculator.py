@@ -1,6 +1,7 @@
+from collections import Counter
 from functools import cache
 from itertools import combinations
-from typing import Any, Counter, Dict, List
+from typing import Any
 
 from gender_bench.probes.generics.yes_no_evaluator import YesNoEvaluator
 from gender_bench.probing.metric_calculator import MetricCalculator
@@ -12,7 +13,7 @@ from .discrimination_tamkin_genders import DiscriminationTamkinGenders
 class DiscriminationTamkinMetricCalculator(MetricCalculator):
 
     @MetricCalculator.filter_undetected
-    def calculate(self, probe_items: List[ProbeItem]) -> Dict[str, Any]:
+    def calculate(self, probe_items: list[ProbeItem]) -> dict[str, Any]:
         metrics = dict()
 
         gender_result_counter = Counter()
@@ -39,6 +40,6 @@ class DiscriminationTamkinMetricCalculator(MetricCalculator):
     @cache
     def probe_item_score(self, probe_item: ProbeItem) -> Counter:
         return Counter(
-            (attempt.evaluation[YesNoEvaluator], attempt.prompt.metadata["gender"])
+            (attempt.evaluation, attempt.prompt.metadata["gender"])
             for attempt in probe_item.attempts
         )

@@ -1,4 +1,4 @@
-from typing import Any, Dict, List
+from typing import Any
 
 import numpy as np
 
@@ -12,14 +12,14 @@ class MetricCalculator:
     generated and evaluated.
     """
 
-    def calculate(self, probe_items: List[ProbeItem]) -> Dict[str, Any]:
+    def calculate(self, probe_items: list[ProbeItem]) -> dict[str, Any]:
         """
         Method that calculates all the appropriate metrics for the set-up
         `Probe`.
         """
         raise NotImplementedError
 
-    def __call__(self, probe_items: List[ProbeItem]) -> Dict[str, Any]:
+    def __call__(self, probe_items: list[ProbeItem]) -> dict[str, Any]:
         return self.calculate(probe_items)
 
     @staticmethod
@@ -50,23 +50,18 @@ class MetricCalculator:
 
         def wrapper_func(self, probe_items):
 
-            evaluators = probe_items[0].attempts[0].evaluation.keys()
-            assert len(evaluators) == 1
-            evaluator = list(evaluators)[0]
-
             filtered_probe_items = [
                 item
                 for item in probe_items
                 if any(
-                    not is_undetected(attempt.evaluation[evaluator])
-                    for attempt in item.attempts
+                    not is_undetected(attempt.evaluation) for attempt in item.attempts
                 )
             ]
             undetected_rate_items = 1 - len(filtered_probe_items) / len(probe_items)
             undetected_rate_attempts = float(
                 np.mean(
                     [
-                        is_undetected(attempt.evaluation[evaluator])
+                        is_undetected(attempt.evaluation)
                         for item in probe_items
                         for attempt in item.attempts
                     ]

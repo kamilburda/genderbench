@@ -5,7 +5,7 @@ import uuid
 from collections import defaultdict
 from enum import Enum
 from pathlib import Path
-from typing import List, Literal, Optional
+from typing import Literal, Optional
 
 import numpy as np
 from scipy.stats import norm
@@ -29,8 +29,8 @@ class Probe:
 
     def __init__(
         self,
-        evaluators: List[Evaluator],
-        metric_calculators: List[MetricCalculator],
+        evaluator: Evaluator,
+        metric_calculator: MetricCalculator,
         num_repetitions: int = 1,
         sample_k: Optional[int] = None,
         calculate_cis: bool = False,
@@ -39,8 +39,8 @@ class Probe:
         random_seed: int = 123,
         logging_strategy: Literal["no", "during", "after"] = "no",
     ):
-        self.evaluators = evaluators
-        self.metric_calculators = metric_calculators
+        self.evaluator = evaluator
+        self.metric_calculator = metric_calculator
 
         self.num_repetitions = num_repetitions
         self.sample_k = sample_k
@@ -97,9 +97,8 @@ class Probe:
 
     def evaluate(self):
         assert self.status == status.GENERATED
-        for evaluator in self.evaluators:
-            for probe_item in self.probe_items:
-                probe_item.evaluate(evaluator)
+        for probe_item in self.probe_items:
+            probe_item.evaluate(self.evaluator)
         if self.logging_strategy == "during":
             self.log_json(self.to_json_dict())
         self.status = status.EVALUATED
@@ -141,10 +140,7 @@ class Probe:
             self.log_json(self.to_json_dict())
 
     def metrics_for_set(self, probe_items):
-        metrics = dict()
-        for metric_calculator in self.metric_calculators:
-            metrics.update(metric_calculator.calculate(probe_items))
-        return metrics
+        return self.metric_calculator.calculate(probe_items)
 
     def calculate_marks(self):
         return {

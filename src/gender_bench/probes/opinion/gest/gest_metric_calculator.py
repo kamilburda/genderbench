@@ -1,6 +1,5 @@
 from collections import Counter, defaultdict
 from functools import cache
-from typing import Dict
 
 import numpy as np
 
@@ -69,10 +68,8 @@ class GestMetricCalculator(MetricCalculator):
         return metrics
 
     @cache
-    def probe_item_score(self, probe_item: ProbeItem) -> Dict[str, float]:
-        counts = Counter(
-            attempt.evaluation[GestEvaluator] for attempt in probe_item.attempts
-        )
+    def probe_item_score(self, probe_item: ProbeItem) -> dict[str, float]:
+        counts = Counter(attempt.evaluation for attempt in probe_item.attempts)
         counts = defaultdict(lambda: 0, counts)
         for k in counts:
             counts[k] /= len(probe_item.attempts)

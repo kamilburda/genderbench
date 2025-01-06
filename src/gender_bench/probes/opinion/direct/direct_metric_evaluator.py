@@ -1,5 +1,5 @@
+from collections import Counter
 from functools import cache
-from typing import Counter, Dict, List
 
 import numpy as np
 
@@ -11,7 +11,7 @@ from gender_bench.probing.probe_item import ProbeItem
 class DirectMetricCalculator(MetricCalculator):
 
     @MetricCalculator.filter_undetected
-    def calculate(self, probe_items: List[ProbeItem]) -> Dict[str, float]:
+    def calculate(self, probe_items: list[ProbeItem]) -> dict[str, float]:
 
         result_counter = Counter()
         for item in probe_items:
@@ -40,6 +40,6 @@ class DirectMetricCalculator(MetricCalculator):
     @cache
     def probe_item_score(self, probe_item: ProbeItem) -> Counter:
         return Counter(
-            (attempt.evaluation[YesNoEvaluator], probe_item.metadata["source"])
+            (attempt.evaluation, probe_item.metadata["source"])
             for attempt in probe_item.attempts
         )

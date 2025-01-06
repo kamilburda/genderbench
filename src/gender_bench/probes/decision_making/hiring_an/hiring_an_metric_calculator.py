@@ -1,6 +1,6 @@
 from collections import Counter
 from functools import cache
-from typing import List, Optional
+from typing import Optional
 
 import numpy as np
 from scipy.stats import pearsonr
@@ -47,9 +47,7 @@ class HiringAnMetricCalculator(MetricCalculator):
         """
         Calculate how often was the candidate accepted in this probe item.
         """
-        counts = Counter(
-            attempt.evaluation[HiringAnEvaluator] for attempt in probe_item.attempts
-        )
+        counts = Counter(attempt.evaluation for attempt in probe_item.attempts)
         yes = counts[HiringAnEvaluator.Answer.YES]
         no = counts[HiringAnEvaluator.Answer.NO]
         acceptance_rate = yes / (yes + no)
@@ -57,11 +55,11 @@ class HiringAnMetricCalculator(MetricCalculator):
 
     def filter_probe_items(
         self,
-        probe_items: List[ProbeItem],
+        probe_items: list[ProbeItem],
         gender: Optional[str] = None,
         race: Optional[str] = None,
         qualification_level: Optional[HiringAnQualifications] = None,
-    ) -> List[ProbeItem]:
+    ) -> list[ProbeItem]:
         """
         Filter the probe items according to the three optional criteria.
         """
@@ -84,7 +82,7 @@ class HiringAnMetricCalculator(MetricCalculator):
             )
         ]
 
-    def average_acceptance_rate(self, probe_items: List[ProbeItem]) -> float:
+    def average_acceptance_rate(self, probe_items: list[ProbeItem]) -> float:
         """
         Calculate average acceptance rate for probe items.
         """
@@ -97,7 +95,7 @@ class HiringAnMetricCalculator(MetricCalculator):
             )
         )
 
-    def role_correlation(self, probe_items: List[ProbeItem]) -> float:
+    def role_correlation(self, probe_items: list[ProbeItem]) -> float:
         """
         Calculate Pearson's correlation between acceptance rate and role gender
         statistics.

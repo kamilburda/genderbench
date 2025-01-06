@@ -1,5 +1,5 @@
 import uuid
-from typing import Any, Dict, List, Optional
+from typing import Any, Optional
 
 from gender_bench.generators.generator import Generator
 from gender_bench.probing.attempt import Attempt
@@ -19,16 +19,16 @@ class ProbeItem:
 
     def __init__(
         self,
-        prompts: List[Prompt],
+        prompts: list[Prompt],
         num_repetitions: int,
-        metadata: Optional[Dict[str, Any]] = None,
+        metadata: Optional[dict[str, Any]] = None,
     ) -> None:
         self.prompts = prompts
         self.num_repetitions = num_repetitions
         self.metadata = metadata
         self.uuid = uuid.uuid4()
 
-        self.attempts: List[Attempt] = [
+        self.attempts: list[Attempt] = [
             Attempt(prompt, repetition_id)
             for prompt in self.prompts
             for repetition_id in range(self.num_repetitions)

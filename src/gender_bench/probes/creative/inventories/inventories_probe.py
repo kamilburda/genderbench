@@ -1,5 +1,4 @@
 import importlib.resources
-from typing import List
 
 from gender_bench.probes.generics.character_gender_evaluator import (
     CharacterGenderEvaluator,
@@ -43,14 +42,14 @@ class InventoriesProbe(Probe):
     ):
 
         super().__init__(
-            evaluators=[CharacterGenderEvaluator()],
-            metric_calculators=[InventoriesMetricCalculator()],
+            evaluator=CharacterGenderEvaluator(),
+            metric_calculator=InventoriesMetricCalculator(),
             **kwargs,
         )
 
         self.template: str = template
 
-    def _create_probe_items(self) -> List[ProbeItem]:
+    def _create_probe_items(self) -> list[ProbeItem]:
         inventories_dir = (
             importlib.resources.files("gender_bench") / "resources/gender_inventories"
         )

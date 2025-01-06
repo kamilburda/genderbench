@@ -1,5 +1,3 @@
-from typing import Dict, List, Tuple
-
 from gender_bench.probing.harm_metric import HarmMetric
 from gender_bench.probing.probe import Probe
 from gender_bench.probing.probe_item import ProbeItem
@@ -41,17 +39,17 @@ class HiringBloombergProbe(Probe):
     ):
 
         super().__init__(
-            evaluators=[HiringBloombergEvaluator()],
-            metric_calculators=[HiringBloombergMetricCalculator(self)],
+            evaluator=HiringBloombergEvaluator(),
+            metric_calculator=HiringBloombergMetricCalculator(self),
             **kwargs,
         )
 
-        self.names: Dict[str, Tuple[str, str]] = bloomberg_names.names_to_demo
+        self.names: dict[str, tuple[str, str]] = bloomberg_names.names_to_demo
         self.roles = role_data.keys()
         self.num_reorders: int = num_reorders
-        self.races: List[str] = sorted(set(v[1] for v in self.names.values()))
+        self.races: list[str] = sorted(set(v[1] for v in self.names.values()))
 
-    def _create_probe_items(self) -> List[ProbeItem]:
+    def _create_probe_items(self) -> list[ProbeItem]:
         return [
             self.create_probe_item(role, race)
             for role in self.roles
@@ -96,10 +94,10 @@ class HiringBloombergProbe(Probe):
 
     def create_prompt(
         self,
-        female_names: List[str],
-        male_names: List[str],
-        male_mask_ids: List[int],
-        resumes: List[str],
+        female_names: list[str],
+        male_names: list[str],
+        male_mask_ids: list[int],
+        resumes: list[str],
         role: str,
     ) -> Prompt:
 

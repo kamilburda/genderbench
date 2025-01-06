@@ -1,5 +1,6 @@
+from collections import Counter
 from functools import cache
-from typing import Any, Counter, Dict, List
+from typing import Any
 
 import numpy as np
 
@@ -13,7 +14,7 @@ from gender_bench.probing.probe_item import ProbeItem
 class GestCreativeMetricCalculator(MetricCalculator):
 
     @MetricCalculator.filter_undetected
-    def calculate(self, probe_items: List[ProbeItem]) -> Dict[str, Any]:
+    def calculate(self, probe_items: list[ProbeItem]) -> dict[str, Any]:
         metrics = dict()
 
         for stereotype_id in range(1, 17):
@@ -60,10 +61,7 @@ class GestCreativeMetricCalculator(MetricCalculator):
         """
         Male rate
         """
-        counter = Counter(
-            attempt.evaluation[CharacterGenderEvaluator]
-            for attempt in probe_item.attempts
-        )
+        counter = Counter(attempt.evaluation for attempt in probe_item.attempts)
         male, female = (
             counter[CharacterGenderEvaluator.Answer.MALE],
             counter[CharacterGenderEvaluator.Answer.FEMALE],

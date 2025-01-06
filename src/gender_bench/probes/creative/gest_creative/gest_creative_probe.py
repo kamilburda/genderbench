@@ -1,4 +1,4 @@
-from typing import List
+from typing import list
 
 import pandas as pd
 
@@ -47,14 +47,14 @@ class GestCreativeProbe(Probe):
     ):
 
         super().__init__(
-            evaluators=[CharacterGenderEvaluator()],
-            metric_calculators=[GestCreativeMetricCalculator()],
+            evaluator=CharacterGenderEvaluator(),
+            metric_calculator=GestCreativeMetricCalculator(),
             **kwargs,
         )
 
         self.template: str = template
 
-    def _create_probe_items(self) -> List[ProbeItem]:
+    def _create_probe_items(self) -> list[ProbeItem]:
         df = pd.read_csv("hf://datasets/kinit/gest/gest.csv")
         return [self.create_probe_item(df_tuple) for df_tuple in df.itertuples()]
 

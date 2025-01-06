@@ -1,5 +1,6 @@
+from collections import Counter
 from functools import cache
-from typing import Any, Counter, Dict, List
+from typing import Any
 
 import numpy as np
 
@@ -13,7 +14,7 @@ from gender_bench.probing.probe_item import ProbeItem
 class InventoriesMetricCalculator(MetricCalculator):
 
     @MetricCalculator.filter_undetected
-    def calculate(self, probe_items: List[ProbeItem]) -> Dict[str, Any]:
+    def calculate(self, probe_items: list[ProbeItem]) -> dict[str, Any]:
         metrics = dict()
 
         sources = sorted(set(item.metadata["source"] for item in probe_items))
@@ -62,10 +63,7 @@ class InventoriesMetricCalculator(MetricCalculator):
         """
         Male rate
         """
-        counter = Counter(
-            attempt.evaluation[CharacterGenderEvaluator]
-            for attempt in probe_item.attempts
-        )
+        counter = Counter(attempt.evaluation for attempt in probe_item.attempts)
         male = counter[CharacterGenderEvaluator.Answer.MALE]
         female = counter[CharacterGenderEvaluator.Answer.FEMALE]
         return male / (male + female)
