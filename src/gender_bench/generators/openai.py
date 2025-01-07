@@ -3,6 +3,9 @@ import asyncio
 import nest_asyncio
 from openai import AsyncOpenAI
 
+from tqdm.asyncio import tqdm
+
+
 
 class OpenAiGenerator:
 
@@ -39,7 +42,7 @@ class OpenAiGenerator:
     async def _generate(self, texts: list[str]) -> list[str]:
         semaphore = asyncio.Semaphore(self.max_concurrent_tasks)
         tasks = [self.generate_single(text, semaphore) for text in texts]
-        answers = await asyncio.gather(*tasks)
+        answers = await tqdm.gather(*tasks)
         return answers
 
     async def generate_single(self, text: str, semaphore: asyncio.Semaphore) -> str:

@@ -37,7 +37,8 @@ class Probe:
         bootstrap_cycles: int = 1000,
         bootstrap_alpha: float = 0.95,
         random_seed: int = 123,
-        logging_strategy: Literal["no", "during", "after"] = "no",
+        log_strategy: Literal["no", "during", "after"] = "no",
+        log_dir: str = None,
     ):
         self.evaluator = evaluator
         self.metric_calculator = metric_calculator
@@ -54,7 +55,11 @@ class Probe:
         self.marks = dict()
         self.status = status.NEW
         self.uuid = uuid.uuid4()
-        self.logging_strategy = logging_strategy
+        self.log_strategy = log_strategy
+
+        if log_dir is None:
+            log_dir = LOG_DIR
+        self.log_dir = Path(log_dir)
 
         self.probe_items = list()
 
@@ -70,7 +75,7 @@ class Probe:
         if self.sample_k is not None:
             self.probe_items = self.sample(k=self.sample_k)
         self.status = status.POPULATED
-        if self.logging_strategy == "during":
+        if self.log_strategy == "during":
             self.log_json(self.to_json_dict())
 
     def _create_probe_items(self):
@@ -91,7 +96,7 @@ class Probe:
             for attempt in item.attempts:
                 attempt.answer = next(answers_iterator)
 
-        if self.logging_strategy == "during":
+        if self.log_strategy == "during":
             self.log_json(self.to_json_dict())
         self.status = status.GENERATED
 
@@ -99,7 +104,7 @@ class Probe:
         assert self.status == status.GENERATED
         for probe_item in self.probe_items:
             probe_item.evaluate(self.evaluator)
-        if self.logging_strategy == "during":
+        if self.log_strategy == "during":
             self.log_json(self.to_json_dict())
         self.status = status.EVALUATED
 
@@ -137,7 +142,7 @@ class Probe:
             self.marks = self.calculate_marks()
         self.status = status.FINISHED
 
-        if self.logging_strategy in ("during", "after"):
+        if self.log_strategy in ("during", "after"):
             self.log_json(self.to_json_dict())
 
     def metrics_for_set(self, probe_items):
@@ -186,7 +191,7 @@ class Probe:
         return {"Probe State": d}
 
     def log_json(self, json_dict):
-        log_file = Path(LOG_DIR) / f"{self.uuid}.jsonl"
+        log_file = self.log_dir / f"{self.uuid}.jsonl"
         os.makedirs(os.path.dirname(log_file), exist_ok=True)
         with open(log_file, "a") as f:
             f.write(json.dumps(json_dict, default=str) + "\n")

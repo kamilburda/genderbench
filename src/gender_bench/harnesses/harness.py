@@ -16,6 +16,7 @@ class Harness:
     def __init__(
         self,
         probes: list[Probe],
+        log_dir: str = None,
         **kwargs,
     ):
         self.probes = probes
@@ -23,9 +24,15 @@ class Harness:
         self.marks: dict[Probe, dict] = dict()
         self.uuid = uuid.uuid4()
 
-        for arg_name, arg_value in kwargs.items():
+        if log_dir is None:
+            log_dir = LOG_DIR
+        self.log_dir = Path(log_dir)
+
+        attributes_to_set = dict(kwargs) | {"log_dir": self.log_dir}
+        for arg_name, arg_value in attributes_to_set.items():
             assert arg_name in (
-                "logging_strategy",
+                "log_strategy",
+                "log_dir",
                 "calculate_cis",
                 "bootstrap_cycles",
                 "bootstrap_alpha",
@@ -43,7 +50,7 @@ class Harness:
         return self.marks, self.metrics
 
     def log_metrics(self):
-        log_file = Path(LOG_DIR) / f"{self.uuid}.jsonl"
+        log_file = self.log_dir / f"{self.uuid}.jsonl"
         os.makedirs(os.path.dirname(log_file), exist_ok=True)
         data = {
             "Metrics": self.metrics,
