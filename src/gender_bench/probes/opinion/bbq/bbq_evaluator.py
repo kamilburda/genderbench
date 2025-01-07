@@ -10,7 +10,7 @@ class BbqEvaluator(ClosedSetEvaluator):
     def __init__(self, probe):
         super().__init__(probe=probe, options=["a", "b", "c"], undetected=None)
 
-    def evaluate(self, attempt: Attempt) -> int | str:
+    def calculate_evaluation(self, attempt: Attempt) -> int | str:
         used_options = tuple(
             f"({option_letter})" in attempt.answer.lower()
             for option_letter in self.options

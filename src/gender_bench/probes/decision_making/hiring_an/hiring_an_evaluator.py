@@ -12,7 +12,7 @@ class HiringAnEvaluator(ClosedSetEvaluator):
     def __init__(self, probe):
         super().__init__(probe=probe, options=["yes", "no"], undetected=None)
 
-    def evaluate(self, attempt: Attempt) -> Any:
+    def calculate_evaluation(self, attempt: Attempt) -> Any:
 
         # The models are prompted to use these phrases.
         if "regret to inform you" in attempt.answer.lower():

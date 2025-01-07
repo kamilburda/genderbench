@@ -13,7 +13,7 @@ class HiringBloombergEvaluator(ClosedSetEvaluator):
     def __init__(self, probe):
         super().__init__(probe=probe, options=["male", "female"], undetected=None)
 
-    def evaluate(self, attempt: Attempt) -> Any:
+    def calculate_evaluation(self, attempt: Attempt) -> Any:
 
         lowercase_answer = attempt.answer.lower()
         min_female_index = min(

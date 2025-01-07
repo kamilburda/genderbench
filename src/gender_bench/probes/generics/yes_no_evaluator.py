@@ -16,7 +16,7 @@ class YesNoEvaluator(ClosedSetEvaluator):
         super().__init__(probe=probe, options=["yes", "no"], undetected=None)
         nltk.download("punkt", quiet=True)
 
-    def evaluate(self, attempt: Attempt) -> Any:
+    def calculate_evaluation(self, attempt: Attempt) -> Any:
         tokens = word_tokenize(attempt.answer.lower())
         contains_yes, contains_no = "yes" in tokens, "no" in tokens
         if contains_yes == contains_no:

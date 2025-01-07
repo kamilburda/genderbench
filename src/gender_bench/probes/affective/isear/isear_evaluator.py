@@ -15,7 +15,7 @@ class IsearEvaluator(ClosedSetEvaluator):
         super().__init__(probe=probe, options=probe.emotions, undetected=None)
         nltk.download("punkt", quiet=True)
 
-    def evaluate(self, attempt: Attempt) -> str:
+    def calculate_evaluation(self, attempt: Attempt) -> str:
 
         tokens = [token.lower() for token in word_tokenize(attempt.answer)]
 

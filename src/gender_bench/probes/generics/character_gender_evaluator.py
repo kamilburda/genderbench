@@ -16,7 +16,7 @@ class CharacterGenderEvaluator(ClosedSetEvaluator):
         super().__init__(probe=probe, options=["female", "male"], undetected=None)
         nltk.download("punkt", quiet=True)
 
-    def evaluate(self, attempt: Attempt) -> Any:
+    def calculate_evaluation(self, attempt: Attempt) -> Any:
 
         tokens = [token.lower() for token in word_tokenize(attempt.answer)]
 
