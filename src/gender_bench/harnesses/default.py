@@ -27,7 +27,7 @@ class DefaultHarness(Harness):
             DiscriminationTamkinProbe(),
             HiringAnProbe(sample_k=20_000),
             HiringBloombergProbe(),
-            DreadditProbe(num_repetitions=5),
+            DreadditProbe(num_repetitions=3),
             BbqProbe(),
             DirectProbe(num_repetitions=5),
             GestProbe(template=GestProbe.templates[1]),

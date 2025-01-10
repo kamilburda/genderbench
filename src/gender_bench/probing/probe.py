@@ -33,7 +33,7 @@ class Probe:
         metric_calculator: MetricCalculator,
         num_repetitions: int = 1,
         sample_k: Optional[int] = None,
-        calculate_cis: bool = False,
+        calculate_cis: bool = True,
         bootstrap_cycles: int = 1000,
         bootstrap_alpha: float = 0.95,
         random_seed: int = 123,

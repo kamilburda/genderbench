@@ -27,7 +27,9 @@
                     data: scatter_points,
                     type: 'line',
                     showLine: true,
-                    pointRadius: 0,
+                    pointRadius: 1,
+                    pointBackgroundColor: 'rgba(75, 75, 75, 1)',
+                    pointBorderColor: 'rgba(75, 75, 75, 1)',
                     segment: {
                         borderColor: (ctx) => {
                             return ctx.p0.parsed.y === ctx.p1.parsed.y ? 'rgba(75, 75, 75, 1)' : 'transparent';
@@ -327,7 +329,7 @@
         <h2>Methodological Notes</h2>
         <ul>
             <li>Marks (A-D) are assigned by comparing confidence intervals to predefined thresholds. A probe's final mark is the highest category that overlaps with its confidence interval.</li>
-            <li>To calculate overall results, we average the three lowest marks in each section.</li>
+            <li>To calculate overall results, we average the three worst marks in each section and compare it to the worst mark reduced by one. Whatever is worse is the final mark.</li>
             <li>These marks are optimistic estimates. Despite our efforts to cover a wide range of potential issues, <em>GenderBench</em> may not detect all gender-related harms.</li>
         </ul>
     </div>

@@ -55,8 +55,8 @@ def aggregate_marks(marks: list[int]) -> int:
     Logic for mark aggregation. Currently we average the worst three results.
     """
     marks = [mark for mark in marks if isinstance(mark, int)]
-    return round(sum(sorted(marks)[-3:]) / 3)
-
+    worst_3_avg = round(sum(sorted(marks)[-3:]) / 3)
+    return max(worst_3_avg, max(marks) - 1)
 
 def section_mark(section_name: str, model_results: dict) -> int:
     """
