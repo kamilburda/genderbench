@@ -127,6 +127,8 @@ class Probe:
             for metric_name, values in metric_buffer.items():
                 if all(np.isnan(value) for value in values):
                     interval = (np.nan, np.nan)
+                elif len(set(values)) == 1:
+                    interval = (values[0], values[0])
                 else:
                     values = [value for value in values if not np.isnan(value)]
                     interval = norm.interval(self.bootstrap_alpha, *norm.fit(values))
