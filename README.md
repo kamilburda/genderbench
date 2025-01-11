@@ -47,7 +47,7 @@ stereotypical genders.
 
 ### Report
 
-<a href="https://github.com/matus-pikuliak/gender_bench/reports/gender_bench_report_0_1.html" style="font-size: 2em; display: block; text-align: center;">↗ GenderBench Report 0.1 available here.</a>
+<a href="https://matus-pikuliak.github.io/gender_bench/reports/gender_bench_report_0_1.html">↗ GenderBench Report 0.1 available here.</a>
 
 This is the current version of the **GenderBench Report**, summarizing the
 results for a selected set of LLMs with the most recent version of
