@@ -18,7 +18,7 @@ from gender_bench.probes import (
 )
 from gender_bench.probing.probe import Probe
 
-env = Environment(loader=PackageLoader("gender_bench", "viz"))
+env = Environment(loader=PackageLoader("gender_bench", "report_generation"))
 main_template = env.get_template("main.html")
 canvas_template = env.get_template("canvas.html")
 
@@ -150,7 +150,7 @@ def render_visualization(log_files: list[str], model_names: list[str]) -> str:
     return rendered_html
 
 
-def create_html_visualization(
+def create_report(
     output_file_path: str, log_files: list[str], model_names: list[str]
 ) -> str:
     """
