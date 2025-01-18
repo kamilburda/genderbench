@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Evaluator &mdash; GenderBench v0.1 documentation</title>
+  <title>Evaluators &mdash; GenderBench v0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
 
@@ -49,8 +49,22 @@
 <li class="toctree-l1"><a class="reference internal" href="../probes.html">Probes</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="gender_bench.probing.attempt.Attempt.html">Attempt</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Evaluator</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#gender_bench.probing.evaluator.Evaluator"><code class="docutils literal notranslate"><span class="pre">Evaluator</span></code></a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Evaluators</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gender_bench.probing.evaluator.Evaluator"><code class="docutils literal notranslate"><span class="pre">Evaluator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gender_bench.probing.evaluator.Evaluator.calculate_evaluation"><code class="docutils literal notranslate"><span class="pre">Evaluator.calculate_evaluation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gender_bench.probing.evaluator.Evaluator.evaluate"><code class="docutils literal notranslate"><span class="pre">Evaluator.evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gender_bench.probing.evaluator.Evaluator.validate_evaluation"><code class="docutils literal notranslate"><span class="pre">Evaluator.validate_evaluation()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#gender_bench.probing.evaluator.ClosedSetEvaluator"><code class="docutils literal notranslate"><span class="pre">ClosedSetEvaluator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gender_bench.probing.evaluator.ClosedSetEvaluator.options"><code class="docutils literal notranslate"><span class="pre">ClosedSetEvaluator.options</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#generic-evaluators">Generic Evaluators</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gender_bench.probes.generics.yes_no_evaluator.YesNoEvaluator"><code class="docutils literal notranslate"><span class="pre">YesNoEvaluator</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gender_bench.probes.generics.character_gender_evaluator.CharacterGenderEvaluator"><code class="docutils literal notranslate"><span class="pre">CharacterGenderEvaluator</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="gender_bench.probing.harm_metric.HarmMetric.html">HarmMetric</a></li>
@@ -77,7 +91,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../api.html">API</a></li>
-      <li class="breadcrumb-item active">Evaluator</li>
+      <li class="breadcrumb-item active">Evaluators</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/api/gender_bench.probing.evaluator.Evaluator.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -87,17 +101,135 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="evaluator">
-<h1>Evaluator<a class="headerlink" href="#evaluator" title="Link to this heading"></a></h1>
+  <section id="evaluators">
+<h1>Evaluators<a class="headerlink" href="#evaluators" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="gender_bench.probing.evaluator.Evaluator">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gender_bench.probing.evaluator.</span></span><span class="sig-name descname"><span class="pre">Evaluator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">probe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gender_bench.probing.probe.Probe.html#gender_bench.probing.probe.Probe" title="gender_bench.probing.probe.Probe"><span class="pre">Probe</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gender_bench.probing.evaluator.Evaluator" title="Link to this definition"></a></dt>
-<dd><p>Evaluator evaluates answers generated by attempts. The results of the
-evaluation is used by metric calculators.</p>
-<p>The class is used as a key when the results of the evaluation are stored in
-an attempt.</p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gender_bench.probing.evaluator.</span></span><span class="sig-name descname"><span class="pre">Evaluator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">probe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gender_bench.probing.probe.Probe.html#gender_bench.probing.probe.Probe" title="gender_bench.probing.probe.Probe"><span class="pre">Probe</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">undetected</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gender_bench.probing.evaluator.Evaluator" title="Link to this definition"></a></dt>
+<dd><p><cite>Evaluators</cite> evaluate answers generated by attempts. The results of the
+evaluation can be anything that is appropriate for a probe.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The output of <cite>Evaluator</cite> must be JSON-serializible.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>probe</strong> (<a class="reference internal" href="gender_bench.probing.probe.Probe.html#gender_bench.probing.probe.Probe" title="gender_bench.probing.probe.Probe"><em>Probe</em></a>) – <cite>Probe</cite> object that uses this <cite>Evaluator</cite>.</p></li>
+<li><p><strong>undetected</strong> (<em>Any</em>) – Special value for <cite>Attempts</cite> where the evaluation was
+inconclusive or otherwise faulty. Example when this value might be
+used: We are trying to detect options such as “(a)”, “(b)”, and
+“(c)” in an asnwer to a multiple-choice question. If we fail to find
+any of those values or we find more than one, we will return
+<cite>undetected</cite> to indicate that the evaluation was not successful.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="gender_bench.probing.evaluator.Evaluator.calculate_evaluation">
+<span class="sig-name descname"><span class="pre">calculate_evaluation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attempt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gender_bench.probing.attempt.Attempt.html#gender_bench.probing.attempt.Attempt" title="gender_bench.probing.attempt.Attempt"><span class="pre">Attempt</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#gender_bench.probing.evaluator.Evaluator.calculate_evaluation" title="Link to this definition"></a></dt>
+<dd><p>Perform the core evaluation routine.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>This method must be overridden in the subclass.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attempt</strong> (<a class="reference internal" href="gender_bench.probing.attempt.Attempt.html#gender_bench.probing.attempt.Attempt" title="gender_bench.probing.attempt.Attempt"><em>Attempt</em></a>) – <cite>Attempt</cite> that already has an <cite>answer</cite> generated.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The result of the evaluation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="gender_bench.probing.evaluator.Evaluator.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attempt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gender_bench.probing.attempt.Attempt.html#gender_bench.probing.attempt.Attempt" title="gender_bench.probing.attempt.Attempt"><span class="pre">Attempt</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#gender_bench.probing.evaluator.Evaluator.evaluate" title="Link to this definition"></a></dt>
+<dd><p>Perform the evaluation of <cite>Attempt</cite>. We first calculate the value
+with a calculation method <a class="reference internal" href="#gender_bench.probing.evaluator.Evaluator.calculate_evaluation" title="gender_bench.probing.evaluator.Evaluator.calculate_evaluation"><code class="xref py py-attr docutils literal notranslate"><span class="pre">calculate_evaluation</span></code></a> and then validate
+it with a validation method <a class="reference internal" href="#gender_bench.probing.evaluator.Evaluator.validate_evaluation" title="gender_bench.probing.evaluator.Evaluator.validate_evaluation"><code class="xref py py-attr docutils literal notranslate"><span class="pre">validate_evaluation</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attempt</strong> (<a class="reference internal" href="gender_bench.probing.attempt.Attempt.html#gender_bench.probing.attempt.Attempt" title="gender_bench.probing.attempt.Attempt"><em>Attempt</em></a>) – <cite>Attempt</cite> that already has an <cite>answer</cite> generated.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the evaluation does not return a valid value.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The result of the evaluation</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gender_bench.probing.evaluator.Evaluator.validate_evaluation">
+<span class="sig-name descname"><span class="pre">validate_evaluation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">evaluation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#gender_bench.probing.evaluator.Evaluator.validate_evaluation" title="Link to this definition"></a></dt>
+<dd><p>Validate the value calculated by <a class="reference internal" href="#gender_bench.probing.evaluator.Evaluator.calculate_evaluation" title="gender_bench.probing.evaluator.Evaluator.calculate_evaluation"><code class="xref py py-attr docutils literal notranslate"><span class="pre">calculate_evaluation</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>evaluation</strong> (<em>Any</em>) – To-be-validated <cite>evaluation</cite> value.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Is <cite>evaluation</cite> valid.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gender_bench.probing.evaluator.ClosedSetEvaluator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gender_bench.probing.evaluator.</span></span><span class="sig-name descname"><span class="pre">ClosedSetEvaluator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">probe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gender_bench.probing.probe.Probe.html#gender_bench.probing.probe.Probe" title="gender_bench.probing.probe.Probe"><span class="pre">Probe</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">undetected</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gender_bench.probing.evaluator.ClosedSetEvaluator" title="Link to this definition"></a></dt>
+<dd><p>A subclass of <cite>Evaluator</cite> that only allows values from a predefined set
+of <cite>options</cite>.</p>
+<p>Inherits all the parameters from <cite>Evaluator</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>options</strong> (<em>list</em><em>[</em><em>Any</em><em>]</em>) – A list of allowed values</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gender_bench.probing.evaluator.ClosedSetEvaluator.options">
+<span class="sig-name descname"><span class="pre">options</span></span><a class="headerlink" href="#gender_bench.probing.evaluator.ClosedSetEvaluator.options" title="Link to this definition"></a></dt>
+<dd><p>See Parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<section id="generic-evaluators">
+<h2>Generic Evaluators<a class="headerlink" href="#generic-evaluators" title="Link to this heading"></a></h2>
+<p>These are some <cite>Evaluators</cite> that are ready to use and are sufficiently generic.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="gender_bench.probes.generics.yes_no_evaluator.YesNoEvaluator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gender_bench.probes.generics.yes_no_evaluator.</span></span><span class="sig-name descname"><span class="pre">YesNoEvaluator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">probe</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gender_bench.probes.generics.yes_no_evaluator.YesNoEvaluator" title="Link to this definition"></a></dt>
+<dd><p>Detect “yes” or “no” answers. If both or neither are present, the evaluation
+remains <cite>undefined</cite>.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gender_bench.probes.generics.character_gender_evaluator.CharacterGenderEvaluator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gender_bench.probes.generics.character_gender_evaluator.</span></span><span class="sig-name descname"><span class="pre">CharacterGenderEvaluator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">probe</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gender_bench.probes.generics.character_gender_evaluator.CharacterGenderEvaluator" title="Link to this definition"></a></dt>
+<dd><p>Detect gender of a character generated by a generator. The logis is based on
+simple pronoun counting (“he”, “his”, “him” vs “she”, “her”). Return either
+“male” or “female” based on what pronouns are more frequent.</p>
+</dd></dl>
+
+</section>
 </section>
 
 

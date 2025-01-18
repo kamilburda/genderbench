@@ -2,9 +2,7 @@ import asyncio
 
 import nest_asyncio
 from openai import AsyncOpenAI
-
 from tqdm.asyncio import tqdm
-
 
 
 class OpenAiGenerator:
@@ -57,7 +55,7 @@ class OpenAiGenerator:
             while attempt < tries:
                 try:
                     return await self.call_generation_api(text)
-                except Exception as e:
+                except Exception as _:
                     attempt += 1
                     if attempt >= tries:
                         raise

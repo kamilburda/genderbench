@@ -49,7 +49,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../probes.html">Probes</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="gender_bench.probing.attempt.Attempt.html">Attempt</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gender_bench.probing.evaluator.Evaluator.html">Evaluator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gender_bench.probing.evaluator.Evaluator.html">Evaluators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gender_bench.probing.harm_metric.HarmMetric.html">HarmMetric</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">MetricCalculator</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#gender_bench.probing.metric_calculator.MetricCalculator"><code class="docutils literal notranslate"><span class="pre">MetricCalculator</span></code></a><ul>
@@ -109,9 +109,9 @@ generated and evaluated.</p>
 <dt class="sig sig-object py" id="gender_bench.probing.metric_calculator.MetricCalculator.filter_undetected">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filter_undetected</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gender_bench.probing.metric_calculator.MetricCalculator.filter_undetected" title="Link to this definition"></a></dt>
 <dd><p>This decorator can be used for <cite>MetricEvaluator.calculate</cite> methods if
-they use <cite>Evaluator.UNDETECTED</cite> as a value in their answer <cite>Enum</cite>.</p>
+they use <cite>Evaluator.undetected</cite> as a value in their answer <cite>Enum</cite>.</p>
 <p>(1) Filter out all the <cite>probe_items</cite> that have all the attempts resulted
-in <cite>UNDETECTED</cite>.
+in <cite>undetected</cite>.
 (2) Calculate <cite>undetected_rate</cite> based on the filtration.</p>
 <p>The <cite>calculate</cite> methods then do not have to explicitly handle such cases
 as they have a guarantee that at least one attempt had valid answer.</p>

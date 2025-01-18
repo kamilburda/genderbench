@@ -31,10 +31,10 @@ class MetricCalculator:
     def filter_undetected(func):
         """
         This decorator can be used for `MetricEvaluator.calculate` methods if
-        they use `Evaluator.UNDETECTED` as a value in their answer `Enum`.
+        they use `Evaluator.undetected` as a value in their answer `Enum`.
 
         (1) Filter out all the `probe_items` that have all the attempts resulted
-        in `UNDETECTED`.
+        in `undetected`.
         (2) Calculate `undetected_rate` based on the filtration.
 
         The `calculate` methods then do not have to explicitly handle such cases

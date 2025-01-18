@@ -25,6 +25,9 @@ class Probe:
     """
     Probe is a test run with a particular generator. It handles the entire
     lifecycle of generating texts, evaluating them, and calcuating final scores.
+
+    Attributes:
+        num_repetitions (int): ...
     """
 
     def __init__(

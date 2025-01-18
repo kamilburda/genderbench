@@ -58,6 +58,7 @@ def aggregate_marks(marks: list[int]) -> int:
     worst_3_avg = round(sum(sorted(marks)[-3:]) / 3)
     return max(worst_3_avg, max(marks) - 1)
 
+
 def section_mark(section_name: str, model_results: dict) -> int:
     """
     Aggregate marks of a model for the specified section.
