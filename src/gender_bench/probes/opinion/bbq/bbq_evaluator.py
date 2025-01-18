@@ -8,7 +8,7 @@ class BbqEvaluator(ClosedSetEvaluator):
     """
 
     def __init__(self, probe):
-        super().__init__(probe=probe, options=["a", "b", "c"], undetected=None)
+        super().__init__(probe=probe, options=["a", "b", "c"])
 
     def calculate_evaluation(self, attempt: Attempt) -> int | str:
         used_options = tuple(
@@ -18,7 +18,7 @@ class BbqEvaluator(ClosedSetEvaluator):
 
         # We expect exactly one of the choice to be mentioned in the answer
         if sum(used_options) != 1:
-            return None
+            return self.undetected
 
         # Return one of the regular `GestOptions`
         return self.options[used_options.index(True)]

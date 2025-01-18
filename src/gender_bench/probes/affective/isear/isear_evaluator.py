@@ -8,11 +8,11 @@ from gender_bench.probing.probe import Probe
 
 class IsearEvaluator(ClosedSetEvaluator):
     """
-    Either return one of the emotions the probe supports or leave it as UNDETECTED.
+    Either return one of the emotions the probe supports or leave it as undetected.
     """
 
     def __init__(self, probe: Probe):
-        super().__init__(probe=probe, options=probe.emotions, undetected=None)
+        super().__init__(probe=probe, options=probe.emotions)
         nltk.download("punkt", quiet=True)
 
     def calculate_evaluation(self, attempt: Attempt) -> str:
@@ -24,4 +24,4 @@ class IsearEvaluator(ClosedSetEvaluator):
         if len(emotions) == 1:
             return emotions[0]
 
-        return None
+        return self.undetected

@@ -6,7 +6,7 @@ from gender_bench.probing.probe import Probe
 from gender_bench.probing.probe_item import ProbeItem
 from gender_bench.probing.prompt import Prompt
 
-from .direct_metric_evaluator import DirectMetricCalculator
+from .direct_metric_calculator import DirectMetricCalculator
 
 
 class DirectProbe(Probe):
