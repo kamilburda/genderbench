@@ -1,0 +1,155 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MetricCalculator &mdash; GenderBench v0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=34cd777e"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ProbeItem" href="gender_bench.probing.probe_item.ProbeItem.html" />
+    <link rel="prev" title="HarmMetric" href="gender_bench.probing.harm_metric.HarmMetric.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            GenderBench
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../new_probe.html">Create a New Probe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reports.html">Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../probes.html">Probes</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="gender_bench.probing.attempt.Attempt.html">Attempt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gender_bench.probing.evaluator.Evaluator.html">Evaluator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gender_bench.probing.harm_metric.HarmMetric.html">HarmMetric</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">MetricCalculator</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gender_bench.probing.metric_calculator.MetricCalculator"><code class="docutils literal notranslate"><span class="pre">MetricCalculator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gender_bench.probing.metric_calculator.MetricCalculator.calculate"><code class="docutils literal notranslate"><span class="pre">MetricCalculator.calculate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gender_bench.probing.metric_calculator.MetricCalculator.filter_undetected"><code class="docutils literal notranslate"><span class="pre">MetricCalculator.filter_undetected()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gender_bench.probing.probe_item.ProbeItem.html">ProbeItem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gender_bench.probing.probe.Probe.html">Probe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gender_bench.probing.prompt.Prompt.html">Prompt</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">GenderBench</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API</a></li>
+      <li class="breadcrumb-item active">MetricCalculator</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/gender_bench.probing.metric_calculator.MetricCalculator.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="metriccalculator">
+<h1>MetricCalculator<a class="headerlink" href="#metriccalculator" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="gender_bench.probing.metric_calculator.MetricCalculator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gender_bench.probing.metric_calculator.</span></span><span class="sig-name descname"><span class="pre">MetricCalculator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">probe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gender_bench.probing.probe.Probe.html#gender_bench.probing.probe.Probe" title="gender_bench.probing.probe.Probe"><span class="pre">Probe</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gender_bench.probing.metric_calculator.MetricCalculator" title="Link to this definition"></a></dt>
+<dd><p>MetricCalculator calculates arbitrary metrics for a probe that has answers
+generated and evaluated.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gender_bench.probing.metric_calculator.MetricCalculator.calculate">
+<span class="sig-name descname"><span class="pre">calculate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">probe_items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="gender_bench.probing.probe_item.ProbeItem.html#gender_bench.probing.probe_item.ProbeItem" title="gender_bench.probing.probe_item.ProbeItem"><span class="pre">ProbeItem</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#gender_bench.probing.metric_calculator.MetricCalculator.calculate" title="Link to this definition"></a></dt>
+<dd><p>Method that calculates all the appropriate metrics for the set-up
+<cite>Probe</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gender_bench.probing.metric_calculator.MetricCalculator.filter_undetected">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filter_undetected</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gender_bench.probing.metric_calculator.MetricCalculator.filter_undetected" title="Link to this definition"></a></dt>
+<dd><p>This decorator can be used for <cite>MetricEvaluator.calculate</cite> methods if
+they use <cite>Evaluator.UNDETECTED</cite> as a value in their answer <cite>Enum</cite>.</p>
+<p>(1) Filter out all the <cite>probe_items</cite> that have all the attempts resulted
+in <cite>UNDETECTED</cite>.
+(2) Calculate <cite>undetected_rate</cite> based on the filtration.</p>
+<p>The <cite>calculate</cite> methods then do not have to explicitly handle such cases
+as they have a guarantee that at least one attempt had valid answer.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="gender_bench.probing.harm_metric.HarmMetric.html" class="btn btn-neutral float-left" title="HarmMetric" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="gender_bench.probing.probe_item.ProbeItem.html" class="btn btn-neutral float-right" title="ProbeItem" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Matúš Pikuliak.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
