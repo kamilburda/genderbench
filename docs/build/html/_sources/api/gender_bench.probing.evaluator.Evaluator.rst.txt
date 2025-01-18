@@ -8,11 +8,6 @@
 
 .. autoclass:: ClosedSetEvaluator
 
-Generic Evaluators
-------------------
-
-These are some `Evaluators` that are ready to use and are sufficiently generic.
-
 .. currentmodule:: gender_bench.probes.generics.yes_no_evaluator
 
 .. autoclass:: YesNoEvaluator

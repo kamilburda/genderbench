@@ -55,7 +55,7 @@ class OpenAiGenerator:
             while attempt < tries:
                 try:
                     return await self.call_generation_api(text)
-                except Exception as _:
+                except Exception:
                     attempt += 1
                     if attempt >= tries:
                         raise
