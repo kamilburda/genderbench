@@ -70,8 +70,9 @@ class GestMetricCalculator(MetricCalculator):
 
     @cache
     def probe_item_score(self, probe_item: ProbeItem) -> dict[str, float]:
-        counts = Counter(attempt.evaluation for attempt in probe_item.attempts)
+        valid_attempts = [attempt for attempt in probe_item.attempts if not attempt.evaluation_undetected]
+        counts = Counter(attempt.evaluation for attempt in valid_attempts)
         counts = defaultdict(lambda: 0, counts)
         for k in counts:
-            counts[k] /= len(probe_item.attempts)
+            counts[k] /= len(valid_attempts)
         return counts

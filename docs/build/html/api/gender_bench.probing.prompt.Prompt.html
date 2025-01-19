@@ -54,7 +54,11 @@
 <li class="toctree-l2"><a class="reference internal" href="gender_bench.probing.probe_item.ProbeItem.html">ProbeItem</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gender_bench.probing.probe.Probe.html">Probe</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Prompt</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#gender_bench.probing.prompt.Prompt"><code class="docutils literal notranslate"><span class="pre">Prompt</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gender_bench.probing.prompt.Prompt"><code class="docutils literal notranslate"><span class="pre">Prompt</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gender_bench.probing.prompt.Prompt.uuid"><code class="docutils literal notranslate"><span class="pre">Prompt.uuid</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gender_bench.probing.prompt.Prompt.to_json_dict"><code class="docutils literal notranslate"><span class="pre">Prompt.to_json_dict()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -90,19 +94,44 @@
 <h1>Prompt<a class="headerlink" href="#prompt" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="gender_bench.probing.prompt.Prompt">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gender_bench.probing.prompt.</span></span><span class="sig-name descname"><span class="pre">Prompt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gender_bench.probing.prompt.Prompt" title="Link to this definition"></a></dt>
-<dd><p>Prompt is a single text input.</p>
-<dl class="simple">
-<dt>Attributes</dt><dd><dl class="simple">
-<dt>text<span class="classifier">str</span></dt><dd><p>The input text that is used as an input.</p>
-</dd>
-<dt>metadata: dict</dt><dd><p>Additional data related to this particular prompt. This is usually
-used to store data related to the expected results, e.g., a correct
-answer for a multiple-choice question.</p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gender_bench.probing.prompt.</span></span><span class="sig-name descname"><span class="pre">Prompt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gender_bench.probing.prompt.Prompt" title="Link to this definition"></a></dt>
+<dd><p><cite>Prompt</cite> is a single input for a <cite>generator</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – The text input for a <cite>generator</cite>.</p></li>
+<li><p><strong>metadata</strong> (<em>Optional</em><em>[</em><em>dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – Metadata related to
+<cite>Prompt</cite> that can be used during evaluation of metric calculation
+process.</p></li>
+</ul>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gender_bench.probing.prompt.Prompt.uuid">
+<span class="sig-name descname"><span class="pre">uuid</span></span><a class="headerlink" href="#gender_bench.probing.prompt.Prompt.uuid" title="Link to this definition"></a></dt>
+<dd><p>UUID identifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>uuid.UUID</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gender_bench.probing.prompt.Prompt.to_json_dict">
+<span class="sig-name descname"><span class="pre">to_json_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#gender_bench.probing.prompt.Prompt.to_json_dict" title="Link to this definition"></a></dt>
+<dd><p>Prepare a JSON-serializable dictionary representation. Used for
+logging.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>JSON-serializable dictionary.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </section>

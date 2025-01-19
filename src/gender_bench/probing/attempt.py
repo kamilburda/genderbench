@@ -21,12 +21,15 @@ class Attempt:
     Attributes:
         answer (str): Text answer generated based on `prompt`.
         evaluation (Any): Evaluation of the `answer`.
+        evaluation_undetected (Optional[bool]): Did an `Evaluator` mark the
+            evaluation of this `Attempt` as `undetected`?
         uuid (uuid.UUID): UUID identifier.
     """
 
     def __init__(self, prompt: Prompt, repetition_id: int) -> None:
         self.answer: Optional[str] = None
         self.evaluation: Any = None
+        self.evaluation_undetected: Optional[bool] = None
         self.prompt = prompt
         self.repetition_id = repetition_id
         self.uuid: uuid.UUID = uuid.uuid4()

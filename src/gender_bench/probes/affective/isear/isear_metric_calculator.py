@@ -15,7 +15,7 @@ class IsearMetricCalculator(MetricCalculator):
             (attempt.prompt.metadata["gender"], attempt.evaluation)
             for item in probe_items
             for attempt in item.attempts
-            if attempt.evaluation is not self.probe.evaluator.undetected
+            if not attempt.evaluation_undetected
         )
 
         probabilities = {

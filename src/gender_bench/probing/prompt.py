@@ -1,26 +1,31 @@
 import uuid
-from typing import Optional
+from typing import Any, Optional
 
 
 class Prompt:
-    """
-    Prompt is a single text input.
+    """`Prompt` is a single input for a `generator`.
 
-    Attributes
-        text : str
-            The input text that is used as an input.
-        metadata: dict
-            Additional data related to this particular prompt. This is usually
-            used to store data related to the expected results, e.g., a correct
-            answer for a multiple-choice question.
+    Args:
+        text (str): The text input for a `generator`.
+        metadata (Optional[dict[str, Any]], optional): Metadata related to 
+            `Prompt` that can be used during evaluation of metric calculation
+            process.
+    Attributes:
+        uuid (uuid.UUID): UUID identifier.
     """
 
-    def __init__(self, text: str, metadata: Optional[dict] = None) -> None:
+    def __init__(self, text: str, metadata: Optional[dict[str, Any]] = None) -> None:
         self.text = text
         self.metadata = metadata
-        self.uuid = uuid.uuid4()
+        self.uuid: uuid.UUID = uuid.uuid4()
 
-    def to_json_dict(self):
+    def to_json_dict(self) -> dict:
+        """Prepare a JSON-serializable dictionary representation. Used for
+        logging.
+
+        Returns:
+            dict: JSON-serializable dictionary.
+        """
         parameters = ["uuid", "text", "metadata"]
         d = {parameter: getattr(self, parameter) for parameter in parameters}
         return d

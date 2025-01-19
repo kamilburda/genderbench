@@ -30,7 +30,7 @@ class ProbeItem:
         num_repetitions (int): How many `Attempts` will be created for each
             `Prompt`.
         metadata (Optional[dict[str, Any]]): Metadata related to `ProbeItem`
-            that can be used during the metric calculation process.
+            that can be used during metric calculation process.
 
     Attributes:
         uuid (uuid.UUID): UUID identifier.
@@ -56,7 +56,7 @@ class ProbeItem:
             for repetition_id in range(self.num_repetitions)
         ]
 
-    def to_json_dict(self):
+    def to_json_dict(self) -> dict:
         """Prepare a JSON-serializable dictionary representation. Used for
         logging.
 
