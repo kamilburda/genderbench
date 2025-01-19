@@ -1,7 +1,6 @@
 from collections import Counter
 from itertools import combinations
 
-from gender_bench.probing.evaluator import Evaluator
 from gender_bench.probing.metric_calculator import MetricCalculator
 
 

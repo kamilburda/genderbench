@@ -1,7 +1,6 @@
 import uuid
 from typing import Any, Optional
 
-from gender_bench.generators.generator import Generator
 from gender_bench.probing.evaluator import Evaluator
 from gender_bench.probing.prompt import Prompt
 
@@ -11,7 +10,7 @@ class Attempt:
     `Attempt` represents the entire lifecycle of a single call to a `generator`:
 
         1. The object is initialized with a `Prompt` object representing the input.
-        2. `Generator` is used to generate a text `answer`.
+        2. `Generator` is used to generate a text `answer` in `Probe.generate`.
         3. Probe's `evaluator` is used to evaluate this `answer` and create an `evaluation`.
 
     Args:
@@ -22,8 +21,6 @@ class Attempt:
     Attributes:
         answer (str): Text answer generated based on `prompt`.
         evaluation (Any): Evaluation of the `answer`.
-        prompt (Prompt): See Parameters.
-        repetition_id (int): See Parameters.
         uuid (uuid.UUID): UUID identifier.
     """
 
@@ -33,20 +30,6 @@ class Attempt:
         self.prompt = prompt
         self.repetition_id = repetition_id
         self.uuid: uuid.UUID = uuid.uuid4()
-
-    def generate(self, generator: Generator) -> str:
-        """Send the `Attempt` object to `generator` and store the generated
-        text in `answer`.
-
-        Args:
-            generator (Generator).
-
-        Returns:
-            str: Generated text.
-        """
-
-        self.answer = generator.generate(self.prompt.text)
-        return self.answer
 
     def evaluate(self, evaluator: Evaluator) -> Any:
         """Send the `Attempt` object to `evaluator` and store the result in

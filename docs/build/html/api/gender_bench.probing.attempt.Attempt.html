@@ -52,11 +52,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#gender_bench.probing.attempt.Attempt"><code class="docutils literal notranslate"><span class="pre">Attempt</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#gender_bench.probing.attempt.Attempt.answer"><code class="docutils literal notranslate"><span class="pre">Attempt.answer</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#gender_bench.probing.attempt.Attempt.evaluation"><code class="docutils literal notranslate"><span class="pre">Attempt.evaluation</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#gender_bench.probing.attempt.Attempt.prompt"><code class="docutils literal notranslate"><span class="pre">Attempt.prompt</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#gender_bench.probing.attempt.Attempt.repetition_id"><code class="docutils literal notranslate"><span class="pre">Attempt.repetition_id</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#gender_bench.probing.attempt.Attempt.uuid"><code class="docutils literal notranslate"><span class="pre">Attempt.uuid</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#gender_bench.probing.attempt.Attempt.evaluate"><code class="docutils literal notranslate"><span class="pre">Attempt.evaluate()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#gender_bench.probing.attempt.Attempt.generate"><code class="docutils literal notranslate"><span class="pre">Attempt.generate()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#gender_bench.probing.attempt.Attempt.to_json_dict"><code class="docutils literal notranslate"><span class="pre">Attempt.to_json_dict()</span></code></a></li>
 </ul>
 </li>
@@ -106,7 +103,7 @@
 <blockquote>
 <div><ol class="arabic simple">
 <li><p>The object is initialized with a <cite>Prompt</cite> object representing the input.</p></li>
-<li><p><cite>Generator</cite> is used to generate a text <cite>answer</cite>.</p></li>
+<li><p><cite>Generator</cite> is used to generate a text <cite>answer</cite> in <cite>Probe.generate</cite>.</p></li>
 <li><p>Probe’s <cite>evaluator</cite> is used to evaluate this <cite>answer</cite> and create an <cite>evaluation</cite>.</p></li>
 </ol>
 </div></blockquote>
@@ -142,28 +139,6 @@ multiple <cite>Attempts</cite>. See <code class="docutils literal notranslate"><
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="gender_bench.probing.attempt.Attempt.prompt">
-<span class="sig-name descname"><span class="pre">prompt</span></span><a class="headerlink" href="#gender_bench.probing.attempt.Attempt.prompt" title="Link to this definition"></a></dt>
-<dd><p>See Parameters.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="gender_bench.probing.prompt.Prompt.html#gender_bench.probing.prompt.Prompt" title="gender_bench.probing.prompt.Prompt">Prompt</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="gender_bench.probing.attempt.Attempt.repetition_id">
-<span class="sig-name descname"><span class="pre">repetition_id</span></span><a class="headerlink" href="#gender_bench.probing.attempt.Attempt.repetition_id" title="Link to this definition"></a></dt>
-<dd><p>See Parameters.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="gender_bench.probing.attempt.Attempt.uuid">
 <span class="sig-name descname"><span class="pre">uuid</span></span><a class="headerlink" href="#gender_bench.probing.attempt.Attempt.uuid" title="Link to this definition"></a></dt>
 <dd><p>UUID identifier.</p>
@@ -188,24 +163,6 @@ multiple <cite>Attempts</cite>. See <code class="docutils literal notranslate"><
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Any</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="gender_bench.probing.attempt.Attempt.generate">
-<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">generator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Generator</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#gender_bench.probing.attempt.Attempt.generate" title="Link to this definition"></a></dt>
-<dd><p>Send the <cite>Attempt</cite> object to <cite>generator</cite> and store the generated
-text in <cite>answer</cite>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>generator</strong> (<em>Generator</em>)</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Generated text.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>

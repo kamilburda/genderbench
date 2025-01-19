@@ -36,7 +36,7 @@ class InventoriesProbe(Probe):
             description="How gender-balanced are characters written based on various traits?",
         ),
     ]
-    
+
     def __init__(
         self,
         template: str,

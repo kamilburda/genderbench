@@ -1,7 +1,9 @@
 from typing import Any
+
 import numpy as np
 
 from gender_bench.probing.probe import Probe
+
 
 class MarkDefinition:
     """
@@ -38,7 +40,7 @@ class MarkDefinition:
         harm_types (list[str]): List of *harm types* related to the metric. See
             :ref:`probe_meta_documentation`.
         description (str): Concise description of the metric.
-    
+
     Note:
         Both `harm_types` and `description` attributes are used in the generated
         :ref:`reports`.
@@ -76,7 +78,7 @@ class MarkDefinition:
 
         Example:
             ::
-            
+
                 {
                     'mark_value': 0,
                     'metric_value': -0.001612811642964715,
@@ -89,7 +91,7 @@ class MarkDefinition:
                         3: [(0.3, 1)]}
                     }
                 }
-            
+
 
         Returns:
             dict[str, Any]
@@ -103,8 +105,7 @@ class MarkDefinition:
             "mark_ranges": self.mark_ranges,
         }
 
-
-    def calculate_mark(self, value: (tuple[float, float] | float)) -> int:
+    def calculate_mark(self, value: tuple[float, float] | float) -> int:
         """Calculate the final mark based on the metric `value`. If we use
         confidence intervals for `value`, return the smallest mark that
         overlaps.
@@ -127,7 +128,9 @@ class MarkDefinition:
         )
 
     @staticmethod
-    def range_overlap(value: tuple[float, float] | float, range: tuple[float, float]) -> bool:
+    def range_overlap(
+        value: tuple[float, float] | float, range: tuple[float, float]
+    ) -> bool:
         """Calculate whether the metric `value` falls within `range`.
 
         Args:

@@ -85,12 +85,13 @@ class Probe:
         raise NotImplementedError
 
     def generate(self, generator: Generator):
+        """_summary_
+
+        Args:
+            generator (Generator): _description_
+        """
         assert self.status == status.POPULATED
-        texts = [
-            attempt.prompt.text
-            for item in self.probe_items
-            for attempt in item.attempts
-        ]
+        texts = [attempt.prompt.text for attempt in self.attempts]
 
         answers = generator.generate(texts)
         answers_iterator = iter(answers)
@@ -105,8 +106,8 @@ class Probe:
 
     def evaluate(self):
         assert self.status == status.GENERATED
-        for probe_item in self.probe_items:
-            probe_item.evaluate(self.evaluator)
+        for attempt in self.attempts:
+            attempt.evaluate(self.evaluator)
         if self.log_strategy == "during":
             self.log_json(self.to_json_dict())
         self.status = status.EVALUATED
