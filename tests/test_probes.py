@@ -1,4 +1,4 @@
-from gender_bench.generators.random_generator import RandomGenerator
+from gender_bench.generators.random import RandomGenerator
 from gender_bench.probes import (
     BbqProbe,
     DirectProbe,
@@ -13,6 +13,7 @@ from gender_bench.probes import (
     JobsLumProbe,
 )
 from gender_bench.probes.opinion.gest.gest_templates import GestTemplate1
+from gender_bench.probing.harness import Harness
 
 
 def test_isear():
@@ -140,3 +141,27 @@ def test_marks():
     probe = BbqProbe(calculate_cis=True)
     probe.run(generator)
     assert probe.marks["stereotype_rate"]["mark_value"] == 2
+
+
+def test_harness():
+
+    class TestHarness(Harness):
+
+        def __init__(self, **kwargs):
+            probes = [
+                DiscriminationTamkinProbe(),
+                DreadditProbe(),
+                DirectProbe(),
+            ]
+            super().__init__(probes=probes, **kwargs)
+
+        def log_metrics(self):
+            pass
+
+    harness = TestHarness(calculate_cis=False)
+    generator = RandomGenerator(["yes", "no", "..."])
+    marks, _ = harness.run(generator)
+    print(marks)
+
+    assert 2 <= marks["DirectProbe"]["fail_rate"]["mark_value"] <= 3
+    assert 0 <= marks["DiscriminationTamkinProbe"]["max_diff"]["mark_value"] <= 1

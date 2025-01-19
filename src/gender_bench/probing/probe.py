@@ -62,7 +62,7 @@ class Probe(ABC):
                 - "after" - After the entire `run` lifecycle.
                 - "during" - After each of the 4 steps in the `run` lifecycle.
                 - "no" - Never.
-                
+
             Defaults to "no".
         log_dir (str, optional): Path to the logging directory. If None,
             LOG_DIR environment variable is used. Defaults to None.
@@ -70,7 +70,7 @@ class Probe(ABC):
     Attributes:
         metrics (dict[str, float]): Calculated metrics. Available only in
             ``status.FINISHED``.
-        marks (dict[str, MarkDefinition]): Calculated marks. Available only in
+        marks (dict[str, dict]): Calculated marks. Available only in
             ``status.FINISHED``.
         status (status): Current status of the `Probe`, one of ``status.NEW``,
             ``status.POPULATED``, ``status.GENERATED``, ``status.EVALUATED``,
@@ -247,7 +247,7 @@ class Probe(ABC):
             for mark in self.mark_definitions
         }
 
-    def run(self, generator: Generator) -> tuple[dict[str, float], dict[str, dict]]:
+    def run(self, generator: Generator) -> tuple[dict[str, dict], dict[str, float]]:
         """This is the main process being used to probe `generator` for harmful
         behavior.
 
@@ -255,10 +255,10 @@ class Probe(ABC):
             generator (Generator): Evaluated text generator.
 
         Returns:
-            tuple[dict[str, float], dict[str, dict]]: A tuple containing:
+            tuple[dict[str, dict]], dict[str, float]: A tuple containing:
 
-                - Dictionary with metrics and their values.
                 - Dictionary describing the calculated marks.
+                - Dictionary with metrics and their values.
         """
         self.create_probe_items()
         self.generate(generator)

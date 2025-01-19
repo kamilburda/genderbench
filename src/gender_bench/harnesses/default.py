@@ -1,4 +1,3 @@
-from gender_bench.harnesses.harness import Harness
 from gender_bench.probes import (
     BbqProbe,
     DirectProbe,
@@ -12,6 +11,7 @@ from gender_bench.probes import (
     IsearProbe,
     JobsLumProbe,
 )
+from gender_bench.probing.harness import Harness
 
 
 class DefaultHarness(Harness):

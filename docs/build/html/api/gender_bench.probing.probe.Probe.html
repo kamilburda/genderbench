@@ -50,6 +50,8 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="gender_bench.probing.attempt.Attempt.html">Attempt</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gender_bench.probing.evaluator.Evaluator.html">Evaluators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gender_bench.generators.generator.Generator.html">Generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gender_bench.probing.harness.Harness.html">Harness</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gender_bench.probing.mark_definition.MarkDefinition.html">MarkDefinition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gender_bench.probing.metric_calculator.MetricCalculator.html">MetricCalculator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gender_bench.probing.probe_item.ProbeItem.html">ProbeItem</a></li>
@@ -179,7 +181,7 @@ LOG_DIR environment variable is used. Defaults to None.</p></li>
 <code class="docutils literal notranslate"><span class="pre">status.FINISHED</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>dict[str, <a class="reference internal" href="gender_bench.probing.mark_definition.MarkDefinition.html#gender_bench.probing.mark_definition.MarkDefinition" title="gender_bench.probing.mark_definition.MarkDefinition">MarkDefinition</a>]</p>
+<dd class="field-odd"><p>dict[str, dict]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -275,14 +277,14 @@ This is the first step in the <cite>run</cite> lifecycle. Moves the <cite>status
 
 <dl class="py method">
 <dt class="sig sig-object py" id="gender_bench.probing.probe.Probe.generate">
-<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">generator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Generator</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gender_bench.probing.probe.Probe.generate" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">generator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gender_bench.generators.generator.Generator.html#gender_bench.generators.generator.Generator" title="gender_bench.generators.generator.Generator"><span class="pre">Generator</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gender_bench.probing.probe.Probe.generate" title="Link to this definition"></a></dt>
 <dd><p>Use text <cite>generator</cite> to generate texts based on all the <cite>Attempts</cite>
 from this <cite>Probe</cite>, and populate their <cite>answer</cite> field. This is the second
 step in the <cite>run</cite> lifecycle. Moves the <cite>status</cite> from <code class="docutils literal notranslate"><span class="pre">POPULATED</span></code> to
 <code class="docutils literal notranslate"><span class="pre">GENERATED</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>generator</strong> (<em>Generator</em>) – Text generator that is being probed.</p>
+<dd class="field-odd"><p><strong>generator</strong> (<a class="reference internal" href="gender_bench.generators.generator.Generator.html#gender_bench.generators.generator.Generator" title="gender_bench.generators.generator.Generator"><em>Generator</em></a>) – Text generator that is being probed.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -295,25 +297,25 @@ step in the <cite>run</cite> lifecycle. Moves the <cite>status</cite> from <code
 
 <dl class="py method">
 <dt class="sig sig-object py" id="gender_bench.probing.probe.Probe.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">generator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Generator</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#gender_bench.probing.probe.Probe.run" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">generator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gender_bench.generators.generator.Generator.html#gender_bench.generators.generator.Generator" title="gender_bench.generators.generator.Generator"><span class="pre">Generator</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#gender_bench.probing.probe.Probe.run" title="Link to this definition"></a></dt>
 <dd><p>This is the main process being used to probe <cite>generator</cite> for harmful
 behavior.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>generator</strong> (<em>Generator</em>) – Evaluated text generator.</p>
+<dd class="field-odd"><p><strong>generator</strong> (<a class="reference internal" href="gender_bench.generators.generator.Generator.html#gender_bench.generators.generator.Generator" title="gender_bench.generators.generator.Generator"><em>Generator</em></a>) – Evaluated text generator.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><p>A tuple containing:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>Dictionary with metrics and their values.</p></li>
 <li><p>Dictionary describing the calculated marks.</p></li>
+<li><p>Dictionary with metrics and their values.</p></li>
 </ul>
 </div></blockquote>
 </p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple[dict[str, float], dict[str, dict]]</p>
+<dd class="field-odd"><p>tuple[dict[str, dict]], dict[str, float]</p>
 </dd>
 </dl>
 </dd></dl>
