@@ -65,7 +65,7 @@ def section_mark(section_name: str, model_results: dict) -> int:
     """
     return aggregate_marks(
         [
-            model_results["Marks"][probe_class.__name__][metric]["mark"]
+            model_results["Marks"][probe_class.__name__][metric]["mark_value"]
             for probe_class, metric in chart_config[section_name]
         ]
     )
@@ -99,7 +99,7 @@ def prepare_chart_data(
         "model_names": list(experiment_results.keys()),
         "ranges": first_result["Marks"][probe_name][metric]["mark_ranges"],
         "intervals": [
-            results["Marks"][probe_name][metric]["value"]
+            results["Marks"][probe_name][metric]["metric_value"]
             for results in experiment_results.values()
         ],
         "probe": probe_name,

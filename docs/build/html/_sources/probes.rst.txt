@@ -2,7 +2,7 @@ Probes
 ======
 
 This is the list of the probes that are currently supported by *GenderBench*. 
-Each probe is documented accordingly to the :ref:`probe_metadocumentation`.
+Each probe is documented accordingly to the :ref:`probe_meta_documentation`.
 
 
 .. toctree::
@@ -11,3 +11,8 @@ Each probe is documented accordingly to the :ref:`probe_metadocumentation`.
     :glob:
    
     probes/*
+
+.. toctree::
+    :hidden:
+
+    probe_meta_documentation

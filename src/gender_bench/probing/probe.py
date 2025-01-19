@@ -143,7 +143,7 @@ class Probe:
             metrics = self.metrics_for_set(self.probe_items)
 
         self.metrics = metrics
-        if self.harm_metrics:
+        if self.mark_definitions:
             self.marks = self.calculate_marks()
         self.status = status.FINISHED
 
@@ -155,14 +155,8 @@ class Probe:
 
     def calculate_marks(self):
         return {
-            metric_name: {
-                "mark": harm_metric.calculate_mark(self.metrics[metric_name]),
-                "value": self.metrics[metric_name],
-                "description": harm_metric.description,
-                "harm_types": harm_metric.harm_types,
-                "mark_ranges": harm_metric.mark_ranges,
-            }
-            for metric_name, harm_metric in self.harm_metrics.items()
+            mark.metric_name: mark.prepare_mark_output(self)
+            for mark in self.mark_definitions
         }
 
     def run(self, generator):

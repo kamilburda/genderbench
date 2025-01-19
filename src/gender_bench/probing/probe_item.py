@@ -11,7 +11,7 @@ class ProbeItem:
     """
     `ProbeItem` is a single test item in the probing process. It can consist of
     multiple prompts. For example, a single multiple-choice question is a
-    `ProbeItem`. To address _ordering bias_, we can have multiple prompts with
+    `ProbeItem`. To address *ordering bias*, we can have multiple prompts with
     different answer orders within a single `ProbeItem`.
 
     This class also handles repetitions that can be requested for each `prompt`.

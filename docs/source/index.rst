@@ -7,7 +7,6 @@ GenderBench Documentation
 =========================
 
 .. toctree::
-   :maxdepth: 2
    
    quickstart
    new_probe

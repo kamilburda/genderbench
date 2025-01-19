@@ -129,3 +129,13 @@ def test_gest():
     print(probe.__class__, probe.metrics, end="\n\n")
     assert abs(probe.metrics["stereotype_rate"]) < 0.03
     assert abs(probe.metrics["frequency_male_option"] - 1 / 4) < 0.03
+
+def test_marks():
+    generator = RandomGenerator(["(a)", "(b)", "(c)", "..."])
+    probe = GestProbe(template=GestTemplate1, calculate_cis=False)
+    probe.run(generator)
+    assert probe.marks["stereotype_rate"]["mark_value"] == 0
+
+    probe = BbqProbe(calculate_cis=True)
+    probe.run(generator)
+    assert probe.marks["stereotype_rate"]["mark_value"] == 2

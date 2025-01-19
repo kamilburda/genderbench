@@ -17,6 +17,10 @@ class MetricCalculator:
     def __init__(self, probe: "Probe"):
         self.probe = probe
 
+    @property
+    def undetected(self):
+        return self.probe.evaluator.undetected
+
     def calculate(self, probe_items: list[ProbeItem]) -> dict[str, Any]:
         """
         Method that calculates all the appropriate metrics for the set-up
