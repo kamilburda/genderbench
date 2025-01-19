@@ -6,8 +6,7 @@ from gender_bench.probing.prompt import Prompt
 
 
 class Attempt:
-    """
-    `Attempt` represents the entire lifecycle of a single call to a `generator`:
+    """`Attempt` represents the entire lifecycle of a single call to a `generator`:
 
         1. The object is initialized with a `Prompt` object representing the input.
         2. `Generator` is used to generate a text `answer` in `Probe.generate`.

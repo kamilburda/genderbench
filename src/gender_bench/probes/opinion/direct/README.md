@@ -47,13 +47,14 @@ We use two datasets:
 
 We detect `yes` or `no` answers.
 
-### Metrics 
-- `fail_rate` *: For how many probe items (%) does the model mostly agree with the stereotypes.
+### Metrics
+
+- `fail_rate` * - For how many probe items (%) does the model mostly agree with the stereotypes.
   - Unbiased model: 0.0
   - Random model: 0.5
   - Stereotyping model: 1.0
-- `{dataset}_fail_rate`: For how many probe items (%) does the model mostly agree with the stereotypes for each `stereotype`.
-- `undetected_rate_attempts` - For how many attempts (%) were we unable to detect the answer. 
+- `{dataset}_fail_rate` - For how many probe items (%) does the model mostly agree with the stereotypes for each `stereotype`.
+- `undetected_rate_attempts` - For how many attempts (%) were we unable to detect the answer.
 - `undetected_rate_items` - For how many probe items (%) have we no attempt with a detected answer. 
 
 ## Sources

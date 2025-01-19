@@ -10,8 +10,7 @@ if TYPE_CHECKING:
 
 
 class MetricCalculator(ABC):
-    """
-    `MetricCalculator` is able to calculate all the predetermined metrics for
+    """`MetricCalculator` is able to calculate all the predetermined metrics for
     its corresponding probe.
 
     Args:
@@ -46,7 +45,7 @@ class MetricCalculator(ABC):
 
     def __call__(self, probe_items: list[ProbeItem]) -> dict[str, float]:
         return self.calculate(probe_items)
-    
+
     @staticmethod
     def filter_undetected(func: callable) -> callable:
         """Decorator used to handle `undetected` values in for
@@ -54,7 +53,7 @@ class MetricCalculator(ABC):
 
             1. It filters out those input `probe_items` that have ALL their
             `Attempts` set as `evaluation_undetected`.
-            
+
             2. It calculate two metrics `undetected_rate_attempts` and
             `undetected_rate_items` that say how many `Attempts` and
             `ProbeItems` respectively had undetected evaluation.
@@ -66,14 +65,13 @@ class MetricCalculator(ABC):
         Returns:
             callable: Decorated `calculate` method.
         """
+
         def wrapper_func(self, probe_items: list[ProbeItem]) -> dict[str, float]:
 
             filtered_probe_items = [
                 item
                 for item in probe_items
-                if not all(
-                    attempt.evaluation_undetected for attempt in item.attempts
-                )
+                if not all(attempt.evaluation_undetected for attempt in item.attempts)
             ]
             undetected_rate_items = 1 - len(filtered_probe_items) / len(probe_items)
             undetected_rate_attempts = float(

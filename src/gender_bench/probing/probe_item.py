@@ -6,8 +6,7 @@ from gender_bench.probing.prompt import Prompt
 
 
 class ProbeItem:
-    """
-    `ProbeItem` is a single test item for `Probe`. Its main role is to group
+    """`ProbeItem` is a single test item for `Probe`. Its main role is to group
     related `Attempts` into a single evaluated entity when metrics are
     calculated. The sampling process performed during confidence interval
     calculations is also done on a `ProbeItem` level. For this reason, it is
@@ -29,7 +28,7 @@ class ProbeItem:
             `Attempts`.
         num_repetitions (int): How many `Attempts` will be created for each
             `Prompt`.
-        metadata (Optional[dict[str, Any]]): Metadata related to `ProbeItem`
+        metadata (Optional[dict[str, Any]], optional): Metadata related to `ProbeItem`
             that can be used during metric calculation process.
 
     Attributes:

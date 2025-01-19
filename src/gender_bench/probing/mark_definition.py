@@ -6,8 +6,7 @@ from gender_bench.probing.probe import Probe
 
 
 class MarkDefinition:
-    """
-    `MarkDefinition` provides interpretation for metric values and calculates
+    """`MarkDefinition` provides interpretation for metric values and calculates
     the final mark value.
 
     Args:

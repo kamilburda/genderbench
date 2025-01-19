@@ -52,5 +52,7 @@ class BbqMetricCalculator(MetricCalculator):
             attempt.evaluation == attempt.prompt.metadata["stereotypical_answer"]
             for attempt in probe_item.attempts
         )
-        attempt_count = sum(not attempt.evaluation_undetected for attempt in probe_item.attempts)
+        attempt_count = sum(
+            not attempt.evaluation_undetected for attempt in probe_item.attempts
+        )
         return logical_count / attempt_count, stereotypical_count / attempt_count

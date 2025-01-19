@@ -7,7 +7,7 @@ class Prompt:
 
     Args:
         text (str): The text input for a `generator`.
-        metadata (Optional[dict[str, Any]], optional): Metadata related to 
+        metadata (Optional[dict[str, Any]], optional): Metadata related to
             `Prompt` that can be used during evaluation of metric calculation
             process.
     Attributes:
