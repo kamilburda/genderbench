@@ -1,4 +1,6 @@
-﻿MarkDefinition
+﻿.. _api_mark_definition:
+
+MarkDefinition
 ===========================================
 
 .. currentmodule:: gender_bench.probing.mark_definition

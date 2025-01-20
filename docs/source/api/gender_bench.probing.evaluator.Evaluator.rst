@@ -1,4 +1,6 @@
-﻿Evaluators
+﻿.. _api_evaluator:
+
+Evaluators
 ========================================
 
 .. currentmodule:: gender_bench.probing.evaluator

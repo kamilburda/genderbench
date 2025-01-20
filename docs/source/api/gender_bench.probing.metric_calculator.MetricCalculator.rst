@@ -1,4 +1,6 @@
-﻿MetricCalculator
+﻿.. _api_metric_calculator:
+
+MetricCalculator
 =======================================================
 
 .. currentmodule:: gender_bench.probing.metric_calculator
