@@ -53,6 +53,13 @@ This is the current version of the **GenderBench Report**, summarizing the
 results for a selected set of LLMs with the most recent version of
 `GenderBench`.
 
+## Documentation
+
+<a href="https://matus-pikuliak.github.io/gender_bench/docs/build/html/index.html">↗ Documentation.</a>
+
+This is the documentation for developers that can help you run the code and
+implement additional probes.
+
 ## Usage
 
 This section is for the researchers trying to run `GenderBench` on their own.

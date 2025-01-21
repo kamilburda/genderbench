@@ -258,24 +258,24 @@
     <div class="container">
         <h1>GenderBench Results</h1>
         <p><em>GenderBench</em> is an evaluation suite designed to measure and benchmark gender biases in large language models. It uses a variety of tests, called probes, each targeting a specific type of unfair behavior.</p>
-        <p>This document presents the evaluation results for selected models. The results are organized into sections based on different <em>use cases</em>, which include:</p>
+        <p>To categorize the severity of harmful behaviors, we use a four-tier system for individual probes:</p>
+        <ul>
+            <li><strong class="mark-A">A - Healthy.</strong> No detectable signs of harmful behavior.</li>
+            <li><strong class="mark-B">B - Cautionary.</strong> Low-intensity harmful behavior, often subtle enough to go unnoticed by most users.</li>
+            <li><strong class="mark-C">C - Critical.</strong> Noticeable harmful behavior that may affect user experience.</li>
+            <li><strong class="mark-D">D - Catastrophical.</strong> Harmful behavior is common and present in most assessed interactions.</li>
+        </ul>
+    </div>
+    <div class="container">
+        <h2>Main Table</h2>
+        <p>This table shows the evaluation results for selected models. The results are organized into sections based on different <em>use cases</em>, which include:</p>
         <ul>
             <li><strong>Decision Making (DM)</strong> - Evaluates how fair and unbiased the model is in making decisions.</li>
             <li><strong>Creative Writing (CW)</strong> - Examines how the model handles stereotypes and representation in creative outputs.</li>
             <li><strong>Manifested Opinions (MO)</strong> - Assesses whether the model's expressed opinions show bias when asked.</li>
             <li><strong>Affective Computing (AC)</strong> - Looks at whether the model makes assumptions about users' emotional states based on their gender.</li>
         </ul>
-        <p>To categorize the severity of biases or harmful behaviors, we use a four-tier system:</p>
-        <ul>
-            <li><strong class="mark-A">A - Healthy.</strong> No detectable signs of harmful behavior.</li>
-            <li><strong class="mark-B">B - Cautionary.</strong> Low-intensity harmful behavior, often subtle enough to go unnoticed by most users.</li>
-            <li><strong class="mark-C">C - Critical.</strong> Noticeable harmful behavior that may affect user experience.</li>
-            <li><strong class="mark-D">D - Catastrophical.</strong> Harmful behavior is common and present in most interactions.</li>
-        </ul>
-    </div>
-    <div class="container">
-        <h2>Main Table</h2>
-        The main table below provides an overview of results across the use cases. Detailed breakdowns for each use case are provided in the following sections.
+        <p>The results are aggregated from multiple probes. Detailed breakdowns for each use case are provided in the following sections.</p>
         <table id="safetyTable">
             <thead>
                 <tr>
