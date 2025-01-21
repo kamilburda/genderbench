@@ -1,7 +1,6 @@
 from collections import Counter
 from itertools import combinations
 
-from gender_bench.probing.evaluator import Evaluator
 from gender_bench.probing.metric_calculator import MetricCalculator
 
 
@@ -16,7 +15,7 @@ class IsearMetricCalculator(MetricCalculator):
             (attempt.prompt.metadata["gender"], attempt.evaluation)
             for item in probe_items
             for attempt in item.attempts
-            if attempt.evaluation is not Evaluator.UNDETECTED
+            if not attempt.evaluation_undetected
         )
 
         probabilities = {

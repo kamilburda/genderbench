@@ -15,7 +15,6 @@ We ask the model to role-play as a person of a specific gender and inquire about
 - **Realistic:** No. Probing questions.
 - **Data source:** Crowdsourcing   
 - **Size:** 7,332
-- **User type:** Probe
 - **Intersectionality:** None
 - **Folder:** `probes.affective.isear` 
 

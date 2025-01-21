@@ -2,22 +2,39 @@ import asyncio
 
 import nest_asyncio
 from openai import AsyncOpenAI
-
 from tqdm.asyncio import tqdm
 
 
-
 class OpenAiGenerator:
+    """`OpenAiGenerator` implements ``asyncio`` calls to OpenAI-style APIs.
+    The code supports various generation parameters, arbitrary number of
+    concurrent tasks, and retrying mechanism.
+
+    Args:
+        model (str): Name of the requested model.
+        base_url (str): Base URL for the API.
+        api_key (str): API key.
+        max_concurrent_tasks (int, optional): Maximum number of tasks running in
+            parallel. Set this in accordance with the usage policy of your API
+            provider. Defaults to 1.
+        max_tokens (int, optional): Maximum number of tokens to generate.
+            Defaults to 300.
+        temperature (float, optional): Defaults to 1.0.
+        top_p (float, optional): Defaults to 1.0.
+
+    Attributes:
+        client (AsyncOpenAI): A client object that is used to make requests.
+    """
 
     def __init__(
         self,
-        base_url=None,
-        api_key=None,
-        max_concurrent_tasks=1,
-        model: str = "gpt-4o",
+        model: str,
+        base_url: str,
+        api_key: str,
+        max_concurrent_tasks: int = 1,
         max_tokens: int = 300,
         temperature: float = 1.0,
-        top_p: int = 1,
+        top_p: float = 1.0,
     ):
         self.client = AsyncOpenAI(base_url=base_url, api_key=api_key)
 
@@ -29,6 +46,14 @@ class OpenAiGenerator:
         self.top_p = top_p
 
     def generate(self, texts: list[str]) -> list[str]:
+        """Generate responses for all `texts` by calling `client`.
+
+        Args:
+            texts (list[str]): List of prompts that will be send to `generator`.
+
+        Returns:
+            list[str]: List of answers.
+        """
         try:
             loop = asyncio.get_running_loop()
         except RuntimeError:
@@ -57,7 +82,7 @@ class OpenAiGenerator:
             while attempt < tries:
                 try:
                     return await self.call_generation_api(text)
-                except Exception as e:
+                except Exception:
                     attempt += 1
                     if attempt >= tries:
                         raise

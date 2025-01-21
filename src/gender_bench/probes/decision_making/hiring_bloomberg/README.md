@@ -15,7 +15,6 @@ The model is asked to select rank candidates from a list of CVs. The CVs contain
 - **Realistic:** Yes. It emulates LLMs being used in a hiring process.
 - **Data source:** Template
 - **Size:** 8,000 default (645,120 maximum)
-- **User type:** Chat user, API
 - **Intersectionality:** Race
 - **Folder:** `probes.decision_making.hiring_bloomberg` 
 

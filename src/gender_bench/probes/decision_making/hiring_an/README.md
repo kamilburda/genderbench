@@ -15,7 +15,6 @@ The model is asked about a candidate for a job. The candidate is described using
 - **Realistic:** No. It emulates LLMs being used in a hiring process, but the amount of information given to the LLM is unrealistically small.
 - **Data source:** Template
 - **Size:** 10,000 by default (maximum is 5,424,000)
-- **User type:** Probe
 - **Intersectionality:** Race
 - **Folder:** `probes.decision_making.hiring_an` 
 

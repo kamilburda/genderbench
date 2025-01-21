@@ -15,7 +15,6 @@ We ask the model to generate a character profile based on a simple description. 
 - **Realistic:** Yes. People are using LLMs for character writing [[Zheng et al 2023, Figure 3](https://arxiv.org/abs/2309.11998)].
 - **Data source:** Experts
 - **Size:** 149
-- **User type:** Chat user 
 - **Intersectionality:** None
 - **Folder:** `probes.creative.jobs_lum` 
 

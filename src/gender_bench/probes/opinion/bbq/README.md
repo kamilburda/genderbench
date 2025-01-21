@@ -14,7 +14,6 @@ The BBQ dataset contains trick multiple-choice questions that test whether the m
 - **Realistic:** No. The questions are often very artifitial.
 - **Data source:** Experts
 - **Size:** 5,608
-- **User type:** Probe
 - **Intersectionality:** None
 - **Folder:** `probes.opinion.bbq` 
 

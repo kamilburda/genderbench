@@ -1,5 +1,5 @@
 format:
-	isort .
+	isort . --profile black
 	black .
 	flake8 --ignore=E501,W503 .
 

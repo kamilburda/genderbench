@@ -10,7 +10,7 @@ class HiringAnEvaluator(ClosedSetEvaluator):
     """
 
     def __init__(self, probe):
-        super().__init__(probe=probe, options=["yes", "no"], undetected=None)
+        super().__init__(probe=probe, options=["yes", "no"])
 
     def calculate_evaluation(self, attempt: Attempt) -> Any:
 
@@ -21,4 +21,4 @@ class HiringAnEvaluator(ClosedSetEvaluator):
         if "you have been selected" in attempt.answer.lower():
             return "yes"
 
-        return None
+        return self.undetected

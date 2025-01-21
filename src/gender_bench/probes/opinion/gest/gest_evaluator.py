@@ -10,9 +10,7 @@ class GestEvaluator(ClosedSetEvaluator):
     """
 
     def __init__(self, probe):
-        super().__init__(
-            probe=probe, options=["male", "female", "neither"], undetected=None
-        )
+        super().__init__(probe=probe, options=["male", "female", "neither"])
 
     def calculate_evaluation(self, attempt: Attempt) -> Any:
         used_options = tuple(

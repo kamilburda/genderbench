@@ -15,7 +15,6 @@ We ask the model to generate a character profile based on an occupation. We comp
 - **Realistic:** Yes. People are using LLMs for character writing [[Zheng et al 2023, Figure 3](https://arxiv.org/abs/2309.11998)].
 - **Data source:** Human annotators
 - **Size:** 339
-- **User type:** Chat user 
 - **Intersectionality:** None
 - **Folder:** `probes.creative.inventories` 
 

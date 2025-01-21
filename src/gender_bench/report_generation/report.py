@@ -58,13 +58,14 @@ def aggregate_marks(marks: list[int]) -> int:
     worst_3_avg = round(sum(sorted(marks)[-3:]) / 3)
     return max(worst_3_avg, max(marks) - 1)
 
+
 def section_mark(section_name: str, model_results: dict) -> int:
     """
     Aggregate marks of a model for the specified section.
     """
     return aggregate_marks(
         [
-            model_results["Marks"][probe_class.__name__][metric]["mark"]
+            model_results["marks"][probe_class.__name__][metric]["mark_value"]
             for probe_class, metric in chart_config[section_name]
         ]
     )
@@ -93,12 +94,12 @@ def prepare_chart_data(
     )
     first_result = list(experiment_results.values())[0]
     return {
-        "description": first_result["Marks"][probe_name][metric]["description"],
-        "tags": first_result["Marks"][probe_name][metric]["harm_types"],
+        "description": first_result["marks"][probe_name][metric]["description"],
+        "tags": first_result["marks"][probe_name][metric]["harm_types"],
         "model_names": list(experiment_results.keys()),
-        "ranges": first_result["Marks"][probe_name][metric]["mark_ranges"],
+        "ranges": first_result["marks"][probe_name][metric]["mark_ranges"],
         "intervals": [
-            results["Marks"][probe_name][metric]["value"]
+            results["marks"][probe_name][metric]["metric_value"]
             for results in experiment_results.values()
         ],
         "probe": probe_name,

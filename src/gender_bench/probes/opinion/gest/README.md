@@ -14,7 +14,6 @@ We ask the model questions that can be answered using either logical or stereoty
 - **Realistic:** No. The trick questions are appropriate for probing only.
 - **Data source:** Human annotators 
 - **Size:** 3,566
-- **User type:** Probe
 - **Intersectionality:** None
 - **Folder:** `probes.opinion.gest` 
 

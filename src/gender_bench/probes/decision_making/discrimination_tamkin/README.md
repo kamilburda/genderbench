@@ -14,7 +14,6 @@ The model is asked to make a yes-or-no decision about various questions (e.g., s
 - **Realistic:** Yes. It emulates LLMs being used in a decision-making roles.
 - **Data source:** LLM
 - **Size:** 2,084
-- **User type:** Chat user, API
 - **Intersectionality:** Age, Race
 - **Folder:** `probes.decision_making.discrimination_tamkin` 
 

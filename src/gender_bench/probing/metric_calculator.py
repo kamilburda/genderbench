@@ -1,3 +1,4 @@
+from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Any
 
 import numpy as np
@@ -8,56 +9,75 @@ if TYPE_CHECKING:
     from gender_bench.probing.probe import Probe
 
 
-class MetricCalculator:
-    """
-    MetricCalculator calculates arbitrary metrics for a probe that has answers
-    generated and evaluated.
+class MetricCalculator(ABC):
+    """`MetricCalculator` is able to calculate all the predetermined metrics for
+    its corresponding probe.
+
+    Args:
+        probe (Probe): The `probe` that initialized this `MetricCalculator`.
     """
 
     def __init__(self, probe: "Probe"):
         self.probe = probe
 
-    def calculate(self, probe_items: list[ProbeItem]) -> dict[str, Any]:
+    @property
+    def undetected(self) -> Any:
+        """The `undetected` value used by the `evaluator` from the corresponding
+        probe.
+
+        Returns:
+            Any: The value that is being used.
         """
-        Method that calculates all the appropriate metrics for the set-up
-        `Probe`.
+        return self.probe.evaluator.undetected
+
+    @abstractmethod
+    def calculate(self, probe_items: list[ProbeItem]) -> dict[str, float]:
+        """Perform the core metric calculation routine for `probe_items`.
+
+        Args:
+            probe_items (list[ProbeItem]): `ProbeItems` that already have
+                answers generated and evaluated.
+
+        Returns:
+            dict[str, Any]: Calculated metrics.
         """
         raise NotImplementedError
 
-    def __call__(self, probe_items: list[ProbeItem]) -> dict[str, Any]:
+    def __call__(self, probe_items: list[ProbeItem]) -> dict[str, float]:
         return self.calculate(probe_items)
 
     @staticmethod
-    def filter_undetected(func):
+    def filter_undetected(func: callable) -> callable:
+        """Decorator used to handle `undetected` values in for
+        `MetricCalculator.calculate` methods. This decorator has two functions:
+
+            1. It filters out those input `probe_items` that have ALL their
+            `Attempts` set as `evaluation_undetected`.
+
+            2. It calculate two metrics `undetected_rate_attempts` and
+            `undetected_rate_items` that say how many `Attempts` and
+            `ProbeItems` respectively had undetected evaluation.
+
+        Args:
+            func (callable[list[ProbeItem], dict[str, Any]]): The `calculate`
+                method to be decorated.
+
+        Returns:
+            callable: Decorated `calculate` method.
         """
-        This decorator can be used for `MetricEvaluator.calculate` methods if
-        they use `Evaluator.UNDETECTED` as a value in their answer `Enum`.
 
-        (1) Filter out all the `probe_items` that have all the attempts resulted
-        in `UNDETECTED`.
-        (2) Calculate `undetected_rate` based on the filtration.
-
-        The `calculate` methods then do not have to explicitly handle such cases
-        as they have a guarantee that at least one attempt had valid answer.
-        """
-
-        def is_undetected(evaluation):
-            return evaluation is None  # TODO: make this dynamic
-
-        def wrapper_func(self, probe_items):
+        def wrapper_func(self, probe_items: list[ProbeItem]) -> dict[str, float]:
 
             filtered_probe_items = [
                 item
                 for item in probe_items
-                if any(
-                    not is_undetected(attempt.evaluation) for attempt in item.attempts
-                )
+                if not all(attempt.evaluation_undetected for attempt in item.attempts)
             ]
             undetected_rate_items = 1 - len(filtered_probe_items) / len(probe_items)
             undetected_rate_attempts = float(
                 np.mean(
                     [
-                        is_undetected(attempt.evaluation)
+                        attempt.evaluation_undetected
                         for item in probe_items
                         for attempt in item.attempts
                     ]
