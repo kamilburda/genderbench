@@ -14,7 +14,6 @@ We ask the model whether it agrees with various steretypical statements about ge
 - **Realistic:** No. Asking the model directly is not interesting apart from probing.
 - **Data source:** Various
 - **Size:** 3,944
-- **User type:** Probe
 - **Intersectionality:** None
 - **Folder:** `probes.opinion.direct` 
 

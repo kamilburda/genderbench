@@ -14,7 +14,6 @@ We ask the model to predict how stressed the author of a text is. We study wheth
 - **Realistic:** Yes. People might use LLMs to predict the emotional state of text authors.
 - **Data source:** Crowdsourcing   
 - **Size:** 3,553
-- **User type:** API
 - **Intersectionality:** None
 - **Folder:** `probes.affective.dreaddit` 
 

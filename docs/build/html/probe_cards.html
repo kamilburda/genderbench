@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Probe Meta Documentation &mdash; GenderBench v0.1 documentation</title>
+  <title>Probe Cards &mdash; GenderBench v0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
@@ -42,9 +42,10 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul class="current">
+              <p class="caption" role="heading"><span class="caption-text">Table of Contents</span></p>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="new_probe.html">Developing Probes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developing_probes.html">Developing Probes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reports.html">Reports</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="probes.html">Probes</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="probes/bbq.html">Bbq</a></li>
@@ -58,7 +59,7 @@
 <li class="toctree-l2"><a class="reference internal" href="probes/inventories.html">Inventories</a></li>
 <li class="toctree-l2"><a class="reference internal" href="probes/isear.html">Isear</a></li>
 <li class="toctree-l2"><a class="reference internal" href="probes/jobs_lum.html">JobsLum</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Probe Meta Documentation</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Probe Cards</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
@@ -79,9 +80,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="probes.html">Probes</a></li>
-      <li class="breadcrumb-item active">Probe Meta Documentation</li>
+      <li class="breadcrumb-item active">Probe Cards</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/probe_meta_documentation.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/probe_cards.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -89,9 +90,133 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="probe-meta-documentation">
-<span id="id1"></span><h1>Probe Meta Documentation<a class="headerlink" href="#probe-meta-documentation" title="Link to this heading"></a></h1>
-<p>Oink</p>
+  <section id="probe-cards">
+<span id="id1"></span><h1>Probe Cards<a class="headerlink" href="#probe-cards" title="Link to this heading"></a></h1>
+<p>Each <cite>Probe</cite> is documented with its own <code class="docutils literal notranslate"><span class="pre">README</span></code> file. This document describes
+the schema used to create these files. We describe the documents field by field
+as they are written.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Abstract</dt><dd><p>Abstract succintly describes the main idea behind the probe.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Harms</dt><dd><p>Yabadee</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Genders</dt><dd><p>What genders are considered.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Genders definition</dt><dd><p>How are the genders indicated in the texts (explicitly stated, gender-coded
+pronouns, gender-coded names, etc).</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Genders placement</dt><dd><p>Whose gender is being signalled to <cite>generator</cite>, e.g., author of a text,
+user, object of a text.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Language</dt><dd><p>Natural language used in the prompts / responses.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Output type</dt><dd><p>What is type of the output, e.g., structured responses, free text.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Modality</dt><dd><p>What is the modality of the conversation, e.g., single turn text
+chats, tools, image generation.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Domain</dt><dd><p>What is domain of the data used, e.g., everyday life, healthcare, business.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Realistic</dt><dd><p>Are the generated requests realistic, i.e., is it possible that similar
+requests would be used by real life users or are they artificial and they
+make sense only in the probing context.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Data source</dt><dd><p>How were the data created, e.g., human annotators, LLMs, scraping.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Size</dt><dd><p>Number of probe items.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Intersectionality</dt><dd><p>Are there non-gender-related harms that could be addressed by the probe,
+e.g., race, occupation.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Folder</dt><dd><p>Where is the code located.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Methodology</dt><dd><ul>
+<li><dl class="simple">
+<dt>Probe Items</dt><dd><p>Description of how are the probe items created.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Data</dt><dd><p>Description of the necessary data used to create the probe items.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Evaluation</dt><dd><p>Description of the answer evaluation methodology.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Metrics</dt><dd><p>Description of all the calculated metrics.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Sources</dt><dd><p>List of all the resources that can improve the understanding of the probe,
+e.g., related papers or datasets.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Probe parameters</dt><dd><p>Documentation for the parameters used when the probe is initialized in the
+code.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Limitations / Improvements</dt><dd><p>Discussion about the limitations of the probe and ideas about how to improve
+it in the future.</p>
+</dd>
+</dl>
+</li>
+</ul>
 </section>
 
 

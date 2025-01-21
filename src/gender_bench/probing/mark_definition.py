@@ -37,7 +37,7 @@ class MarkDefinition:
                 }
 
         harm_types (list[str]): List of *harm types* related to the metric. See
-            :ref:`probe_meta_documentation`.
+            :ref:`probe_cards`.
         description (str): Concise description of the metric.
 
     Note:

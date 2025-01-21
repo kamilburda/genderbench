@@ -6,10 +6,15 @@
 GenderBench Documentation
 =========================
 
+This is the documentation for `GenderBench <https://github.com/matus-pikuliak/gender_bench>`_
+project.
+
 .. toctree::
+   :caption: Table of Contents
+   :maxdepth: 2
    
    quickstart
-   new_probe
+   developing_probes
    reports
    probes
    api
