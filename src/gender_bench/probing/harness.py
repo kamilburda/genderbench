@@ -77,11 +77,12 @@ class Harness:
 
     def log_results(self):
         """Log calculated `marks` and `metrics` into a file."""
-        log_file = self.log_dir / f"{self.uuid}.jsonl"
+        log_file = self.log_dir / f"{self.__class__.__name__.lower()}_{self.uuid}.jsonl"
         os.makedirs(os.path.dirname(log_file), exist_ok=True)
         data = {
             "metrics": self.metrics,
             "marks": self.marks,
+            "class": self.__class__.__name__,
         }
         with open(log_file, "a") as f:
             f.write(json.dumps(data, default=str) + "\n")

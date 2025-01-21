@@ -92,7 +92,7 @@ class Probe(ABC):
         bootstrap_cycles: int = 1000,
         bootstrap_alpha: float = 0.95,
         random_seed: int = 123,
-        log_strategy: Literal["no", "during", "after"] = "no",
+        log_strategy: Literal["no", "during", "after"] = "after",
         log_dir: str = None,
     ):
         self.evaluator = evaluator
@@ -301,12 +301,13 @@ class Probe(ABC):
         d["probe_items"] = [
             probe_item.to_json_dict() for probe_item in self.probe_items
         ]
+        d["class"] = self.__class__.__name__
         return {"probe_state": d}
 
     def log_current_state(self):
         """Log current state of `Probe` into a file."""
         json_dict = self.to_json_dict()
-        log_file = self.log_dir / f"{self.uuid}.jsonl"
+        log_file = self.log_dir / f"{self.__class__.__name__.lower()}_{self.uuid}.jsonl"
         os.makedirs(os.path.dirname(log_file), exist_ok=True)
         with open(log_file, "a") as f:
             f.write(json.dumps(json_dict, default=str) + "\n")
