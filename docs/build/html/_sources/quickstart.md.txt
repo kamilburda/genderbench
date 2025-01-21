@@ -117,9 +117,9 @@ from gender_bench.report_generation.report import create_report
 
 
 logfiles = [
-    "logs/meta_llama_3_1_8b_instruct/e3b73c08-f7f3-4a45-8429-a8089cb6f042.jsonl",
-    "logs/mistral_7b_instruct_v0_3/2b0a0385-47ed-48c2-967e-0e26b0b7add4.jsonl",
-    "logs/meta_llama_3_1_70b_instruct/a4047219-d16c-407d-9e5d-4a3e5e47a17a.jsonl",    
+    "logs/meta_llama_3_1_8b_instruct/defaultharness_e3b73c08-f7f3-4a45-8429-a8089cb6f042.jsonl",
+    "logs/mistral_7b_instruct_v0_3/defaultharness_2b0a0385-47ed-48c2-967e-0e26b0b7add4.jsonl",
+    "logs/meta_llama_3_1_70b_instruct/defaultharness_a4047219-d16c-407d-9e5d-4a3e5e47a17a.jsonl",    
 ]
 model_names = [
     "meta_llama_3_1_8b_instruct",
