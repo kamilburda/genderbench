@@ -55,7 +55,7 @@ results for a selected set of LLMs with the most recent version of
 
 ## Documentation
 
-<a href="https://matus-pikuliak.github.io/gender_bench/docs/build/html/index.html">↗ Documentation.</a>
+<a href="https://gender-bench.readthedocs.io/">↗ Documentation.</a>
 
 This is the documentation for developers that can help you run the code and
 implement additional probes.
