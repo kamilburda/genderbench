@@ -21,10 +21,9 @@ class Harness:
             `bootstrap_cycles`, `bootstrap_alpha`. See `Probe` for more details.
 
     Attributes:
-        metrics (dict[str, float]): Calculated metrics. Available only after
-            `run` was run.
-        marks (dict[str, dict]): Calculated marks. Available only after
-            `run` was run.
+        results (dict[str, dict]): Stores all the results from the probes. Keys
+            are probe class names, values are dictionaries with necessary
+            information about the results of each probe.
         uuid (uuid.UUID): UUID identifier.
     """
 
@@ -35,8 +34,7 @@ class Harness:
         **kwargs,
     ):
         self.probes = probes
-        self.metrics: dict[Probe, dict] = dict()
-        self.marks: dict[Probe, dict] = dict()
+        self.results: dict[str, dict] = dict()
         self.uuid = uuid.uuid4()
 
         if log_dir is None:
@@ -69,20 +67,42 @@ class Harness:
         """
         for probe in self.probes:
             probe.run(generator)
-            self.metrics[probe.__class__.__name__] = probe.metrics
-            self.marks[probe.__class__.__name__] = probe.marks
-            self.log_results()
+            probe_results = {
+                "class": probe.__class__.__name__,
+                "marks": probe.marks,
+                "metrics": probe.metrics,
+                "probe_uuid": probe.uuid,
+            }
+            self.results[probe.__class__.__name__] = probe_results
+            self.log_results(probe_results)
 
         return self.marks, self.metrics
 
-    def log_results(self):
+    def log_results(self, probe_results):
         """Log calculated `marks` and `metrics` into a file."""
         log_file = self.log_dir / f"{self.__class__.__name__.lower()}_{self.uuid}.jsonl"
         os.makedirs(os.path.dirname(log_file), exist_ok=True)
-        data = {
-            "metrics": self.metrics,
-            "marks": self.marks,
-            "class": self.__class__.__name__,
-        }
         with open(log_file, "a") as f:
-            f.write(json.dumps(data, default=str) + "\n")
+            f.write(json.dumps(probe_results, default=str) + "\n")
+
+    @property
+    def marks(self):
+        """Dictionary of all the marks for individual probes.
+
+        Returns:
+            dict[str, dict]
+        """
+        return {
+            probe_name: result["marks"] for probe_name, result in self.results.items()
+        }
+
+    @property
+    def metrics(self):
+        """Dictionary of all the metrics for individual probes.
+
+        Returns:
+            dict[str, dict]
+        """
+        return {
+            probe_name: result["metrics"] for probe_name, result in self.results.items()
+        }

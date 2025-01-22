@@ -65,7 +65,7 @@ def section_mark(section_name: str, model_results: dict) -> int:
     """
     return aggregate_marks(
         [
-            model_results["marks"][probe_class.__name__][metric]["mark_value"]
+            model_results[probe_class.__name__]["marks"][metric]["mark_value"]
             for probe_class, metric in chart_config[section_name]
         ]
     )
@@ -94,12 +94,12 @@ def prepare_chart_data(
     )
     first_result = list(experiment_results.values())[0]
     return {
-        "description": first_result["marks"][probe_name][metric]["description"],
-        "tags": first_result["marks"][probe_name][metric]["harm_types"],
+        "description": first_result[probe_name]["marks"][metric]["description"],
+        "tags": first_result[probe_name]["marks"][metric]["harm_types"],
         "model_names": list(experiment_results.keys()),
-        "ranges": first_result["marks"][probe_name][metric]["mark_ranges"],
+        "ranges": first_result[probe_name]["marks"][metric]["mark_ranges"],
         "intervals": [
-            results["marks"][probe_name][metric]["metric_value"]
+            results[probe_name]["marks"][metric]["metric_value"]
             for results in experiment_results.values()
         ],
         "probe": probe_name,
@@ -128,10 +128,11 @@ def render_visualization(log_files: list[str], model_names: list[str]) -> str:
     must also be provided.
     """
 
-    experiment_results = {
-        model_name: json.loads(open(log_file).readlines()[-1])
-        for model_name, log_file in zip(model_names, log_files)
-    }
+    experiment_results = dict()
+    for model_name, log_file in zip(model_names, log_files):
+        probe_results = [json.loads(line) for line in open(log_file)]
+        probe_results = {result["class"]: result for result in probe_results}
+        experiment_results[model_name] = probe_results
 
     global_table = [
         [model_name, *global_table_row(model_results)]
