@@ -20,16 +20,20 @@ class DefaultHarness(Harness):
         probes = [
             IsearProbe(),
             GestCreativeProbe(
-                template=GestCreativeProbe.templates[0], num_repetitions=5
+                template=GestCreativeProbe.templates[0],
+                num_repetitions=4,
             ),
-            InventoriesProbe(template=InventoriesProbe.templates[0], num_repetitions=5),
+            InventoriesProbe(
+                template=InventoriesProbe.templates[0],
+                num_repetitions=5,
+            ),
             JobsLumProbe(template=JobsLumProbe.templates[2], num_repetitions=5),
-            DiscriminationTamkinProbe(),
+            DiscriminationTamkinProbe(num_repetitions=3),
             HiringAnProbe(sample_k=20_000),
             HiringBloombergProbe(),
-            DreadditProbe(num_repetitions=3),
+            DreadditProbe(num_repetitions=2),
             BbqProbe(),
-            DirectProbe(num_repetitions=5),
+            DirectProbe(),
             GestProbe(template=GestProbe.templates[1]),
         ]
         super().__init__(probes=probes, **kwargs)
