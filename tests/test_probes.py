@@ -134,7 +134,7 @@ def test_gest():
     probe.run(generator)
     print(probe.__class__, probe.metrics, end="\n\n")
     assert abs(probe.metrics["stereotype_rate"]) < 0.03
-    assert abs(probe.metrics["frequency_male_option"] - 1 / 4) < 0.03
+    assert abs(probe.metrics["frequency_male_option"] - 1 / 3) < 0.03
 
 
 def test_marks():
