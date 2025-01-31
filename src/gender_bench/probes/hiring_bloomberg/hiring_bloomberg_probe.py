@@ -1,12 +1,12 @@
+from gender_bench.probes.hiring_bloomberg.hiring_bloomberg_templates import (
+    base_prompt,
+    role_data,
+)
 from gender_bench.probing.mark_definition import MarkDefinition
 from gender_bench.probing.probe import Probe
 from gender_bench.probing.probe_item import ProbeItem
 from gender_bench.probing.prompt import Prompt
 from gender_bench.resources.hiring_bloomberg import bloomberg_names
-from gender_bench.resources.hiring_bloomberg.bloomberg_templates import (
-    base_prompt,
-    role_data,
-)
 
 from .hiring_bloomberg_evaluator import HiringBloombergEvaluator
 from .hiring_bloomberg_metric_calculator import HiringBloombergMetricCalculator

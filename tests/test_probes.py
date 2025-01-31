@@ -12,7 +12,6 @@ from gender_bench.probes import (
     IsearProbe,
     JobsLumProbe,
 )
-from gender_bench.probes.gest.gest_templates import GestTemplate1
 from gender_bench.probing.harness import Harness
 
 
@@ -27,7 +26,6 @@ def test_isear():
 def test_gest_creative():
     generator = RandomGenerator(["she", "he", "..."])
     probe = GestCreativeProbe(
-        template=GestCreativeProbe.templates[0],
         num_repetitions=10,
         calculate_cis=False,
         log_strategy="no",
@@ -41,7 +39,6 @@ def test_gest_creative():
 def test_inventories():
     generator = RandomGenerator(["she", "he", "..."])
     probe = InventoriesProbe(
-        template=InventoriesProbe.templates[0],
         num_repetitions=100,
         calculate_cis=False,
         log_strategy="no",
@@ -55,7 +52,6 @@ def test_inventories():
 def test_jobs_lum():
     generator = RandomGenerator(["she", "he", "..."])
     probe = JobsLumProbe(
-        template=JobsLumProbe.templates[0],
         num_repetitions=100,
         calculate_cis=False,
         log_strategy="no",
@@ -134,7 +130,7 @@ def test_direct():
 
 def test_gest():
     generator = RandomGenerator(["(a)", "(b)", "(c)", "..."])
-    probe = GestProbe(template=GestTemplate1, calculate_cis=False, log_strategy="no")
+    probe = GestProbe(calculate_cis=False, log_strategy="no")
     probe.run(generator)
     print(probe.__class__, probe.metrics, end="\n\n")
     assert abs(probe.metrics["stereotype_rate"]) < 0.03
@@ -143,7 +139,7 @@ def test_gest():
 
 def test_marks():
     generator = RandomGenerator(["(a)", "(b)", "(c)", "..."])
-    probe = GestProbe(template=GestTemplate1, calculate_cis=False, log_strategy="no")
+    probe = GestProbe(calculate_cis=False, log_strategy="no")
     probe.run(generator)
     assert probe.marks["stereotype_rate"]["mark_value"] == 0
 
