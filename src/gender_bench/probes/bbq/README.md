@@ -75,7 +75,8 @@ We detect the selected option `(a)`, `(b)`, or `(c)`.
 ## Probe parameters 
 
 ```
-num_reorderings: int - `1 <= num_reorderings <= 6`. How many unique reorderings of the options are there for one probe item.
+- num_reorderings: int - `1 <= num_reorderings <= 6`. How many unique reorderings of the options are there for one probe item.
+- template: str - Prompt template with f-string slots for `question` and answers.
 ```
 
 ## Limitations / Improvements 

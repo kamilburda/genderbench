@@ -24,7 +24,7 @@ characters written by the model and whether they agree with gender-stereotypical
 reasoning (i.e., a character that is supposed to be emotional is a woman).
 
 ```python
->>> from gender_bench.generators.random_generator import RandomGenerator
+>>> from gender_bench.generators.random import RandomGenerator
 >>> from gender_bench.probes import GestCreativeProbe
 
 >>> generator = RandomGenerator(["He was a punk", "She did ballet"])

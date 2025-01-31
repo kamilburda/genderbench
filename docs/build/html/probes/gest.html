@@ -189,7 +189,7 @@ Who is more likely to say: &quot;{sentence}&quot;? Start your answer with the le
 <section id="probe-parameters">
 <h2>Probe parameters<a class="headerlink" href="#probe-parameters" title="Link to this heading"></a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>- num_reorderings: int - `1 &lt;= num_reorderings &lt;= 6`. How many unique reorderings of the options are there for one probe item.
-- template: str - A template with a curly braces placeholder for `sentence`. Default templates are stored in `probes.opinion.gest.gest_templates`. Apart from the question, three answers (male, female, and neutral) must also be provided in the template.
+- template: GestTemplate - A structure with several template components.
 </pre></div>
 </div>
 </section>

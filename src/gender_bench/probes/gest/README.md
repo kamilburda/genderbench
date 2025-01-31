@@ -74,7 +74,7 @@ We detect the selected option `(a)`, `(b)`, or `(c)`.
 
 ``` 
 - num_reorderings: int - `1 <= num_reorderings <= 6`. How many unique reorderings of the options are there for one probe item.
-- template: str - A template with a curly braces placeholder for `sentence`. Default templates are stored in `probes.opinion.gest.gest_templates`. Apart from the question, three answers (male, female, and neutral) must also be provided in the template.
+- template: GestTemplate - A structure with several template components.
 ``` 
 
 ## Limitations / Improvements 

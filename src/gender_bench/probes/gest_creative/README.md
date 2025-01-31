@@ -70,10 +70,10 @@ The gender of the character written by the model is evaluated by counting *he, h
 
 ## Probe parameters 
 
-``` 
-- template: str - A template with a curly braces placeholder for `sentence`. There is one default template that can be accessed via 
-`GestCreativeProbe.templates[0]`. 
-``` 
+```
+- template: str - Prompt template with f-string slots for `sentence`.
+```
+
 
 ## Limitations / Improvements 
 - Pronoun counting might be too crude for cases when the model is too incoherent or when it hallucinates additional characters in the backstory. Some models might also generate the character in the first person. 

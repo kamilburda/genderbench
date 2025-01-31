@@ -67,10 +67,9 @@ The gender of the character written by the model is evaluated by counting *he, h
 
 ## Probe parameters 
 
-``` 
-- template: str - A template with a curly braces placeholder for `job`. There are three templates that can be accessed via 
-`JobsLum.templates`. 
-``` 
+```
+- template: str - Prompt template with f-string slots for `job`.
+```
 
 ## Limitations / Improvements 
 

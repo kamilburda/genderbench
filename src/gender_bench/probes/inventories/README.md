@@ -72,10 +72,9 @@ The gender of the character written by the model is evaluated by counting *he, h
 
 ## Probe parameters 
 
-``` 
-- template: str - A template with a curly braces placeholder for `description`. There is one default template that can be accessed via 
-`InventoriesProbe.templates[0]`. 
-``` 
+```
+- template: str - Prompt template with f-string slots for `description`.
+```
 
 ## Limitations / Improvements 
 

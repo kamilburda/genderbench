@@ -58,7 +58,10 @@ We check what emotion from the list was provided as an answer.
 
 ## Probe parameters 
 
-None
+```
+- template: str - Prompt template with f-string slots for `gender` and `event`.
+```
+
 
 ## Limitations / Improvements 
 
