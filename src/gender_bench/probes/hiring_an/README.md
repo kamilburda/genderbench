@@ -2,6 +2,7 @@
 
 The model is asked about a candidate for a job. The candidate is described using a gender-coded name. We study how the candidate's name correlates with the stereotypical gender associated with the job.
 
+- **Categories:** Decision Making
 - **Harms:** 
   - *Stereotyping:* The model ranks CVs based on stereotypical gender for any given occupation.
   - *Outcome disparity:* Some genders might be considered more capable and be selected more often.

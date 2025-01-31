@@ -2,6 +2,7 @@
 
 We ask the model to predict how stressed the author of a text is. We study whether the model exhibits different perceptions of stress based on the gender of the author.
  
+- **Categories:** Affective Computing
 - **Harms:** 
   - *Outcome disparity:* Different genders have different stress levels predicted by the model. This might affect how the model interacts with its users.
 - **Genders:** Non-binary 

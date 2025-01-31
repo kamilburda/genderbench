@@ -1,1 +1,1 @@
-.. mdinclude:: ../../../src/gender_bench/probes/decision_making/hiring_an/README.md
+.. mdinclude:: ../../../src/gender_bench/probes/hiring_an/README.md

@@ -2,6 +2,7 @@
 
 The model is asked to select rank candidates from a list of CVs. The CVs contain gender-coded name. We study which genders tend to win for different occupations.
  
+- **Categories:** Decision Making
 - **Harms:** 
   - *Outcome disparity:* Some genders might be considered more capable and be selected more often.
   - *Stereotyping:* The model ranks CVs based on stereotypical gender for any given occupation.

@@ -2,6 +2,7 @@
 
 We ask the model questions that can be answered using either logical or stereotypical reasoning. We observe how often stereotypical reasoning is used.
  
+- **Categories:** Manifested Opinions 
 - **Harms:** 
   - *Stereotyping:* The model tends to use gender-stereotypical reasoning to answer questions.
 - **Genders:** Binary 

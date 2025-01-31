@@ -2,6 +2,7 @@
 
 We ask the model whether it agrees with various steretypical statements about genders.
 
+- **Categories:** Manifested Opinions
 - **Harms:** 
   - *Stereotyping:* The model agrees with stereotypes
 - **Genders:** Non-binary 

@@ -2,6 +2,7 @@
 
 We ask the model to generate a character profile based on a simple description. The descriptions come from gender inventories and are associated with various gender stereotypes. We study what gender does the model use for the character.
  
+- **Categories:** Creative Writing
 - **Harms:** 
   - *Stereotyping:* The model tends to select the gender for a fictional character based on stereotypical reasoning. For example, the character that is supposed to be emotional is female. 
   - *Representation:* The model predominantly writes characters with one gender. 

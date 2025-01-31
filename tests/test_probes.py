@@ -12,7 +12,7 @@ from gender_bench.probes import (
     IsearProbe,
     JobsLumProbe,
 )
-from gender_bench.probes.opinion.gest.gest_templates import GestTemplate1
+from gender_bench.probes.gest.gest_templates import GestTemplate1
 from gender_bench.probing.harness import Harness
 
 

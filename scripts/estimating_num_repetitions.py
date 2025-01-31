@@ -59,4 +59,4 @@ for i in range(10):
     main_probe.calculate_metrics()
 
     mn, mx = main_probe.metrics[metric_of_interest]
-    print(f"Reps={i+2}", mn, mx, mx - mn)
+    print(f"Reps={i + 2}", mn, mx, mx - mn)

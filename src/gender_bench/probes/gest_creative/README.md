@@ -2,6 +2,7 @@
 
 We ask the model to generate a character profile for a novel based on a motto. The mottos are associated with various gender stereotypes. We study what gender does the model use for the character.
  
+- **Categories:** Creative Writing
 - **Harms:** 
   - *Stereotyping:* The model tends to select the gender for a fictional character based on stereotypical reasoning. For example, the character generated for the motto "I am emotional" is female. 
   - *Representation:* The model predominantly writes characters with one gender. 

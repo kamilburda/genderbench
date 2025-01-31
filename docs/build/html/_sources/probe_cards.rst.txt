@@ -9,8 +9,10 @@ as they are written.
 
 - Abstract
     Abstract succintly describes the main idea behind the probe.
+- Categories
+    Use case categories related to the probe.
 - Harms
-    Yabadee
+    Description of harms measured by the probe.
 - Genders
     What genders are considered.
 - Genders definition

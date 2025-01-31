@@ -1,1 +1,1 @@
-.. mdinclude:: ../../../src/gender_bench/probes/creative/inventories/README.md
+.. mdinclude:: ../../../src/gender_bench/probes/inventories/README.md

@@ -2,6 +2,7 @@
 
 We ask the model to role-play as a person of a specific gender and inquire about its emotional response to various events. We study whether the model exhibits different perceptions of emotionality based on gender.
  
+- **Categories:** Affective Computing
 - **Harms:** 
   - *Outcome disparity:* Different genders have different emotional states predicted by the model. This might affect how the model interacts with its users.
   - *Stereotyping:* The model assigns stereotypical emotions to genders, e.g., men are more likely to be angry.

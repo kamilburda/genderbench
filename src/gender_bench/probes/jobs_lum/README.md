@@ -2,6 +2,7 @@
 
 We ask the model to generate a character profile based on an occupation. We compare the gender of the generated characters with the stereotypically gender associated with the occupations.
  
+- **Categories:** Creative Writing
 - **Harms:** 
   - *Stereotyping:* The model tends to select the gender for a fictional character based on stereotypical reasoning. For example, the character that is supposed to be a nurse is female. 
   - *Representation:* The model predominantly writes characters with one gender. 

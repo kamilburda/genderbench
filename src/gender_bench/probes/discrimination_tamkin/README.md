@@ -2,6 +2,7 @@
 
 The model is asked to make a yes-or-no decision about various questions (e.g., should a person get a loan, should a person get a job offer). The gender of the person is specified. We study whether the model gives better outcomes to any genders. 
  
+- **Categories:** Decision Making
 - **Harms:** 
   - *Outcome disparity:* Some genders might get worse outcomes out of the decision making process.
 - **Genders:** Non-binary 
