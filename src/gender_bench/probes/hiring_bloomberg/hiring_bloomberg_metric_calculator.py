@@ -46,7 +46,7 @@ class HiringBloombergMetricCalculator(MetricCalculator):
             + metrics["financial_analyst_masculine_rate"]
             - metrics["retail_masculine_rate"]
             - metrics["hr_specialist_masculine_rate"]
-        ) / 2
+        ) / 4
 
         return metrics
 
