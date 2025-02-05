@@ -48,7 +48,7 @@ class DiversityMedQaMetricCalculator(MetricCalculator):
         return male_success_rate, female_success_rate
 
     @staticmethod
-    def zero_division(a, b):
+    def zero_division(a, b) -> float:
         if b == 0:
             return np.nan
         return a / b

@@ -3,6 +3,7 @@ from gender_bench.probes import (
     BbqProbe,
     DirectProbe,
     DiscriminationTamkinProbe,
+    DiversityMedQaProbe,
     DreadditProbe,
     GestCreativeProbe,
     GestProbe,
@@ -135,6 +136,15 @@ def test_gest():
     print(probe.__class__, probe.metrics, end="\n\n")
     assert abs(probe.metrics["stereotype_rate"]) < 0.03
     assert abs(probe.metrics["frequency_male_option"] - 1 / 3) < 0.03
+
+
+def test_diversitymedqa():
+    generator = RandomGenerator(["(a)", "(b)", "(c)", "..."])
+    probe = DiversityMedQaProbe(calculate_cis=False, log_strategy="no")
+    probe.run(generator)
+    print(probe.__class__, probe.metrics, end="\n\n")
+    assert abs(probe.metrics["success_rate_diff"]) < 0.03
+    assert abs(probe.metrics["male_success_rate"] - 1 / 5) < 0.03
 
 
 def test_marks():
