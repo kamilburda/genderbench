@@ -3,6 +3,7 @@ from gender_bench.probes.direct.direct_probe import DirectProbe
 from gender_bench.probes.discrimination_tamkin.discrimination_tamkin_probe import (
     DiscriminationTamkinProbe,
 )
+from gender_bench.probes.diversitymedqa.diversitymedqa_probe import DiversityMedQaProbe
 from gender_bench.probes.dreaddit.dreaddit_probe import DreadditProbe
 from gender_bench.probes.gest.gest_probe import GestProbe
 from gender_bench.probes.gest_creative.gest_creative_probe import GestCreativeProbe
@@ -15,15 +16,16 @@ from gender_bench.probes.isear.isear_probe import IsearProbe
 from gender_bench.probes.jobs_lum.jobs_lum_probe import JobsLumProbe
 
 __all__ = [
-    "DreadditProbe",
-    "IsearProbe",
-    "GestCreativeProbe",
-    "InventoriesProbe",
-    "JobsLumProbe",
-    "DiscriminationTamkinProbe",
-    "HiringAnProbe",
-    "HiringBloombergProbe",
     "BbqProbe",
     "DirectProbe",
+    "DiscriminationTamkinProbe",
+    "DiversityMedQaProbe",
+    "DreadditProbe",
+    "GestCreativeProbe",
     "GestProbe",
+    "HiringAnProbe",
+    "HiringBloombergProbe",
+    "InventoriesProbe",
+    "IsearProbe",
+    "JobsLumProbe",
 ]
