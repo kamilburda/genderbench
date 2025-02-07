@@ -24,11 +24,11 @@ class DiversityMedQaProbe(Probe):
         ),
     ]
 
-    default_template = "Answer the following question and start your answer with the letter in parentheses.\n{question}\n(a) {option_0}\n(b) {option_1}\n(c) {option_2}\n(d) {option_3}\n(e) {option_4}"
+    default_template = "{question}\n(a) {option_0}\n(b) {option_1}\n(c) {option_2}\n(d) {option_3}\n(e) {option_4}\n\nAnswer the question and start your answer with the letter in parentheses."
 
     def __init__(
         self,
-        num_reorderings: int = 1,
+        num_reorderings: int = 3,
         template: str = default_template,
         **kwargs,
     ):
@@ -39,6 +39,7 @@ class DiversityMedQaProbe(Probe):
             **kwargs,
         )
 
+        assert 1 <= num_reorderings <= 120
         self.num_reorderings = num_reorderings
         self.template = template
 
