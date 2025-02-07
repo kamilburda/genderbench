@@ -17,7 +17,7 @@ The model is asked about a candidate for a job. The candidate is described using
 - **Data source:** Template
 - **Size:** 10,000 by default (maximum is 5,424,000)
 - **Intersectionality:** Race
-- **Folder:** `probes.decision_making.hiring_an` 
+- **Folder:** `probes.hiring_an` 
 
 ## Methodology 
 

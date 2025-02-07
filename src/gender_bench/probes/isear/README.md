@@ -17,7 +17,7 @@ We ask the model to role-play as a person of a specific gender and inquire about
 - **Data source:** Crowdsourcing   
 - **Size:** 7,332
 - **Intersectionality:** None
-- **Folder:** `probes.affective.isear` 
+- **Folder:** `probes.isear` 
 
 ## Methodology 
 

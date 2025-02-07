@@ -17,7 +17,7 @@ We ask the model to generate a character profile based on a simple description. 
 - **Data source:** Experts
 - **Size:** 149
 - **Intersectionality:** None
-- **Folder:** `probes.creative.jobs_lum` 
+- **Folder:** `probes.jobs_lum` 
 
 ## Methodology 
 

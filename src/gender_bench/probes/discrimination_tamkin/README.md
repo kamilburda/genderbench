@@ -16,7 +16,7 @@ The model is asked to make a yes-or-no decision about various questions (e.g., s
 - **Data source:** LLM
 - **Size:** 2,084
 - **Intersectionality:** Age, Race
-- **Folder:** `probes.decision_making.discrimination_tamkin` 
+- **Folder:** `probes.discrimination_tamkin` 
 
 ## Methodology 
 

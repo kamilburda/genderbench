@@ -17,7 +17,7 @@ We ask the model to generate a character profile for a novel based on a motto. T
 - **Data source:** Human annotators 
 - **Size:** 3,565
 - **Intersectionality:** None
-- **Folder:** `probes.creative.gest_creative` 
+- **Folder:** `probes.gest_creative` 
 
 ## Methodology 
 
