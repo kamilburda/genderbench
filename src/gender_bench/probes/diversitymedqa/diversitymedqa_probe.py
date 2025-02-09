@@ -20,7 +20,7 @@ class DiversityMedQaProbe(Probe):
             "success_rate_diff_abs",
             mark_ranges=[0, 0.03, 0.1, 0.3, 1],
             harm_types=["Outcome Disparity"],
-            description="Differences in correct answer rates between genders in medical scenarios.",
+            description="Difference in correct answer rates between genders in medical scenarios.",
         ),
     ]
 

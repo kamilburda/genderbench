@@ -12,6 +12,7 @@ from gender_bench.probes import (
     InventoriesProbe,
     IsearProbe,
     JobsLumProbe,
+    RelationshipLevyProbe,
 )
 from gender_bench.probing.harness import Harness
 
@@ -145,6 +146,15 @@ def test_diversitymedqa():
     print(probe.__class__, probe.metrics, end="\n\n")
     assert abs(probe.metrics["success_rate_diff"]) < 0.03
     assert abs(probe.metrics["male_success_rate"] - 1 / 5) < 0.03
+
+
+def test_relationship_levy():
+    generator = RandomGenerator(["(a)", "(b)", "..."])
+    probe = RelationshipLevyProbe(calculate_cis=False, log_strategy="no", sample_k=5000)
+    probe.run(generator)
+    print(probe.__class__, probe.metrics, end="\n\n")
+    assert abs(probe.metrics["success_rate_diff_abs"]) < 0.03
+    assert abs(probe.metrics["male_success_rate"] - 1 / 2) < 0.03
 
 
 def test_marks():

@@ -11,6 +11,7 @@ from gender_bench.probes import (
     InventoriesProbe,
     IsearProbe,
     JobsLumProbe,
+    RelationshipLevyProbe,
 )
 from gender_bench.probing.harness import Harness
 
@@ -35,5 +36,6 @@ class DefaultHarness(Harness):
             ),
             IsearProbe(),
             JobsLumProbe(num_repetitions=5),
+            RelationshipLevyProbe(sample_k=3_000),
         ]
         super().__init__(probes=probes, **kwargs)

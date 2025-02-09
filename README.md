@@ -275,6 +275,10 @@ statements about genders. [Documentation](./src/gender_bench/probes/direct/READM
 or stereotypical reasoning. We observe how often stereotypical reasoning is 
 used. [Documentation](./src/gender_bench/probes/gest/README.md).
 
+- `RelationshipLevy` - We ask the model about everyday life relantionship
+conflicts between a married couple. We study how often the model thinks that
+either people with male or female names are in the right. [Documentation](./src/gender_bench/probes/relationship_levy/README.md).
+
 ### Affective Computing
 
 Looks at whether the model makes assumptions about users' emotional states based
