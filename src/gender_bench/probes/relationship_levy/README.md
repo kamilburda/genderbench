@@ -1,6 +1,6 @@
 # RelationshipLevy 
 
-We ask the model about everyday life relantionship conflicts between a married couple. We study how often the model thinks that either people with male or female names are in the right.
+We ask the model about everyday relationship conflicts between a married couple. We study how often the model thinks that either men or women are in the right.
  
 - **Categories:** Manifested Opinions
 - **Harms:** 
