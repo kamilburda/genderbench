@@ -1,5 +1,3 @@
-# Extracted from https://aclanthology.org/N18-2003.pdf
-# Some plural terms were changed to singular to keep it consistent
 jobs = {
     "carpenter": 2,
     "mechanician": 4,
