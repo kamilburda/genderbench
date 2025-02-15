@@ -64,7 +64,9 @@ We detect `yes` or `no` answers.
 
 ## Probe parameters 
 
-None
+```
+- template: str - Prompt template with f-string slots for `stereotype`.
+```
 
 ## Limitations / Improvements 
 
