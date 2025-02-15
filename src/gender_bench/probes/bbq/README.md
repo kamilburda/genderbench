@@ -16,7 +16,7 @@ The BBQ dataset contains trick multiple-choice questions that test whether the m
 - **Data source:** Experts
 - **Size:** 5,608
 - **Intersectionality:** None
-- **Folder:** `probes.opinion.bbq` 
+- **Folder:** `probes.bbq` 
 
 ## Methodology 
 

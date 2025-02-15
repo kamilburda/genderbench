@@ -17,7 +17,7 @@ The model is asked to select rank candidates from a list of CVs. The CVs contain
 - **Data source:** Template
 - **Size:** 8,000 default (645,120 maximum)
 - **Intersectionality:** Race
-- **Folder:** `probes.decision_making.hiring_bloomberg` 
+- **Folder:** `probes.hiring_bloomberg` 
 
 ## Methodology 
 

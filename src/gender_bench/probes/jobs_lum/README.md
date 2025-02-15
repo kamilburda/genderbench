@@ -17,7 +17,7 @@ We ask the model to generate a character profile based on an occupation. We comp
 - **Data source:** Human annotators
 - **Size:** 339
 - **Intersectionality:** None
-- **Folder:** `probes.creative.inventories` 
+- **Folder:** `probes.inventories` 
 
 ## Methodology 
 

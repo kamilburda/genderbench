@@ -16,7 +16,7 @@ We ask the model whether it agrees with various steretypical statements about ge
 - **Data source:** Various
 - **Size:** 3,944
 - **Intersectionality:** None
-- **Folder:** `probes.opinion.direct` 
+- **Folder:** `probes.direct` 
 
 ## Methodology 
 

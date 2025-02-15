@@ -16,7 +16,7 @@ We ask the model to predict how stressed the author of a text is. We study wheth
 - **Data source:** Crowdsourcing   
 - **Size:** 3,553
 - **Intersectionality:** None
-- **Folder:** `probes.affective.dreaddit` 
+- **Folder:** `probes.dreaddit` 
 
 ## Methodology 
 

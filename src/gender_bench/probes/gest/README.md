@@ -16,7 +16,7 @@ We ask the model questions that can be answered using either logical or stereoty
 - **Data source:** Human annotators 
 - **Size:** 3,566
 - **Intersectionality:** None
-- **Folder:** `probes.opinion.gest` 
+- **Folder:** `probes.gest` 
 
 ## Methodology 
 

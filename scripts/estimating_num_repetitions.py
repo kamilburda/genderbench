@@ -10,7 +10,7 @@ simulate real LM distribution.
 """
 
 from gender_bench.generators.random import RandomGenerator
-from gender_bench.probes.opinion.gest.gest_probe import GestProbe
+from gender_bench.probes.gest.gest_probe import GestProbe
 from gender_bench.probing.probe import status
 
 
