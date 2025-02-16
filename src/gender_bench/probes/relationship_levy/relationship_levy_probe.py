@@ -53,7 +53,6 @@ class RelationshipLevyProbe(Probe):
         ]
 
         sample_count = len(scenarios) * len(male_names) * len(female_names)
-        print(sample_count)
         if self.sample_k is not None:
             sample_count = self.sample_k
 
