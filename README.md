@@ -60,15 +60,11 @@ results for a selected set of LLMs with the most recent version of
 This is the documentation for developers that can help you run the code and
 implement additional probes.
 
-## Usage
+## Licensing & Fair Use
 
-This section is for the researchers trying to run `GenderBench` on their own.
-`GenderBench` can be used to evaluate an arbitrary text generator, i.e.,
-anything that is able to call `generate(texts: list[str]) -> list[str]` method.
+Read our full [`LICENSE`](https://github.com/matus-pikuliak/gender_bench/blob/main/LICENSE) before using or sharing this repository.
 
-### Licensing & Fair Use
-
-- The **code** in this repository is licensed under the [MIT License](./LICENSE).
+- The **code** in this repository is licensed under the MIT License.
 - Some **resources** in the `src/gender_bench/resources` folder are used under
 **fair use** for research and educational purposes. See the appropriate
 `FAIR_USE.md` files for details.
@@ -77,6 +73,12 @@ under various additional licenses. See the appropriate `LICENSE` files.
 
 **Do not use or redistribute** the `resources` folder unless you verify that you
 comply with applicable laws.
+
+## Usage
+
+This section is for the researchers trying to run `GenderBench` on their own.
+`GenderBench` can be used to evaluate an arbitrary text generator, i.e.,
+anything that is able to call `generate(texts: list[str]) -> list[str]` method.
 
 ### Installation
 
@@ -241,15 +243,15 @@ situations, such as hiring.
 - `DiscriminationTamkin` - The model is asked to make a yes-or-no decision about 
 various questions (e.g., should a person get a loan, should a person get a job 
 offer). The gender of the person is specified. We study whether the model gives 
-better outcomes to any genders. [Documentation](./src/gender_bench/probes/discrimination_tamkin/README.md).
+better outcomes to any genders. [Documentation](https://gender-bench.readthedocs.io/en/latest/probes/discrimination_tamkin.html).
 
 - `HiringAn` - The model is asked about a candidate for a job. The candidate is 
 described using a gender-coded name. We study how the candidate's name 
-correlates with the stereotypical gender associated with the job. [Documentation](./src/gender_bench/probes/hiring_an/README.md).
+correlates with the stereotypical gender associated with the job. [Documentation](https://gender-bench.readthedocs.io/en/latest/probes/hiring_an.html).
 
 - `HiringBloomberg` - The model is asked to select candidates from a list of
 CVs. The CVs contain gender-coded names. We study which genders tend to win for
-different occupations. [Documentation](./src/gender_bench/probes/hiring_bloomberg/README.md).
+different occupations. [Documentation](https://gender-bench.readthedocs.io/en/latest/probes/hiring_bloomberg.html).
 
 ### Creative Writing
 
@@ -259,16 +261,16 @@ creative writing. Writing is a common LLM application.
 
 - `GestCreative` - We ask the model to generate a character profile for a novel 
 based on a motto. The mottos are associated with various gender stereotypes. We 
-study what gender the model uses for the character. [Documentation](./src/gender_bench/probes/gest_creative/README.md).
+study what gender the model uses for the character. [Documentation](https://gender-bench.readthedocs.io/en/latest/probes/gest_creative.html).
 
 - `Inventories` - We ask the model to generate a character profile based on a 
 simple description. The descriptions come from gender inventories and are 
 associated with various gender stereotypes. We study what gender does the model 
-use for the character. [Documentation](./src/gender_bench/probes/inventories/README.md).
+use for the character. [Documentation](https://gender-bench.readthedocs.io/en/latest/probes/inventories.html).
 
 - `JobsLum` - We ask the model to generate a character profile based on an 
 occupation. We compare the gender of the generated characters with the 
-stereotypical gender of the occupations. [Documentation](./src/gender_bench/probes/jobs_lum/README.md).
+stereotypical gender of the occupations. [Documentation](https://gender-bench.readthedocs.io/en/latest/probes/jobs_lum.html).
 
 ### Manifested Opinions
 
@@ -278,18 +280,18 @@ reflect typical use cases, it provides insight into the underlying ideologies
 embedded in the model.
 
 - `BBQ` - The BBQ dataset contains tricky multiple-choice questions that test 
-whether the model uses gender-stereotypical reasoning. [Documentation](./src/gender_bench/probes/bbq/README.md).
+whether the model uses gender-stereotypical reasoning. [Documentation](https://gender-bench.readthedocs.io/en/latest/probes/bbq.html).
 
 - `Direct` - We ask the model whether it agrees with various stereotypical 
-statements about genders. [Documentation](./src/gender_bench/probes/direct/README.md).
+statements about genders. [Documentation](https://gender-bench.readthedocs.io/en/latest/probes/direct.html).
 
 - `Gest` - We ask the model questions that can be answered using either logical 
 or stereotypical reasoning. We observe how often stereotypical reasoning is 
-used. [Documentation](./src/gender_bench/probes/gest/README.md).
+used. [Documentation](https://gender-bench.readthedocs.io/en/latest/probes/gest.html).
 
 - `RelationshipLevy` - We ask the model about everyday relationship conflicts
 between a married couple. We study how often the model thinks that either men
-or women are in the right. [Documentation](./src/gender_bench/probes/relationship_levy/README.md).
+or women are in the right. [Documentation](https://gender-bench.readthedocs.io/en/latest/probes/relationship_levy.html).
 
 ### Affective Computing
 
@@ -300,12 +302,12 @@ in unintended unequal treatment.
 
 - `Dreaddit` - We ask the model to predict how stressed the author of a text is. 
 We study whether the model exhibits different perceptions of stress based on the 
-gender of the author. [Documentation](./src/gender_bench/probes/dreaddit/README.md).
+gender of the author. [Documentation](https://gender-bench.readthedocs.io/en/latest/probes/dreaddit.html).
 
 - `Isear` - We ask the model to role-play as a person of a specific gender and 
 inquire about its emotional response to various events. We study whether the 
 model exhibits different perceptions of emotionality based on gender. 
-[Documentation](./src/gender_bench/probes/isear/README.md).
+[Documentation](https://gender-bench.readthedocs.io/en/latest/probes/isear.html).
 
 ### Healthcare
 
@@ -315,4 +317,4 @@ ensure fair and safe functioning of the models.
 
 - `DiversityMedQa` - We ask the model the same medical question for either a
 male or a female patient. We study whether the gender of the patient affects
-the accuracy of the model. [Documentation](./src/gender_bench/probes/diversitymedqa/README.md).
+the accuracy of the model. [Documentation](https://gender-bench.readthedocs.io/en/latest/probes/diversitymedqa.html).
