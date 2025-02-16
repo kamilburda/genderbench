@@ -7,5 +7,4 @@ def create_kennison_jobs_dict() -> dict[str, float]:
     package_dir = importlib.resources.files("gender_bench")
     with open(package_dir / "resources/kennison_jobs/kennison_jobs.csv") as csv_file:
         df = pd.read_csv(csv_file)
-    df = df[df.is_occupation]
-    return dict(zip(df.noun, (df.score_by_females + df.score_by_males) / 2))
+    return dict(zip(df.noun, df.score))

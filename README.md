@@ -66,6 +66,18 @@ This section is for the researchers trying to run `GenderBench` on their own.
 `GenderBench` can be used to evaluate an arbitrary text generator, i.e.,
 anything that is able to call `generate(texts: list[str]) -> list[str]` method.
 
+### Licensing & Fair Use
+
+- The **code** in this repository is licensed under the [MIT License](./LICENSE).
+- Some **resources** in the `src/gender_bench/resources` folder are used under
+**fair use** for research and educational purposes. See the appropriate
+`FAIR_USE.md` files for details.
+-  Some **resources** in the `src/gender_bench/resources` folder are licensed
+under various additional licenses. See the appropriate `LICENSE` files.
+
+**Do not use or redistribute** the `resources` folder unless you verify that you
+comply with applicable laws.
+
 ### Installation
 
 1. Install the package from this repository:
