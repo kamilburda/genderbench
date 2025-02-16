@@ -13,4 +13,16 @@ setup(
     package_dir={"": "src"},
     packages=find_namespace_packages(where="src"),
     include_package_data=True,
+    description="Evaluation suite for gender biases in LLMs.",
+    long_description=open("README.md").read(),
+    long_description_content_type="text/markdown",
+    author="Matúš Pikuliak",
+    author_email="matus.pikuliak@gmail.com",
+    url="https://github.com/matus-pikuliak/gender_bench",
+    license="See README",
+    project_urls={
+        "Documentation": "https://gender-bench.readthedocs.io/en/latest/",
+        "Source Code": "https://github.com/matus-pikuliak/gender_bench",
+    },
+    keywords="gender-bias fairness-ai llms llms-benchmarking",
 )
