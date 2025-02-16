@@ -85,7 +85,7 @@ anything that is able to call `generate(texts: list[str]) -> list[str]` method.
 1. Install the package from this repository:
 
 ```
-pip install gender_bench
+pip install gender-bench
 ```
 
 2. Set up the config `.env` file. Follow the example file.
