@@ -10,6 +10,8 @@
     <script>
 
         function createChart(canvasId, model_names, intervals, ranges) {
+
+            intervals = intervals.map(item => Array.isArray(item) ? item : [item, item]);
     
             const allPoints = Object.values(ranges).flat().flat();
             const mmin = Math.min(...allPoints);

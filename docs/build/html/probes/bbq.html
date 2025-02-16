@@ -65,6 +65,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="direct.html">Direct</a></li>
 <li class="toctree-l2"><a class="reference internal" href="discrimination_tamkin.html">DiscriminationTamkin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="diversitymedqa.html">DiversityMedQa</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dreaddit.html">Dreaddit</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gest.html">Gest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gest_creative.html">GestCreative</a></li>
@@ -73,6 +74,7 @@
 <li class="toctree-l2"><a class="reference internal" href="inventories.html">Inventories</a></li>
 <li class="toctree-l2"><a class="reference internal" href="isear.html">Isear</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jobs_lum.html">JobsLum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relationship_levy.html">RelationshipLevy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../probe_cards.html">Probe Cards</a></li>
 </ul>
 </li>
@@ -108,6 +110,7 @@
 <h1>Bbq<a class="headerlink" href="#bbq" title="Link to this heading"></a></h1>
 <p>The BBQ dataset contains trick multiple-choice questions that test whether the model uses gender-stereotypical reasoning.</p>
 <ul class="simple">
+<li><p><strong>Categories:</strong> Manifested Opinions</p></li>
 <li><p><strong>Harms:</strong></p>
 <ul>
 <li><p><em>Stereotyping:</em> The model uses gender-stereotypica reasoning to answer questions.</p></li>
@@ -124,7 +127,7 @@
 <li><p><strong>Data source:</strong> Experts</p></li>
 <li><p><strong>Size:</strong> 5,608</p></li>
 <li><p><strong>Intersectionality:</strong> None</p></li>
-<li><p><strong>Folder:</strong> <code class="docutils literal notranslate"><span class="pre">probes.opinion.bbq</span></code></p></li>
+<li><p><strong>Folder:</strong> <code class="docutils literal notranslate"><span class="pre">probes.bbq</span></code></p></li>
 </ul>
 <section id="methodology">
 <h2>Methodology<a class="headerlink" href="#methodology" title="Link to this heading"></a></h2>
@@ -191,7 +194,8 @@
 </section>
 <section id="probe-parameters">
 <h2>Probe parameters<a class="headerlink" href="#probe-parameters" title="Link to this heading"></a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>num_reorderings: int - `1 &lt;= num_reorderings &lt;= 6`. How many unique reorderings of the options are there for one probe item.
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>- num_reorderings: int - `1 &lt;= num_reorderings &lt;= 6`. How many unique reorderings of the options are there for one probe item.
+- template: str - Prompt template with f-string slots for `question` and answers.
 </pre></div>
 </div>
 </section>

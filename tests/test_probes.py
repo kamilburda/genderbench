@@ -3,6 +3,7 @@ from gender_bench.probes import (
     BbqProbe,
     DirectProbe,
     DiscriminationTamkinProbe,
+    DiversityMedQaProbe,
     DreadditProbe,
     GestCreativeProbe,
     GestProbe,
@@ -11,13 +12,13 @@ from gender_bench.probes import (
     InventoriesProbe,
     IsearProbe,
     JobsLumProbe,
+    RelationshipLevyProbe,
 )
-from gender_bench.probes.opinion.gest.gest_templates import GestTemplate1
 from gender_bench.probing.harness import Harness
 
 
 def test_isear():
-    probe = IsearProbe(calculate_cis=False)
+    probe = IsearProbe(calculate_cis=False, log_strategy="no")
     generator = RandomGenerator(probe.emotions)
     probe.run(generator)
     print(probe.__class__, probe.metrics, end="\n\n")
@@ -27,7 +28,9 @@ def test_isear():
 def test_gest_creative():
     generator = RandomGenerator(["she", "he", "..."])
     probe = GestCreativeProbe(
-        template=GestCreativeProbe.templates[0], num_repetitions=10, calculate_cis=False
+        num_repetitions=10,
+        calculate_cis=False,
+        log_strategy="no",
     )
     probe.run(generator)
     print(probe.__class__, probe.metrics, end="\n\n")
@@ -38,7 +41,9 @@ def test_gest_creative():
 def test_inventories():
     generator = RandomGenerator(["she", "he", "..."])
     probe = InventoriesProbe(
-        template=InventoriesProbe.templates[0], num_repetitions=100, calculate_cis=False
+        num_repetitions=100,
+        calculate_cis=False,
+        log_strategy="no",
     )
     probe.run(generator)
     print(probe.__class__, probe.metrics, end="\n\n")
@@ -49,7 +54,9 @@ def test_inventories():
 def test_jobs_lum():
     generator = RandomGenerator(["she", "he", "..."])
     probe = JobsLumProbe(
-        template=JobsLumProbe.templates[0], num_repetitions=100, calculate_cis=False
+        num_repetitions=100,
+        calculate_cis=False,
+        log_strategy="no",
     )
     probe.run(generator)
     print(probe.__class__, probe.metrics, end="\n\n")
@@ -59,7 +66,7 @@ def test_jobs_lum():
 
 def test_discrimination_tamkin():
     generator = RandomGenerator(["yes", "no", "..."])
-    probe = DiscriminationTamkinProbe(calculate_cis=False)
+    probe = DiscriminationTamkinProbe(calculate_cis=False, log_strategy="no")
     probe.run(generator)
     print(probe.__class__, probe.metrics, end="\n\n")
     assert abs(probe.metrics["max_diff"]) < 0.03
@@ -70,7 +77,7 @@ def test_hiring_an():
     generator = RandomGenerator(
         ["regret to inform you", "you have been selected", "..."]
     )
-    probe = HiringAnProbe(sample_k=20_000, calculate_cis=False)
+    probe = HiringAnProbe(sample_k=20_000, calculate_cis=False, log_strategy="no")
     probe.run(generator)
     print(probe.__class__, probe.metrics, end="\n\n")
     assert abs(probe.metrics["diff_acceptance_rate"]) < 0.03
@@ -79,7 +86,7 @@ def test_hiring_an():
 
 def test_hiring_bloomberg():
     generator = RandomGenerator(["A1", "A2", "A3", "A4", "B1", "B2", "B3", "B4", "..."])
-    probe = HiringBloombergProbe(calculate_cis=False)
+    probe = HiringBloombergProbe(calculate_cis=False, log_strategy="no")
     probe.names = {
         "A1": ("male", "asian"),
         "A2": ("male", "asian"),
@@ -99,7 +106,7 @@ def test_hiring_bloomberg():
 
 def test_dreaddit():
     generator = RandomGenerator(["yes", "no", "..."])
-    probe = DreadditProbe(num_repetitions=5, calculate_cis=False)
+    probe = DreadditProbe(num_repetitions=5, calculate_cis=False, log_strategy="no")
     probe.run(generator)
     print(probe.__class__, probe.metrics, end="\n\n")
     assert abs(probe.metrics["max_diff_tpr"]) < 0.03
@@ -108,7 +115,7 @@ def test_dreaddit():
 
 def test_bbq():
     generator = RandomGenerator(["(a)", "(b)", "(c)", "..."])
-    probe = BbqProbe(calculate_cis=False)
+    probe = BbqProbe(calculate_cis=False, log_strategy="no")
     probe.run(generator)
     print(probe.__class__, probe.metrics, end="\n\n")
     assert abs(probe.metrics["stereotype_rate"] - 1 / 3) < 0.03
@@ -117,7 +124,7 @@ def test_bbq():
 
 def test_direct():
     generator = RandomGenerator(["yes", "no", "..."])
-    probe = DirectProbe(num_repetitions=10, calculate_cis=False)
+    probe = DirectProbe(num_repetitions=10, calculate_cis=False, log_strategy="no")
     probe.run(generator)
     print(probe.__class__, probe.metrics, end="\n\n")
     assert abs(probe.metrics["sbic_fail_rate"] - 1 / 2) < 0.03
@@ -125,20 +132,38 @@ def test_direct():
 
 def test_gest():
     generator = RandomGenerator(["(a)", "(b)", "(c)", "..."])
-    probe = GestProbe(template=GestTemplate1, calculate_cis=False)
+    probe = GestProbe(calculate_cis=False, log_strategy="no")
     probe.run(generator)
     print(probe.__class__, probe.metrics, end="\n\n")
     assert abs(probe.metrics["stereotype_rate"]) < 0.03
-    assert abs(probe.metrics["frequency_male_option"] - 1 / 4) < 0.03
+    assert abs(probe.metrics["frequency_male_option"] - 1 / 3) < 0.03
+
+
+def test_diversitymedqa():
+    generator = RandomGenerator(["(a)", "(b)", "(c)", "..."])
+    probe = DiversityMedQaProbe(calculate_cis=False, log_strategy="no")
+    probe.run(generator)
+    print(probe.__class__, probe.metrics, end="\n\n")
+    assert abs(probe.metrics["success_rate_diff"]) < 0.03
+    assert abs(probe.metrics["male_success_rate"] - 1 / 5) < 0.03
+
+
+def test_relationship_levy():
+    generator = RandomGenerator(["(a)", "(b)", "..."])
+    probe = RelationshipLevyProbe(calculate_cis=False, log_strategy="no", sample_k=5000)
+    probe.run(generator)
+    print(probe.__class__, probe.metrics, end="\n\n")
+    assert abs(probe.metrics["success_rate_diff_abs"]) < 0.03
+    assert abs(probe.metrics["male_success_rate"] - 1 / 2) < 0.03
 
 
 def test_marks():
     generator = RandomGenerator(["(a)", "(b)", "(c)", "..."])
-    probe = GestProbe(template=GestTemplate1, calculate_cis=False)
+    probe = GestProbe(calculate_cis=False, log_strategy="no")
     probe.run(generator)
     assert probe.marks["stereotype_rate"]["mark_value"] == 0
 
-    probe = BbqProbe(calculate_cis=True)
+    probe = BbqProbe(calculate_cis=True, log_strategy="no")
     probe.run(generator)
     assert probe.marks["stereotype_rate"]["mark_value"] == 2
 
@@ -158,7 +183,7 @@ def test_harness():
         def log_metrics(self):
             pass
 
-    harness = TestHarness(calculate_cis=False)
+    harness = TestHarness(calculate_cis=False, log_strategy="no")
     generator = RandomGenerator(["yes", "no", "..."])
     marks, _ = harness.run(generator)
     print(marks)

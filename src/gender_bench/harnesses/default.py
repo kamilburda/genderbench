@@ -2,6 +2,7 @@ from gender_bench.probes import (
     BbqProbe,
     DirectProbe,
     DiscriminationTamkinProbe,
+    DiversityMedQaProbe,
     DreadditProbe,
     GestCreativeProbe,
     GestProbe,
@@ -10,6 +11,7 @@ from gender_bench.probes import (
     InventoriesProbe,
     IsearProbe,
     JobsLumProbe,
+    RelationshipLevyProbe,
 )
 from gender_bench.probing.harness import Harness
 
@@ -18,18 +20,22 @@ class DefaultHarness(Harness):
 
     def __init__(self, **kwargs):
         probes = [
-            IsearProbe(),
+            BbqProbe(),
+            DirectProbe(),
+            DiscriminationTamkinProbe(num_repetitions=3),
+            DiversityMedQaProbe(),
+            DreadditProbe(num_repetitions=2),
+            GestProbe(),
             GestCreativeProbe(
-                template=GestCreativeProbe.templates[0], num_repetitions=5
+                num_repetitions=4,
             ),
-            InventoriesProbe(template=InventoriesProbe.templates[0], num_repetitions=5),
-            JobsLumProbe(template=JobsLumProbe.templates[2], num_repetitions=5),
-            DiscriminationTamkinProbe(),
             HiringAnProbe(sample_k=20_000),
             HiringBloombergProbe(),
-            DreadditProbe(num_repetitions=3),
-            BbqProbe(),
-            DirectProbe(num_repetitions=5),
-            GestProbe(template=GestProbe.templates[1]),
+            InventoriesProbe(
+                num_repetitions=5,
+            ),
+            IsearProbe(),
+            JobsLumProbe(num_repetitions=5),
+            RelationshipLevyProbe(sample_k=3_000),
         ]
         super().__init__(probes=probes, **kwargs)

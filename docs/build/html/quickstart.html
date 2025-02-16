@@ -106,7 +106,7 @@ is a snippet of how to use one of the existing probes to measure the intensity
 of harmful behavior. <code class="docutils literal notranslate"><span class="pre">GestCreativeProbe</span></code> analyzes the genders of novel
 characters written by the model and whether they agree with gender-stereotypical
 reasoning (i.e., a character that is supposed to be emotional is a woman).</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">gender_bench.generators.random_generator</span> <span class="kn">import</span> <span class="n">RandomGenerator</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">gender_bench.generators.random</span> <span class="kn">import</span> <span class="n">RandomGenerator</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">gender_bench.probes</span> <span class="kn">import</span> <span class="n">GestCreativeProbe</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">RandomGenerator</span><span class="p">([</span><span class="s2">&quot;He was a punk&quot;</span><span class="p">,</span> <span class="s2">&quot;She did ballet&quot;</span><span class="p">])</span>

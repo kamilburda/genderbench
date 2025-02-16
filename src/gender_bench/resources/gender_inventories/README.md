@@ -1,4 +1,10 @@
-# BSRI
+## Dataset Attribution
+
+The sources of these inventories are described below. The use of these
+inventories is believed to be *fair use* for the reasons stated in `FAIR_USE.md`
+files.
+
+## BSRI
 
 Stereotypes were extracted from _The measurment of psychological androgyny_
 [[Sandra L. Bem 1974]](https://www.bibb.de/dokumente/pdf/AB26_WBT3_Vertiefung_Bem-1974.pdf).
@@ -14,13 +20,13 @@ more desirable in American society for a man than for a woman, and it qualified
 as feminine if it was judged to be more desirable for a woman than for a man.
 ```
 
-# EPAQ
+## EPAQ
 
 Stereotypes were extracted from _Interpersonal Phenomenology as a Function of
 Sexual Orientation, Sex, Sentiment, and Trait Categories in Long-Term Dyadic
 Relationships_ [[Schullo & Alperson 1984]](https://psycnet.apa.org/record/1985-14446-001).
 
-# Gaucher
+## Gaucher
 
 Stereotypes were extracted from _Evidence That Gendered Wording in Job
 Advertisements Exists and Sustains Gender Inequalit_ [[Gaucher et al 2011]](https://ideas.wharton.upenn.edu/wp-content/uploads/2018/07/Gaucher-Friesen-Kay-2011.pdf).

@@ -1,1 +1,1 @@
-.. mdinclude:: ../../../src/gender_bench/probes/affective/isear/README.md
+.. mdinclude:: ../../../src/gender_bench/probes/isear/README.md

@@ -19,7 +19,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Probe Cards" href="../probe_cards.html" />
+    <link rel="next" title="RelationshipLevy" href="relationship_levy.html" />
     <link rel="prev" title="Isear" href="isear.html" /> 
 </head>
 
@@ -51,6 +51,7 @@
 <li class="toctree-l2"><a class="reference internal" href="bbq.html">Bbq</a></li>
 <li class="toctree-l2"><a class="reference internal" href="direct.html">Direct</a></li>
 <li class="toctree-l2"><a class="reference internal" href="discrimination_tamkin.html">DiscriminationTamkin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="diversitymedqa.html">DiversityMedQa</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dreaddit.html">Dreaddit</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gest.html">Gest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gest_creative.html">GestCreative</a></li>
@@ -71,6 +72,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#limitations-improvements">Limitations / Improvements</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="relationship_levy.html">RelationshipLevy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../probe_cards.html">Probe Cards</a></li>
 </ul>
 </li>
@@ -106,6 +108,7 @@
 <h1>JobsLum<a class="headerlink" href="#jobslum" title="Link to this heading"></a></h1>
 <p>We ask the model to generate a character profile based on an occupation. We compare the gender of the generated characters with the stereotypically gender associated with the occupations.</p>
 <ul class="simple">
+<li><p><strong>Categories:</strong> Creative Writing</p></li>
 <li><p><strong>Harms:</strong></p>
 <ul>
 <li><p><em>Stereotyping:</em> The model tends to select the gender for a fictional character based on stereotypical reasoning. For example, the character that is supposed to be a nurse is female.</p></li>
@@ -123,7 +126,7 @@
 <li><p><strong>Data source:</strong> Human annotators</p></li>
 <li><p><strong>Size:</strong> 339</p></li>
 <li><p><strong>Intersectionality:</strong> None</p></li>
-<li><p><strong>Folder:</strong> <code class="docutils literal notranslate"><span class="pre">probes.creative.inventories</span></code></p></li>
+<li><p><strong>Folder:</strong> <code class="docutils literal notranslate"><span class="pre">probes.inventories</span></code></p></li>
 </ul>
 <section id="methodology">
 <h2>Methodology<a class="headerlink" href="#methodology" title="Link to this heading"></a></h2>
@@ -182,8 +185,7 @@ I am writing a novel and I need a character that works as a/an {job}. Please wri
 </section>
 <section id="probe-parameters">
 <h2>Probe parameters<a class="headerlink" href="#probe-parameters" title="Link to this heading"></a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>- template: str - A template with a curly braces placeholder for `job`. There are three templates that can be accessed via
-`JobsLum.templates`.
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>- template: str - Prompt template with f-string slots for `job`.
 </pre></div>
 </div>
 </section>
@@ -201,7 +203,7 @@ I am writing a novel and I need a character that works as a/an {job}. Please wri
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="isear.html" class="btn btn-neutral float-left" title="Isear" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../probe_cards.html" class="btn btn-neutral float-right" title="Probe Cards" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="relationship_levy.html" class="btn btn-neutral float-right" title="RelationshipLevy" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

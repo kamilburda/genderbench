@@ -54,10 +54,11 @@
 <li class="toctree-l2"><a class="reference internal" href="gender_bench.generators.generator.Generator.html">Generators</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Harness</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#gender_bench.probing.harness.Harness"><code class="docutils literal notranslate"><span class="pre">Harness</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#gender_bench.probing.harness.Harness.metrics"><code class="docutils literal notranslate"><span class="pre">Harness.metrics</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#gender_bench.probing.harness.Harness.marks"><code class="docutils literal notranslate"><span class="pre">Harness.marks</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gender_bench.probing.harness.Harness.results"><code class="docutils literal notranslate"><span class="pre">Harness.results</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#gender_bench.probing.harness.Harness.uuid"><code class="docutils literal notranslate"><span class="pre">Harness.uuid</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#gender_bench.probing.harness.Harness.log_results"><code class="docutils literal notranslate"><span class="pre">Harness.log_results()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gender_bench.probing.harness.Harness.marks"><code class="docutils literal notranslate"><span class="pre">Harness.marks</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gender_bench.probing.harness.Harness.metrics"><code class="docutils literal notranslate"><span class="pre">Harness.metrics</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#gender_bench.probing.harness.Harness.run"><code class="docutils literal notranslate"><span class="pre">Harness.run()</span></code></a></li>
 </ul>
 </li>
@@ -117,22 +118,11 @@ variable <cite>LOG_DIR</cite> is used instead.</p></li>
 </dd>
 </dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="gender_bench.probing.harness.Harness.metrics">
-<span class="sig-name descname"><span class="pre">metrics</span></span><a class="headerlink" href="#gender_bench.probing.harness.Harness.metrics" title="Link to this definition"></a></dt>
-<dd><p>Calculated metrics. Available only after
-<cite>run</cite> was run.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>dict[str, float]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="gender_bench.probing.harness.Harness.marks">
-<span class="sig-name descname"><span class="pre">marks</span></span><a class="headerlink" href="#gender_bench.probing.harness.Harness.marks" title="Link to this definition"></a></dt>
-<dd><p>Calculated marks. Available only after
-<cite>run</cite> was run.</p>
+<dt class="sig sig-object py" id="gender_bench.probing.harness.Harness.results">
+<span class="sig-name descname"><span class="pre">results</span></span><a class="headerlink" href="#gender_bench.probing.harness.Harness.results" title="Link to this definition"></a></dt>
+<dd><p>Stores all the results from the probes. Keys
+are probe class names, values are dictionaries with necessary
+information about the results of each probe.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dict[str, dict]</p>
@@ -153,8 +143,30 @@ variable <cite>LOG_DIR</cite> is used instead.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="gender_bench.probing.harness.Harness.log_results">
-<span class="sig-name descname"><span class="pre">log_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gender_bench.probing.harness.Harness.log_results" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">log_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">probe_results</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gender_bench.probing.harness.Harness.log_results" title="Link to this definition"></a></dt>
 <dd><p>Log calculated <cite>marks</cite> and <cite>metrics</cite> into a file.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="gender_bench.probing.harness.Harness.marks">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">marks</span></span><a class="headerlink" href="#gender_bench.probing.harness.Harness.marks" title="Link to this definition"></a></dt>
+<dd><p>Dictionary of all the marks for individual probes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, dict]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="gender_bench.probing.harness.Harness.metrics">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">metrics</span></span><a class="headerlink" href="#gender_bench.probing.harness.Harness.metrics" title="Link to this definition"></a></dt>
+<dd><p>Dictionary of all the metrics for individual probes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, dict]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
