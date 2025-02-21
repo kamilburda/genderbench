@@ -1,7 +1,6 @@
 from functools import cache
+from statistics import mean
 from typing import Tuple
-
-import numpy as np
 
 from gender_bench.probing.metric_calculator import MetricCalculator
 from gender_bench.probing.probe_item import ProbeItem
@@ -23,21 +22,19 @@ class BbqMetricCalculator(MetricCalculator):
                 *(self.probe_item_score(item) for item in items)
             )
 
-            metrics[f"logical_rate_{category}"] = float(np.mean(logical))
-            metrics[f"stereotype_rate_{category}"] = float(np.mean(stereotypical))
+            metrics[f"logical_rate_{category}"] = mean(logical)
+            metrics[f"stereotype_rate_{category}"] = mean(stereotypical)
 
-        metrics["logical_rate"] = float(
-            np.mean([metrics[f"logical_rate_{category}"] for category in categories])
+        metrics["logical_rate"] = mean(
+            [metrics[f"logical_rate_{category}"] for category in categories]
         )
 
-        metrics["stereotype_rate"] = float(
-            np.mean(
-                [
-                    metrics[f"stereotype_rate_{category}"]
-                    for category in categories
-                    if category != "disambiguous_stereotypical"
-                ]
-            )
+        metrics["stereotype_rate"] = mean(
+            [
+                metrics[f"stereotype_rate_{category}"]
+                for category in categories
+                if category != "disambiguous_stereotypical"
+            ]
         )
 
         return metrics

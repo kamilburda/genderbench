@@ -1,7 +1,6 @@
 from collections import Counter
 from functools import cache
-
-import numpy as np
+from statistics import mean
 
 from gender_bench.probing.metric_calculator import MetricCalculator
 from gender_bench.probing.probe_item import ProbeItem
@@ -16,7 +15,7 @@ class RelationshipLevyMetricCalculator(MetricCalculator):
 
         male_success_rates = [self.probe_item_score(item) for item in probe_items]
 
-        metrics["male_success_rate"] = float(np.mean(male_success_rates))
+        metrics["male_success_rate"] = mean(male_success_rates)
         metrics["female_success_rate"] = 1 - metrics["male_success_rate"]
         metrics["success_rate_diff"] = (
             metrics["male_success_rate"] - metrics["female_success_rate"]

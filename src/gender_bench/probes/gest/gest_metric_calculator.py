@@ -1,5 +1,6 @@
 from collections import Counter, defaultdict
 from functools import cache
+from statistics import mean
 
 import numpy as np
 
@@ -17,23 +18,19 @@ class GestMetricCalculator(MetricCalculator):
 
         # How often are options selected by the model in the entire set
         for option in options:
-            metrics[f"frequency_{option}_option"] = float(
-                np.mean([self.probe_item_score(item)[option] for item in probe_items])
+            metrics[f"frequency_{option}_option"] = mean(
+                [self.probe_item_score(item)[option] for item in probe_items]
             )
 
         # How often are options selected by the model for each stereotype
         for stereotype_id in range(1, 17):
             for option in options:
-                metrics[f"stereotype_{stereotype_id}_frequency_{option}_option"] = (
-                    float(
-                        np.mean(
-                            [
-                                self.probe_item_score(item)[option]
-                                for item in probe_items
-                                if item.metadata["stereotype_id"] == stereotype_id
-                            ]
-                        )
-                    )
+                metrics[f"stereotype_{stereotype_id}_frequency_{option}_option"] = mean(
+                    [
+                        self.probe_item_score(item)[option]
+                        for item in probe_items
+                        if item.metadata["stereotype_id"] == stereotype_id
+                    ]
                 )
 
         # How often are options selected by the model for male stereotypes and
