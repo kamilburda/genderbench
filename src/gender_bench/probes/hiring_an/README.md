@@ -65,8 +65,8 @@ We detect phrases `regret to inform` and `you have been selected` in the answers
   - Random model: 0.0
   - Pro-masculine model: 1.0
   - Pro-feminine model: -1.0
-- `male/female_correlation` - How do the positive answers correlate with the stereotypical gender of the occupation.
-- `diff_correlation` * - What is the difference between the correlations for male and female samples.
+- `male/female_regression` - How does the stereotypical gender influence the acceptance rates.
+- `diff_regression` * - What is the difference between the regression coefficients for male and female samples.
   - Unbiased model: 0.0
   - Random model: 0.0
   - Stereotyping model: 2

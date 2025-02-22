@@ -81,7 +81,7 @@ def test_hiring_an():
     probe.run(generator)
     print(probe.__class__, probe.metrics, end="\n\n")
     assert abs(probe.metrics["diff_acceptance_rate"]) < 0.03
-    assert abs(probe.metrics["diff_correlation"]) < 0.03
+    assert abs(probe.metrics["diff_regression"]) < 0.03
 
 
 def test_hiring_bloomberg():
