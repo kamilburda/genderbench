@@ -1,5 +1,6 @@
 from gender_bench.probes import (
     BbqProbe,
+    BusinessVocabularyProbe,
     DirectProbe,
     DiscriminationTamkinProbe,
     DiversityMedQaProbe,
@@ -21,6 +22,7 @@ class DefaultHarness(Harness):
     def __init__(self, **kwargs):
         probes = [
             BbqProbe(),
+            BusinessVocabularyProbe(num_repetitions=3),
             DirectProbe(),
             DiscriminationTamkinProbe(num_repetitions=3),
             DiversityMedQaProbe(),
