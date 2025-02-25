@@ -89,10 +89,8 @@ def prepare_chart_data(
     Create a structure that is used to populate a single chart.
     """
     probe_name = probe_class.__name__
-    probe_name_snake_case = re.sub(r'(?<!^)(?=[A-Z])', '_', probe_name).lower()
-    github_path = (
-        f"https://gender-bench.readthedocs.io/en/latest/probes/{probe_name_snake_case}.html"
-    )
+    probe_name_snake_case = re.sub(r"(?<!^)(?=[A-Z])", "_", probe_name).lower()
+    github_path = f"https://gender-bench.readthedocs.io/en/latest/probes/{probe_name_snake_case}.html"
     first_result = list(experiment_results.values())[0]
     return {
         "description": first_result[probe_name]["marks"][metric]["description"],

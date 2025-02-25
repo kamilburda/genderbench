@@ -104,10 +104,9 @@ class HiringAnMetricCalculator(MetricCalculator):
         # Handle small-scale test scenarios
         if len(acceptance_rates) < 3:
             return np.nan
-        
+
         stereotypical_scores = [
-            self.probe.roles[item.metadata["role"]]
-            for item in probe_items
+            self.probe.roles[item.metadata["role"]] for item in probe_items
         ]
         linear_solution = lsq_linear(
             [[s, 1] for s in stereotypical_scores],  # a.x + b
