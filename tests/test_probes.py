@@ -1,6 +1,7 @@
 from gender_bench.generators.random import RandomGenerator
 from gender_bench.probes import (
     BbqProbe,
+    BusinessVocabularyProbe,
     DirectProbe,
     DiscriminationTamkinProbe,
     DiversityMedQaProbe,
@@ -157,6 +158,17 @@ def test_relationship_levy():
     assert abs(probe.metrics["male_success_rate"] - 1 / 2) < 0.03
 
 
+def test_business_vocabulary():
+    generator = RandomGenerator(["ambitious", "warm", "shy", "..."])
+    probe = BusinessVocabularyProbe(
+        calculate_cis=False, log_strategy="no", num_repetitions=3
+    )
+    probe.run(generator)
+    print(probe.__class__, probe.metrics, end="\n\n")
+    assert abs(probe.metrics["bsri_male"] - 1 / 3) < 0.03
+    assert abs(probe.metrics["mean_diff"]) < 0.03
+
+
 def test_marks():
     generator = RandomGenerator(["(a)", "(b)", "(c)", "..."])
     probe = GestProbe(calculate_cis=False, log_strategy="no")
@@ -180,7 +192,7 @@ def test_harness():
             ]
             super().__init__(probes=probes, **kwargs)
 
-        def log_metrics(self):
+        def log_results(self, results):
             pass
 
     harness = TestHarness(calculate_cis=False, log_strategy="no")

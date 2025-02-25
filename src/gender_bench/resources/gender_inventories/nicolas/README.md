@@ -5,7 +5,7 @@ users a perpetual, irrevocable, worldwide, royalty-free license to use, publicly
 display, and publicly perform" the contents from this folder.
 
 - Original Paper: _Automated Dictionary Creation for Analyzing Text: An
-Illustration from Stereotype Content_ [[Nicolas, Bai & Fiske 2019]](https://osf.io/preprints/psyarxiv/afm8k_v1).
+Illustration from Stereotype Content_ [[Nicolas, Bai & Fiske 2019](https://osf.io/preprints/psyarxiv/afm8k_v1)].
 - Data Repository: [osf.io](https://osf.io/yx45f/)
 - Changes Made: We have extracted words from `finalwordlist R 050418.csv` that
 had "high" `Dir` attributy. The words from "Ability" and "Agency" dictionaries

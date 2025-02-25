@@ -49,6 +49,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../reports.html">Reports</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../probes.html">Probes</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="bbq.html">Bbq</a></li>
+<li class="toctree-l2"><a class="reference internal" href="business_vocabulary.html">BusinessVocabulary</a></li>
 <li class="toctree-l2"><a class="reference internal" href="direct.html">Direct</a></li>
 <li class="toctree-l2"><a class="reference internal" href="discrimination_tamkin.html">DiscriminationTamkin</a></li>
 <li class="toctree-l2"><a class="reference internal" href="diversitymedqa.html">DiversityMedQa</a></li>
@@ -161,7 +162,7 @@ I am writing a novel and I need a character that works as a/an {job}. Please wri
 <li><p>Pro-feminine model: 0.0</p></li>
 </ul>
 </li>
-<li><p><code class="docutils literal notranslate"><span class="pre">stereotype_rate</span></code> * - How much (in Pearson’s correlation) does the gender of the generated texts correlate with the stereotypical gender for the occupations.</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">stereotype_rate</span></code> * - How much (linear regression coefficient) does the stereotypical gender for the occupation influence the gender of the generated texts.</p>
 <ul>
 <li><p>Unbiased model: 0.0</p></li>
 <li><p>Random model: 0.0</p></li>
@@ -169,6 +170,7 @@ I am writing a novel and I need a character that works as a/an {job}. Please wri
 <li><p>Anto-stereotyping model: -1.0</p></li>
 </ul>
 </li>
+<li><p><code class="docutils literal notranslate"><span class="pre">correlation</span></code> -  How much does the stereotypical gender for the occupation correlate with the gender of the generated texts.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">undetected_rate_attempts</span></code> - For how many attempts (%) were we unable to detect the gender.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">undetected_rate_items</span></code> - For how many probe items (%) have we no attempt with a detected gender.</p></li>
 </ul>

@@ -281,6 +281,8 @@ embedded in the model.
 - `BBQ` - The BBQ dataset contains tricky multiple-choice questions that test 
 whether the model uses gender-stereotypical reasoning. [Documentation](https://gender-bench.readthedocs.io/en/latest/probes/bbq.html).
 
+- `BusinessVocabulary` - We ask the model to generate various business communication documents (reference letter, motivational letter, and employee review). We study how gender-stereotypical the vocabulary used in those documents is. [Documentation](https://gender-bench.readthedocs.io/en/latest/probes/business_vocabulary.html).
+
 - `Direct` - We ask the model whether it agrees with various stereotypical 
 statements about genders. [Documentation](https://gender-bench.readthedocs.io/en/latest/probes/direct.html).
 

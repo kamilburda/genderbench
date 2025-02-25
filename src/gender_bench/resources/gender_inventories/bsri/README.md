@@ -4,7 +4,7 @@ paper is believed to be *fair use* for the reasons stated in the `FAIR_USE.md`
 file.
 
 - Original Source: _The measurment of psychological androgyny_
-[[Sandra L. Bem 1974]](https://www.bibb.de/dokumente/pdf/AB26_WBT3_Vertiefung_Bem-1974.pdf).
+[[Bem 1974](https://www.bibb.de/dokumente/pdf/AB26_WBT3_Vertiefung_Bem-1974.pdf)].
 
 ### Definition
 Because the BSRI was founded on a conception of the sex-typed person as someone
