@@ -5,7 +5,7 @@
 1. Install the package from this repository:
 
 ```
-pip install git+https://github.com/matus-pikuliak/gender_bench
+pip install gender-bench
 cd gender_bench
 ```
 
@@ -28,7 +28,7 @@ reasoning (i.e., a character that is supposed to be emotional is a woman).
 >>> from gender_bench.probes import GestCreativeProbe
 
 >>> generator = RandomGenerator(["He was a punk", "She did ballet"])
->>> probe = GestCreativeProbe(template=GestCreativeProbe.templates[0], num_repetitions=10)
+>>> probe = GestCreativeProbe(num_repetitions=10)
 >>> marks, metrics = probe.run(generator)
 >>> print(marks)
 
