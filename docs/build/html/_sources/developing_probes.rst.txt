@@ -1,6 +1,10 @@
 Developing Probes
 =====================
 
+.. note::
+   See ``CONTRIBUTING.md`` in the repo for general instructions about how to
+   contribute to this project.
+
 `GenderBench` is designed so that developing new probes is as easy and seamless
 as possible. To develop a new probe, you have to create a new :ref:`api_probe`
 subclass with several additional elements. All the necessary files for a probe
