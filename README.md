@@ -88,10 +88,11 @@ anything that is able to call `generate(texts: list[str]) -> list[str]` method.
 pip install gender-bench
 ```
 
-2. Set up the config `.env` file. Follow the example file.
+2. Optionally, set the environment variables. Default values are shown below:
 
 ```
-cp .env.example .env
+# Directory where the logs are stored. Logs include probing results.
+export GENDER_BENCH_LOG_DIR=logs/
 ```
 
 ### Probes
