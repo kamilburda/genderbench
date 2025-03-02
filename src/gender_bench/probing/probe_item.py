@@ -67,3 +67,19 @@ class ProbeItem:
         d["prompts"] = [prompt.to_json_dict() for prompt in self.prompts]
         d["attempts"] = [attempt.to_json_dict() for attempt in self.attempts]
         return d
+
+    @classmethod
+    def from_json_dict(cls, json_dict):
+        prompts = [Prompt.from_json_dict(prompt) for prompt in json_dict["prompts"]]
+        prompt_uuids = {str(prompt.uuid): prompt for prompt in prompts}
+        item = ProbeItem(
+            prompts=prompts,
+            num_repetitions=json_dict["num_repetitions"],
+            metadata=json_dict["metadata"],
+        )
+        item.uuid = uuid.UUID(json_dict["uuid"])
+        item.attempts = [
+            Attempt.from_json_dict(attempt, prompt_uuids[attempt["prompt"]["uuid"]])
+            for attempt in json_dict["attempts"]
+        ]
+        return item

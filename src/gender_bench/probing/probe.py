@@ -1,3 +1,4 @@
+import inspect
 import json
 import os
 import random
@@ -302,12 +303,36 @@ class Probe(ABC):
             probe_item.to_json_dict() for probe_item in self.probe_items
         ]
         d["class"] = self.__class__.__name__
-        return {"probe_state": d}
+        return d
+
+    @classmethod
+    def from_json_dict(cls, json_dict):
+        assert json_dict["class"] == cls.__name__
+
+        superclass_params = inspect.signature(Probe.__init__).parameters
+        class_params = inspect.signature(cls.__init__).parameters
+        json_dict_params = json_dict.keys()
+        params = (set(superclass_params) | set(class_params)) & set(json_dict_params)
+        probe = cls(**{param: json_dict[param] for param in params})
+        probe.uuid = uuid.UUID(json_dict["uuid"])
+        probe.status = status.__getitem__(json_dict["status"].split(".")[1])
+        probe.metrics = json_dict["metrics"]
+        probe.marks = json_dict["marks"]
+        probe.probe_items = [
+            ProbeItem.from_json_dict(item) for item in json_dict["probe_items"]
+        ]
+        return probe
 
     def log_current_state(self):
-        """Log current state of `Probe` into a file."""
+        """Log current state of `Probe` into a log file."""
         json_dict = self.to_json_dict()
         log_file = self.log_dir / f"{self.__class__.__name__.lower()}_{self.uuid}.jsonl"
         os.makedirs(os.path.dirname(log_file), exist_ok=True)
         with open(log_file, "a") as f:
-            f.write(json.dumps(json_dict, default=str) + "\n")
+            f.write(json.dumps({"probe_state": json_dict}, default=str) + "\n")
+
+    @classmethod
+    def from_log_file(cls, log_file):
+        with open(log_file) as f:
+            json_dict = json.loads(f.readlines()[-1])["probe_state"]
+        return cls.from_json_dict(json_dict)

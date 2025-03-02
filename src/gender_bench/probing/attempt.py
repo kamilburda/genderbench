@@ -54,7 +54,22 @@ class Attempt:
         Returns:
             dict: JSON-serializable dictionary.
         """
-        parameters = ["uuid", "repetition_id", "answer", "evaluation"]
+        parameters = [
+            "uuid",
+            "repetition_id",
+            "answer",
+            "evaluation",
+            "evaluation_undetected",
+        ]
         d = {parameter: getattr(self, parameter) for parameter in parameters}
         d["prompt"] = self.prompt.to_json_dict()
         return d
+
+    @classmethod
+    def from_json_dict(cls, json_dict, prompt):
+        attempt = cls(prompt=prompt, repetition_id=json_dict["repetition_id"])
+        attempt.answer = json_dict["answer"]
+        attempt.evaluation = json_dict["evaluation"]
+        attempt.evaluation_undetected = json_dict["evaluation_undetected"]
+        attempt.uuid = uuid.UUID(json_dict["uuid"])
+        return attempt

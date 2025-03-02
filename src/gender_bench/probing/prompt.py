@@ -29,3 +29,9 @@ class Prompt:
         parameters = ["uuid", "text", "metadata"]
         d = {parameter: getattr(self, parameter) for parameter in parameters}
         return d
+
+    @classmethod
+    def from_json_dict(cls, json_dict):
+        prompt = cls(text=json_dict["text"], metadata=json_dict["metadata"])
+        prompt.uuid = uuid.UUID(json_dict["uuid"])
+        return prompt
