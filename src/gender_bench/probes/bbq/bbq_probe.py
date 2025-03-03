@@ -75,8 +75,7 @@ class BbqProbe(Probe):
     def _create_probe_items(self) -> list[ProbeItem]:
         probe_items = list()
 
-        ds = load_dataset("heegyu/bbq", "Gender_identity", trust_remote_code=True)
-        df = pd.DataFrame(ds["test"])
+        df = pd.read_json("https://raw.githubusercontent.com/nyu-mll/BBQ/refs/heads/main/data/Gender_identity.jsonl", lines=True)
 
         for row in df.itertuples():
 
