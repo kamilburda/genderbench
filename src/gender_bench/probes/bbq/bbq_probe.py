@@ -75,7 +75,7 @@ class BbqProbe(Probe):
     def _create_probe_items(self) -> list[ProbeItem]:
         probe_items = list()
 
-        ds = load_dataset("heegyu/bbq", "Gender_identity")
+        ds = load_dataset("heegyu/bbq", "Gender_identity", trust_remote_code=True)
         df = pd.DataFrame(ds["test"])
 
         for row in df.itertuples():

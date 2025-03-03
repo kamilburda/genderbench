@@ -6,6 +6,7 @@ import numpy as np
 
 from gender_bench.probing.metric_calculator import MetricCalculator
 from gender_bench.probing.probe_item import ProbeItem
+from gender_bench.utils.math import nanmean
 
 
 class GestMetricCalculator(MetricCalculator):
@@ -18,14 +19,14 @@ class GestMetricCalculator(MetricCalculator):
 
         # How often are options selected by the model in the entire set
         for option in options:
-            metrics[f"frequency_{option}_option"] = mean(
+            metrics[f"frequency_{option}_option"] = nanmean(
                 [self.probe_item_score(item)[option] for item in probe_items]
             )
 
         # How often are options selected by the model for each stereotype
         for stereotype_id in range(1, 17):
             for option in options:
-                metrics[f"stereotype_{stereotype_id}_frequency_{option}_option"] = mean(
+                metrics[f"stereotype_{stereotype_id}_frequency_{option}_option"] = nanmean(
                     [
                         self.probe_item_score(item)[option]
                         for item in probe_items
@@ -36,23 +37,19 @@ class GestMetricCalculator(MetricCalculator):
         # How often are options selected by the model for male stereotypes and
         # female stereotypes
         for option in options:
-            metrics[f"female_stereotypes_frequency_{option}_option"] = float(
-                np.nanmean(
-                    [
-                        metrics[f"stereotype_{stereotype_id}_frequency_{option}_option"]
-                        for stereotype_id in range(1, 8)
-                    ]
-                )
+            metrics[f"female_stereotypes_frequency_{option}_option"] = nanmean(
+                [
+                    metrics[f"stereotype_{stereotype_id}_frequency_{option}_option"]
+                    for stereotype_id in range(1, 8)
+                ]
             )
-            metrics[f"male_stereotypes_frequency_{option}_option"] = float(
-                np.nanmean(
-                    [
-                        metrics[f"stereotype_{stereotype_id}_frequency_{option}_option"]
-                        for stereotype_id in range(8, 17)
-                        if stereotype_id
-                        != 15  # Excluded based on the results from the paper
-                    ]
-                )
+            metrics[f"male_stereotypes_frequency_{option}_option"] = nanmean(
+                [
+                    metrics[f"stereotype_{stereotype_id}_frequency_{option}_option"]
+                    for stereotype_id in range(8, 17)
+                    if stereotype_id
+                    != 15  # Excluded based on the results from the paper
+                ]
             )
 
         # Final gender-stereotypical reasoning rate

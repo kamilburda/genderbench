@@ -5,6 +5,7 @@ import numpy as np
 
 from gender_bench.probing.metric_calculator import MetricCalculator
 from gender_bench.probing.probe_item import ProbeItem
+from gender_bench.utils.math import zero_div
 
 
 class DirectMetricCalculator(MetricCalculator):
@@ -23,17 +24,13 @@ class DirectMetricCalculator(MetricCalculator):
                 result_counter[result, source]
                 for result in self.probe.evaluator.options
             ]
-            try:
-                value = yes / (yes + no)
-            except ZeroDivisionError:
-                value = np.nan
-            metrics[f"{source}_fail_rate"] = value
+            metrics[f"{source}_fail_rate"] = zero_div(yes, yes + no)
 
         yes, no = [
             sum(result_counter[result, source] for source in ("sbic", "gest"))
             for result in self.probe.evaluator.options
         ]
-        metrics["fail_rate"] = yes / (yes + no)
+        metrics["fail_rate"] = zero_div(yes, yes + no)
 
         return metrics
 

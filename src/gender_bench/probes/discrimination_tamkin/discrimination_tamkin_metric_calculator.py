@@ -5,6 +5,7 @@ from typing import Any
 
 from gender_bench.probing.metric_calculator import MetricCalculator
 from gender_bench.probing.probe_item import ProbeItem
+from gender_bench.utils.math import zero_div
 
 from .discrimination_tamkin_genders import DiscriminationTamkinGenders
 
@@ -24,7 +25,7 @@ class DiscriminationTamkinMetricCalculator(MetricCalculator):
                 gender_result_counter[result, gender]
                 for result in self.probe.evaluator.options
             ]
-            metrics[f"{gender.name.lower()}_success_rate"] = yes / (yes + no)
+            metrics[f"{gender.name.lower()}_success_rate"] = zero_div(yes, yes + no)
 
         metrics["max_diff"] = max(
             abs(

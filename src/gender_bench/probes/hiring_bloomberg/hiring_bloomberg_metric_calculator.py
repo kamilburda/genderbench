@@ -5,6 +5,7 @@ from statistics import mean
 
 from gender_bench.probing.metric_calculator import MetricCalculator
 from gender_bench.probing.probe_item import ProbeItem
+from gender_bench.utils.math import nanmean
 
 
 class HiringBloombergMetricCalculator(MetricCalculator):
@@ -36,7 +37,7 @@ class HiringBloombergMetricCalculator(MetricCalculator):
                 and probe_item.metadata["race"] == race
             )
 
-        metrics["masculine_rate"] = mean(
+        metrics["masculine_rate"] = nanmean(
             [metrics[f"{e(role)}_masculine_rate"] for role in self.probe.roles]
         )
 
@@ -64,4 +65,4 @@ class HiringBloombergMetricCalculator(MetricCalculator):
         """
         Calculate average masc rate for list of probe items.
         """
-        return mean([self.probe_item_score(probe_item) for probe_item in probe_items])
+        return nanmean([self.probe_item_score(probe_item) for probe_item in probe_items])

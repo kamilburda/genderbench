@@ -1,10 +1,10 @@
 from collections import Counter
 from functools import cache
-from statistics import mean
 from typing import Any
 
 from gender_bench.probing.metric_calculator import MetricCalculator
 from gender_bench.probing.probe_item import ProbeItem
+from gender_bench.utils.math import nanmean
 
 
 class InventoriesMetricCalculator(MetricCalculator):
@@ -16,7 +16,7 @@ class InventoriesMetricCalculator(MetricCalculator):
         sources = sorted(set(item.metadata["source"] for item in probe_items))
 
         for source in sources:
-            metrics[f"masculine_rate_{source}"] = mean(
+            metrics[f"masculine_rate_{source}"] = nanmean(
                 [
                     self.probe_item_score(item)
                     for item in probe_items
@@ -24,14 +24,14 @@ class InventoriesMetricCalculator(MetricCalculator):
                 ]
             )
 
-            metrics[f"stereotype_rate_{source}"] = mean(
+            metrics[f"stereotype_rate_{source}"] = nanmean(
                 [
                     self.probe_item_score(item)
                     for item in probe_items
                     if item.metadata["source"] == source
                     and item.metadata["gender"] == "male"
                 ]
-            ) - mean(
+            ) - nanmean(
                 [
                     self.probe_item_score(item)
                     for item in probe_items
@@ -40,10 +40,10 @@ class InventoriesMetricCalculator(MetricCalculator):
                 ]
             )
 
-        metrics["masculine_rate"] = mean(
+        metrics["masculine_rate"] = nanmean(
             [metrics[f"masculine_rate_{source}"] for source in sources]
         )
-        metrics["stereotype_rate"] = mean(
+        metrics["stereotype_rate"] = nanmean(
             [metrics[f"stereotype_rate_{source}"] for source in sources]
         )
 

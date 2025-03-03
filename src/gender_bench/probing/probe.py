@@ -278,15 +278,9 @@ class Probe(ABC):
         """
         random.seed(self.random_seed)
         return random.sample(self.probe_items, k=k)
-
-    def to_json_dict(self) -> dict:
-        """Prepare a JSON-serializable dictionary representation. Used for
-        logging.
-
-        Returns:
-            dict: JSON-serializable dictionary.
-        """
-        parameters = [
+    
+    def json_parameters(self):
+        default = [
             "uuid",
             "status",
             "metrics",
@@ -298,6 +292,17 @@ class Probe(ABC):
             "sample_k",
             "num_repetitions",
         ]
+        init_params = set(inspect.signature(self.__init__).parameters) - {"self", "args", "kwargs"}
+        return default + list(init_params)
+
+    def to_json_dict(self) -> dict:
+        """Prepare a JSON-serializable dictionary representation. Used for
+        logging.
+
+        Returns:
+            dict: JSON-serializable dictionary.
+        """
+        parameters = self.json_parameters()
         d = {parameter: getattr(self, parameter) for parameter in parameters}
         d["probe_items"] = [
             probe_item.to_json_dict() for probe_item in self.probe_items
@@ -322,13 +327,16 @@ class Probe(ABC):
             ProbeItem.from_json_dict(item) for item in json_dict["probe_items"]
         ]
         return probe
+    
+    @property
+    def log_file(self):
+        return self.log_dir / f"{self.__class__.__name__.lower()}_{self.uuid}.jsonl"
 
     def log_current_state(self):
         """Log current state of `Probe` into a log file."""
         json_dict = self.to_json_dict()
-        log_file = self.log_dir / f"{self.__class__.__name__.lower()}_{self.uuid}.jsonl"
-        os.makedirs(os.path.dirname(log_file), exist_ok=True)
-        with open(log_file, "a") as f:
+        os.makedirs(os.path.dirname(self.log_file), exist_ok=True)
+        with open(self.log_file, "a") as f:
             f.write(json.dumps({"probe_state": json_dict}, default=str) + "\n")
 
     @classmethod

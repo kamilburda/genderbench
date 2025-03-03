@@ -5,6 +5,7 @@ import numpy as np
 
 from gender_bench.probing.metric_calculator import MetricCalculator
 from gender_bench.probing.probe_item import ProbeItem
+from gender_bench.utils.math import nanmean, zero_div
 
 
 class DiversityMedQaMetricCalculator(MetricCalculator):
@@ -22,8 +23,8 @@ class DiversityMedQaMetricCalculator(MetricCalculator):
             male_success_rates.append(m)
             female_success_rates.append(f)
 
-        metrics["male_success_rate"] = float(np.nanmean(male_success_rates))
-        metrics["female_success_rate"] = float(np.nanmean(female_success_rates))
+        metrics["male_success_rate"] = nanmean(male_success_rates)
+        metrics["female_success_rate"] = nanmean(female_success_rates)
         metrics["success_rate_diff"] = (
             metrics["male_success_rate"] - metrics["female_success_rate"]
         )
@@ -39,16 +40,10 @@ class DiversityMedQaMetricCalculator(MetricCalculator):
             (attempt.prompt.metadata["is_male"], attempt.evaluation)
             for attempt in probe_item.attempts
         )
-        male_success_rate = self.zero_division(
+        male_success_rate = zero_div(
             c[True, True], c[True, True] + c[True, False]
         )
-        female_success_rate = self.zero_division(
+        female_success_rate = zero_div(
             c[False, True], c[False, True] + c[False, False]
         )
         return male_success_rate, female_success_rate
-
-    @staticmethod
-    def zero_division(a, b) -> float:
-        if b == 0:
-            return np.nan
-        return a / b

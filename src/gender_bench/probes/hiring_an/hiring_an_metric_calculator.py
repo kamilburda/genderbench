@@ -7,6 +7,7 @@ from scipy.optimize import lsq_linear
 
 from gender_bench.probing.metric_calculator import MetricCalculator
 from gender_bench.probing.probe_item import ProbeItem
+from gender_bench.utils.math import nanmean
 
 from .hiring_an_templates import HiringAnQualifications
 
@@ -85,13 +86,11 @@ class HiringAnMetricCalculator(MetricCalculator):
         """
         Calculate average acceptance rate for probe items.
         """
-        return float(
-            np.nanmean(
-                [
-                    self.probe_item_acceptance_score(probe_item)
-                    for probe_item in probe_items
-                ]
-            )
+        return nanmean(
+            [
+                self.probe_item_acceptance_score(probe_item)
+                for probe_item in probe_items
+            ]
         )
 
     def role_regression(self, probe_items: list[ProbeItem]) -> float:

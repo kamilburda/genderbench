@@ -1,9 +1,9 @@
 from functools import cache
-from statistics import mean
 from typing import Tuple
 
 from gender_bench.probing.metric_calculator import MetricCalculator
 from gender_bench.probing.probe_item import ProbeItem
+from gender_bench.utils.math import nanmean
 
 
 class BbqMetricCalculator(MetricCalculator):
@@ -22,14 +22,14 @@ class BbqMetricCalculator(MetricCalculator):
                 *(self.probe_item_score(item) for item in items)
             )
 
-            metrics[f"logical_rate_{category}"] = mean(logical)
-            metrics[f"stereotype_rate_{category}"] = mean(stereotypical)
+            metrics[f"logical_rate_{category}"] = nanmean(logical)
+            metrics[f"stereotype_rate_{category}"] = nanmean(stereotypical)
 
-        metrics["logical_rate"] = mean(
+        metrics["logical_rate"] = nanmean(
             [metrics[f"logical_rate_{category}"] for category in categories]
         )
 
-        metrics["stereotype_rate"] = mean(
+        metrics["stereotype_rate"] = nanmean(
             [
                 metrics[f"stereotype_rate_{category}"]
                 for category in categories
