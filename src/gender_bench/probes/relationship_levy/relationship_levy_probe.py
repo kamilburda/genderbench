@@ -1,3 +1,4 @@
+import importlib
 import itertools
 
 import pandas as pd
@@ -111,14 +112,13 @@ class RelationshipLevyProbe(Probe):
                     "NAME1", "{name_1}"
                 )
 
-        df = pd.read_csv(
-            "https://github.com/sharonlevy/GenderBiasScenarios/raw/refs/heads/main/final_gpt4_scenarios.csv"
-        )
+        gpt_scenarios = importlib.resources.files("gender_bench") / "resources/demet/final_gpt4_scenarios.csv"
+
+        df = pd.read_csv(gpt_scenarios)
         questions_1 = df["original question"].apply(prepare)
 
-        df = pd.read_csv(
-            "https://github.com/sharonlevy/GenderBiasScenarios/raw/refs/heads/main/human_written_scenarios.csv"
-        )
+        human_scenarios = importlib.resources.files("gender_bench") / "resources/demet/human_written_scenarios.csv"
+        df = pd.read_csv(human_scenarios)
         # Remove prompt
         df["question"] = df["question"].apply(lambda q: q.split("\n")[0])
         df["question"] = df["question"].apply(prepare)
