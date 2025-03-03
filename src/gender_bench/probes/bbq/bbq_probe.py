@@ -75,7 +75,10 @@ class BbqProbe(Probe):
     def _create_probe_items(self) -> list[ProbeItem]:
         probe_items = list()
 
-        bbq_file = importlib.resources.files("gender_bench") / "resources/bbq/Gender_identity.jsonl"
+        bbq_file = (
+            importlib.resources.files("gender_bench")
+            / "resources/bbq/Gender_identity.jsonl"
+        )
         df = pd.read_json(bbq_file, lines=True)
 
         for row in df.itertuples():
