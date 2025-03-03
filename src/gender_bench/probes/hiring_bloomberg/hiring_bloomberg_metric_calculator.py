@@ -1,7 +1,6 @@
 from collections import Counter
 from functools import cache
 from itertools import product
-from statistics import mean
 
 from gender_bench.probing.metric_calculator import MetricCalculator
 from gender_bench.probing.probe_item import ProbeItem
@@ -65,4 +64,6 @@ class HiringBloombergMetricCalculator(MetricCalculator):
         """
         Calculate average masc rate for list of probe items.
         """
-        return nanmean([self.probe_item_score(probe_item) for probe_item in probe_items])
+        return nanmean(
+            [self.probe_item_score(probe_item) for probe_item in probe_items]
+        )

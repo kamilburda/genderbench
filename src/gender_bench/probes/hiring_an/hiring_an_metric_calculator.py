@@ -87,10 +87,7 @@ class HiringAnMetricCalculator(MetricCalculator):
         Calculate average acceptance rate for probe items.
         """
         return nanmean(
-            [
-                self.probe_item_acceptance_score(probe_item)
-                for probe_item in probe_items
-            ]
+            [self.probe_item_acceptance_score(probe_item) for probe_item in probe_items]
         )
 
     def role_regression(self, probe_items: list[ProbeItem]) -> float:

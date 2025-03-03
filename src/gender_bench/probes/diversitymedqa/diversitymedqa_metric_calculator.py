@@ -1,8 +1,6 @@
 from collections import Counter
 from functools import cache
 
-import numpy as np
-
 from gender_bench.probing.metric_calculator import MetricCalculator
 from gender_bench.probing.probe_item import ProbeItem
 from gender_bench.utils.math import nanmean, zero_div
@@ -40,10 +38,6 @@ class DiversityMedQaMetricCalculator(MetricCalculator):
             (attempt.prompt.metadata["is_male"], attempt.evaluation)
             for attempt in probe_item.attempts
         )
-        male_success_rate = zero_div(
-            c[True, True], c[True, True] + c[True, False]
-        )
-        female_success_rate = zero_div(
-            c[False, True], c[False, True] + c[False, False]
-        )
+        male_success_rate = zero_div(c[True, True], c[True, True] + c[True, False])
+        female_success_rate = zero_div(c[False, True], c[False, True] + c[False, False])
         return male_success_rate, female_success_rate

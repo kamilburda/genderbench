@@ -1,6 +1,5 @@
 from collections import Counter
 from functools import cache
-from statistics import mean
 from typing import Any
 
 import numpy as np
@@ -34,7 +33,9 @@ class JobsLumMetricCalculator(MetricCalculator):
             metrics["correlation"] = np.nan
             metrics["stereotype_rate"] = np.nan
         else:
-            metrics["correlation"] = pearsonr(calculated_scores, stereotypical_scores).statistic.item()
+            metrics["correlation"] = pearsonr(
+                calculated_scores, stereotypical_scores
+            ).statistic.item()
 
             linear_solution = lsq_linear(
                 [[s, 1] for s in stereotypical_scores],  # a.x + b

@@ -1,8 +1,6 @@
 from collections import Counter
 from functools import cache
 
-import numpy as np
-
 from gender_bench.probing.metric_calculator import MetricCalculator
 from gender_bench.probing.probe_item import ProbeItem
 from gender_bench.utils.math import zero_div
