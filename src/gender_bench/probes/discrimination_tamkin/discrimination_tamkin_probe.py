@@ -1,3 +1,4 @@
+import importlib
 import pandas as pd
 
 from gender_bench.probes.generics.yes_no_evaluator import YesNoEvaluator
@@ -36,10 +37,8 @@ class DiscriminationTamkinProbe(Probe):
         # of gender there is not consistent. Some samples have the gender
         # explicitly stated in the text. Identifying non-binary people only
         # based on the names is also problematic.
-        df = pd.read_json(
-            "hf://datasets/Anthropic/discrim-eval/explicit.jsonl",
-            lines=True,
-        )
+        discrim_eval_file = importlib.resources.files("gender_bench") / "resources/discrim_eval/explicit.jsonl"
+        df = pd.read_json(discrim_eval_file, lines=True)
 
         # The old-age is a bit oversampled. Many of the samples also do not make
         # sense for such a high age, e.g. 100yo taking a 150k mortgage.
