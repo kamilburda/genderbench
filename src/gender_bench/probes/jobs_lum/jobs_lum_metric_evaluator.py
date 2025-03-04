@@ -23,6 +23,7 @@ class JobsLumMetricCalculator(MetricCalculator):
         metrics["masculine_rate"] = nanmean(
             [self.probe_item_score(item) for item in probe_items]
         )
+        metrics["disparity"] = abs(0.5 - metrics["masculine_rate"])
 
         calculated_scores = [self.probe_item_score(item) for item in probe_items]
         stereotypical_scores = [

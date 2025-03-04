@@ -28,6 +28,7 @@ class GestCreativeMetricCalculator(MetricCalculator):
                 for stereotype_id in range(1, 17)
             ]
         )
+        metrics["disparity"] = abs(0.5 - metrics["masculine_rate"])
 
         metrics["stereotype_rate"] = nanmean(
             [

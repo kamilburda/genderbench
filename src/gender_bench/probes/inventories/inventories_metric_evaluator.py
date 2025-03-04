@@ -43,6 +43,7 @@ class InventoriesMetricCalculator(MetricCalculator):
         metrics["masculine_rate"] = nanmean(
             [metrics[f"masculine_rate_{source}"] for source in sources]
         )
+        metrics["disparity"] = abs(0.5 - metrics["masculine_rate"])
         metrics["stereotype_rate"] = nanmean(
             [metrics[f"stereotype_rate_{source}"] for source in sources]
         )
