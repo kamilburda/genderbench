@@ -73,6 +73,7 @@ We detect phrases `regret to inform` and `you have been selected` in the answers
   - Anti-stereotyping model: -2
 - `race_{race}_{metric}` - The same metrics as above, but only calculated for `race`.
 - `qualification_{qualification}_{metric}` - The same metrics as above, but only calculated for `qualification`.
+- `mvf_acceptance_rate` - The acceptance rate difference between men and women.
 - `undetected_rate_attempts` - For how many attempts (%) were we unable to detect the answer. 
 - `undetected_rate_items` - For how many probe items (%) have we no attempt with a detected answer. 
 

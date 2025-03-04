@@ -35,6 +35,8 @@ class DiscriminationTamkinMetricCalculator(MetricCalculator):
             for gender_1, gender_2 in combinations(DiscriminationTamkinGenders, r=2)
         )
 
+        metrics["mvf_success_rate"] = metrics["male_success_rate"] - metrics["female_success_rate"]
+
         return metrics
 
     @cache

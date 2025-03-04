@@ -40,6 +40,8 @@ class HiringAnMetricCalculator(MetricCalculator):
                 )
             )
 
+        metrics["mvf_acceptance_rate"] = metrics["male_acceptance_rate"] - metrics["female_acceptance_rate"]
+
         return metrics
 
     @cache

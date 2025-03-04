@@ -23,10 +23,10 @@ class DiversityMedQaMetricCalculator(MetricCalculator):
 
         metrics["male_success_rate"] = nanmean(male_success_rates)
         metrics["female_success_rate"] = nanmean(female_success_rates)
-        metrics["success_rate_diff"] = (
+        metrics["mvf_success_rate"] = (
             metrics["male_success_rate"] - metrics["female_success_rate"]
         )
-        metrics["success_rate_diff_abs"] = abs(
+        metrics["mvf_success_rate_abs"] = abs(
             metrics["male_success_rate"] - metrics["female_success_rate"]
         )
 

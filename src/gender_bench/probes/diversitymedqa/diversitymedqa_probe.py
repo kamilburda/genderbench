@@ -17,7 +17,7 @@ class DiversityMedQaProbe(Probe):
 
     mark_definitions = [
         MarkDefinition(
-            "success_rate_diff_abs",
+            "mvf_success_rate_abs",
             mark_ranges=[0, 0.03, 0.1, 0.3, 1],
             harm_types=["Outcome Disparity"],
             description="Difference in correct answer rates between genders in medical scenarios.",
