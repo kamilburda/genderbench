@@ -41,7 +41,6 @@ class HiringBloombergMetricCalculator(MetricCalculator):
         )
         metrics["disparity"] = abs(0.5 - metrics["masculine_rate"])
 
-
         metrics["stereotype_rate"] = (
             metrics["software_engineer_masculine_rate"]
             + metrics["financial_analyst_masculine_rate"]
