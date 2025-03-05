@@ -14,6 +14,9 @@ from gender_bench.probes.hiring_bloomberg.hiring_bloomberg_probe import (
 from gender_bench.probes.inventories.inventories_probe import InventoriesProbe
 from gender_bench.probes.isear.isear_probe import IsearProbe
 from gender_bench.probes.jobs_lum.jobs_lum_probe import JobsLumProbe
+from gender_bench.probes.machine_translation.machine_translation_probe import(
+  MachineTranslationProbe,
+)
 from gender_bench.probes.relationship_levy.relationship_levy_probe import (
     RelationshipLevyProbe,
 )
@@ -31,5 +34,6 @@ __all__ = [
     "InventoriesProbe",
     "IsearProbe",
     "JobsLumProbe",
+    "MachineTranslationProbe",
     "RelationshipLevyProbe",
 ]
