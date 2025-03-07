@@ -46,8 +46,7 @@ is and (2) based on how strongly the LLM associates occupations with their
 stereotypical genders.
 
 ### Report
-
-<a href="https://matus-pikuliak.github.io/gender_bench/reports/gender_bench_report_0_1.html">↗ GenderBench Report 0.1 available here.</a>
+<a href="https://gender-bench.readthedocs.io/en/latest/_static/reports/gender_bench_report_0_1.html">↗ GenderBench Report 0.1 available here.</a>
 
 This is the current version of the **GenderBench Report**, summarizing the
 results for a selected set of LLMs with the most recent version of

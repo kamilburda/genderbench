@@ -1,7 +1,7 @@
 import json
 import re
-from typing import Type
 import uuid
+from typing import Type
 
 from jinja2 import Environment, PackageLoader
 
@@ -91,7 +91,10 @@ def global_table_row(model_results: dict) -> list[str]:
     """
     Prepare row of aggregated marks for a single model's results.
     """
-    row = [section_mark(section_name, model_results) for section_name in ["decision", "creative", "opinion", "affective"]]
+    row = [
+        section_mark(section_name, model_results)
+        for section_name in ["decision", "creative", "opinion", "affective"]
+    ]
     row.append(aggregate_marks(row))
     row = [chr(mark + 65) for mark in row]
     return row
