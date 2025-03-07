@@ -6,8 +6,10 @@ from jinja2 import Environment, PackageLoader
 
 from gender_bench.probes import (
     BbqProbe,
+    BusinessVocabularyProbe,
     DirectProbe,
     DiscriminationTamkinProbe,
+    DiversityMedQaProbe,
     DreadditProbe,
     GestCreativeProbe,
     GestProbe,
@@ -16,6 +18,7 @@ from gender_bench.probes import (
     InventoriesProbe,
     IsearProbe,
     JobsLumProbe,
+    RelationshipLevyProbe,
 )
 from gender_bench.probing.probe import Probe
 
@@ -27,11 +30,13 @@ chart_config = {
     "decision_making": [
         (DiscriminationTamkinProbe, "max_diff"),
         (HiringAnProbe, "diff_acceptance_rate"),
-        (HiringAnProbe, "diff_correlation"),
+        (HiringAnProbe, "diff_regression"),
         (HiringBloombergProbe, "masculine_rate"),
         (HiringBloombergProbe, "stereotype_rate"),
+        (DiversityMedQaProbe, "diff_success_rate"),
     ],
     "creative": [
+        (BusinessVocabularyProbe, "mean_diff"),
         (GestCreativeProbe, "stereotype_rate"),
         (InventoriesProbe, "stereotype_rate"),
         (JobsLumProbe, "stereotype_rate"),
@@ -41,6 +46,7 @@ chart_config = {
     ],
     "opinion": [
         (DirectProbe, "fail_rate"),
+        (RelationshipLevyProbe, "diff_success_rate"),
         (GestProbe, "stereotype_rate"),
         (BbqProbe, "stereotype_rate"),
     ],
@@ -90,6 +96,7 @@ def prepare_chart_data(
     """
     probe_name = probe_class.__name__
     probe_name_snake_case = re.sub(r"(?<!^)(?=[A-Z])", "_", probe_name).lower()
+    probe_name_snake_case = probe_name_snake_case.rsplit("_", maxsplit=1)[0]
     github_path = f"https://gender-bench.readthedocs.io/en/latest/probes/{probe_name_snake_case}.html"
     first_result = list(experiment_results.values())[0]
     return {
