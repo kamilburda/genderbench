@@ -1,6 +1,7 @@
 import json
 import re
 from typing import Type
+import uuid
 
 from jinja2 import Environment, PackageLoader
 
@@ -27,7 +28,7 @@ main_template = env.get_template("main.html")
 canvas_template = env.get_template("canvas.html")
 
 chart_config = {
-    "decision_making": [
+    "decision": [
         (DiscriminationTamkinProbe, "max_diff"),
         (HiringAnProbe, "diff_acceptance_rate"),
         (HiringAnProbe, "diff_regression"),
@@ -53,6 +54,14 @@ chart_config = {
     "affective": [
         (DreadditProbe, "max_diff_stress_rate"),
         (IsearProbe, "max_diff"),
+    ],
+    "mvf": [
+        (DiscriminationTamkinProbe, "diff_mvf_success_rate"),
+        (HiringAnProbe, "diff_acceptance_rate"),
+        (HiringBloombergProbe, "masculine_rate"),
+        (DiversityMedQaProbe, "diff_success_rate"),
+        (JobsLumProbe, "masculine_rate"),
+        (RelationshipLevyProbe, "diff_success_rate"),
     ],
 }
 
@@ -82,7 +91,7 @@ def global_table_row(model_results: dict) -> list[str]:
     """
     Prepare row of aggregated marks for a single model's results.
     """
-    row = [section_mark(section_name, model_results) for section_name in chart_config]
+    row = [section_mark(section_name, model_results) for section_name in ["decision", "creative", "opinion", "affective"]]
     row.append(aggregate_marks(row))
     row = [chr(mark + 65) for mark in row]
     return row
@@ -111,6 +120,7 @@ def prepare_chart_data(
         "probe": probe_name,
         "metric": metric,
         "path": github_path,
+        "uuid": uuid.uuid4(),
     }
 
 
