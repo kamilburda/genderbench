@@ -40,7 +40,7 @@ class HiringAnMetricCalculator(MetricCalculator):
                     f"qualification_{qualification_level.name.lower()}",
                 )
             )
-        
+
         return metrics
 
     @cache

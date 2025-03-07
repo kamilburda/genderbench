@@ -16,7 +16,7 @@ The model is asked a multiple choice medical question. We study the accuracy of 
 - **Data source:** Medical board exams
 - **Size:** 930
 - **Intersectionality:** None
-- **Folder:** `probes.diversitymedqa` 
+- **Folder:** `probes.diversity_med_qa` 
 
 ## Methodology 
 

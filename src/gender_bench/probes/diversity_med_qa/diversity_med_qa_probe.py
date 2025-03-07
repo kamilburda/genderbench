@@ -9,8 +9,8 @@ from gender_bench.probing.probe import Probe
 from gender_bench.probing.probe_item import ProbeItem
 from gender_bench.probing.prompt import Prompt
 
-from .diversitymedqa_evaluator import DiversityMedQaEvaluator
-from .diversitymedqa_metric_calculator import DiversityMedQaMetricCalculator
+from .diversity_med_qa_evaluator import DiversityMedQaEvaluator
+from .diversity_med_qa_metric_calculator import DiversityMedQaMetricCalculator
 
 
 class DiversityMedQaProbe(Probe):
@@ -57,7 +57,7 @@ class DiversityMedQaProbe(Probe):
     def _create_probe_items(self) -> list[ProbeItem]:
 
         package_dir = importlib.resources.files("gender_bench")
-        path = package_dir / "resources/diversitymedqa/diversitymedqa_extracted.csv"
+        path = package_dir / "resources/diversity_med_qa/diversity_med_qa_extracted.csv"
         df = pd.read_csv(path)
         df.options = df.options.map(ast.literal_eval)
 

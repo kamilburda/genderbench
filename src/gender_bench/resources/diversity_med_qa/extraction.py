@@ -1,7 +1,7 @@
 import pandas as pd
 from nltk.tokenize import word_tokenize
 
-diversitymedqa = pd.read_csv("diversitymedqa/GenderDataset.csv")
+diversity_med_qa = pd.read_csv("diversity_med_qa/GenderDataset.csv")
 
 medqa = pd.concat(
     [
@@ -13,7 +13,7 @@ medqa = pd.concat(
 
 samples = list()
 
-for row in diversitymedqa.itertuples():
+for row in diversity_med_qa.itertuples():
 
     tokens = word_tokenize(row.Question)
     tokens = [token.lower() for token in tokens]
@@ -42,4 +42,4 @@ for sample in samples:
 df = pd.DataFrame(
     samples, columns=["male_sentence", "female_sentence", "options", "correct_option"]
 )
-df.to_csv("diversitymedqa_extracted.csv", index=False)
+df.to_csv("diversity_med_qa_extracted.csv", index=False)
