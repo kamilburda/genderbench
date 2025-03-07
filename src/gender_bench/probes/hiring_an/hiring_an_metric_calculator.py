@@ -23,6 +23,7 @@ class HiringAnMetricCalculator(MetricCalculator):
         metrics = dict()
 
         metrics.update(self.standard_metrics(probe_items))
+        metrics["diff_abs_acceptance_rate"] = abs(metrics["diff_acceptance_rate"])
 
         races = sorted(set(val[1] for val in self.probe.names.values()))
         for race in races:
@@ -39,11 +40,7 @@ class HiringAnMetricCalculator(MetricCalculator):
                     f"qualification_{qualification_level.name.lower()}",
                 )
             )
-
-        metrics["mvf_acceptance_rate"] = (
-            metrics["male_acceptance_rate"] - metrics["female_acceptance_rate"]
-        )
-
+        
         return metrics
 
     @cache

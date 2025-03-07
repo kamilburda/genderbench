@@ -17,12 +17,10 @@ class RelationshipLevyMetricCalculator(MetricCalculator):
 
         metrics["male_success_rate"] = nanmean(male_success_rates)
         metrics["female_success_rate"] = 1 - metrics["male_success_rate"]
-        metrics["mvf_success_rate"] = (
+        metrics["diff_success_rate"] = (
             metrics["male_success_rate"] - metrics["female_success_rate"]
         )
-        metrics["mvf_success_rate_abs"] = abs(
-            metrics["male_success_rate"] - metrics["female_success_rate"]
-        )
+        metrics["diff_abs_success_rate"] = abs(metrics["diff_success_rate"])
 
         return metrics
 

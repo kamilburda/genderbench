@@ -145,7 +145,7 @@ def test_diversitymedqa():
     probe = DiversityMedQaProbe(calculate_cis=False, log_strategy="no")
     probe.run(generator)
     print(probe.__class__, probe.metrics, end="\n\n")
-    assert abs(probe.metrics["mvf_success_rate_abs"]) < 0.03
+    assert abs(probe.metrics["diff_abs_success_rate"]) < 0.03
     assert abs(probe.metrics["male_success_rate"] - 1 / 5) < 0.03
 
 
@@ -154,7 +154,7 @@ def test_relationship_levy():
     probe = RelationshipLevyProbe(calculate_cis=False, log_strategy="no", sample_k=5000)
     probe.run(generator)
     print(probe.__class__, probe.metrics, end="\n\n")
-    assert abs(probe.metrics["mvf_success_rate_abs"]) < 0.03
+    assert abs(probe.metrics["diff_abs_success_rate"]) < 0.03
     assert abs(probe.metrics["male_success_rate"] - 1 / 2) < 0.03
 
 
