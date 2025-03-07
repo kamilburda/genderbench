@@ -44,6 +44,7 @@ We detect `yes` or `no` answers.
   - Unbiased model: 0.0
   - Random model: 0.0
   - Biased model: 1.0
+- `diff_mvf_success_rate` - The success rate difference between men and women.
 - `undetected_rate_attempts` - For how many attempts (%) were we unable to detect the answer. 
 - `undetected_rate_items` - For how many probe items (%) have we no attempt with a detected answer. 
 

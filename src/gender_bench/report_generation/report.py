@@ -1,12 +1,16 @@
 import json
+import re
+import uuid
 from typing import Type
 
 from jinja2 import Environment, PackageLoader
 
 from gender_bench.probes import (
     BbqProbe,
+    BusinessVocabularyProbe,
     DirectProbe,
     DiscriminationTamkinProbe,
+    DiversityMedQaProbe,
     DreadditProbe,
     GestCreativeProbe,
     GestProbe,
@@ -15,6 +19,7 @@ from gender_bench.probes import (
     InventoriesProbe,
     IsearProbe,
     JobsLumProbe,
+    RelationshipLevyProbe,
 )
 from gender_bench.probing.probe import Probe
 
@@ -23,14 +28,16 @@ main_template = env.get_template("main.html")
 canvas_template = env.get_template("canvas.html")
 
 chart_config = {
-    "decision_making": [
+    "decision": [
         (DiscriminationTamkinProbe, "max_diff"),
         (HiringAnProbe, "diff_acceptance_rate"),
-        (HiringAnProbe, "diff_correlation"),
+        (HiringAnProbe, "diff_regression"),
         (HiringBloombergProbe, "masculine_rate"),
         (HiringBloombergProbe, "stereotype_rate"),
+        (DiversityMedQaProbe, "diff_success_rate"),
     ],
     "creative": [
+        (BusinessVocabularyProbe, "mean_diff"),
         (GestCreativeProbe, "stereotype_rate"),
         (InventoriesProbe, "stereotype_rate"),
         (JobsLumProbe, "stereotype_rate"),
@@ -40,12 +47,21 @@ chart_config = {
     ],
     "opinion": [
         (DirectProbe, "fail_rate"),
+        (RelationshipLevyProbe, "diff_success_rate"),
         (GestProbe, "stereotype_rate"),
         (BbqProbe, "stereotype_rate"),
     ],
     "affective": [
         (DreadditProbe, "max_diff_stress_rate"),
         (IsearProbe, "max_diff"),
+    ],
+    "mvf": [
+        (DiscriminationTamkinProbe, "diff_mvf_success_rate"),
+        (HiringAnProbe, "diff_acceptance_rate"),
+        (HiringBloombergProbe, "masculine_rate"),
+        (DiversityMedQaProbe, "diff_success_rate"),
+        (JobsLumProbe, "masculine_rate"),
+        (RelationshipLevyProbe, "diff_success_rate"),
     ],
 }
 
@@ -75,7 +91,10 @@ def global_table_row(model_results: dict) -> list[str]:
     """
     Prepare row of aggregated marks for a single model's results.
     """
-    row = [section_mark(section_name, model_results) for section_name in chart_config]
+    row = [
+        section_mark(section_name, model_results)
+        for section_name in ["decision", "creative", "opinion", "affective"]
+    ]
     row.append(aggregate_marks(row))
     row = [chr(mark + 65) for mark in row]
     return row
@@ -88,10 +107,9 @@ def prepare_chart_data(
     Create a structure that is used to populate a single chart.
     """
     probe_name = probe_class.__name__
-    github_path = (
-        "https://github.com/matus-pikuliak/gender_bench/tree/main/src/"
-        + probe_class.__module__.rsplit(".", 1)[0].replace(".", "/")
-    )
+    probe_name_snake_case = re.sub(r"(?<!^)(?=[A-Z])", "_", probe_name).lower()
+    probe_name_snake_case = probe_name_snake_case.rsplit("_", maxsplit=1)[0]
+    github_path = f"https://gender-bench.readthedocs.io/en/latest/probes/{probe_name_snake_case}.html"
     first_result = list(experiment_results.values())[0]
     return {
         "description": first_result[probe_name]["marks"][metric]["description"],
@@ -105,6 +123,7 @@ def prepare_chart_data(
         "probe": probe_name,
         "metric": metric,
         "path": github_path,
+        "uuid": uuid.uuid4(),
     }
 
 

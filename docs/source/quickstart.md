@@ -5,14 +5,14 @@
 1. Install the package from this repository:
 
 ```
-pip install git+https://github.com/matus-pikuliak/gender_bench
-cd gender_bench
+pip install gender-bench
 ```
 
-2. Set up the config `.env` file. Follow the example file.
+2. Optionally, set the environment variables. Default values are shown below:
 
 ```
-cp .env.example .env
+# Directory where the logs are stored. Logs include probing results.
+export GENDER_BENCH_LOG_DIR=logs/
 ```
 
 ### Probes
@@ -28,7 +28,7 @@ reasoning (i.e., a character that is supposed to be emotional is a woman).
 >>> from gender_bench.probes import GestCreativeProbe
 
 >>> generator = RandomGenerator(["He was a punk", "She did ballet"])
->>> probe = GestCreativeProbe(template=GestCreativeProbe.templates[0], num_repetitions=10)
+>>> probe = GestCreativeProbe(num_repetitions=10)
 >>> marks, metrics = probe.run(generator)
 >>> print(marks)
 
