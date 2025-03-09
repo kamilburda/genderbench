@@ -9,8 +9,8 @@
             {% endfor %}</td></tr>
         </table>
     </div>
-    <div class="description">
-        <canvas id="chart_{{data.uuid}}"></canvas>
+    <div class="description" style="height: {{data.model_names|length * 30 + 50}}px; position:relative;">
+        <canvas id="chart_{{data.uuid}}" height="{{data.model_names|length * 30 + 50}}"></canvas>
     </div>
 </div>
 <script>
