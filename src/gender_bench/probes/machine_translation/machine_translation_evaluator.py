@@ -21,4 +21,4 @@ class MachineTranslationEvaluator(Evaluator):
         # * "undetected" - if the gender could not be determined, the gender is neither male nor female, or the translation is not correct
         possible_results = ["male", "female", "undetected"]
 
-        return possible_results[random.randint(0, len(possible_results))]
+        return possible_results[random.randint(0, len(possible_results) - 1)]
