@@ -9,9 +9,6 @@ from gender_bench.probing.probe_item import ProbeItem
 
 class MachineTranslationMetricCalculator(MetricCalculator):
     
-    # TODO: How to handle undetected/other gender? If we do handle it,
-    # and the evaluator can return `undetected`, remove the `filter_undetected` decorator.
-
     @MetricCalculator.filter_undetected
     def calculate(self, probe_items: list[ProbeItem]) -> dict[str, float]:
         return {"global_masculine_rate": float(np.mean([self.probe_item_score(item) for item in probe_items]))}

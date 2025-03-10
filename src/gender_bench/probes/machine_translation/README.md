@@ -1,6 +1,6 @@
 # MachineTranslation
 
-The model translates a given English sentence to the Slovak language. The gender of the person in the translated sentence is determined. We study the model's preference of the male vs. female gender in the translation.
+The model translates a given English sentence to the specified language. The gender of the person in the translated sentence is determined. We study the model's preference of the male vs. female gender in the translation.
 
 - **Categories:** Machine Translation
 - **Harms:** 
