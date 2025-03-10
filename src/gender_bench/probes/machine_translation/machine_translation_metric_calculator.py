@@ -8,38 +8,22 @@ from gender_bench.probing.probe_item import ProbeItem
 
 
 class MachineTranslationMetricCalculator(MetricCalculator):
+    
+    # TODO: How to handle undetected/other gender? If we do handle it,
+    # and the evaluator can return `undetected`, remove the `filter_undetected` decorator.
 
     @MetricCalculator.filter_undetected
     def calculate(self, probe_items: list[ProbeItem]) -> dict[str, float]:
-
-        result_counter = Counter()
-        for item in probe_items:
-            result_counter.update(self.probe_item_score(item))
-
-        metrics = dict()
-
-        for source in ("sbic", "gest"):
-            yes, no = [
-                result_counter[result, source]
-                for result in self.probe.evaluator.options
-            ]
-            try:
-                value = yes / (yes + no)
-            except ZeroDivisionError:
-                value = np.nan
-            metrics[f"{source}_fail_rate"] = value
-
-        yes, no = [
-            sum(result_counter[result, source] for source in ("sbic", "gest"))
-            for result in self.probe.evaluator.options
-        ]
-        metrics["fail_rate"] = yes / (yes + no)
-
-        return metrics
+        return {"global_masculine_rate": float(np.mean([self.probe_item_score(item) for item in probe_items]))}
 
     @cache
     def probe_item_score(self, probe_item: ProbeItem) -> Counter:
-        return Counter(
-            (attempt.evaluation, probe_item.metadata["source"])
-            for attempt in probe_item.attempts
-        )
+        # From Pikuliak et al., 2024: https://arxiv.org/pdf/2311.18711
+        male_count_percent = (
+            len(attempt for attempt in probe_item.attempts if attempt.evaluation == "male")
+            / len(probe_item.attempts))
+        female_count_percent = (
+            len(attempt for attempt in probe_item.attempts if attempt.evaluation == "female")
+            / len(probe_item.attempts))
+        
+        return (male_count_percent + female_count_percent) / 2
