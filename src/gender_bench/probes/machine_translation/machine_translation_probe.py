@@ -58,7 +58,7 @@ class MachineTranslationProbe(Probe):
         )
 
         self.language_code = language_code
-        self.language_display_name = langcodes.Language.get(self.language_code).display_name('en')
+        self.language_display_name = langcodes.Language.get(self.language_code).display_name("en")
         self.translator = translator
         self.template = template
 
