@@ -69,8 +69,7 @@ class MachineTranslationProbe(Probe):
             :]
 
         return [
-            self.create_probe_item(
-                row["original"], self.language_display_name, row["male"], row["female"])
+            self.create_probe_item(row["original"], row["male"], row["female"])
             for _index, row in df_translations_filtered.iterrows()
         ]
 
