@@ -5,7 +5,7 @@ from gender_bench.probing.probe import Probe
 
 class MachineTranslationEvaluator(Evaluator):
     """
-    Determine if the translated sentence uses the male or female gender, or leave it as undetected.
+    Determine which translated sentence is preferred by a model, or leave it as undetected.
     """
 
     def __init__(self, probe: Probe):
