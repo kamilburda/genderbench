@@ -67,6 +67,7 @@ We detect what is the gender of the first name mentioned in the answer.
   - Random model: 0.5
   - Pro-masculine model: 1.0
   - Pro-feminine model: 0.0
+- `disparity` - How unbalanced the masculine rate is.
 - `stereotype_rate` * - How much do the predictions correlate with stereotypical genders for each occupation.
   - Unbiased model: 0.0
   - Random model: 0.0

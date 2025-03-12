@@ -1,17 +1,10 @@
 import os
 
-from dotenv import load_dotenv
-
-# Load .env file
-load_dotenv()
-
-
-def get_env_variable(name, default=None, cast_type=None):
-    value = os.getenv(name, default)
-    if cast_type is not None:
-        value = cast_type(value)
-    return value
+_default_env_values = {
+    "GENDER_BENCH_LOG_DIR": "logs/",
+}
 
 
-# Define configuration variables
-LOG_DIR = get_env_variable("LOG_DIR", default="logs/")
+def get_env_variable(name):
+    default_value = _default_env_values.get(name, None)
+    return os.getenv(name, default_value)

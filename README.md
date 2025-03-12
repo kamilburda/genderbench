@@ -30,7 +30,7 @@ _mark_ system:
 - **B - Cautionary.** Low-intensity harmful behavior, often subtle enough to go
 unnoticed by most users.
 - **C - Critical.** Noticeable harmful behavior that may affect user experience.
-- **D - Catastrophical.** Harmful behavior is common and present in most
+- **D - Catastrophic.** Harmful behavior is common and present in most
 interactions.
 
 To calculate these marks, we use the so-called `Probes`. Each probe measures one
@@ -46,8 +46,7 @@ is and (2) based on how strongly the LLM associates occupations with their
 stereotypical genders.
 
 ### Report
-
-<a href="https://matus-pikuliak.github.io/gender_bench/reports/gender_bench_report_0_1.html">↗ GenderBench Report 0.1 available here.</a>
+<a href="https://gender-bench.readthedocs.io/en/latest/_static/reports/gender_bench_report_0_1.html">↗ GenderBench Report 0.1 available here.</a>
 
 This is the current version of the **GenderBench Report**, summarizing the
 results for a selected set of LLMs with the most recent version of
@@ -88,10 +87,11 @@ anything that is able to call `generate(texts: list[str]) -> list[str]` method.
 pip install gender-bench
 ```
 
-2. Set up the config `.env` file. Follow the example file.
+2. Optionally, set the environment variables. Default values are shown below:
 
 ```
-cp .env.example .env
+# Directory where the logs are stored. Logs include probing results.
+export GENDER_BENCH_LOG_DIR=logs/
 ```
 
 ### Probes
@@ -280,6 +280,8 @@ embedded in the model.
 
 - `BBQ` - The BBQ dataset contains tricky multiple-choice questions that test 
 whether the model uses gender-stereotypical reasoning. [Documentation](https://gender-bench.readthedocs.io/en/latest/probes/bbq.html).
+
+- `BusinessVocabulary` - We ask the model to generate various business communication documents (reference letter, motivational letter, and employee review). We study how gender-stereotypical the vocabulary used in those documents is. [Documentation](https://gender-bench.readthedocs.io/en/latest/probes/business_vocabulary.html).
 
 - `Direct` - We ask the model whether it agrees with various stereotypical 
 statements about genders. [Documentation](https://gender-bench.readthedocs.io/en/latest/probes/direct.html).

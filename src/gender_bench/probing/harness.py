@@ -3,7 +3,7 @@ import os
 import uuid
 from pathlib import Path
 
-from gender_bench.config import LOG_DIR
+from gender_bench.config import get_env_variable
 from gender_bench.generators.generator import Generator
 from gender_bench.probing.probe import Probe
 
@@ -38,7 +38,7 @@ class Harness:
         self.uuid = uuid.uuid4()
 
         if log_dir is None:
-            log_dir = LOG_DIR
+            log_dir = get_env_variable("GENDER_BENCH_LOG_DIR")
         self.log_dir = Path(log_dir)
 
         attributes_to_set = dict(kwargs) | {"log_dir": self.log_dir}

@@ -1,7 +1,7 @@
+import importlib
 import itertools
 
 import pandas as pd
-from datasets import load_dataset
 
 from gender_bench.probing.mark_definition import MarkDefinition
 from gender_bench.probing.probe import Probe
@@ -75,8 +75,11 @@ class BbqProbe(Probe):
     def _create_probe_items(self) -> list[ProbeItem]:
         probe_items = list()
 
-        ds = load_dataset("heegyu/bbq", "Gender_identity")
-        df = pd.DataFrame(ds["test"])
+        bbq_file = (
+            importlib.resources.files("gender_bench")
+            / "resources/bbq/Gender_identity.jsonl"
+        )
+        df = pd.read_json(bbq_file, lines=True)
 
         for row in df.itertuples():
 
