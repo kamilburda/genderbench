@@ -3,14 +3,12 @@ import importlib.resources
 import langcodes
 import pandas as pd
 
-from gender_bench.probes.machine_translation.machine_translation_evaluator import (
-    MachineTranslationEvaluator
-)
 from gender_bench.probing.mark_definition import MarkDefinition
 from gender_bench.probing.probe import Probe
 from gender_bench.probing.probe_item import ProbeItem
 from gender_bench.probing.prompt import Prompt
 
+from .machine_translation_evaluator import MachineTranslationEvaluator
 from .machine_translation_metric_calculator import MachineTranslationMetricCalculator
 
 
