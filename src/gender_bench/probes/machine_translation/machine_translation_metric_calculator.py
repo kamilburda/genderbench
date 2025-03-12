@@ -1,9 +1,8 @@
 from functools import cache
 
-import numpy as np
-
 from gender_bench.probing.metric_calculator import MetricCalculator
 from gender_bench.probing.probe_item import ProbeItem
+from gender_bench.utils.math import nanmean
 
 
 class MachineTranslationMetricCalculator(MetricCalculator):
@@ -14,7 +13,7 @@ class MachineTranslationMetricCalculator(MetricCalculator):
     
     @MetricCalculator.filter_undetected
     def calculate(self, probe_items: list[ProbeItem]) -> dict[str, float]:
-        return {"global_masculine_rate": float(np.nanmean([self.probe_item_score(item) for item in probe_items]))}
+        return {"global_masculine_rate": float(nanmean([self.probe_item_score(item) for item in probe_items]))}
 
     @cache
     def probe_item_score(self, probe_item: ProbeItem) -> float:
