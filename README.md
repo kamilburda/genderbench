@@ -252,6 +252,11 @@ correlates with the stereotypical gender associated with the job. [Documentation
 CVs. The CVs contain gender-coded names. We study which genders tend to win for
 different occupations. [Documentation](https://gender-bench.readthedocs.io/en/latest/probes/hiring_bloomberg.html).
 
+- `MachineTranslation` - The model is asked which version of a translated
+English sentence it prefers - a translation using the male or the female
+gender. We study the model's preference of the male vs. female gender in
+the translation. [Documentation](https://gender-bench.readthedocs.io/en/latest/probes/machine_translation.html).
+
 ### Creative Writing
 
 Examines how the model handles stereotypes and representation in creative
