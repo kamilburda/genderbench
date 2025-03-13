@@ -1,3 +1,4 @@
+from collections.abc import Iterable
 import importlib.resources
 
 import langcodes
@@ -7,6 +8,7 @@ from gender_bench.probing.mark_definition import MarkDefinition
 from gender_bench.probing.probe import Probe
 from gender_bench.probing.probe_item import ProbeItem
 from gender_bench.probing.prompt import Prompt
+from gender_bench.utils.math import nanmean
 
 from .machine_translation_evaluator import MachineTranslationEvaluator
 from .machine_translation_metric_calculator import MachineTranslationMetricCalculator
@@ -35,20 +37,28 @@ class MachineTranslationProbe(Probe):
 
     def __init__(
         self,
-        language_code: str,
-        translator: str = "GoogleTranslate",
+        languages: Iterable[str] | None = None,
+        translators: Iterable[str] | None = None,
+        per_translator_metric_aggregation_func=nanmean,
+        per_language_metric_aggregation_func=nanmean,
         template: str = default_template,
         **kwargs,
     ):
+        self.per_translator_metric_aggregation_func = per_translator_metric_aggregation_func
+        self.per_language_metric_aggregation_func = per_language_metric_aggregation_func
+
         super().__init__(
             evaluator=MachineTranslationEvaluator(self),
-            metric_calculator=MachineTranslationMetricCalculator(self),
+            metric_calculator=MachineTranslationMetricCalculator(
+                self,
+                per_translator_metric_aggregation_func,
+                per_language_metric_aggregation_func,
+            ),
             **kwargs,
         )
 
-        self.language_code = language_code
-        self.language_display_name = langcodes.Language.get(self.language_code).display_name("en")
-        self.translator = translator
+        self.languages = languages
+        self.translators = translators
         self.template = template
 
     def _create_probe_items(self) -> list[ProbeItem]:
@@ -57,22 +67,41 @@ class MachineTranslationProbe(Probe):
 
         df_translations = pd.read_csv(package_dir / resource_rel_filepath)
 
-        if self.language_code not in df_translations["language"].unique():
-            raise ValueError(
-                f'language "{self.language_code}" is not present in the dataset for translated sentences')
+        if self.languages is not None:
+            languages = self.languages
+
+            for language in languages:
+                if language not in df_translations["language"].unique():
+                    raise ValueError(
+                        f'language "{language}" is not present in the dataset for translated sentences')
+        else:
+            languages = list(df_translations["language"].unique())
+
+        if self.translators is not None:
+            translators = self.translators
+
+            for translator in translators:
+                if translator not in df_translations["translator"].unique():
+                    raise ValueError(
+                        f'translator "{translator}" is not present in the dataset for translated sentences')
+        else:
+            translators = list(df_translations["translator"].unique())
 
         df_translations_filtered = df_translations.loc[
-            (df_translations["translator"] == self.translator)
-            & (df_translations["language"] == self.language_code),
+            (df_translations["translator"].isin(translators))
+            & (df_translations["language"].isin(languages)),
             :]
 
         return [
-            self.create_probe_item(row["original"], row["male"], row["female"])
+            self.create_probe_item(
+                row["language"], row["translator"], row["original"], row["male"], row["female"])
             for _index, row in df_translations_filtered.iterrows()
         ]
 
     def create_probe_item(
         self,
+        language: str,
+        translator: str,
         sentence: str,
         translated_male_sentence: str,
         translated_female_sentence: str,
@@ -81,12 +110,16 @@ class MachineTranslationProbe(Probe):
             prompts=[
                 self.create_prompt(
                     sentence,
-                    self.language_display_name,
+                    langcodes.Language.get(language).display_name("en"),
                     translated_male_sentence,
                     translated_female_sentence,
                 ),
             ],
             num_repetitions=self.num_repetitions,
+            metadata={
+                "language": language,
+                "translator": translator,
+            }
         )
 
     def create_prompt(

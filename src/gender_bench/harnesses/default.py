@@ -39,8 +39,7 @@ class DefaultHarness(Harness):
             ),
             IsearProbe(),
             JobsLumProbe(num_repetitions=5),
-            MachineTranslationProbe(language_code='pl'),
-            MachineTranslationProbe(language_code='sk'),
+            MachineTranslationProbe(),
             RelationshipLevyProbe(sample_k=3_000),
         ]
         super().__init__(probes=probes, **kwargs)
