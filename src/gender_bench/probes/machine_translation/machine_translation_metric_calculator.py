@@ -41,17 +41,17 @@ class MachineTranslationMetricCalculator(MetricCalculator):
         metrics = dict()
         
         for language, translator in itertools.product(unique_languages, unique_translators):
-            metrics[f'global_masculine_rate_{language}_{translator}'] = self.per_translator_aggregation_func(
+            metrics[f"global_masculine_rate_{language}_{translator}"] = self.per_translator_aggregation_func(
                 [self.probe_item_score(item)
                  for item in items_per_language_per_translator[language][translator]])
         
         for language in unique_languages:
-            metrics[f'global_masculine_rate_{language}'] = self.per_language_aggregation_func(
-                [metrics[f'global_masculine_rate_{language}_{translator}']
+            metrics[f"global_masculine_rate_{language}"] = self.per_language_aggregation_func(
+                [metrics[f"global_masculine_rate_{language}_{translator}"]
                  for translator in unique_translators])
 
-        metrics['global_masculine_rate'] = nanmean(
-            [metrics[f'global_masculine_rate_{language}']
+        metrics["global_masculine_rate"] = nanmean(
+            [metrics[f"global_masculine_rate_{language}"]
              for language in unique_languages])
 
         return metrics
