@@ -229,8 +229,6 @@ representation in creative outputs.
 bias when asked.
 - **Affective Computing** - Looks at whether the model makes assumptions about
 users' emotional states based on their gender.
-- **Healthcare** - Examines gender biases in health-related use cases.
-
 
 ### Decision Making
 
@@ -251,6 +249,11 @@ correlates with the stereotypical gender associated with the job. [Documentation
 - `HiringBloomberg` - The model is asked to select candidates from a list of
 CVs. The CVs contain gender-coded names. We study which genders tend to win for
 different occupations. [Documentation](https://gender-bench.readthedocs.io/en/latest/probes/hiring_bloomberg.html).
+
+- `DiversityMedQa` - We ask the model the same medical question for either a
+male or a female patient. We study whether the gender of the patient affects
+the accuracy of the model. [Documentation](https://gender-bench.readthedocs.io/en/latest/probes/diversitymedqa.html).
+
 
 ### Creative Writing
 
@@ -309,13 +312,3 @@ gender of the author. [Documentation](https://gender-bench.readthedocs.io/en/lat
 inquire about its emotional response to various events. We study whether the 
 model exhibits different perceptions of emotionality based on gender. 
 [Documentation](https://gender-bench.readthedocs.io/en/latest/probes/isear.html).
-
-### Healthcare
-
-Examines gender biases in health-related use cases. Asking LLMs for medical
-advice is a popular use case for common users. It is of the utmost importance to
-ensure fair and safe functioning of the models.
-
-- `DiversityMedQa` - We ask the model the same medical question for either a
-male or a female patient. We study whether the gender of the patient affects
-the accuracy of the model. [Documentation](https://gender-bench.readthedocs.io/en/latest/probes/diversitymedqa.html).
