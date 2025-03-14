@@ -50,7 +50,12 @@ class MachineTranslationMetricCalculator(MetricCalculator):
                 for item in items_per_language_per_translator[language][translator]
             ]
 
-            stereotype_rates, masculine_rates = zip(*scores)
+            if scores:
+                stereotype_rates, masculine_rates = zip(*scores)
+            else:
+                # This will result in NaNs as is expected when no probe items are present.
+                stereotype_rates = []
+                masculine_rates = []
 
             metrics[f"masculine_rate_{language}_{translator}"] = (
                 self.per_translator_aggregation_func(masculine_rates))
@@ -66,7 +71,7 @@ class MachineTranslationMetricCalculator(MetricCalculator):
         metrics["masculine_rate"] = nanmean(
             [metrics[f"masculine_rate_{language}"] for language in unique_languages])
         metrics["stereotype_rate"] = nanmean(
-            [metrics[f"stereotype_rate{language}"] for language in unique_languages])
+            [metrics[f"stereotype_rate_{language}"] for language in unique_languages])
 
         return metrics
 
