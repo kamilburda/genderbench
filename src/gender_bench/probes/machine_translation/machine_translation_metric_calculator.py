@@ -44,19 +44,32 @@ class MachineTranslationMetricCalculator(MetricCalculator):
 
         metrics = dict()
         
-        # TODO: Adjust metric computation
         for language, translator in itertools.product(unique_languages, unique_translators):
-            metrics[f"global_masculine_rate_{language}_{translator}"] = self.per_translator_aggregation_func(
-                [self.probe_item_score(item)
-                 for item in items_per_language_per_translator[language][translator]])
-        
+            scores = [
+                self.probe_item_score(item)
+                for item in items_per_language_per_translator[language][translator]
+            ]
+
+            stereotype_rates, masculine_rates = zip(*scores)
+
+            metrics[f"global_masculine_rate_{language}_{translator}"] = (
+                self.per_translator_aggregation_func(masculine_rates))
+            metrics[f"stereotype_rate_{language}_{translator}"] = (
+                self.per_translator_aggregation_func(stereotype_rates))
+
         for language in unique_languages:
             metrics[f"global_masculine_rate_{language}"] = self.per_language_aggregation_func(
                 [metrics[f"global_masculine_rate_{language}_{translator}"]
                  for translator in unique_translators])
+            metrics[f"stereotype_rate_{language}"] = self.per_language_aggregation_func(
+                [metrics[f"stereotype_rate_{language}_{translator}"]
+                 for translator in unique_translators])
 
         metrics["global_masculine_rate"] = nanmean(
             [metrics[f"global_masculine_rate_{language}"]
+             for language in unique_languages])
+        metrics["stereotype_rate"] = nanmean(
+            [metrics[f"stereotype_rate{language}"]
              for language in unique_languages])
 
         return metrics
@@ -86,17 +99,7 @@ class MachineTranslationMetricCalculator(MetricCalculator):
             / len(probe_item.attempts)
         )
 
-        male_stereotype_rate = (
-            (stereotypically_male_count - not_stereotypically_male_count)
-            / (stereotypically_male_count + not_stereotypically_male_count)
-        )
-
-        female_stereotype_rate = (
-            (stereotypically_female_count - not_stereotypically_female_count)
-            / (stereotypically_female_count - not_stereotypically_female_count)
-        )
-
         male_count = len([attempt for attempt in probe_item.attempts if attempt.evaluation == "male"])
         global_masculine_rate = male_count / len(probe_item.attempts)
 
-        return stereotype_rate, male_stereotype_rate, female_stereotype_rate, global_masculine_rate
+        return stereotype_rate, global_masculine_rate
