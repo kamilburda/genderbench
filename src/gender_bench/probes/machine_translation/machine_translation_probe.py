@@ -77,7 +77,7 @@ class MachineTranslationProbe(Probe):
 
     def _create_probe_items(self) -> list[ProbeItem]:
         package_dir = importlib.resources.files("gender_bench")
-        resource_rel_filepath = "resources/gest_machine_translation/machine_translation.csv"
+        resource_rel_filepath = "resources/gest_machine_translation/gender_variants.csv"
 
         df_translations = pd.read_csv(package_dir / resource_rel_filepath)
 
