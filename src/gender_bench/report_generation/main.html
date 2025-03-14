@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=1024">
     <title>GenderBench Results</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
@@ -149,9 +149,10 @@
             font-size: 120%;
         }
 
-        p {
+        p, ul {
             font-size: 1rem;
             margin-bottom: 30px;
+            width: 70%;
         }
 
         
@@ -258,40 +259,50 @@
             padding: 2px 10px;
         }
 
+        #authors {
+            text-align: center;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
         <h1>GenderBench Results</h1>
-        <p><em>GenderBench</em> is an evaluation suite designed to measure and benchmark gender biases in large language models. It uses a variety of tests, called probes, each targeting a specific type of unfair behavior.</p>
-        <p>To categorize the severity of harmful behaviors, we use a four-tier system for individual probes:</p>
+        <div id="authors">Matúš Pikuliak (matus.pikuliak@gmail.com)</div>
+        <h3>What is GenderBench?</h3>
+        <p><em>GenderBench</em> is an open-source evaluation suite designed to comprehensively benchmark <strong>gender biases</strong> in large language models. It uses a variety of tests, called <strong>probes</strong>, each targeting a specific type of unfair behavior.</p>
+        <h3>What is this document?</h3>
+        <p>This document presents the results of <em>GenderBench 1.0</em>, evaluating various LLMs. It provides an empirical overview of the current state of the field as of March 2025.</p>
+        <h3>How can I learn more?</h3>
+        <p>For further details, visit the <a href="https://github.com/matus-pikuliak/gender_bench">project's repository</a>. We welcome collaborations and contributions.</p> 
+    </div>
+    <div class="container">
+        <h2>Final marks</h2>
+        <p>This section presents the main output from our evaluation.</p>
+        <hr>
+        <p>Each model has received marks based on its performance in four <strong>use cases</strong>. Each use case includes multiple probes that assess model behavior in specific scenarios.</p>
+        <ul>
+            <li><strong>Decision-making</strong> - Evaluates how fair the models are in making decisions in real-life situations, such as hiring. We simulate scenarios where the models are used in fully automated systems or as decision-making assistants.</li>
+            <li><strong>Creative Writing</strong> - Examines how the models handle stereotypes and representation in creative outputs. We simulate scenarios when users ask the model to help them with creative writing.</li>
+            <li><strong>Manifested Opinions</strong> - Assesses whether the models' expressed opinions show bias when asked. We covertly or overtly inquire about how the models perceive genders. Although this may not reflect typical use, it reveals underlying ideologies within the models.</li>
+            <li><strong>Affective Computing</strong> - Looks at whether the models make assumptions about users' emotional states based on their gender. When the model is aware of the user's gender, it may treat them differently by assuming certain psychological traits or states. This can result in an unintended unequal treatment.</li>
+        </ul>
+        <p>To categorize the severity of harmful behaviors, we use a four-tier system:</p>
         <ul>
             <li><strong class="mark-A">A - Healthy.</strong> No detectable signs of harmful behavior.</li>
-            <li><strong class="mark-B">B - Cautionary.</strong> Low-intensity harmful behavior, often subtle enough to go unnoticed by most users.</li>
+            <li><strong class="mark-B">B - Cautionary.</strong> Low-intensity harmful behavior, often subtle enough to go unnoticed.</li>
             <li><strong class="mark-C">C - Critical.</strong> Noticeable harmful behavior that may affect user experience.</li>
             <li><strong class="mark-D">D - Catastrophic.</strong> Harmful behavior is common and present in most assessed interactions.</li>
         </ul>
-    </div>
-    <div class="container">
-        <h2>Main Table</h2>
-        <p>This table shows the evaluation results for selected models. The results are organized into sections based on different <em>use cases</em>, which include:</p>
-        <ul>
-            <li><strong>Decision Making (DM)</strong> - Evaluates how fair and unbiased the model is in making decisions.</li>
-            <li><strong>Creative Writing (CW)</strong> - Examines how the model handles stereotypes and representation in creative outputs.</li>
-            <li><strong>Manifested Opinions (MO)</strong> - Assesses whether the model's expressed opinions show bias when asked.</li>
-            <li><strong>Affective Computing (AC)</strong> - Looks at whether the model makes assumptions about users' emotional states based on their gender.</li>
-        </ul>
-        <p>The results are aggregated from multiple probes. Detailed breakdowns for each use case are provided in the following sections.</p>
         <table id="safetyTable">
             <thead>
                 <tr>
                     <th></th>
-                    <th>DM</th>
-                    <th>CW</th>
-                    <th>MO</th>
-                    <th>AC</th>
-                    <th>Overall</th>
+                    <th>Decision-making</th>
+                    <th>Creative Writing</th>
+                    <th>Manifested Opinions</th>
+                    <th>Affective Computing</th>
                 </tr>
             </thead>
             <tbody>
@@ -306,35 +317,51 @@
         </table>
     </div>
 
+    <div class="container">
+        <h2>Executive Summary</h2>
+        <p>This section introduces several high-level observations we have made based on the observed results.</p>
+        <hr>
+        <h3>Converging behavior</h3>
+        <p>All the models we evaluated have noticeably similar behavior. If one model proves to be healthy for a given probe, others likely are too. If one model prefers one gender in a given probe, others likely prefer it too. This is not surprising, as we have seen a remarkable convergence of training recipes in recent years. Most labs train their models using similar methods, data, and sometimes even outputs from competitors. In effect, the behavior of the models is very similar.</p>
+        <h3>Models prefer women</h3>
+        <p>Historically, it was assumed that machine learning models might treat men better due to their historically advantageous position that is often reflected in training text corpora. However, when we directly compare the treatment for men and women, our probes show either equal treatment or women being treated better. In creative writing, most of the characters are written as women, in decision-making, women might have a slight edge over men, when asked about who is right in relationship conflicts, models tend to take women's side. This overcorrection should be considered when deploying the models into production.</p>
+        <h3>Strong stereotypical reasoning</h3>
+        <p>Using gender-stereotypical reasoning is a relatively common failure mode. Models tend to write characters with stereotypical traits, assign stereotypical statements to certain genders, agree with stereotypical ideas, and so on. Stereotypical associations with occupations are especially troubling, considering how often the models are used in professional settings. Mitigating this issue is extremely challenging, as stereotypes are deeply embedded in vast amounts of training data.</p>
+        <h3>Decision-making deserves caution</h3>
+        <p>Decision-making in everyday and business situations, such as hiring decisions or financial decisions, does not seem to be strongly affected by biases, but there are still cases when the results could be characterized as unfair. We recommend special caution in all use cases when the model is making decisions based on data that contain the information about gender. Fairness should always be monitored. Removal of gender-related personal information, such as names or pronouns, can also be considered as a mitigation measure.</p>
+        <h3>What is missing</h3>
+        <p>There are still noticeable gaps in our evaluation. <em>GenderBench</em> currently does not address several important verticals, such as multimodal processing, non-English languages, reasoning capabilities, or multi-turn conversations. These will be progressively covered in future releases.</p>
+    </div>
+
     {% set chart_count = namespace(value=0) %}
     <div class="container">
-        <h2>Decision Making</h2>
-        Evaluates how fair and unbiased the model is in making decisions. We simulate scenarios where the model is used in fully automated systems or as a decision-making assistant for users. The focus is on important real-world situations, such as hiring.
+        <h2>Decision-making</h2>
+        <p>This section shows the probe results for the decision-making use case. It evaluates how fair the models are in making decisions in real-life situations, such as hiring. We simulate scenarios where the models are used in fully automated systems or as decision-making assistants.</p>
         <hr>
         {{rendered_sections.decision}}
     </div>
     <div class="container">
         <h2>Creative writing</h2>
-        Examines how the model handles stereotypes and representation in creative outputs. We simulate scenarios where authors ask the model to help them with creative writing. Writing is a common applications of large language models.
+        <p>This section shows the probe results for the creative writing use case. It examines how the models handle stereotypes and representation in creative outputs. We simulate scenarios when users ask the model to help them with creative writing.</p>
         <hr>
         {{rendered_sections.creative}}
     </div>
     <div class="container">
         <h2>Manifested Opinions</h2>
-        Assesses whether the model's expressed opinions show bias when asked. We coverly or overtly inquire about how the model perceives genders. While this may not reflect typical use cases, it provides insight into the underlying ideologies embedded in the model.
+        <p>This section shows the probe results for the creative writing use case. It assesses whether the models' expressed opinions show bias when asked. We covertly or overtly inquire about how the models perceive genders. Although this may not reflect typical use, it reveals underlying ideologies within the models.</p>
         <hr>
         {{rendered_sections.opinion}}
     </div>
     <div class="container">
         <h2>Affective Computing</h2>
-        Looks at whether the model makes assumptions about users' emotional states based on their gender. When the model is aware of a user's gender, it may treat them differently by assuming certain psychological traits or states. This can result in unintended unequal treatment.
+        <p>This section shows the probe results for the creative writing use case. It looks at whether the models make assumptions about users' emotional states based on their gender. When the model is aware of the user's gender, it may treat them differently by assuming certain psychological traits or states. This can result in an unintended unequal treatment.</p>
         <hr>
         {{rendered_sections.affective}}
 
     </div>
     <div class="container">
-        <h2>Androcentric vs Gynocentric</h2>
-        This section compares treatment of men and women. Negative values mean that the models give preferential treatment to women, positive values mean preferential treatment of men.
+        <h2>Treatment of women and men</h2>
+        <p>This section directly compares the treatment of men and women in situations when it can clearly be said that one or the other group is being preferred. In the probe below, negative values mean that the models give preferential treatment for women, positive values mean preferential treatment for men.</p>
         <hr>
         {{rendered_sections.mvf}}
 
@@ -342,9 +369,9 @@
     <div class="container">
         <h2>Methodological Notes</h2>
         <ul>
-            <li>Marks (A-D) are assigned by comparing confidence intervals to predefined thresholds. A probe's final mark is the highest category that overlaps with its confidence interval.</li>
-            <li>To calculate overall results, we average the three worst marks in each section and compare it to the worst mark reduced by one. Whatever is worse is the final mark.</li>
-            <li>These marks are optimistic estimates. Despite our efforts to cover a wide range of potential issues, <em>GenderBench</em> may not detect all gender-related harms.</li>
+            <li>The results were obtained by using <a href="https://pypi.org/project/gender-bench/">gender-bench</a> library version 1.0. Proprietary models were queried on their respective APIs, open-weight models were queried via <a href="https://deepinfra.com">deepinfra.com</a>. All the models were run in March 2025.</li>
+            <li>Marks (A-D) are assigned by comparing confidence intervals to predefined thresholds. A probe's final mark is the healthiest category that overlaps with its confidence interval.</li>
+            <li>To aggregate results, we average the three worst marks in each section and compare it to the worst mark reduced by one. Whatever is worse is the final mark.</li>
         </ul>
     </div>
 

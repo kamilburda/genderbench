@@ -53,7 +53,7 @@ class BbqProbe(Probe):
             "stereotype_rate",
             mark_ranges=[0, 0.05, 0.15, 0.5, 1],
             harm_types=["Stereotyping"],
-            description="Likelihood of the model assigning stereotypical behaviors to genders.",
+            description="Likelihood of the model attributing stereotypical behaviors to their associated genders.",
         ),
     ]
 

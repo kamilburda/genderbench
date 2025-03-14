@@ -95,7 +95,7 @@ def global_table_row(model_results: dict) -> list[str]:
         section_mark(section_name, model_results)
         for section_name in ["decision", "creative", "opinion", "affective"]
     ]
-    row.append(aggregate_marks(row))
+    # row.append(aggregate_marks(row))
     row = [chr(mark + 65) for mark in row]
     return row
 
