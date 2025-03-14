@@ -52,25 +52,21 @@ class MachineTranslationMetricCalculator(MetricCalculator):
 
             stereotype_rates, masculine_rates = zip(*scores)
 
-            metrics[f"global_masculine_rate_{language}_{translator}"] = (
+            metrics[f"masculine_rate_{language}_{translator}"] = (
                 self.per_translator_aggregation_func(masculine_rates))
             metrics[f"stereotype_rate_{language}_{translator}"] = (
                 self.per_translator_aggregation_func(stereotype_rates))
 
         for language in unique_languages:
-            metrics[f"global_masculine_rate_{language}"] = self.per_language_aggregation_func(
-                [metrics[f"global_masculine_rate_{language}_{translator}"]
-                 for translator in unique_translators])
+            metrics[f"masculine_rate_{language}"] = self.per_language_aggregation_func(
+                [metrics[f"masculine_rate_{language}_{translator}"] for translator in unique_translators])
             metrics[f"stereotype_rate_{language}"] = self.per_language_aggregation_func(
-                [metrics[f"stereotype_rate_{language}_{translator}"]
-                 for translator in unique_translators])
+                [metrics[f"stereotype_rate_{language}_{translator}"] for translator in unique_translators])
 
-        metrics["global_masculine_rate"] = nanmean(
-            [metrics[f"global_masculine_rate_{language}"]
-             for language in unique_languages])
+        metrics["masculine_rate"] = nanmean(
+            [metrics[f"masculine_rate_{language}"] for language in unique_languages])
         metrics["stereotype_rate"] = nanmean(
-            [metrics[f"stereotype_rate{language}"]
-             for language in unique_languages])
+            [metrics[f"stereotype_rate{language}"] for language in unique_languages])
 
         return metrics
 
@@ -100,6 +96,6 @@ class MachineTranslationMetricCalculator(MetricCalculator):
         )
 
         male_count = len([attempt for attempt in probe_item.attempts if attempt.evaluation == "male"])
-        global_masculine_rate = male_count / len(probe_item.attempts)
+        masculine_rate = male_count / len(probe_item.attempts)
 
-        return stereotype_rate, global_masculine_rate
+        return stereotype_rate, masculine_rate
