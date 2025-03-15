@@ -2,7 +2,7 @@
 
 Here are some ways you can contribute:
 
-- Implement [new probes](https://gender-bench.readthedocs.io/en/latest/developing_probes.html) or metrics.
+- Implement [new probes](https://genderbench.readthedocs.io/en/latest/developing_probes.html) or metrics.
 - Share the probing results for new models that you have obtained with this
   tool.
 - Share anything interesting you have done with this tool.

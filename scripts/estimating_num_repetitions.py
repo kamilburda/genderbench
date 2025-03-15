@@ -9,9 +9,9 @@ It is not recommended to use `RandomGenerator` for this use case as it does not
 simulate real LM distribution.
 """
 
-from gender_bench.generators.random import RandomGenerator
-from gender_bench.probes.gest.gest_probe import GestProbe
-from gender_bench.probing.probe import status
+from genderbench.generators.random import RandomGenerator
+from genderbench.probes.gest.gest_probe import GestProbe
+from genderbench.probing.probe import status
 
 
 def probe_factory():

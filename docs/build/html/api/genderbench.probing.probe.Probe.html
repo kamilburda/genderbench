@@ -1,0 +1,441 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Probe &mdash; GenderBench v0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=34cd777e"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Prompt" href="genderbench.probing.prompt.Prompt.html" />
+    <link rel="prev" title="ProbeItem" href="genderbench.probing.probe_item.ProbeItem.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            GenderBench
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing_probes.html">Developing Probes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reports.html">Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../probes.html">Probes</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="genderbench.probing.attempt.Attempt.html">Attempt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genderbench.probing.evaluator.Evaluator.html">Evaluators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genderbench.generators.generator.Generator.html">Generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genderbench.probing.harness.Harness.html">Harness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genderbench.probing.mark_definition.MarkDefinition.html">MarkDefinition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genderbench.probing.metric_calculator.MetricCalculator.html">MetricCalculator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genderbench.probing.probe_item.ProbeItem.html">ProbeItem</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Probe</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#genderbench.probing.probe.Probe"><code class="docutils literal notranslate"><span class="pre">Probe</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#genderbench.probing.probe.Probe.metrics"><code class="docutils literal notranslate"><span class="pre">Probe.metrics</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genderbench.probing.probe.Probe.marks"><code class="docutils literal notranslate"><span class="pre">Probe.marks</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genderbench.probing.probe.Probe.status"><code class="docutils literal notranslate"><span class="pre">Probe.status</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genderbench.probing.probe.Probe.uuid"><code class="docutils literal notranslate"><span class="pre">Probe.uuid</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genderbench.probing.probe.Probe.probe_items"><code class="docutils literal notranslate"><span class="pre">Probe.probe_items</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genderbench.probing.probe.Probe.attempts"><code class="docutils literal notranslate"><span class="pre">Probe.attempts</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genderbench.probing.probe.Probe.calculate_marks"><code class="docutils literal notranslate"><span class="pre">Probe.calculate_marks()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genderbench.probing.probe.Probe.calculate_metrics"><code class="docutils literal notranslate"><span class="pre">Probe.calculate_metrics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genderbench.probing.probe.Probe.create_probe_items"><code class="docutils literal notranslate"><span class="pre">Probe.create_probe_items()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genderbench.probing.probe.Probe.evaluate"><code class="docutils literal notranslate"><span class="pre">Probe.evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genderbench.probing.probe.Probe.from_json_dict"><code class="docutils literal notranslate"><span class="pre">Probe.from_json_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genderbench.probing.probe.Probe.from_log_file"><code class="docutils literal notranslate"><span class="pre">Probe.from_log_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genderbench.probing.probe.Probe.generate"><code class="docutils literal notranslate"><span class="pre">Probe.generate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genderbench.probing.probe.Probe.log_current_state"><code class="docutils literal notranslate"><span class="pre">Probe.log_current_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genderbench.probing.probe.Probe.log_file"><code class="docutils literal notranslate"><span class="pre">Probe.log_file</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genderbench.probing.probe.Probe.run"><code class="docutils literal notranslate"><span class="pre">Probe.run()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genderbench.probing.probe.Probe.sample"><code class="docutils literal notranslate"><span class="pre">Probe.sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genderbench.probing.probe.Probe.to_json_dict"><code class="docutils literal notranslate"><span class="pre">Probe.to_json_dict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="genderbench.probing.prompt.Prompt.html">Prompt</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">GenderBench</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API</a></li>
+      <li class="breadcrumb-item active">Probe</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/genderbench.probing.probe.Probe.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="probe">
+<span id="api-probe"></span><h1>Probe<a class="headerlink" href="#probe" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="genderbench.probing.probe.Probe">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">genderbench.probing.probe.</span></span><span class="sig-name descname"><span class="pre">Probe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">evaluator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="genderbench.probing.evaluator.Evaluator.html#genderbench.probing.evaluator.Evaluator" title="genderbench.probing.evaluator.Evaluator"><span class="pre">Evaluator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_calculator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="genderbench.probing.metric_calculator.MetricCalculator.html#genderbench.probing.metric_calculator.MetricCalculator" title="genderbench.probing.metric_calculator.MetricCalculator"><span class="pre">MetricCalculator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_repetitions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calculate_cis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bootstrap_cycles</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bootstrap_alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.95</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">123</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_strategy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'no'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'during'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'after'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'after'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genderbench.probing.probe.Probe" title="Link to this definition"></a></dt>
+<dd><p><cite>Probes</cite> are capable of orchestrating the entire probing pipeline to
+calculate <cite>metrics</cite> and <cite>marks</cite> for text generators. Each <cite>Probe</cite> is
+designed to quantify one or more harmful behaviors that such text generators
+might manifest.</p>
+<p>The lifecycle of <cite>Probe</cite> consists of four main steps:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Creating <cite>ProbeItems</cite> and their <cite>Attempts</cite>.</p></li>
+<li><p>Running <cite>generator</cite> on all the created <cite>Attempts</cite></p></li>
+<li><p>Evaluating the generated answers with <cite>evaluator</cite>.</p></li>
+<li><p>Calculating metrics and marks based on the evaluations.</p></li>
+</ol>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>evaluator</strong> (<a class="reference internal" href="genderbench.probing.evaluator.Evaluator.html#genderbench.probing.evaluator.Evaluator" title="genderbench.probing.evaluator.Evaluator"><em>Evaluator</em></a>) – <cite>Evaluator</cite> used to evaluate generated answers in
+<cite>attempts</cite>.</p></li>
+<li><p><strong>metric_calculator</strong> (<a class="reference internal" href="genderbench.probing.metric_calculator.MetricCalculator.html#genderbench.probing.metric_calculator.MetricCalculator" title="genderbench.probing.metric_calculator.MetricCalculator"><em>MetricCalculator</em></a>) – <cite>MetricCalculator</cite> used to
+calculate metrics from the evaluated <cite>Attempts</cite>.</p></li>
+<li><p><strong>num_repetitions</strong> (<em>int</em>) – How many <cite>Attempts</cite> are created for each
+<cite>Prompt</cite>. Useful to increase the precision of measurments. Defaults
+to 1.</p></li>
+<li><p><strong>sample_k</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – How many <cite>ProbeItems</cite> are sampled
+from the full dataset. When set to None, all the samples are used.
+Defaults to None.</p></li>
+<li><p><strong>calculate_cis</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to calculate confidence
+intervals (via bootstrapping) for metrics or use the raw values.
+Defaults to True.</p></li>
+<li><p><strong>bootstrap_cycles</strong> (<em>int</em><em>, </em><em>optional</em>) – How many resamplings of <cite>ProbeItems</cite>
+are done for confidence interval calculations. Defaults to 1000.</p></li>
+<li><p><strong>bootstrap_alpha</strong> (<em>float</em><em>, </em><em>optional</em>) – The <em>alpha</em> level for confidence
+interval calculations. Defaults to 0.95.</p></li>
+<li><p><strong>random_seed</strong> (<em>int</em><em>, </em><em>optional</em>) – Random seed used when we create
+<cite>ProbeItems</cite>. Defaults to 123.</p></li>
+<li><p><strong>log_strategy</strong> (<em>Literal</em><em>[</em><em>&quot;after&quot;</em><em>, </em><em>&quot;during&quot;</em><em>, </em><em>&quot;no&quot;</em><em>]</em><em>, </em><em>optional</em>) – <p>How often is
+the state of the probe logged into a file as a JSON line:</p>
+<blockquote>
+<div><ul>
+<li><p>”after” - After the entire <cite>run</cite> lifecycle.</p></li>
+<li><p>”during” - After each of the 4 steps in the <cite>run</cite> lifecycle.</p></li>
+<li><p>”no” - Never.</p></li>
+</ul>
+</div></blockquote>
+<p>Defaults to “no”.</p>
+</p></li>
+<li><p><strong>log_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to the logging directory. If None,
+LOG_DIR environment variable is used. Defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genderbench.probing.probe.Probe.metrics">
+<span class="sig-name descname"><span class="pre">metrics</span></span><a class="headerlink" href="#genderbench.probing.probe.Probe.metrics" title="Link to this definition"></a></dt>
+<dd><p>Calculated metrics. Available only in
+<code class="docutils literal notranslate"><span class="pre">status.FINISHED</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, float]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genderbench.probing.probe.Probe.marks">
+<span class="sig-name descname"><span class="pre">marks</span></span><a class="headerlink" href="#genderbench.probing.probe.Probe.marks" title="Link to this definition"></a></dt>
+<dd><p>Calculated marks. Available only in
+<code class="docutils literal notranslate"><span class="pre">status.FINISHED</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, dict]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genderbench.probing.probe.Probe.status">
+<span class="sig-name descname"><span class="pre">status</span></span><a class="headerlink" href="#genderbench.probing.probe.Probe.status" title="Link to this definition"></a></dt>
+<dd><p>Current status of the <cite>Probe</cite>, one of <code class="docutils literal notranslate"><span class="pre">status.NEW</span></code>,
+<code class="docutils literal notranslate"><span class="pre">status.POPULATED</span></code>, <code class="docutils literal notranslate"><span class="pre">status.GENERATED</span></code>, <code class="docutils literal notranslate"><span class="pre">status.EVALUATED</span></code>,
+<code class="docutils literal notranslate"><span class="pre">status.FINISHED</span></code>. Status is changed after each of the four steps.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>status</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genderbench.probing.probe.Probe.uuid">
+<span class="sig-name descname"><span class="pre">uuid</span></span><a class="headerlink" href="#genderbench.probing.probe.Probe.uuid" title="Link to this definition"></a></dt>
+<dd><p>UUID identifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>uuid.UUID</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genderbench.probing.probe.Probe.probe_items">
+<span class="sig-name descname"><span class="pre">probe_items</span></span><a class="headerlink" href="#genderbench.probing.probe.Probe.probe_items" title="Link to this definition"></a></dt>
+<dd><p>List of current <cite>ProbeItems</cite>. Available
+starting from <code class="docutils literal notranslate"><span class="pre">status.POPULATED</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[<a class="reference internal" href="genderbench.probing.probe_item.ProbeItem.html#genderbench.probing.probe_item.ProbeItem" title="genderbench.probing.probe_item.ProbeItem">ProbeItem</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="genderbench.probing.probe.Probe.attempts">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">attempts</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="genderbench.probing.attempt.Attempt.html#genderbench.probing.attempt.Attempt" title="genderbench.probing.attempt.Attempt"><span class="pre">Attempt</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#genderbench.probing.probe.Probe.attempts" title="Link to this definition"></a></dt>
+<dd><p>Generator of all the attempts that belong to this <cite>Probe</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Yields<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Attempt</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="genderbench.probing.probe.Probe.calculate_marks">
+<span class="sig-name descname"><span class="pre">calculate_marks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#genderbench.probing.probe.Probe.calculate_marks" title="Link to this definition"></a></dt>
+<dd><p>Calculate <cite>marks</cite> and prepare output mark dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>Assessment of the mark based on coressponding</dt><dd><p>metric value.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict[str, dict]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="genderbench.probing.probe.Probe.calculate_metrics">
+<span class="sig-name descname"><span class="pre">calculate_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#genderbench.probing.probe.Probe.calculate_metrics" title="Link to this definition"></a></dt>
+<dd><p>Calculate <cite>metrics</cite> and <cite>marks</cite> based on the results of evaluation.
+This is the fourth and final step in the <cite>run</cite> lifecycle. Moves the
+<cite>status</cite> from <code class="docutils literal notranslate"><span class="pre">EVALUATED</span></code> to <code class="docutils literal notranslate"><span class="pre">FINISHED</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="genderbench.probing.probe.Probe.create_probe_items">
+<span class="sig-name descname"><span class="pre">create_probe_items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#genderbench.probing.probe.Probe.create_probe_items" title="Link to this definition"></a></dt>
+<dd><p>Populate <cite>probe_items</cite> with corrensponding prepared <cite>ProbeItems</cite>.
+This is the first step in the <cite>run</cite> lifecycle. Moves the <cite>status</cite> from
+<code class="docutils literal notranslate"><span class="pre">NEW</span></code> to <code class="docutils literal notranslate"><span class="pre">POPULATED</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="genderbench.probing.probe.Probe.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#genderbench.probing.probe.Probe.evaluate" title="Link to this definition"></a></dt>
+<dd><p>Use <cite>evaluator</cite> to evaluate the generated texts and populate the
+<cite>evaluation</cite> field in all the <cite>Attempts</cite>. This is the third step in the
+<cite>run</cite> lifecycle. Moves the <cite>status</cite> from <code class="docutils literal notranslate"><span class="pre">GENERATED</span></code> to <code class="docutils literal notranslate"><span class="pre">EVALUATED</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="genderbench.probing.probe.Probe.from_json_dict">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_json_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genderbench.probing.probe.Probe.from_json_dict" title="Link to this definition"></a></dt>
+<dd><p>Create a new <cite>Probe</cite> object from a JSON-serializable dictionary
+representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>json_dict</strong> (<em>dict</em>) – JSON-serializable dictionary. Generated by
+<code class="docutils literal notranslate"><span class="pre">to_json_dict</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Restored <cite>Probe</cite> object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="genderbench.probing.attempt.Attempt.html#genderbench.probing.attempt.Attempt" title="genderbench.probing.attempt.Attempt">Attempt</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="genderbench.probing.probe.Probe.from_log_file">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_log_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#genderbench.probing.probe.Probe" title="genderbench.probing.probe.Probe"><span class="pre">Probe</span></a></span></span><a class="headerlink" href="#genderbench.probing.probe.Probe.from_log_file" title="Link to this definition"></a></dt>
+<dd><p>Restore a <cite>Probe</cite> object from a log file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>log_file</strong> (<em>str</em>) – Path to a log file generated by <code class="docutils literal notranslate"><span class="pre">log_current_state</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Restored <cite>Probe</cite> object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="genderbench.probing.attempt.Attempt.html#genderbench.probing.attempt.Attempt" title="genderbench.probing.attempt.Attempt">Attempt</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="genderbench.probing.probe.Probe.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">generator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="genderbench.generators.generator.Generator.html#genderbench.generators.generator.Generator" title="genderbench.generators.generator.Generator"><span class="pre">Generator</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genderbench.probing.probe.Probe.generate" title="Link to this definition"></a></dt>
+<dd><p>Use text <cite>generator</cite> to generate texts based on all the <cite>Attempts</cite>
+from this <cite>Probe</cite>, and populate their <cite>answer</cite> field. This is the second
+step in the <cite>run</cite> lifecycle. Moves the <cite>status</cite> from <code class="docutils literal notranslate"><span class="pre">POPULATED</span></code> to
+<code class="docutils literal notranslate"><span class="pre">GENERATED</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>generator</strong> (<a class="reference internal" href="genderbench.generators.generator.Generator.html#genderbench.generators.generator.Generator" title="genderbench.generators.generator.Generator"><em>Generator</em></a>) – Text generator that is being probed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="genderbench.probing.probe.Probe.log_current_state">
+<span class="sig-name descname"><span class="pre">log_current_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#genderbench.probing.probe.Probe.log_current_state" title="Link to this definition"></a></dt>
+<dd><p>Log current state of <cite>Probe</cite> into a log file.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="genderbench.probing.probe.Probe.log_file">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">log_file</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#genderbench.probing.probe.Probe.log_file" title="Link to this definition"></a></dt>
+<dd><p>Path to the log file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="genderbench.probing.probe.Probe.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">generator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="genderbench.generators.generator.Generator.html#genderbench.generators.generator.Generator" title="genderbench.generators.generator.Generator"><span class="pre">Generator</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#genderbench.probing.probe.Probe.run" title="Link to this definition"></a></dt>
+<dd><p>This is the main process being used to probe <cite>generator</cite> for harmful
+behavior.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>generator</strong> (<a class="reference internal" href="genderbench.generators.generator.Generator.html#genderbench.generators.generator.Generator" title="genderbench.generators.generator.Generator"><em>Generator</em></a>) – Evaluated text generator.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>A tuple containing:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Dictionary describing the calculated marks.</p></li>
+<li><p>Dictionary with metrics and their values.</p></li>
+</ul>
+</div></blockquote>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[dict[str, dict]], dict[str, float]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="genderbench.probing.probe.Probe.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="genderbench.probing.probe_item.ProbeItem.html#genderbench.probing.probe_item.ProbeItem" title="genderbench.probing.probe_item.ProbeItem"><span class="pre">ProbeItem</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#genderbench.probing.probe.Probe.sample" title="Link to this definition"></a></dt>
+<dd><p>Sample <cite>k</cite> existing <cite>ProbeItems</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>k</strong> (<em>int</em>) – How many <cite>ProbeItems</cite> are sampled.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Sampled <cite>ProbeItems</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[<a class="reference internal" href="genderbench.probing.probe_item.ProbeItem.html#genderbench.probing.probe_item.ProbeItem" title="genderbench.probing.probe_item.ProbeItem">ProbeItem</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="genderbench.probing.probe.Probe.to_json_dict">
+<span class="sig-name descname"><span class="pre">to_json_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#genderbench.probing.probe.Probe.to_json_dict" title="Link to this definition"></a></dt>
+<dd><p>Prepare a JSON-serializable dictionary representation. Used for
+logging.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>JSON-serializable dictionary.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="genderbench.probing.probe_item.ProbeItem.html" class="btn btn-neutral float-left" title="ProbeItem" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="genderbench.probing.prompt.Prompt.html" class="btn btn-neutral float-right" title="Prompt" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Matúš Pikuliak.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

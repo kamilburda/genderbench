@@ -7,7 +7,7 @@ def read_requirements(filename):
 
 
 setup(
-    name="gender_bench",
+    name="genderbench",
     version="0.4.0",
     install_requires=read_requirements("requirements.txt"),
     package_dir={"": "src"},
@@ -18,11 +18,11 @@ setup(
     long_description_content_type="text/markdown",
     author="Matúš Pikuliak",
     author_email="matus.pikuliak@gmail.com",
-    url="https://github.com/matus-pikuliak/gender_bench",
+    url="https://github.com/matus-pikuliak/genderbench",
     license="See README",
     project_urls={
-        "Documentation": "https://gender-bench.readthedocs.io/en/latest/",
-        "Source Code": "https://github.com/matus-pikuliak/gender_bench",
+        "Documentation": "https://genderbench.readthedocs.io/en/latest/",
+        "Source Code": "https://github.com/matus-pikuliak/genderbench",
     },
     keywords="gender-bias fairness-ai llms llms-benchmarking",
 )

@@ -6,7 +6,7 @@
 GenderBench Documentation
 =========================
 
-This is the documentation for `GenderBench <https://github.com/matus-pikuliak/gender_bench>`_
+This is the documentation for `GenderBench <https://github.com/matus-pikuliak/genderbench>`_
 project. `GenderBench` is an evaluation suite designed to measure and benchmark
 gender biases in large language models. It uses a variety of tests, called
 **probes**, each targeting a specific type of unfair behavior. Our goal is to

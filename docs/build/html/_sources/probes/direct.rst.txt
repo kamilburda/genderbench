@@ -1,3 +1,3 @@
 .. _direct_probe:
 
-.. mdinclude:: ../../../src/gender_bench/probes/direct/README.md
+.. mdinclude:: ../../../src/genderbench/probes/direct/README.md

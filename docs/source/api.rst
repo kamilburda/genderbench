@@ -4,12 +4,12 @@ API
 .. toctree::
     :maxdepth: 2
 
-    api/gender_bench.probing.attempt.Attempt 
-    api/gender_bench.probing.evaluator.Evaluator
-    api/gender_bench.generators.generator.Generator
-    api/gender_bench.probing.harness.Harness
-    api/gender_bench.probing.mark_definition.MarkDefinition
-    api/gender_bench.probing.metric_calculator.MetricCalculator
-    api/gender_bench.probing.probe_item.ProbeItem
-    api/gender_bench.probing.probe.Probe
-    api/gender_bench.probing.prompt.Prompt
+    api/genderbench.probing.attempt.Attempt 
+    api/genderbench.probing.evaluator.Evaluator
+    api/genderbench.generators.generator.Generator
+    api/genderbench.probing.harness.Harness
+    api/genderbench.probing.mark_definition.MarkDefinition
+    api/genderbench.probing.metric_calculator.MetricCalculator
+    api/genderbench.probing.probe_item.ProbeItem
+    api/genderbench.probing.probe.Probe
+    api/genderbench.probing.prompt.Prompt

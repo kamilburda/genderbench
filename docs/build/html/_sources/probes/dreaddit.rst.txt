@@ -1,1 +1,1 @@
-.. mdinclude:: ../../../src/gender_bench/probes/dreaddit/README.md
+.. mdinclude:: ../../../src/genderbench/probes/dreaddit/README.md
