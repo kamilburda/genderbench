@@ -46,10 +46,10 @@ is and (2) based on how strongly the LLM associates occupations with their
 stereotypical genders.
 
 ### Report
-<a href="https://genderbench.readthedocs.io/en/latest/_static/reports/genderbench_report_0_1.html">↗ GenderBench Report 0.1 available here.</a>
+<a href="https://genderbench.readthedocs.io/en/latest/_static/reports/genderbench_report_1_0.html">↗ GenderBench Report 1.0 available here.</a>
 
 This is the current version of the **GenderBench Report**, summarizing the
-results for a selected set of LLMs with the most recent version of
+results for a selected set of 12 LLMs with the most recent version of
 `GenderBench`.
 
 ## Documentation
