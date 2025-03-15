@@ -21,7 +21,7 @@ setup(
     url="https://github.com/matus-pikuliak/genderbench",
     license="See README",
     project_urls={
-        "Documentation": "https://genderbench.readthedocs.io/en/latest/",
+        "Documentation": "https://genderbench.readthedocs.io/latest/",
         "Source Code": "https://github.com/matus-pikuliak/genderbench",
     },
     keywords="gender-bias fairness-ai llms llms-benchmarking",
