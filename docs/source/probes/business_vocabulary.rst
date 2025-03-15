@@ -1,1 +1,1 @@
-.. mdinclude:: ../../../src/gender_bench/probes/business_vocabulary/README.md
+.. mdinclude:: ../../../src/genderbench/probes/business_vocabulary/README.md

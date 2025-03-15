@@ -87,12 +87,12 @@
 contribute to this project.</p>
 </div>
 <p><cite>GenderBench</cite> is designed so that developing new probes is as easy and seamless
-as possible. To develop a new probe, you have to create a new <a class="reference internal" href="api/gender_bench.probing.probe.Probe.html#api-probe"><span class="std std-ref">Probe</span></a>
+as possible. To develop a new probe, you have to create a new <a class="reference internal" href="api/genderbench.probing.probe.Probe.html#api-probe"><span class="std std-ref">Probe</span></a>
 subclass with several additional elements. All the necessary files for a probe
 to run tend to be located in a single folder. The necessary elements for a probe
 to work are:</p>
 <ul>
-<li><p><a class="reference internal" href="api/gender_bench.probing.probe.Probe.html#api-probe"><span class="std std-ref">Probe</span></a></p>
+<li><p><a class="reference internal" href="api/genderbench.probing.probe.Probe.html#api-probe"><span class="std std-ref">Probe</span></a></p>
 <blockquote>
 <div><p>Handles data loading and orchestration of the entire probing process. Each
 subclass needs a custom <code class="docutils literal notranslate"><span class="pre">__init__</span></code> to initialize the object with
@@ -101,7 +101,7 @@ loading itself is implemented as <code class="docutils literal notranslate"><spa
 a list of <cite>ProbeItems</cite> and their <cite>Prompts</cite>.</p>
 </div></blockquote>
 </li>
-<li><p><a class="reference internal" href="api/gender_bench.probing.evaluator.Evaluator.html#api-evaluator"><span class="std std-ref">Evaluator</span></a></p>
+<li><p><a class="reference internal" href="api/genderbench.probing.evaluator.Evaluator.html#api-evaluator"><span class="std std-ref">Evaluator</span></a></p>
 <blockquote>
 <div><p><cite>Probe</cite> needs to be initialized with <code class="docutils literal notranslate"><span class="pre">Evaluator</span></code> subclass object. This
 <cite>Evaluator</cite> object must implement <code class="docutils literal notranslate"><span class="pre">calculate_evaluation</span></code> method that is
@@ -110,7 +110,7 @@ e.g., what options was selected in a multiple choice question, what gender
 was used for a novel character, and so on.</p>
 </div></blockquote>
 </li>
-<li><p><a class="reference internal" href="api/gender_bench.probing.metric_calculator.MetricCalculator.html#api-metric-calculator"><span class="std std-ref">MetricCalculator</span></a></p>
+<li><p><a class="reference internal" href="api/genderbench.probing.metric_calculator.MetricCalculator.html#api-metric-calculator"><span class="std std-ref">MetricCalculator</span></a></p>
 <blockquote>
 <div><p><cite>Probe</cite> needs to be initialized with <cite>MetricCalculator</cite> subclass object as
 well. This <cite>MetricCalculator</cite> must implement <code class="docutils literal notranslate"><span class="pre">calculate</span></code> method that
@@ -118,7 +118,7 @@ processes evaluated <cite>Attempts</cite> and calculate various probe-specific
 statistics.</p>
 </div></blockquote>
 </li>
-<li><p><a class="reference internal" href="api/gender_bench.probing.mark_definition.MarkDefinition.html#api-mark-definition"><span class="std std-ref">MarkDefinition</span></a></p>
+<li><p><a class="reference internal" href="api/genderbench.probing.mark_definition.MarkDefinition.html#api-mark-definition"><span class="std std-ref">MarkDefinition</span></a></p>
 <blockquote>
 <div><p>Finally, <cite>Probe</cite> class can have one or more <cite>MarkDefinition</cite> objects. These
 are used to interpret the selected calculated metric and provide the user

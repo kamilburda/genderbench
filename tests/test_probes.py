@@ -1,5 +1,5 @@
-from gender_bench.generators.random import RandomGenerator
-from gender_bench.probes import (
+from genderbench.generators.random import RandomGenerator
+from genderbench.probes import (
     BbqProbe,
     BusinessVocabularyProbe,
     DirectProbe,
@@ -15,7 +15,7 @@ from gender_bench.probes import (
     JobsLumProbe,
     RelationshipLevyProbe,
 )
-from gender_bench.probing.harness import Harness
+from genderbench.probing.harness import Harness
 
 
 def test_isear():
