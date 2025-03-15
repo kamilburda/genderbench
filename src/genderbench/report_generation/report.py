@@ -1,7 +1,7 @@
-from importlib.metadata import version
 import json
 import re
 import uuid
+from importlib.metadata import version
 from typing import Type
 
 from jinja2 import Environment, PackageLoader
