@@ -319,11 +319,11 @@
 
     <div class="container">
         <h2>Executive Summary</h2>
-        <p>This section introduces several high-level observations we have made based on the observed results.</p>
+        <p>This section introduces several high-level observations we have made based on the observed results. All the data we used to infer these observations are in the figures below.</p>
         <hr>
         <h3>Converging behavior</h3>
         <p>All the models we evaluated have noticeably similar behavior. If one model proves to be healthy for a given probe, others likely are too. If one model prefers one gender in a given probe, others likely prefer it too. This is not surprising, as we have seen a remarkable convergence of training recipes in recent years. Most labs train their models using similar methods, data, and sometimes even outputs from competitors. In effect, the behavior of the models is very similar.</p>
-        <h3>Models prefer women</h3>
+        <h3>Models treat women better</h3>
         <p>Historically, it was assumed that machine learning models might treat men better due to their historically advantageous position that is often reflected in training text corpora. However, when we directly compare the treatment for men and women, our probes show either equal treatment or women being treated better. In creative writing, most of the characters are written as women, in decision-making, women might have a slight edge over men, when asked about who is right in relationship conflicts, models tend to take women's side. This overcorrection should be considered when deploying the models into production.</p>
         <h3>Strong stereotypical reasoning</h3>
         <p>Using gender-stereotypical reasoning is a relatively common failure mode. Models tend to write characters with stereotypical traits, assign stereotypical statements to certain genders, agree with stereotypical ideas, and so on. Stereotypical associations with occupations are especially troubling, considering how often the models are used in professional settings. Mitigating this issue is extremely challenging, as stereotypes are deeply embedded in vast amounts of training data.</p>
