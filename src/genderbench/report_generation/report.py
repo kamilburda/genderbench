@@ -1,3 +1,4 @@
+from importlib.metadata import version
 import json
 import re
 import uuid
@@ -166,6 +167,7 @@ def render_visualization(log_files: list[str], model_names: list[str]) -> str:
     rendered_html = main_template.render(
         global_table=global_table,
         rendered_sections=rendered_sections,
+        version=version("genderbench"),
     )
 
     return rendered_html
