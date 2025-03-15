@@ -8,7 +8,7 @@ def read_requirements(filename):
 
 setup(
     name="genderbench",
-    version="0.4.0",
+    version="0.5.0",
     install_requires=read_requirements("requirements.txt"),
     package_dir={"": "src"},
     packages=find_namespace_packages(where="src"),
