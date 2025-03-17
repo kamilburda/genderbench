@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "genderbench"
+version = "0.5.1"
+dependencies = [
+    "anthropic",
+    "jinja2",
+    "nest_asyncio",
+    "nltk",
+    "numpy",
+    "openai",
+    "pandas",
+    "requests",
+    "scipy",
+    "tqdm",
+]
+requires-python = ">=3.12"
+authors = [
+  {name = "Matúš Pikuliak", email = "matus.pikuliak@gmail.com"},
+]
+description = "Evaluation suite for gender biases in LLMs."
+readme = "README.md"
+keywords = ["gender-bias", "fairness-ai", "llms", "llms-benchmarking"]
+
+[project.optional-dependencies]
+dev = [
+  "black",
+  "isort",
+]
+
+[project.urls]
+Documentation = "https://genderbench.readthedocs.io"
+Repository = "https://github.com/matus-pikuliak/genderbench"

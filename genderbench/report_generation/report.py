@@ -110,7 +110,9 @@ def prepare_chart_data(
     probe_name = probe_class.__name__
     probe_name_snake_case = re.sub(r"(?<!^)(?=[A-Z])", "_", probe_name).lower()
     probe_name_snake_case = probe_name_snake_case.rsplit("_", maxsplit=1)[0]
-    github_path = f"https://genderbench.readthedocs.io/latest/probes/{probe_name_snake_case}.html"
+    github_path = (
+        f"https://genderbench.readthedocs.io/latest/probes/{probe_name_snake_case}.html"
+    )
     first_result = list(experiment_results.values())[0]
     return {
         "description": first_result[probe_name]["marks"][metric]["description"],
