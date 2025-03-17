@@ -1,36 +1,38 @@
-[build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta"
-
 [project]
 name = "genderbench"
-version = "0.5.1"
-dependencies = [
-    "anthropic",
-    "jinja2",
-    "nest_asyncio",
-    "nltk",
-    "numpy",
-    "openai",
-    "pandas",
-    "requests",
-    "scipy",
-    "tqdm",
-]
-requires-python = ">=3.12"
-authors = [
-  {name = "Matúš Pikuliak", email = "matus.pikuliak@gmail.com"},
-]
+version = "0.6.0"
 description = "Evaluation suite for gender biases in LLMs."
+authors = [
+    {name = "Your Name",email = "you@example.com"}
+]
+license = {text = "LICENSE"}
 readme = "README.md"
-keywords = ["gender-bias", "fairness-ai", "llms", "llms-benchmarking"]
-
-[project.optional-dependencies]
-dev = [
-  "black",
-  "isort",
+requires-python = ">=3.12"
+dependencies = [
+    "anthropic (>=0.49.0,<0.50.0)",
+    "fsspec (>=2025.3.0,<2026.0.0)",
+    "huggingface-hub (>=0.29.3,<0.30.0)",
+    "jinja2 (>=3.1.6,<4.0.0)",
+    "nest-asyncio (>=1.6.0,<2.0.0)",
+    "nltk (>=3.9.1,<4.0.0)",
+    "numpy (>=2.2.4,<3.0.0)",
+    "openai (>=1.66.3,<2.0.0)",
+    "pandas (>=2.2.3,<3.0.0)",
+    "requests (>=2.32.3,<3.0.0)",
+    "scipy (>=1.15.2,<2.0.0)",
+    "tqdm (>=4.67.1,<5.0.0)",
 ]
 
-[project.urls]
-Documentation = "https://genderbench.readthedocs.io"
-Repository = "https://github.com/matus-pikuliak/genderbench"
+[tool.poetry]
+
+[tool.poetry.group.dev.dependencies]
+black = "^25.1.0"
+isort = "^6.0.1"
+pytest = "^8.3.5"
+sphinx = "^8.2.3"
+sphinx-mdinclude = "^0.6.2"
+sphinx-rtd-theme = "^3.0.2"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

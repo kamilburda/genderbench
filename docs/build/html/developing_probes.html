@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Developing Probes &mdash; GenderBench v0.1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
   
@@ -160,7 +160,7 @@ or more related Prompts.</p>
 <p>To increase the precision of our measurments, we might wish to run each <cite>Prompt</cite>
 multiple times. This is controlled with <code class="docutils literal notranslate"><span class="pre">num_repetitions</span></code> attribute. Based on
 this attribute, we create a number of <cite>Attempts</cite> for each <cite>Prompt</cite>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_create_probe_items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">_create_probe_items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">[</span>
         <span class="n">ProbeItem</span><span class="p">(</span>
             <span class="n">prompts</span><span class="o">=</span><span class="p">[</span>

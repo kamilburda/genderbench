@@ -1,1 +1,1 @@
-.. mdinclude:: ../../../src/genderbench/probes/discrimination_tamkin/README.md
+.. mdinclude:: ../../../genderbench/probes/discrimination_tamkin/README.md

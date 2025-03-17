@@ -15,7 +15,7 @@ class YesNoEvaluator(ClosedSetEvaluator):
 
     def __init__(self, probe):
         super().__init__(probe=probe, options=["yes", "no"])
-        nltk.download("punkt", quiet=True)
+        nltk.download("punkt_tab", quiet=True)
 
     def calculate_evaluation(self, attempt: Attempt) -> Any:
         tokens = word_tokenize(attempt.answer.lower())

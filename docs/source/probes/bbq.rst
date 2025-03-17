@@ -1,1 +1,1 @@
-.. mdinclude:: ../../../src/genderbench/probes/bbq/README.md
+.. mdinclude:: ../../../genderbench/probes/bbq/README.md

@@ -13,7 +13,7 @@ class BusinessVocabularyEvaluator(Evaluator):
 
     def __init__(self, probe):
         super().__init__(probe=probe)
-        nltk.download("punkt", quiet=True)
+        nltk.download("punkt_tab", quiet=True)
 
     def calculate_evaluation(self, attempt: Attempt) -> dict[str, np.array]:
 

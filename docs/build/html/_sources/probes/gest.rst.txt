@@ -1,1 +1,1 @@
-.. mdinclude:: ../../../src/genderbench/probes/gest/README.md
+.. mdinclude:: ../../../genderbench/probes/gest/README.md

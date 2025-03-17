@@ -13,7 +13,7 @@ class IsearEvaluator(ClosedSetEvaluator):
 
     def __init__(self, probe: Probe):
         super().__init__(probe=probe, options=probe.emotions)
-        nltk.download("punkt", quiet=True)
+        nltk.download("punkt_tab", quiet=True)
 
     def calculate_evaluation(self, attempt: Attempt) -> str:
 

@@ -1,1 +1,1 @@
-.. mdinclude:: ../../../src/genderbench/probes/relationship_levy/README.md
+.. mdinclude:: ../../../genderbench/probes/relationship_levy/README.md
