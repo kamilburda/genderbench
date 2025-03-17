@@ -1,5 +1,6 @@
 from collections.abc import Iterable
 import importlib.resources
+import itertools
 
 import langcodes
 import pandas as pd
@@ -112,8 +113,7 @@ class MachineTranslationProbe(Probe):
                 row["language"],
                 row["original"],
                 row["stereotype"],
-                row["male"],
-                row["female"])
+                [row["male"], row["female"]])
             for _index, row in df_translations_filtered.iterrows()
         ]
 
@@ -123,17 +123,26 @@ class MachineTranslationProbe(Probe):
         language: str,
         sentence: str,
         stereotype: int,
-        translated_male_sentence: str,
-        translated_female_sentence: str,
+        translated_sentences: list[str],
     ) -> ProbeItem:
+        order_permutations = self.create_probe_items_random_generator.sample(
+            # Two sentences to choose from
+            list(itertools.permutations(range(2))),
+            # Two possible orderings for two sentences
+            k=2,
+        )
+
         return ProbeItem(
             prompts=[
                 self.create_prompt(
                     sentence,
                     langcodes.Language.get(language).display_name("en"),
-                    translated_male_sentence,
-                    translated_female_sentence,
-                ),
+                    *(translated_sentences[index] for index in permutation),
+                    metadata={
+                        permutation_index: real_index
+                        for permutation_index, real_index in enumerate(permutation)},
+                )
+                for permutation in order_permutations
             ],
             num_repetitions=self.num_repetitions,
             metadata={
@@ -149,6 +158,7 @@ class MachineTranslationProbe(Probe):
         language_display_name: str,
         translated_male_sentence: str,
         translated_female_sentence: str,
+        metadata: dict,
     ) -> Prompt:
         return Prompt(
             text=self.template.format(
@@ -157,4 +167,5 @@ class MachineTranslationProbe(Probe):
                 translated_sentences="\n".join(
                     [translated_male_sentence, translated_female_sentence]),
             ),
+            metadata=metadata,
         )
