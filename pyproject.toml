@@ -1,13 +1,14 @@
 [project]
 name = "genderbench"
-version = "0.6.0"
+version = "0.5.1"
 description = "Evaluation suite for gender biases in LLMs."
 authors = [
-    {name = "Your Name",email = "you@example.com"}
+    {name = "Matúš Pikuliak",email = "matus.pikuliak@gmail.com"}
 ]
-license = {text = "LICENSE"}
+license = {file = "LICENSE"}
 readme = "README.md"
 requires-python = ">=3.12"
+keywords = ["gender-bias", "fairness-ai", "llms", "llms-benchmarking"]
 dependencies = [
     "anthropic (>=0.49.0,<0.50.0)",
     "fsspec (>=2025.3.0,<2026.0.0)",
@@ -22,6 +23,10 @@ dependencies = [
     "scipy (>=1.15.2,<2.0.0)",
     "tqdm (>=4.67.1,<5.0.0)",
 ]
+
+[project.urls]
+repository = "https://github.com/matus-pikuliak/genderbench"
+documentation = "https://genderbench.readthedocs.io"
 
 [tool.poetry]
 
