@@ -135,12 +135,17 @@ class Probe(ABC):
             for attempt in item.attempts:
                 yield attempt
 
+    def check_status(self, expected_status):
+        assert (
+            self.status == expected_status
+        ), f"Unexpected probe status. Expected: {expected_status}. Current: {self.status}"
+
     def create_probe_items(self):
         """Populate `probe_items` with corrensponding prepared `ProbeItems`.
         This is the first step in the `run` lifecycle. Moves the `status` from
         ``NEW`` to ``POPULATED``.
         """
-        assert self.status == status.NEW
+        self.check_status(expected_status=status.NEW)
         self.create_probe_items_random_generator = random.Random(self.random_seed)
         self.probe_items = self._create_probe_items()
         if self.sample_k is not None:
@@ -168,7 +173,7 @@ class Probe(ABC):
         Args:
             generator (Generator): Text generator that is being probed.
         """
-        assert self.status == status.POPULATED
+        self.check_status(expected_status=status.POPULATED)
         texts = [attempt.prompt.text for attempt in self.attempts]
 
         answers = generator.generate(texts)
@@ -187,7 +192,7 @@ class Probe(ABC):
         `evaluation` field in all the `Attempts`. This is the third step in the
         `run` lifecycle. Moves the `status` from ``GENERATED`` to ``EVALUATED``.
         """
-        assert self.status == status.GENERATED
+        self.check_status(expected_status=status.GENERATED)
         for attempt in self.attempts:
             attempt.evaluate(self.evaluator)
         if self.log_strategy == "during":
@@ -199,7 +204,7 @@ class Probe(ABC):
         This is the fourth and final step in the `run` lifecycle. Moves the
         `status` from ``EVALUATED`` to ``FINISHED``.
         """
-        assert self.status == status.EVALUATED
+        self.check_status(expected_status=status.EVALUATED)
 
         # Bootstrapping
         if self.calculate_cis:
