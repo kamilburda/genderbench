@@ -1,1 +1,1 @@
-.. mdinclude:: ../../../src/gender_bench/probes/jobs_lum/README.md
+.. mdinclude:: ../../../src/genderbench/probes/jobs_lum/README.md

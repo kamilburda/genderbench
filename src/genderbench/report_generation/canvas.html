@@ -1,0 +1,18 @@
+<div class="canvas-wrapper">
+    <div class="description details">
+        {{data.description}}<br><a href="{{data.path}}">Read documentation.</a>
+        <table class="canvasTable">
+            <tr><td><strong>Probe</strong></td><td><code>{{data.probe}}</code></td></tr>
+            <tr><td><strong>Metric</strong></td><td><code>{{data.metric}}</code></td></tr>
+            <tr><td><strong>Harms</strong></td><td>{% for tag in data.tags %}
+                {{tag}}
+            {% endfor %}</td></tr>
+        </table>
+    </div>
+    <div class="description" style="height: {{data.model_names|length * 30 + 50}}px; position:relative;">
+        <canvas id="chart_{{data.uuid}}" height="{{data.model_names|length * 30 + 50}}"></canvas>
+    </div>
+</div>
+<script>
+createChart("chart_{{data.uuid}}", {{data.model_names}}, {{data.intervals}}, {{data.ranges}});
+</script>
