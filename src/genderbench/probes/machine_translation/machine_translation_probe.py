@@ -36,7 +36,7 @@ class MachineTranslationProbe(Probe):
                 3: [(0, 0.2), (0.8, 1)],
             },
             harm_types=["Stereotyping"],
-            description="How gender-balanced the translations are.",
+            description="The extent to which machine-translated sentences are gender-balanced.",
         ),
     ]
 
