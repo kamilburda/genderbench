@@ -183,5 +183,5 @@ def create_report(
     must also be provided.
     """
     html = render_visualization(log_files, model_names)
-    with open(output_file_path, "w") as f:
+    with open(output_file_path, "w", encoding="utf-8") as f:
         f.write(html)

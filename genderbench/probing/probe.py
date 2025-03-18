@@ -358,7 +358,7 @@ class Probe(ABC):
         """Log current state of `Probe` into a log file."""
         json_dict = self.to_json_dict()
         os.makedirs(os.path.dirname(self.log_file), exist_ok=True)
-        with open(self.log_file, "a") as f:
+        with open(self.log_file, "a", encoding="utf-8") as f:
             f.write(json.dumps({"probe_state": json_dict}, default=str) + "\n")
 
     @classmethod
