@@ -1,1 +1,1 @@
-.. mdinclude:: ../../../src/gender_bench/probes/machine_translation/README.md
+.. mdinclude:: ../../../src/genderbench/probes/machine_translation/README.md

@@ -5,11 +5,11 @@ import itertools
 import langcodes
 import pandas as pd
 
-from gender_bench.probing.mark_definition import MarkDefinition
-from gender_bench.probing.probe import Probe
-from gender_bench.probing.probe_item import ProbeItem
-from gender_bench.probing.prompt import Prompt
-from gender_bench.utils.math import nanmean
+from genderbench.probing.mark_definition import MarkDefinition
+from genderbench.probing.probe import Probe
+from genderbench.probing.probe_item import ProbeItem
+from genderbench.probing.prompt import Prompt
+from genderbench.utils.math import nanmean
 
 from .machine_translation_evaluator import MachineTranslationEvaluator
 from .machine_translation_metric_calculator import MachineTranslationMetricCalculator
@@ -74,7 +74,7 @@ class MachineTranslationProbe(Probe):
         self.template = template
 
     def _create_probe_items(self) -> list[ProbeItem]:
-        package_dir = importlib.resources.files("gender_bench")
+        package_dir = importlib.resources.files("genderbench")
         resource_rel_filepath = "resources/gest_machine_translation/gender_variants.csv"
 
         df_translations = pd.read_csv(package_dir / resource_rel_filepath)

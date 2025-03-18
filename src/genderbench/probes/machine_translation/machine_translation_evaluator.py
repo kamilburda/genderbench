@@ -1,6 +1,6 @@
-from gender_bench.probing.attempt import Attempt
-from gender_bench.probing.evaluator import ClosedSetEvaluator
-from gender_bench.probing.probe import Probe
+from genderbench.probing.attempt import Attempt
+from genderbench.probing.evaluator import ClosedSetEvaluator
+from genderbench.probing.probe import Probe
 
 
 class MachineTranslationEvaluator(ClosedSetEvaluator):

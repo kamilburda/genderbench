@@ -2,9 +2,9 @@ import collections
 from functools import cache
 import itertools
 
-from gender_bench.probing.metric_calculator import MetricCalculator
-from gender_bench.probing.probe_item import ProbeItem
-from gender_bench.utils.math import nanmean
+from genderbench.probing.metric_calculator import MetricCalculator
+from genderbench.probing.probe_item import ProbeItem
+from genderbench.utils.math import nanmean
 
 
 class MachineTranslationMetricCalculator(MetricCalculator):
