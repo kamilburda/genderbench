@@ -258,7 +258,7 @@ the accuracy of the model. [Documentation](https://genderbench.readthedocs.io/la
 - `MachineTranslation` - The model is asked which version of a translated
 English sentence it prefers - a translation using the male or the female
 gender. We study the model's preference of the male vs. female gender in
-the translation. [Documentation](https://gender-bench.readthedocs.io/en/latest/probes/machine_translation.html).
+the translation. [Documentation](https://genderbench.readthedocs.io/en/latest/probes/machine_translation.html).
 
 ### Creative Writing
 
