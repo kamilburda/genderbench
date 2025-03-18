@@ -57,10 +57,11 @@ class MachineTranslationMetricCalculator(MetricCalculator):
                 stereotype_rates = []
                 masculine_rates = []
 
-            metrics[f"masculine_rate_{language}_{translator}"] = (
-                self.per_translator_aggregation_func(masculine_rates))
-            metrics[f"stereotype_rate_{language}_{translator}"] = (
-                self.per_translator_aggregation_func(stereotype_rates))
+            if len(unique_translators) > 1:
+                metrics[f"masculine_rate_{language}_{translator}"] = (
+                    self.per_translator_aggregation_func(masculine_rates))
+                metrics[f"stereotype_rate_{language}_{translator}"] = (
+                    self.per_translator_aggregation_func(stereotype_rates))
 
         for language in unique_languages:
             metrics[f"masculine_rate_{language}"] = self.per_language_aggregation_func(
