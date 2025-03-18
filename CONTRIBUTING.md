@@ -27,7 +27,7 @@ section.
 4. Develop your code.
 5. Format the code with `poetry run make format`.
 6. Test the code with `poetry run make test`. Develop your own tests if necessary.
-7. Rebuild the documentation if necessary with `cd docs; poetry run make clean html`.
+7. Build the documentation if necessary with `cd docs; poetry run make clean html`.
 8. Push the code into the repository and create a pull request.
 
 We appreciate your contributions and look forward to your involvement in
