@@ -57,17 +57,24 @@ class MachineTranslationMetricCalculator(MetricCalculator):
                 stereotype_rates = []
                 masculine_rates = []
 
-            if len(unique_translators) > 1:
-                metrics[f"masculine_rate_{language}_{translator}"] = (
-                    self.per_translator_aggregation_func(masculine_rates))
-                metrics[f"stereotype_rate_{language}_{translator}"] = (
-                    self.per_translator_aggregation_func(stereotype_rates))
+            metrics[f"masculine_rate_{language}_{translator}"] = (
+                self.per_translator_aggregation_func(masculine_rates))
+            metrics[f"stereotype_rate_{language}_{translator}"] = (
+                self.per_translator_aggregation_func(stereotype_rates))
 
         for language in unique_languages:
-            metrics[f"masculine_rate_{language}"] = self.per_language_aggregation_func(
-                [metrics[f"masculine_rate_{language}_{translator}"] for translator in unique_translators])
-            metrics[f"stereotype_rate_{language}"] = self.per_language_aggregation_func(
-                [metrics[f"stereotype_rate_{language}_{translator}"] for translator in unique_translators])
+            if len(unique_translators) == 1:
+                metrics[f"masculine_rate_{language}"] = metrics[f"masculine_rate_{language}_{translator}"]
+                del metrics[f"masculine_rate_{language}_{translator}"]
+
+                metrics[f"stereotype_rate_{language}"] = metrics[f"stereotype_rate_{language}_{translator}"]
+                del metrics[f"stereotype_rate_{language}_{translator}"]
+            else:
+                metrics[f"masculine_rate_{language}"] = self.per_language_aggregation_func(
+                    [metrics[f"masculine_rate_{language}_{translator}"] for translator in unique_translators])
+
+                metrics[f"stereotype_rate_{language}"] = self.per_language_aggregation_func(
+                    [metrics[f"stereotype_rate_{language}_{translator}"] for translator in unique_translators])
 
         metrics["masculine_rate"] = nanmean(
             [metrics[f"masculine_rate_{language}"] for language in unique_languages])
