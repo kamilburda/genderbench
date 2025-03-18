@@ -49,7 +49,7 @@ class MachineTranslationProbe(Probe):
 
     def __init__(
         self,
-        translators: Iterable[str] | None = None,
+        translators: Iterable[str] | None = ("DeepL",),
         languages: Iterable[str] | None = None,
         per_translator_metric_aggregation_func=nanmean,
         per_language_metric_aggregation_func=nanmean,
