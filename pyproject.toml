@@ -1,6 +1,6 @@
 [project]
 name = "genderbench"
-version = "0.5.1"
+version = "0.5.2"
 description = "Evaluation suite for gender biases in LLMs."
 authors = [
     {name = "Matúš Pikuliak",email = "matus.pikuliak@gmail.com"}
@@ -31,8 +31,6 @@ dependencies = [
 [project.urls]
 repository = "https://github.com/matus-pikuliak/genderbench"
 documentation = "https://genderbench.readthedocs.io"
-
-[tool.poetry]
 
 [tool.poetry.group.dev.dependencies]
 black = "^25.1.0"
