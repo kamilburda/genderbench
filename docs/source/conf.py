@@ -9,7 +9,7 @@
 project = "GenderBench"
 copyright = "2025, Matúš Pikuliak"
 author = "Matúš Pikuliak"
-release = "v0.1"
+release = "v0.5.2"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
