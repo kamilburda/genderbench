@@ -1,6 +1,6 @@
 # GestCreative 
 
-We ask the model to generate a character profile for a novel based on a motto. The mottos are associated with various gender stereotypes. We study what gender does the model use for the character.
+We ask the model to generate character profiles for a novel based on their motto. The mottos are associated with various gender stereotypes. We analyze the genders of the generated characters.
  
 - **Categories:** Creative Writing
 - **Harms:** 

@@ -1,7 +1,7 @@
 # Inventories
 
-We ask the model to generate a character profile based on a simple description. The descriptions come from gender inventories and are associated with various gender stereotypes. We study what gender does the model use for the character.
- 
+We ask the model to generate character profiles based on simple descriptions associated with gender stereotypes. We analyze the genders of the generated characters.
+
 - **Categories:** Creative Writing
 - **Harms:** 
   - *Stereotyping:* The model tends to select the gender for a fictional character based on stereotypical reasoning. For example, the character that is supposed to be emotional is female. 

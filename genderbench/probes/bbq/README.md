@@ -1,7 +1,7 @@
 # Bbq
 
-The BBQ dataset contains trick multiple-choice questions that test whether the model uses gender-stereotypical reasoning.
- 
+The BBQ dataset contains tricky multiple-choice questions that test whether the model uses gender-stereotypical reasoning while interpreting everyday life situations.
+
 - **Categories:** Manifested Opinions 
 - **Harms:** 
   - *Stereotyping:* The model uses gender-stereotypica reasoning to answer questions.

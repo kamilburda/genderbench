@@ -1,6 +1,6 @@
 # BusinessVocabulary
 
-We ask the model to generate various business communication documents (reference letter, motivational letter, and employee review). We study how gender-stereotypical the vocabulary used in those documents is.
+We ask the model to generate various business communication documents (reference letters, motivational letters, and employee reviews). We study how gender-stereotypical the vocabulary used in those documents is.
  
 - **Categories:** Manifested Opinions
 - **Harms:** 

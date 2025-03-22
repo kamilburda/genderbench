@@ -236,22 +236,18 @@ This use case evaluates how fair the LLMs are in making decisions in real-life
 situations, such as hiring. We simulate scenarios where the LLMs are used in
 fully automated systems or as decision-making assistants.
 
-- `DiscriminationTamkin` - The model is asked to make a yes-or-no decision about 
-various questions (e.g., should a person get a loan, should a person get a job 
-offer). The gender of the person is specified. We study whether the model gives 
-better outcomes to any genders. [Documentation](https://genderbench.readthedocs.io/latest/probes/discrimination_tamkin.html).
+- `DiscriminationTamkin` - The model is asked to make yes-or-no decisions in
+various high-stakes scenarios (e.g., whether a person should get a loan or a job
+offer). We analyze the outcomes across different genders. [Documentation](https://genderbench.readthedocs.io/latest/probes/discrimination_tamkin.html).
 
-- `HiringAn` - The model is asked about a candidate for a job. The candidate is 
-described using a gender-coded name. We study how the candidate's name 
-correlates with the stereotypical gender associated with the job. [Documentation](https://genderbench.readthedocs.io/latest/probes/hiring_an.html).
+- `HiringAn` - The model is asked about a candidate for a job. We study how the
+candidate's gender infuences the outcome for various occupations. [Documentation](https://genderbench.readthedocs.io/latest/probes/hiring_an.html).
 
-- `HiringBloomberg` - The model is asked to select candidates from a list of
-CVs. The CVs contain gender-coded names. We study which genders tend to win for
-different occupations. [Documentation](https://genderbench.readthedocs.io/latest/probes/hiring_bloomberg.html).
+- `HiringBloomberg` - The model is asked to select the best CV from a list. We
+study which genders tend to win for different occupations. [Documentation](https://genderbench.readthedocs.io/latest/probes/hiring_bloomberg.html).
 
-- `DiversityMedQa` - We ask the model the same medical question for either a
-male or a female patient. We study whether the gender of the patient affects
-the accuracy of the model. [Documentation](https://genderbench.readthedocs.io/latest/probes/diversitymedqa.html).
+- `DiversityMedQa` - The model answers multiple choice medical questions. We
+study the accuracy of answers for patients with different genders. [Documentation](https://genderbench.readthedocs.io/latest/probes/diversitymedqa.html).
 
 
 ### Creative Writing
@@ -260,18 +256,16 @@ This use case examines how the LLMs handle stereotypes and representation in
 creative outputs. We simulate scenarios when users ask the LLM to help them with
 creative writing.
 
-- `GestCreative` - We ask the model to generate a character profile for a novel 
-based on a motto. The mottos are associated with various gender stereotypes. We 
-study what gender the model uses for the character. [Documentation](https://genderbench.readthedocs.io/latest/probes/gest_creative.html).
+- `GestCreative` - We ask the model to generate character profiles for a novel 
+based on their motto. The mottos are associated with various gender stereotypes. We
+analyze the genders of the generated characters. [Documentation](https://genderbench.readthedocs.io/latest/probes/gest_creative.html).
 
-- `Inventories` - We ask the model to generate a character profile based on a 
-simple description. The descriptions come from gender inventories and are 
-associated with various gender stereotypes. We study what gender does the model 
-use for the character. [Documentation](https://genderbench.readthedocs.io/latest/probes/inventories.html).
+- `Inventories` - We ask the model to generate character profiles based on
+simple descriptions associated with gender stereotypes. We analyze the
+genders of the generated characters. [Documentation](https://genderbench.readthedocs.io/latest/probes/inventories.html).
 
-- `JobsLum` - We ask the model to generate a character profile based on an 
-occupation. We compare the gender of the generated characters with the 
-stereotypical gender of the occupations. [Documentation](https://genderbench.readthedocs.io/latest/probes/jobs_lum.html).
+- `JobsLum` - We ask the model to generate character profiles based on various
+occupations. We analyze the genders of the generated characters. [Documentation](https://genderbench.readthedocs.io/latest/probes/jobs_lum.html).
 
 ### Manifested Opinions
 
@@ -281,16 +275,19 @@ Although this may not reflect typical use, it reveals underlying ideologies
 within the LLMs.
 
 - `BBQ` - The BBQ dataset contains tricky multiple-choice questions that test 
-whether the model uses gender-stereotypical reasoning. [Documentation](https://genderbench.readthedocs.io/latest/probes/bbq.html).
+whether the model uses gender-stereotypical reasoning while interpreting
+everyday life situations. [Documentation](https://genderbench.readthedocs.io/latest/probes/bbq.html).
 
-- `BusinessVocabulary` - We ask the model to generate various business communication documents (reference letter, motivational letter, and employee review). We study how gender-stereotypical the vocabulary used in those documents is. [Documentation](https://genderbench.readthedocs.io/latest/probes/business_vocabulary.html).
+- `BusinessVocabulary` - We ask the model to generate various business
+communication documents (reference letters, motivational letters, and employee
+reviews). We study how gender-stereotypical the vocabulary used in those
+documents is. [Documentation](https://genderbench.readthedocs.io/latest/probes/business_vocabulary.html).
 
 - `Direct` - We ask the model whether it agrees with various stereotypical 
 statements about genders. [Documentation](https://genderbench.readthedocs.io/latest/probes/direct.html).
 
-- `Gest` - We ask the model questions that can be answered using either logical 
-or stereotypical reasoning. We observe how often stereotypical reasoning is 
-used. [Documentation](https://genderbench.readthedocs.io/latest/probes/gest.html).
+- `Gest` - We ask the model to assign certain stereotypical statements to either
+men or women. We analyze how often it uses stereotypical reasoning.. [Documentation](https://genderbench.readthedocs.io/latest/probes/gest.html).
 
 - `RelationshipLevy` - We ask the model about everyday relationship conflicts
 between a married couple. We study how often the model thinks that either men

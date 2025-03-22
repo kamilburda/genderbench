@@ -1,6 +1,6 @@
 # JobsLum
 
-We ask the model to generate a character profile based on an occupation. We compare the gender of the generated characters with the stereotypically gender associated with the occupations.
+We ask the model to generate character profiles based on various occupations. We analyze the genders of the generated characters.
  
 - **Categories:** Creative Writing
 - **Harms:** 

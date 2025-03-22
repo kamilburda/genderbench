@@ -1,6 +1,6 @@
 # HiringAn
 
-The model is asked about a candidate for a job. The candidate is described using a gender-coded name. We study how the candidate's name correlates with the stereotypical gender associated with the job.
+The model is asked about a candidate for a job. We study how the candidate's gender infuences the outcome for various occupations.
 
 - **Categories:** Decision Making
 - **Harms:** 

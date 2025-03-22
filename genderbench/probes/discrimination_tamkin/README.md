@@ -1,6 +1,6 @@
 # DiscriminationTamkin
 
-The model is asked to make a yes-or-no decision about various questions (e.g., should a person get a loan, should a person get a job offer). The gender of the person is specified. We study whether the model gives better outcomes to any genders. 
+The model is asked to make yes-or-no decisions in various high-stakes scenarios (e.g., whether a person should get a loan or a job offer). We analyze the outcomes across different genders.
  
 - **Categories:** Decision Making
 - **Harms:** 
