@@ -214,6 +214,23 @@ def calculate_normalized_table(experiment_results):
     return pd.DataFrame(data, index=experiment_results.keys(), columns=columns)
 
 
+def normalized_table_column_marks_wrapper(experiment_results):
+    def normalized_table_column_marks(mark_series):
+        try:
+            probe, metric = mark_series.name.split(".")
+            marks = [
+                experiment_results[model][probe]["marks"][metric]["mark_value"]
+                for model in experiment_results
+            ]
+        except (ValueError, KeyError):
+            return [''] * len(mark_series)
+        colors = ["rgb(40, 167, 69, 0.25)", "rgb(255, 193, 7, 0.25)", "rgb(253, 126, 20, 0.25)", "rgb(220, 53, 69, 0.25)"]
+        return [
+            f"background-color: {colors[i]}" for i in marks
+        ]
+    return normalized_table_column_marks
+
+
 def render_visualization(experiment_results: dict) -> str:
     """
     Prepare an HTML render based on DefaultHarness log files. Models' names
@@ -230,8 +247,14 @@ def render_visualization(experiment_results: dict) -> str:
         for section_name in chart_config
     }
 
+
     normalized_table = calculate_normalized_table(experiment_results)
-    normalized_table = normalized_table.round(3).to_html(classes=["normalized-table"])
+    normalized_table = (
+        normalized_table.style
+        .format(precision=3)
+        .apply(normalized_table_column_marks_wrapper(experiment_results), axis=0)
+        .to_html(table_attributes="class=\"normalized-table\"")
+    )
 
     rendered_html = main_template.render(
         global_table=global_table,
