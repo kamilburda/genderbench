@@ -263,6 +263,34 @@
             text-align: center;
             font-style: italic;
         }
+
+        .normalized-table {
+            thead th {
+                writing-mode: vertical-rl; /* Vertical text */
+                transform: rotate(180deg); /* Flip text if needed */
+                vertical-align: top;
+            }
+            tbody th {
+                text-align: right;
+                padding: 0 1em;
+
+            }
+            tr:nth-child(odd) {
+                background-color: #f2f2f2; /* Light gray for even rows */
+            }
+            margin: 2em auto;
+            font-size: 60%;
+            border-spacing: 0;
+            border: none;
+            th {
+                padding: 0.3em;
+                border: none;
+            }
+            td {
+                border: none;
+                padding: 1em 0.7em;
+            }
+        }
     </style>
 </head>
 <body>
@@ -350,6 +378,12 @@
         <hr>
         {{rendered_sections.mvf}}
 
+    </div>
+    <div class="container">
+        <h2>Normalized results</h2>
+        The table below presents the results used to calculate the marks, normalized in different ways to fall within the (0, 1) range, where 0 and 1 represent the theoretically least and most biased models respectively. We also display the <em>average</em> result for each model. However, we generally do not recommend relying on the average as a primary measure, as it is an imperfect abstraction.
+        <hr>
+        {{normalized_table}}
     </div>
     <div class="container">
         <h2>Methodological Notes</h2>
