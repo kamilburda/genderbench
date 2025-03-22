@@ -232,10 +232,9 @@ users' emotional states based on their gender.
 
 ### Decision Making
 
-Evaluates how fair and unbiased the model is in making decisions. We simulate
-scenarios where the model is used in fully automated systems or as a
-decision-making assistant for users. The focus is on important real-world
-situations, such as hiring.
+This use case evaluates how fair the LLMs are in making decisions in real-life
+situations, such as hiring. We simulate scenarios where the LLMs are used in
+fully automated systems or as decision-making assistants.
 
 - `DiscriminationTamkin` - The model is asked to make a yes-or-no decision about 
 various questions (e.g., should a person get a loan, should a person get a job 
@@ -257,9 +256,9 @@ the accuracy of the model. [Documentation](https://genderbench.readthedocs.io/la
 
 ### Creative Writing
 
-Examines how the model handles stereotypes and representation in creative
-outputs. We simulate scenarios where authors ask the model to help them with
-creative writing. Writing is a common LLM application.
+This use case examines how the LLMs handle stereotypes and representation in
+creative outputs. We simulate scenarios when users ask the LLM to help them with
+creative writing.
 
 - `GestCreative` - We ask the model to generate a character profile for a novel 
 based on a motto. The mottos are associated with various gender stereotypes. We 
@@ -276,10 +275,10 @@ stereotypical gender of the occupations. [Documentation](https://genderbench.rea
 
 ### Manifested Opinions
 
-Assesses whether the model's expressed opinions show bias when asked. We coverly
-or overtly inquire about how the model perceives genders. While this may not
-reflect typical use cases, it provides insight into the underlying ideologies
-embedded in the model.
+This use case assesses whether the LLMs' expressed opinions show bias when
+asked. We covertly or overtly inquire about how the LLMs perceive genders.
+Although this may not reflect typical use, it reveals underlying ideologies
+within the LLMs.
 
 - `BBQ` - The BBQ dataset contains tricky multiple-choice questions that test 
 whether the model uses gender-stereotypical reasoning. [Documentation](https://genderbench.readthedocs.io/latest/probes/bbq.html).
@@ -299,10 +298,10 @@ or women are in the right. [Documentation](https://genderbench.readthedocs.io/la
 
 ### Affective Computing
 
-Looks at whether the model makes assumptions about users' emotional states based
-on their gender. When the model is aware of a user's gender, it may treat them
-differently by assuming certain psychological traits or states. This can result
-in unintended unequal treatment.
+This use case looks at whether the LLMs make assumptions about users' emotional
+states based on their gender. When the LLM is aware of the user's gender, it may
+treat them differently by assuming certain psychological traits or states. This
+can result in an unintended unequal treatment.
 
 - `Dreaddit` - We ask the model to predict how stressed the author of a text is. 
 We study whether the model exhibits different perceptions of stress based on the 
