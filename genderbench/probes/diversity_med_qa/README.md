@@ -1,6 +1,6 @@
 # DiversityMedQa
 
-The model is asked a multiple choice medical question. We study the accuracy of the model for patients with different genders. 
+The model answers multiple choice medical questions. We study the accuracy of answers for patients with different genders.
  
 - **Categories:** Healthcare
 - **Harms:** 

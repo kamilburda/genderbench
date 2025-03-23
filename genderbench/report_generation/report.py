@@ -2,8 +2,11 @@ import json
 import re
 import uuid
 from importlib.metadata import version
+from statistics import mean
 from typing import Type
 
+import numpy as np
+import pandas as pd
 from jinja2 import Environment, PackageLoader
 
 from genderbench.probes import (
@@ -65,6 +68,28 @@ chart_config = {
         (RelationshipLevyProbe, "diff_success_rate"),
     ],
 }
+
+metric_normalizations = [
+    (DiscriminationTamkinProbe, "max_diff", None),
+    (HiringAnProbe, "diff_acceptance_rate", lambda x: abs(x)),
+    (HiringAnProbe, "diff_regression", lambda x: max(0, x) / 2),
+    (HiringBloombergProbe, "masculine_rate", lambda x: abs(x - 0.5)),
+    (HiringBloombergProbe, "stereotype_rate", lambda x: max(0, x)),
+    (DiversityMedQaProbe, "diff_success_rate", lambda x: abs(x)),
+    (BusinessVocabularyProbe, "mean_diff", lambda x: max(0, x)),
+    (GestCreativeProbe, "stereotype_rate", lambda x: max(0, x)),
+    (InventoriesProbe, "stereotype_rate", lambda x: max(0, x)),
+    (JobsLumProbe, "stereotype_rate", lambda x: max(0, x)),
+    (GestCreativeProbe, "masculine_rate", lambda x: abs(x - 0.5)),
+    (InventoriesProbe, "masculine_rate", lambda x: abs(x - 0.5)),
+    (JobsLumProbe, "masculine_rate", lambda x: abs(x - 0.5)),
+    (DirectProbe, "fail_rate", None),
+    (RelationshipLevyProbe, "diff_success_rate", lambda x: abs(x)),
+    (GestProbe, "stereotype_rate", lambda x: max(0, x)),
+    (BbqProbe, "stereotype_rate", None),
+    (DreadditProbe, "max_diff_stress_rate", None),
+    (IsearProbe, "max_diff", None),
+]
 
 
 def aggregate_marks(marks: list[int]) -> int:
@@ -144,17 +169,87 @@ def section_html(section_name: str, experiment_results: dict) -> str:
     return "".join(canvases_html)
 
 
-def render_visualization(log_files: list[str], model_names: list[str]) -> str:
+def normalized_table_row(model_results):
+    """
+    Calculate normalized results for one model.
+    """
+
+    def normalize(value, function):
+        if function is None:
+            function = lambda x: x  # noqa
+        if isinstance(value, float):
+            return function(value)
+        elif isinstance(value, list):
+            return function(mean(value))
+
+    return [
+        normalize(
+            model_results[probe_class.__name__]["metrics"][metric_name],
+            normalization_function,
+        )
+        for probe_class, metric_name, normalization_function in metric_normalizations
+    ]
+
+
+def calculate_normalized_table(log_files: list[str], model_names: list[str]):
+    experiment_results = load_experiment_results(log_files, model_names)
+    return _calculate_normalized_table(experiment_results)
+
+
+def _calculate_normalized_table(experiment_results):
+    """
+    Prepare DataFrame table with normalized results.
+    """
+    data = np.vstack(
+        [
+            np.array(normalized_table_row(model_results))
+            for _, model_results in experiment_results.items()
+        ]
+    )
+
+    columns = [
+        f"{probe_class.__name__}.{metric_name}"
+        for probe_class, metric_name, _ in metric_normalizations
+    ]
+
+    # Add "average" column
+    columns.append("Average")
+    data = np.hstack([data, np.mean(data, axis=1, keepdims=True)])
+
+    return pd.DataFrame(data, index=experiment_results.keys(), columns=columns)
+
+
+def normalized_table_column_marks_wrapper(experiment_results):
+    """
+    This is a wrapper for a function that is used to color the cells in the
+    table with normalized results.
+    """
+
+    def normalized_table_column_marks(mark_series):
+        try:
+            probe, metric = mark_series.name.split(".")
+            marks = [
+                experiment_results[model][probe]["marks"][metric]["mark_value"]
+                for model in experiment_results
+            ]
+        except (ValueError, KeyError):
+            return [""] * len(mark_series)
+        colors = [
+            "rgb(40, 167, 69, 0.25)",
+            "rgb(255, 193, 7, 0.25)",
+            "rgb(253, 126, 20, 0.25)",
+            "rgb(220, 53, 69, 0.25)",
+        ]
+        return [f"background-color: {colors[i]}" for i in marks]
+
+    return normalized_table_column_marks
+
+
+def render_visualization(experiment_results: dict) -> str:
     """
     Prepare an HTML render based on DefaultHarness log files. Models' names
     must also be provided.
     """
-
-    experiment_results = dict()
-    for model_name, log_file in zip(model_names, log_files):
-        probe_results = [json.loads(line) for line in open(log_file)]
-        probe_results = {result["class"]: result for result in probe_results}
-        experiment_results[model_name] = probe_results
 
     global_table = [
         [model_name, *global_table_row(model_results)]
@@ -166,13 +261,33 @@ def render_visualization(log_files: list[str], model_names: list[str]) -> str:
         for section_name in chart_config
     }
 
+    normalized_table = _calculate_normalized_table(experiment_results)
+    normalized_table = (
+        normalized_table.style.format(precision=3)
+        .apply(normalized_table_column_marks_wrapper(experiment_results), axis=0)
+        .to_html(table_attributes='class="normalized-table"')
+    )
+
     rendered_html = main_template.render(
         global_table=global_table,
         rendered_sections=rendered_sections,
+        normalized_table=normalized_table,
         version=version("genderbench"),
     )
 
     return rendered_html
+
+
+def load_experiment_results(log_files: list[str], model_names: list[str]) -> dict:
+    """
+    Load results from JSON files into a dictionary.
+    """
+    experiment_results = dict()
+    for model_name, log_file in zip(model_names, log_files):
+        probe_results = [json.loads(line) for line in open(log_file)]
+        probe_results = {result["class"]: result for result in probe_results}
+        experiment_results[model_name] = probe_results
+    return experiment_results
 
 
 def create_report(
@@ -182,6 +297,9 @@ def create_report(
     Save an HTML render based on DefaultHarness log files. Models' names
     must also be provided.
     """
-    html = render_visualization(log_files, model_names)
+    experiment_results = load_experiment_results(log_files, model_names)
+
+    html = render_visualization(experiment_results)
+
     with open(output_file_path, "w", encoding="utf-8") as f:
         f.write(html)

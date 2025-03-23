@@ -263,6 +263,31 @@
             text-align: center;
             font-style: italic;
         }
+
+        .normalized-table {
+            thead th {
+                writing-mode: vertical-rl; /* Vertical text */
+                transform: rotate(180deg); /* Flip text if needed */
+                vertical-align: top;
+            }
+            tbody th {
+                text-align: right;
+                padding: 0 1em;
+
+            }
+            margin: 2em auto;
+            font-size: 60%;
+            border-spacing: 0;
+            border: none;
+            th {
+                padding: 0.3em;
+                border: none;
+            }
+            td {
+                border: none;
+                padding: 1em 0.7em;
+            }
+        }
     </style>
 </head>
 <body>
@@ -488,6 +513,8 @@
         <h2>Executive summary</h2>
         <p>This section introduces several high-level observations we have made based on our results. All the data we used to infer these observations are in the figures below.</p>
         <hr>
+        <h3>🙈 Note on completeness</h3>
+        <p>This benchmark captures only a subset of potential gender biases - others may exist beyond our scope. Biases can manifest differently across contexts, cultures, or languages, making complete coverage impossible. Results should be interpreted as indicative, not exhaustive.</p>
         <h3>Converging behavior</h3>
         <p>All the LLMs we evaluated have noticeably similar behavior. If one model proves to be healthy for a given probe, others likely are too. If one LLM prefers one gender in a given probe, others likely prefer it too. This is not surprising, as we have seen a remarkable convergence of training recipes in recent years. Most AI labs train their LLMs using similar methods, data, and sometimes even outputs from competitors. In effect, the behavior of the LLMs is very similar.</p>
         <h3>LLMs treat women better</h3>
@@ -736,7 +763,7 @@ createChart("chart_ba0a0b49-dadf-478a-9b40-b0cbb3ea5146", ['claude-3-5-haiku', '
     </div>
     <div class="container">
         <h2>Manifested Opinions</h2>
-        <p>This section shows the probe results for the creative writing use case. It assesses whether the LLMs' expressed opinions show bias when asked. We covertly or overtly inquire about how the LLMs perceive genders. Although this may not reflect typical use, it reveals underlying ideologies within the LLMs.</p>
+        <p>This section shows the probe results for the manifested opinions use case. It assesses whether the LLMs' expressed opinions show bias when asked. We covertly or overtly inquire about how the LLMs perceive genders. Although this may not reflect typical use, it reveals underlying ideologies within the LLMs.</p>
         <hr>
         <div class="canvas-wrapper">
     <div class="description details">
@@ -810,7 +837,7 @@ createChart("chart_7ede7ca5-c6f2-44a3-a4af-3af2eead921d", ['claude-3-5-haiku', '
     </div>
     <div class="container">
         <h2>Affective Computing</h2>
-        <p>This section shows the probe results for the creative writing use case. It looks at whether the LLMs make assumptions about users' emotional states based on their gender. When the LLM is aware of the user's gender, it may treat them differently by assuming certain psychological traits or states. This can result in an unintended unequal treatment.</p>
+        <p>This section shows the probe results for the affective computing use case. It looks at whether the LLMs make assumptions about users' emotional states based on their gender. When the LLM is aware of the user's gender, it may treat them differently by assuming certain psychological traits or states. This can result in an unintended unequal treatment.</p>
         <hr>
         <div class="canvas-wrapper">
     <div class="description details">
@@ -957,6 +984,330 @@ createChart("chart_4f9da18a-f56a-41c0-acde-364eed575534", ['claude-3-5-haiku', '
 createChart("chart_2f6aecac-e8f5-4f0e-91d7-a9cdace11b23", ['claude-3-5-haiku', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemma-2-27b-it', 'gemma-2-9b-it', 'gpt-4o', 'gpt-4o-mini', 'Llama-3.1-8B-Instruct', 'Llama-3.3-70B-Instruct', 'Mistral-7B-Instruct-v0.3', 'Mistral-Small-24B-Instruct-2501', 'phi-4'], [[-0.3541877610793557, -0.3035375282982613], [-0.3379035125324443, -0.28687021256370254], [-0.2945681714558779, -0.2584544223300673], [-0.6792710372856376, -0.5903356732865315], [-0.5706434247396478, -0.5150097755360553], [-0.5661899812082273, -0.5169856657102235], [-0.3987435510270847, -0.35972901733347074], [-0.16067699283965298, -0.09067985418974421], [-0.30731745932654364, -0.27316964879522776], [-0.4680412460628236, -0.4178049611238843], [-0.5367474365455023, -0.39220648568850247], [-0.3544118659371578, -0.18889562636339763]], {'0': [[-0.05, 0.05]], '1': [[-0.15, -0.05], [0.05, 0.15]], '2': [[-0.5, -0.15], [0.15, 0.5]], '3': [[-1, -0.5], [0.5, 1]]});
 </script>
 
+    </div>
+    <div class="container">
+        <h2>Normalized results</h2>
+        The table below presents the results used to calculate the marks, normalized in different ways to fall within the (0, 1) range, where 0 and 1 represent the theoretically least and most biased models respectively. We also display the <em>average</em> result for each model. However, we generally do not recommend relying on the average as a primary measure, as it is an imperfect abstraction.
+        <hr>
+        <style type="text/css">
+            #T_e70d3_row0_col0, #T_e70d3_row0_col7, #T_e70d3_row0_col16, #T_e70d3_row1_col3, #T_e70d3_row1_col7, #T_e70d3_row2_col3, #T_e70d3_row2_col10, #T_e70d3_row2_col12, #T_e70d3_row3_col7, #T_e70d3_row3_col8, #T_e70d3_row4_col0, #T_e70d3_row4_col7, #T_e70d3_row6_col3, #T_e70d3_row6_col13, #T_e70d3_row6_col16, #T_e70d3_row7_col0, #T_e70d3_row7_col15, #T_e70d3_row9_col3, #T_e70d3_row9_col10, #T_e70d3_row9_col12, #T_e70d3_row10_col8, #T_e70d3_row11_col3, #T_e70d3_row11_col12 {
+            background-color: rgb(255, 193, 7, 0.25);
+            }
+            #T_e70d3_row0_col1, #T_e70d3_row0_col2, #T_e70d3_row0_col3, #T_e70d3_row0_col4, #T_e70d3_row0_col5, #T_e70d3_row0_col6, #T_e70d3_row0_col8, #T_e70d3_row0_col13, #T_e70d3_row0_col17, #T_e70d3_row0_col18, #T_e70d3_row1_col0, #T_e70d3_row1_col1, #T_e70d3_row1_col2, #T_e70d3_row1_col4, #T_e70d3_row1_col5, #T_e70d3_row1_col6, #T_e70d3_row1_col8, #T_e70d3_row1_col13, #T_e70d3_row1_col16, #T_e70d3_row1_col17, #T_e70d3_row1_col18, #T_e70d3_row2_col0, #T_e70d3_row2_col1, #T_e70d3_row2_col2, #T_e70d3_row2_col4, #T_e70d3_row2_col5, #T_e70d3_row2_col6, #T_e70d3_row2_col8, #T_e70d3_row2_col13, #T_e70d3_row2_col16, #T_e70d3_row2_col17, #T_e70d3_row2_col18, #T_e70d3_row3_col0, #T_e70d3_row3_col1, #T_e70d3_row3_col2, #T_e70d3_row3_col3, #T_e70d3_row3_col4, #T_e70d3_row3_col5, #T_e70d3_row3_col6, #T_e70d3_row3_col13, #T_e70d3_row3_col16, #T_e70d3_row3_col17, #T_e70d3_row3_col18, #T_e70d3_row4_col1, #T_e70d3_row4_col2, #T_e70d3_row4_col3, #T_e70d3_row4_col4, #T_e70d3_row4_col5, #T_e70d3_row4_col6, #T_e70d3_row4_col8, #T_e70d3_row4_col13, #T_e70d3_row4_col16, #T_e70d3_row4_col17, #T_e70d3_row4_col18, #T_e70d3_row5_col0, #T_e70d3_row5_col1, #T_e70d3_row5_col2, #T_e70d3_row5_col4, #T_e70d3_row5_col5, #T_e70d3_row5_col6, #T_e70d3_row5_col13, #T_e70d3_row5_col16, #T_e70d3_row5_col17, #T_e70d3_row5_col18, #T_e70d3_row6_col0, #T_e70d3_row6_col1, #T_e70d3_row6_col2, #T_e70d3_row6_col4, #T_e70d3_row6_col5, #T_e70d3_row6_col6, #T_e70d3_row6_col8, #T_e70d3_row6_col17, #T_e70d3_row6_col18, #T_e70d3_row7_col1, #T_e70d3_row7_col2, #T_e70d3_row7_col3, #T_e70d3_row7_col4, #T_e70d3_row7_col5, #T_e70d3_row7_col6, #T_e70d3_row7_col12, #T_e70d3_row7_col13, #T_e70d3_row7_col14, #T_e70d3_row7_col17, #T_e70d3_row7_col18, #T_e70d3_row8_col0, #T_e70d3_row8_col1, #T_e70d3_row8_col2, #T_e70d3_row8_col3, #T_e70d3_row8_col4, #T_e70d3_row8_col5, #T_e70d3_row8_col6, #T_e70d3_row8_col13, #T_e70d3_row8_col16, #T_e70d3_row8_col17, #T_e70d3_row8_col18, #T_e70d3_row9_col0, #T_e70d3_row9_col1, #T_e70d3_row9_col2, #T_e70d3_row9_col4, #T_e70d3_row9_col5, #T_e70d3_row9_col6, #T_e70d3_row9_col13, #T_e70d3_row9_col17, #T_e70d3_row9_col18, #T_e70d3_row10_col0, #T_e70d3_row10_col1, #T_e70d3_row10_col2, #T_e70d3_row10_col3, #T_e70d3_row10_col4, #T_e70d3_row10_col5, #T_e70d3_row10_col6, #T_e70d3_row10_col13, #T_e70d3_row10_col16, #T_e70d3_row10_col17, #T_e70d3_row10_col18, #T_e70d3_row11_col0, #T_e70d3_row11_col1, #T_e70d3_row11_col2, #T_e70d3_row11_col4, #T_e70d3_row11_col5, #T_e70d3_row11_col6, #T_e70d3_row11_col13, #T_e70d3_row11_col16, #T_e70d3_row11_col17, #T_e70d3_row11_col18 {
+            background-color: rgb(40, 167, 69, 0.25);
+            }
+            #T_e70d3_row0_col9, #T_e70d3_row0_col10, #T_e70d3_row0_col11, #T_e70d3_row0_col15, #T_e70d3_row1_col9, #T_e70d3_row1_col15, #T_e70d3_row2_col9, #T_e70d3_row2_col15, #T_e70d3_row3_col9, #T_e70d3_row3_col14, #T_e70d3_row3_col15, #T_e70d3_row4_col9, #T_e70d3_row4_col14, #T_e70d3_row4_col15, #T_e70d3_row5_col9, #T_e70d3_row5_col14, #T_e70d3_row6_col9, #T_e70d3_row6_col15, #T_e70d3_row7_col9, #T_e70d3_row8_col9, #T_e70d3_row8_col10, #T_e70d3_row8_col15, #T_e70d3_row9_col9, #T_e70d3_row10_col9, #T_e70d3_row11_col9, #T_e70d3_row11_col15 {
+            background-color: rgb(220, 53, 69, 0.25);
+            }
+            #T_e70d3_row0_col12, #T_e70d3_row0_col14, #T_e70d3_row1_col10, #T_e70d3_row1_col11, #T_e70d3_row1_col12, #T_e70d3_row1_col14, #T_e70d3_row2_col7, #T_e70d3_row2_col11, #T_e70d3_row2_col14, #T_e70d3_row3_col10, #T_e70d3_row3_col11, #T_e70d3_row3_col12, #T_e70d3_row4_col10, #T_e70d3_row4_col11, #T_e70d3_row4_col12, #T_e70d3_row5_col3, #T_e70d3_row5_col7, #T_e70d3_row5_col8, #T_e70d3_row5_col10, #T_e70d3_row5_col11, #T_e70d3_row5_col12, #T_e70d3_row5_col15, #T_e70d3_row6_col7, #T_e70d3_row6_col10, #T_e70d3_row6_col11, #T_e70d3_row6_col12, #T_e70d3_row6_col14, #T_e70d3_row7_col7, #T_e70d3_row7_col8, #T_e70d3_row7_col10, #T_e70d3_row7_col11, #T_e70d3_row7_col16, #T_e70d3_row8_col7, #T_e70d3_row8_col8, #T_e70d3_row8_col11, #T_e70d3_row8_col12, #T_e70d3_row8_col14, #T_e70d3_row9_col7, #T_e70d3_row9_col8, #T_e70d3_row9_col11, #T_e70d3_row9_col14, #T_e70d3_row9_col15, #T_e70d3_row9_col16, #T_e70d3_row10_col7, #T_e70d3_row10_col10, #T_e70d3_row10_col11, #T_e70d3_row10_col12, #T_e70d3_row10_col14, #T_e70d3_row10_col15, #T_e70d3_row11_col7, #T_e70d3_row11_col8, #T_e70d3_row11_col10, #T_e70d3_row11_col11, #T_e70d3_row11_col14 {
+            background-color: rgb(253, 126, 20, 0.25);
+            }
+            </style>
+    <table id="T_e70d3" class="normalized-table">
+        <thead>
+        <tr>
+            <th class="blank level0" >&nbsp;</th>
+            <th id="T_e70d3_level0_col0" class="col_heading level0 col0" >DiscriminationTamkinProbe.max_diff</th>
+            <th id="T_e70d3_level0_col1" class="col_heading level0 col1" >HiringAnProbe.diff_acceptance_rate</th>
+            <th id="T_e70d3_level0_col2" class="col_heading level0 col2" >HiringAnProbe.diff_regression</th>
+            <th id="T_e70d3_level0_col3" class="col_heading level0 col3" >HiringBloombergProbe.masculine_rate</th>
+            <th id="T_e70d3_level0_col4" class="col_heading level0 col4" >HiringBloombergProbe.stereotype_rate</th>
+            <th id="T_e70d3_level0_col5" class="col_heading level0 col5" >DiversityMedQaProbe.diff_success_rate</th>
+            <th id="T_e70d3_level0_col6" class="col_heading level0 col6" >BusinessVocabularyProbe.mean_diff</th>
+            <th id="T_e70d3_level0_col7" class="col_heading level0 col7" >GestCreativeProbe.stereotype_rate</th>
+            <th id="T_e70d3_level0_col8" class="col_heading level0 col8" >InventoriesProbe.stereotype_rate</th>
+            <th id="T_e70d3_level0_col9" class="col_heading level0 col9" >JobsLumProbe.stereotype_rate</th>
+            <th id="T_e70d3_level0_col10" class="col_heading level0 col10" >GestCreativeProbe.masculine_rate</th>
+            <th id="T_e70d3_level0_col11" class="col_heading level0 col11" >InventoriesProbe.masculine_rate</th>
+            <th id="T_e70d3_level0_col12" class="col_heading level0 col12" >JobsLumProbe.masculine_rate</th>
+            <th id="T_e70d3_level0_col13" class="col_heading level0 col13" >DirectProbe.fail_rate</th>
+            <th id="T_e70d3_level0_col14" class="col_heading level0 col14" >RelationshipLevyProbe.diff_success_rate</th>
+            <th id="T_e70d3_level0_col15" class="col_heading level0 col15" >GestProbe.stereotype_rate</th>
+            <th id="T_e70d3_level0_col16" class="col_heading level0 col16" >BbqProbe.stereotype_rate</th>
+            <th id="T_e70d3_level0_col17" class="col_heading level0 col17" >DreadditProbe.max_diff_stress_rate</th>
+            <th id="T_e70d3_level0_col18" class="col_heading level0 col18" >IsearProbe.max_diff</th>
+            <th id="T_e70d3_level0_col19" class="col_heading level0 col19" >Average</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th id="T_e70d3_level0_row0" class="row_heading level0 row0" >claude-3-5-haiku</th>
+            <td id="T_e70d3_row0_col0" class="data row0 col0" >0.062</td>
+            <td id="T_e70d3_row0_col1" class="data row0 col1" >0.022</td>
+            <td id="T_e70d3_row0_col2" class="data row0 col2" >0.006</td>
+            <td id="T_e70d3_row0_col3" class="data row0 col3" >0.021</td>
+            <td id="T_e70d3_row0_col4" class="data row0 col4" >0.015</td>
+            <td id="T_e70d3_row0_col5" class="data row0 col5" >0.010</td>
+            <td id="T_e70d3_row0_col6" class="data row0 col6" >0.000</td>
+            <td id="T_e70d3_row0_col7" class="data row0 col7" >0.116</td>
+            <td id="T_e70d3_row0_col8" class="data row0 col8" >0.116</td>
+            <td id="T_e70d3_row0_col9" class="data row0 col9" >0.572</td>
+            <td id="T_e70d3_row0_col10" class="data row0 col10" >0.400</td>
+            <td id="T_e70d3_row0_col11" class="data row0 col11" >0.404</td>
+            <td id="T_e70d3_row0_col12" class="data row0 col12" >0.231</td>
+            <td id="T_e70d3_row0_col13" class="data row0 col13" >0.026</td>
+            <td id="T_e70d3_row0_col14" class="data row0 col14" >0.329</td>
+            <td id="T_e70d3_row0_col15" class="data row0 col15" >0.578</td>
+            <td id="T_e70d3_row0_col16" class="data row0 col16" >0.096</td>
+            <td id="T_e70d3_row0_col17" class="data row0 col17" >0.005</td>
+            <td id="T_e70d3_row0_col18" class="data row0 col18" >0.077</td>
+            <td id="T_e70d3_row0_col19" class="data row0 col19" >0.162</td>
+        </tr>
+        <tr>
+            <th id="T_e70d3_level0_row1" class="row_heading level0 row1" >gemini-2.0-flash</th>
+            <td id="T_e70d3_row1_col0" class="data row1 col0" >0.023</td>
+            <td id="T_e70d3_row1_col1" class="data row1 col1" >0.003</td>
+            <td id="T_e70d3_row1_col2" class="data row1 col2" >0.017</td>
+            <td id="T_e70d3_row1_col3" class="data row1 col3" >0.044</td>
+            <td id="T_e70d3_row1_col4" class="data row1 col4" >0.000</td>
+            <td id="T_e70d3_row1_col5" class="data row1 col5" >0.023</td>
+            <td id="T_e70d3_row1_col6" class="data row1 col6" >0.000</td>
+            <td id="T_e70d3_row1_col7" class="data row1 col7" >0.106</td>
+            <td id="T_e70d3_row1_col8" class="data row1 col8" >0.000</td>
+            <td id="T_e70d3_row1_col9" class="data row1 col9" >0.571</td>
+            <td id="T_e70d3_row1_col10" class="data row1 col10" >0.257</td>
+            <td id="T_e70d3_row1_col11" class="data row1 col11" >0.160</td>
+            <td id="T_e70d3_row1_col12" class="data row1 col12" >0.202</td>
+            <td id="T_e70d3_row1_col13" class="data row1 col13" >0.046</td>
+            <td id="T_e70d3_row1_col14" class="data row1 col14" >0.312</td>
+            <td id="T_e70d3_row1_col15" class="data row1 col15" >0.687</td>
+            <td id="T_e70d3_row1_col16" class="data row1 col16" >0.013</td>
+            <td id="T_e70d3_row1_col17" class="data row1 col17" >0.007</td>
+            <td id="T_e70d3_row1_col18" class="data row1 col18" >0.059</td>
+            <td id="T_e70d3_row1_col19" class="data row1 col19" >0.133</td>
+        </tr>
+        <tr>
+            <th id="T_e70d3_level0_row2" class="row_heading level0 row2" >gemini-2.0-flash-lite</th>
+            <td id="T_e70d3_row2_col0" class="data row2 col0" >0.007</td>
+            <td id="T_e70d3_row2_col1" class="data row2 col1" >0.001</td>
+            <td id="T_e70d3_row2_col2" class="data row2 col2" >0.000</td>
+            <td id="T_e70d3_row2_col3" class="data row2 col3" >0.041</td>
+            <td id="T_e70d3_row2_col4" class="data row2 col4" >0.011</td>
+            <td id="T_e70d3_row2_col5" class="data row2 col5" >0.001</td>
+            <td id="T_e70d3_row2_col6" class="data row2 col6" >0.000</td>
+            <td id="T_e70d3_row2_col7" class="data row2 col7" >0.176</td>
+            <td id="T_e70d3_row2_col8" class="data row2 col8" >0.105</td>
+            <td id="T_e70d3_row2_col9" class="data row2 col9" >0.747</td>
+            <td id="T_e70d3_row2_col10" class="data row2 col10" >0.068</td>
+            <td id="T_e70d3_row2_col11" class="data row2 col11" >0.283</td>
+            <td id="T_e70d3_row2_col12" class="data row2 col12" >0.109</td>
+            <td id="T_e70d3_row2_col13" class="data row2 col13" >0.037</td>
+            <td id="T_e70d3_row2_col14" class="data row2 col14" >0.277</td>
+            <td id="T_e70d3_row2_col15" class="data row2 col15" >0.535</td>
+            <td id="T_e70d3_row2_col16" class="data row2 col16" >0.033</td>
+            <td id="T_e70d3_row2_col17" class="data row2 col17" >0.013</td>
+            <td id="T_e70d3_row2_col18" class="data row2 col18" >0.078</td>
+            <td id="T_e70d3_row2_col19" class="data row2 col19" >0.133</td>
+        </tr>
+        <tr>
+            <th id="T_e70d3_level0_row3" class="row_heading level0 row3" >gemma-2-27b-it</th>
+            <td id="T_e70d3_row3_col0" class="data row3 col0" >0.039</td>
+            <td id="T_e70d3_row3_col1" class="data row3 col1" >0.003</td>
+            <td id="T_e70d3_row3_col2" class="data row3 col2" >0.016</td>
+            <td id="T_e70d3_row3_col3" class="data row3 col3" >0.030</td>
+            <td id="T_e70d3_row3_col4" class="data row3 col4" >0.023</td>
+            <td id="T_e70d3_row3_col5" class="data row3 col5" >0.002</td>
+            <td id="T_e70d3_row3_col6" class="data row3 col6" >0.003</td>
+            <td id="T_e70d3_row3_col7" class="data row3 col7" >0.154</td>
+            <td id="T_e70d3_row3_col8" class="data row3 col8" >0.160</td>
+            <td id="T_e70d3_row3_col9" class="data row3 col9" >0.591</td>
+            <td id="T_e70d3_row3_col10" class="data row3 col10" >0.220</td>
+            <td id="T_e70d3_row3_col11" class="data row3 col11" >0.279</td>
+            <td id="T_e70d3_row3_col12" class="data row3 col12" >0.209</td>
+            <td id="T_e70d3_row3_col13" class="data row3 col13" >0.037</td>
+            <td id="T_e70d3_row3_col14" class="data row3 col14" >0.635</td>
+            <td id="T_e70d3_row3_col15" class="data row3 col15" >0.563</td>
+            <td id="T_e70d3_row3_col16" class="data row3 col16" >0.020</td>
+            <td id="T_e70d3_row3_col17" class="data row3 col17" >0.013</td>
+            <td id="T_e70d3_row3_col18" class="data row3 col18" >0.060</td>
+            <td id="T_e70d3_row3_col19" class="data row3 col19" >0.161</td>
+        </tr>
+        <tr>
+            <th id="T_e70d3_level0_row4" class="row_heading level0 row4" >gemma-2-9b-it</th>
+            <td id="T_e70d3_row4_col0" class="data row4 col0" >0.043</td>
+            <td id="T_e70d3_row4_col1" class="data row4 col1" >0.024</td>
+            <td id="T_e70d3_row4_col2" class="data row4 col2" >0.001</td>
+            <td id="T_e70d3_row4_col3" class="data row4 col3" >0.010</td>
+            <td id="T_e70d3_row4_col4" class="data row4 col4" >0.011</td>
+            <td id="T_e70d3_row4_col5" class="data row4 col5" >0.001</td>
+            <td id="T_e70d3_row4_col6" class="data row4 col6" >0.004</td>
+            <td id="T_e70d3_row4_col7" class="data row4 col7" >0.132</td>
+            <td id="T_e70d3_row4_col8" class="data row4 col8" >0.097</td>
+            <td id="T_e70d3_row4_col9" class="data row4 col9" >0.604</td>
+            <td id="T_e70d3_row4_col10" class="data row4 col10" >0.262</td>
+            <td id="T_e70d3_row4_col11" class="data row4 col11" >0.294</td>
+            <td id="T_e70d3_row4_col12" class="data row4 col12" >0.193</td>
+            <td id="T_e70d3_row4_col13" class="data row4 col13" >0.030</td>
+            <td id="T_e70d3_row4_col14" class="data row4 col14" >0.543</td>
+            <td id="T_e70d3_row4_col15" class="data row4 col15" >0.477</td>
+            <td id="T_e70d3_row4_col16" class="data row4 col16" >0.011</td>
+            <td id="T_e70d3_row4_col17" class="data row4 col17" >0.008</td>
+            <td id="T_e70d3_row4_col18" class="data row4 col18" >0.067</td>
+            <td id="T_e70d3_row4_col19" class="data row4 col19" >0.148</td>
+        </tr>
+        <tr>
+            <th id="T_e70d3_level0_row5" class="row_heading level0 row5" >gpt-4o</th>
+            <td id="T_e70d3_row5_col0" class="data row5 col0" >0.007</td>
+            <td id="T_e70d3_row5_col1" class="data row5 col1" >0.020</td>
+            <td id="T_e70d3_row5_col2" class="data row5 col2" >0.026</td>
+            <td id="T_e70d3_row5_col3" class="data row5 col3" >0.101</td>
+            <td id="T_e70d3_row5_col4" class="data row5 col4" >0.009</td>
+            <td id="T_e70d3_row5_col5" class="data row5 col5" >0.004</td>
+            <td id="T_e70d3_row5_col6" class="data row5 col6" >0.000</td>
+            <td id="T_e70d3_row5_col7" class="data row5 col7" >0.287</td>
+            <td id="T_e70d3_row5_col8" class="data row5 col8" >0.279</td>
+            <td id="T_e70d3_row5_col9" class="data row5 col9" >0.624</td>
+            <td id="T_e70d3_row5_col10" class="data row5 col10" >0.169</td>
+            <td id="T_e70d3_row5_col11" class="data row5 col11" >0.205</td>
+            <td id="T_e70d3_row5_col12" class="data row5 col12" >0.195</td>
+            <td id="T_e70d3_row5_col13" class="data row5 col13" >0.052</td>
+            <td id="T_e70d3_row5_col14" class="data row5 col14" >0.542</td>
+            <td id="T_e70d3_row5_col15" class="data row5 col15" >0.238</td>
+            <td id="T_e70d3_row5_col16" class="data row5 col16" >0.001</td>
+            <td id="T_e70d3_row5_col17" class="data row5 col17" >0.010</td>
+            <td id="T_e70d3_row5_col18" class="data row5 col18" >0.021</td>
+            <td id="T_e70d3_row5_col19" class="data row5 col19" >0.147</td>
+        </tr>
+        <tr>
+            <th id="T_e70d3_level0_row6" class="row_heading level0 row6" >gpt-4o-mini</th>
+            <td id="T_e70d3_row6_col0" class="data row6 col0" >0.020</td>
+            <td id="T_e70d3_row6_col1" class="data row6 col1" >0.011</td>
+            <td id="T_e70d3_row6_col2" class="data row6 col2" >0.002</td>
+            <td id="T_e70d3_row6_col3" class="data row6 col3" >0.061</td>
+            <td id="T_e70d3_row6_col4" class="data row6 col4" >0.000</td>
+            <td id="T_e70d3_row6_col5" class="data row6 col5" >0.003</td>
+            <td id="T_e70d3_row6_col6" class="data row6 col6" >0.003</td>
+            <td id="T_e70d3_row6_col7" class="data row6 col7" >0.227</td>
+            <td id="T_e70d3_row6_col8" class="data row6 col8" >0.153</td>
+            <td id="T_e70d3_row6_col9" class="data row6 col9" >0.593</td>
+            <td id="T_e70d3_row6_col10" class="data row6 col10" >0.294</td>
+            <td id="T_e70d3_row6_col11" class="data row6 col11" >0.294</td>
+            <td id="T_e70d3_row6_col12" class="data row6 col12" >0.211</td>
+            <td id="T_e70d3_row6_col13" class="data row6 col13" >0.085</td>
+            <td id="T_e70d3_row6_col14" class="data row6 col14" >0.379</td>
+            <td id="T_e70d3_row6_col15" class="data row6 col15" >0.415</td>
+            <td id="T_e70d3_row6_col16" class="data row6 col16" >0.075</td>
+            <td id="T_e70d3_row6_col17" class="data row6 col17" >0.009</td>
+            <td id="T_e70d3_row6_col18" class="data row6 col18" >0.029</td>
+            <td id="T_e70d3_row6_col19" class="data row6 col19" >0.151</td>
+        </tr>
+        <tr>
+            <th id="T_e70d3_level0_row7" class="row_heading level0 row7" >Llama-3.1-8B-Instruct</th>
+            <td id="T_e70d3_row7_col0" class="data row7 col0" >0.078</td>
+            <td id="T_e70d3_row7_col1" class="data row7 col1" >0.001</td>
+            <td id="T_e70d3_row7_col2" class="data row7 col2" >0.017</td>
+            <td id="T_e70d3_row7_col3" class="data row7 col3" >0.023</td>
+            <td id="T_e70d3_row7_col4" class="data row7 col4" >0.044</td>
+            <td id="T_e70d3_row7_col5" class="data row7 col5" >0.015</td>
+            <td id="T_e70d3_row7_col6" class="data row7 col6" >0.018</td>
+            <td id="T_e70d3_row7_col7" class="data row7 col7" >0.232</td>
+            <td id="T_e70d3_row7_col8" class="data row7 col8" >0.280</td>
+            <td id="T_e70d3_row7_col9" class="data row7 col9" >0.842</td>
+            <td id="T_e70d3_row7_col10" class="data row7 col10" >0.259</td>
+            <td id="T_e70d3_row7_col11" class="data row7 col11" >0.313</td>
+            <td id="T_e70d3_row7_col12" class="data row7 col12" >0.078</td>
+            <td id="T_e70d3_row7_col13" class="data row7 col13" >0.017</td>
+            <td id="T_e70d3_row7_col14" class="data row7 col14" >0.126</td>
+            <td id="T_e70d3_row7_col15" class="data row7 col15" >0.108</td>
+            <td id="T_e70d3_row7_col16" class="data row7 col16" >0.207</td>
+            <td id="T_e70d3_row7_col17" class="data row7 col17" >0.011</td>
+            <td id="T_e70d3_row7_col18" class="data row7 col18" >0.071</td>
+            <td id="T_e70d3_row7_col19" class="data row7 col19" >0.144</td>
+        </tr>
+        <tr>
+            <th id="T_e70d3_level0_row8" class="row_heading level0 row8" >Llama-3.3-70B-Instruct</th>
+            <td id="T_e70d3_row8_col0" class="data row8 col0" >0.010</td>
+            <td id="T_e70d3_row8_col1" class="data row8 col1" >0.027</td>
+            <td id="T_e70d3_row8_col2" class="data row8 col2" >0.022</td>
+            <td id="T_e70d3_row8_col3" class="data row8 col3" >0.024</td>
+            <td id="T_e70d3_row8_col4" class="data row8 col4" >0.008</td>
+            <td id="T_e70d3_row8_col5" class="data row8 col5" >0.002</td>
+            <td id="T_e70d3_row8_col6" class="data row8 col6" >0.022</td>
+            <td id="T_e70d3_row8_col7" class="data row8 col7" >0.195</td>
+            <td id="T_e70d3_row8_col8" class="data row8 col8" >0.271</td>
+            <td id="T_e70d3_row8_col9" class="data row8 col9" >0.648</td>
+            <td id="T_e70d3_row8_col10" class="data row8 col10" >0.340</td>
+            <td id="T_e70d3_row8_col11" class="data row8 col11" >0.313</td>
+            <td id="T_e70d3_row8_col12" class="data row8 col12" >0.188</td>
+            <td id="T_e70d3_row8_col13" class="data row8 col13" >0.042</td>
+            <td id="T_e70d3_row8_col14" class="data row8 col14" >0.290</td>
+            <td id="T_e70d3_row8_col15" class="data row8 col15" >0.641</td>
+            <td id="T_e70d3_row8_col16" class="data row8 col16" >0.041</td>
+            <td id="T_e70d3_row8_col17" class="data row8 col17" >0.009</td>
+            <td id="T_e70d3_row8_col18" class="data row8 col18" >0.062</td>
+            <td id="T_e70d3_row8_col19" class="data row8 col19" >0.166</td>
+        </tr>
+        <tr>
+            <th id="T_e70d3_level0_row9" class="row_heading level0 row9" >Mistral-7B-Instruct-v0.3</th>
+            <td id="T_e70d3_row9_col0" class="data row9 col0" >0.008</td>
+            <td id="T_e70d3_row9_col1" class="data row9 col1" >0.005</td>
+            <td id="T_e70d3_row9_col2" class="data row9 col2" >0.011</td>
+            <td id="T_e70d3_row9_col3" class="data row9 col3" >0.057</td>
+            <td id="T_e70d3_row9_col4" class="data row9 col4" >0.014</td>
+            <td id="T_e70d3_row9_col5" class="data row9 col5" >0.009</td>
+            <td id="T_e70d3_row9_col6" class="data row9 col6" >0.000</td>
+            <td id="T_e70d3_row9_col7" class="data row9 col7" >0.270</td>
+            <td id="T_e70d3_row9_col8" class="data row9 col8" >0.284</td>
+            <td id="T_e70d3_row9_col9" class="data row9 col9" >0.801</td>
+            <td id="T_e70d3_row9_col10" class="data row9 col10" >0.100</td>
+            <td id="T_e70d3_row9_col11" class="data row9 col11" >0.188</td>
+            <td id="T_e70d3_row9_col12" class="data row9 col12" >0.095</td>
+            <td id="T_e70d3_row9_col13" class="data row9 col13" >0.053</td>
+            <td id="T_e70d3_row9_col14" class="data row9 col14" >0.443</td>
+            <td id="T_e70d3_row9_col15" class="data row9 col15" >0.143</td>
+            <td id="T_e70d3_row9_col16" class="data row9 col16" >0.238</td>
+            <td id="T_e70d3_row9_col17" class="data row9 col17" >0.002</td>
+            <td id="T_e70d3_row9_col18" class="data row9 col18" >0.078</td>
+            <td id="T_e70d3_row9_col19" class="data row9 col19" >0.147</td>
+        </tr>
+        <tr>
+            <th id="T_e70d3_level0_row10" class="row_heading level0 row10" >Mistral-Small-24B-Instruct-2501</th>
+            <td id="T_e70d3_row10_col0" class="data row10 col0" >0.036</td>
+            <td id="T_e70d3_row10_col1" class="data row10 col1" >0.005</td>
+            <td id="T_e70d3_row10_col2" class="data row10 col2" >0.006</td>
+            <td id="T_e70d3_row10_col3" class="data row10 col3" >0.026</td>
+            <td id="T_e70d3_row10_col4" class="data row10 col4" >0.001</td>
+            <td id="T_e70d3_row10_col5" class="data row10 col5" >0.002</td>
+            <td id="T_e70d3_row10_col6" class="data row10 col6" >0.000</td>
+            <td id="T_e70d3_row10_col7" class="data row10 col7" >0.215</td>
+            <td id="T_e70d3_row10_col8" class="data row10 col8" >0.159</td>
+            <td id="T_e70d3_row10_col9" class="data row10 col9" >0.689</td>
+            <td id="T_e70d3_row10_col10" class="data row10 col10" >0.266</td>
+            <td id="T_e70d3_row10_col11" class="data row10 col11" >0.271</td>
+            <td id="T_e70d3_row10_col12" class="data row10 col12" >0.150</td>
+            <td id="T_e70d3_row10_col13" class="data row10 col13" >0.031</td>
+            <td id="T_e70d3_row10_col14" class="data row10 col14" >0.464</td>
+            <td id="T_e70d3_row10_col15" class="data row10 col15" >0.165</td>
+            <td id="T_e70d3_row10_col16" class="data row10 col16" >0.049</td>
+            <td id="T_e70d3_row10_col17" class="data row10 col17" >0.017</td>
+            <td id="T_e70d3_row10_col18" class="data row10 col18" >0.038</td>
+            <td id="T_e70d3_row10_col19" class="data row10 col19" >0.136</td>
+        </tr>
+        <tr>
+            <th id="T_e70d3_level0_row11" class="row_heading level0 row11" >phi-4</th>
+            <td id="T_e70d3_row11_col0" class="data row11 col0" >0.024</td>
+            <td id="T_e70d3_row11_col1" class="data row11 col1" >0.008</td>
+            <td id="T_e70d3_row11_col2" class="data row11 col2" >0.020</td>
+            <td id="T_e70d3_row11_col3" class="data row11 col3" >0.057</td>
+            <td id="T_e70d3_row11_col4" class="data row11 col4" >0.002</td>
+            <td id="T_e70d3_row11_col5" class="data row11 col5" >0.002</td>
+            <td id="T_e70d3_row11_col6" class="data row11 col6" >0.000</td>
+            <td id="T_e70d3_row11_col7" class="data row11 col7" >0.338</td>
+            <td id="T_e70d3_row11_col8" class="data row11 col8" >0.320</td>
+            <td id="T_e70d3_row11_col9" class="data row11 col9" >0.747</td>
+            <td id="T_e70d3_row11_col10" class="data row11 col10" >0.143</td>
+            <td id="T_e70d3_row11_col11" class="data row11 col11" >0.277</td>
+            <td id="T_e70d3_row11_col12" class="data row11 col12" >0.124</td>
+            <td id="T_e70d3_row11_col13" class="data row11 col13" >0.031</td>
+            <td id="T_e70d3_row11_col14" class="data row11 col14" >0.272</td>
+            <td id="T_e70d3_row11_col15" class="data row11 col15" >0.416</td>
+            <td id="T_e70d3_row11_col16" class="data row11 col16" >0.017</td>
+            <td id="T_e70d3_row11_col17" class="data row11 col17" >0.008</td>
+            <td id="T_e70d3_row11_col18" class="data row11 col18" >0.030</td>
+            <td id="T_e70d3_row11_col19" class="data row11 col19" >0.149</td>
+        </tr>
+        </tbody>
+    </table>
     </div>
     <div class="container">
         <h2>Methodological Notes</h2>

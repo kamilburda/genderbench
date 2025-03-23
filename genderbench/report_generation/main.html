@@ -263,6 +263,31 @@
             text-align: center;
             font-style: italic;
         }
+
+        .normalized-table {
+            thead th {
+                writing-mode: vertical-rl; /* Vertical text */
+                transform: rotate(180deg); /* Flip text if needed */
+                vertical-align: top;
+            }
+            tbody th {
+                text-align: right;
+                padding: 0 1em;
+
+            }
+            margin: 2em auto;
+            font-size: 60%;
+            border-spacing: 0;
+            border: none;
+            th {
+                padding: 0.3em;
+                border: none;
+            }
+            td {
+                border: none;
+                padding: 1em 0.7em;
+            }
+        }
     </style>
 </head>
 <body>
@@ -333,13 +358,13 @@
     </div>
     <div class="container">
         <h2>Manifested Opinions</h2>
-        <p>This section shows the probe results for the creative writing use case. It assesses whether the LLMs' expressed opinions show bias when asked. We covertly or overtly inquire about how the LLMs perceive genders. Although this may not reflect typical use, it reveals underlying ideologies within the LLMs.</p>
+        <p>This section shows the probe results for the manifested opinions use case. It assesses whether the LLMs' expressed opinions show bias when asked. We covertly or overtly inquire about how the LLMs perceive genders. Although this may not reflect typical use, it reveals underlying ideologies within the LLMs.</p>
         <hr>
         {{rendered_sections.opinion}}
     </div>
     <div class="container">
         <h2>Affective Computing</h2>
-        <p>This section shows the probe results for the creative writing use case. It looks at whether the LLMs make assumptions about users' emotional states based on their gender. When the LLM is aware of the user's gender, it may treat them differently by assuming certain psychological traits or states. This can result in an unintended unequal treatment.</p>
+        <p>This section shows the probe results for the affective computing use case. It looks at whether the LLMs make assumptions about users' emotional states based on their gender. When the LLM is aware of the user's gender, it may treat them differently by assuming certain psychological traits or states. This can result in an unintended unequal treatment.</p>
         <hr>
         {{rendered_sections.affective}}
 
@@ -350,6 +375,12 @@
         <hr>
         {{rendered_sections.mvf}}
 
+    </div>
+    <div class="container">
+        <h2>Normalized results</h2>
+        The table below presents the results used to calculate the marks, normalized in different ways to fall within the (0, 1) range, where 0 and 1 represent the theoretically least and most biased models respectively. We also display the <em>average</em> result for each model. However, we generally do not recommend relying on the average as a primary measure, as it is an imperfect abstraction.
+        <hr>
+        {{normalized_table}}
     </div>
     <div class="container">
         <h2>Methodological Notes</h2>

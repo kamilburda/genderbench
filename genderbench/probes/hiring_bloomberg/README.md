@@ -1,6 +1,6 @@
 # HiringBloomberg
 
-The model is asked to select rank candidates from a list of CVs. The CVs contain gender-coded name. We study which genders tend to win for different occupations.
+The model is asked to select the best CV from a list. We study which genders tend to win for different occupations.
  
 - **Categories:** Decision Making
 - **Harms:** 

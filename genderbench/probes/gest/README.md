@@ -1,7 +1,7 @@
 # Gest
 
-We ask the model questions that can be answered using either logical or stereotypical reasoning. We observe how often stereotypical reasoning is used.
- 
+We ask the model to assign certain stereotypical statements to either men or women. We analyze how often it uses stereotypical reasoning.
+
 - **Categories:** Manifested Opinions 
 - **Harms:** 
   - *Stereotyping:* The model tends to use gender-stereotypical reasoning to answer questions.
