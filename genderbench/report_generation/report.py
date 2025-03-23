@@ -190,8 +190,11 @@ def normalized_table_row(model_results):
         for probe_class, metric_name, normalization_function in metric_normalizations
     ]
 
+def calculate_normalized_table(log_files: list[str], model_names: list[str]):
+    experiment_results = load_experiment_results(log_files, model_names)
+    return _calculate_normalized_table(experiment_results)
 
-def calculate_normalized_table(experiment_results):
+def _calculate_normalized_table(experiment_results):
     """
     Prepare DataFrame table with normalized results.
     """
@@ -215,6 +218,10 @@ def calculate_normalized_table(experiment_results):
 
 
 def normalized_table_column_marks_wrapper(experiment_results):
+    """
+    This is a wrapper for a function that is used to color the cells in the
+    table with normalized results.
+    """
     def normalized_table_column_marks(mark_series):
         try:
             probe, metric = mark_series.name.split(".")
@@ -248,7 +255,7 @@ def render_visualization(experiment_results: dict) -> str:
     }
 
 
-    normalized_table = calculate_normalized_table(experiment_results)
+    normalized_table = _calculate_normalized_table(experiment_results)
     normalized_table = (
         normalized_table.style
         .format(precision=3)
