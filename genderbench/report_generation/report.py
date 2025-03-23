@@ -190,9 +190,11 @@ def normalized_table_row(model_results):
         for probe_class, metric_name, normalization_function in metric_normalizations
     ]
 
+
 def calculate_normalized_table(log_files: list[str], model_names: list[str]):
     experiment_results = load_experiment_results(log_files, model_names)
     return _calculate_normalized_table(experiment_results)
+
 
 def _calculate_normalized_table(experiment_results):
     """
@@ -222,6 +224,7 @@ def normalized_table_column_marks_wrapper(experiment_results):
     This is a wrapper for a function that is used to color the cells in the
     table with normalized results.
     """
+
     def normalized_table_column_marks(mark_series):
         try:
             probe, metric = mark_series.name.split(".")
@@ -230,11 +233,15 @@ def normalized_table_column_marks_wrapper(experiment_results):
                 for model in experiment_results
             ]
         except (ValueError, KeyError):
-            return [''] * len(mark_series)
-        colors = ["rgb(40, 167, 69, 0.25)", "rgb(255, 193, 7, 0.25)", "rgb(253, 126, 20, 0.25)", "rgb(220, 53, 69, 0.25)"]
-        return [
-            f"background-color: {colors[i]}" for i in marks
+            return [""] * len(mark_series)
+        colors = [
+            "rgb(40, 167, 69, 0.25)",
+            "rgb(255, 193, 7, 0.25)",
+            "rgb(253, 126, 20, 0.25)",
+            "rgb(220, 53, 69, 0.25)",
         ]
+        return [f"background-color: {colors[i]}" for i in marks]
+
     return normalized_table_column_marks
 
 
@@ -254,13 +261,11 @@ def render_visualization(experiment_results: dict) -> str:
         for section_name in chart_config
     }
 
-
     normalized_table = _calculate_normalized_table(experiment_results)
     normalized_table = (
-        normalized_table.style
-        .format(precision=3)
+        normalized_table.style.format(precision=3)
         .apply(normalized_table_column_marks_wrapper(experiment_results), axis=0)
-        .to_html(table_attributes="class=\"normalized-table\"")
+        .to_html(table_attributes='class="normalized-table"')
     )
 
     rendered_html = main_template.render(
