@@ -38,8 +38,8 @@ or more harmful behaviors. A probe consists of a set of prompts that are fed
 into the LLM. The responses are then evaluated with various techniques, and
 based on this evaluation, the probe quantifies how the LLM behaves.
 
-### Report
-‼️ <a href="https://genderbench.readthedocs.io/latest/_static/reports/genderbench_report_1_0.html">↗ GenderBench Report 1.0 available here.</a>
+### ⚠️ Report
+<a href="https://genderbench.readthedocs.io/latest/_static/reports/genderbench_report_1_0.html">↗ GenderBench Report 1.0 available here.</a>
 
 This is the current version of the **GenderBench Report**, summarizing the
 results for a selected set of 12 LLMs with the most recent version of
