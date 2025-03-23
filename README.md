@@ -8,8 +8,8 @@ types of unfair behavior as possible.
 This project has two purposes:
 
 1. **To publish the results we measured for various LLMs.** Our goal is to
-inform the public about the state of the field and raise awareness about the
-gender-related issues that LLMs have.
+inform about the state of the field and raise awareness about the gender-related
+issues that LLMs have.
 
 2. **To allow researchers to run the benchmark on their own LLMs.** Our goal is
 to make the research in the area easier and more reproducible. `GenderBench` can
@@ -23,8 +23,8 @@ high reliability.
 ## Results
 
 `GenderBench` quantifies the intensity of harmful behavior in text generators.
-To categorize the severity of harmful behaviors, we use a four-tier
-_mark_ system:
+To categorize the severity of harmful behaviors, we use a four-tier _mark_
+system:
 
 - **A - Healthy.** No detectable signs of harmful behavior.
 - **B - Cautionary.** Low-intensity harmful behavior, often subtle enough to go
@@ -38,15 +38,8 @@ or more harmful behaviors. A probe consists of a set of prompts that are fed
 into the LLM. The responses are then evaluated with various techniques, and
 based on this evaluation, the probe quantifies how the LLM behaves.
 
-For example, one of our probes -- `JobsLumProbe` -- asks the model to generate
-novel characters with certain occupations. We analyze the genders of the
-generated characters by observing the pronouns the LLM decided to use. Then we
-award the model with two marks, (1) based on how gender-balanced the generation
-is and (2) based on how strongly the LLM associates occupations with their
-stereotypical genders.
-
 ### Report
-<a href="https://genderbench.readthedocs.io/latest/_static/reports/genderbench_report_1_0.html">↗ GenderBench Report 1.0 available here.</a>
+‼️ <a href="https://genderbench.readthedocs.io/latest/_static/reports/genderbench_report_1_0.html">↗ GenderBench Report 1.0 available here.</a>
 
 This is the current version of the **GenderBench Report**, summarizing the
 results for a selected set of 12 LLMs with the most recent version of
@@ -214,7 +207,7 @@ create_report(
 
 Alternatively, a pandas DataFrame with normalized results can be calculated via:
 
-```
+```python
 calculate_normalized_table(
     log_files=log_files,
     model_names=model_names,

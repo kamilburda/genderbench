@@ -135,7 +135,7 @@ create_report(
 
 Alternatively, a pandas DataFrame with normalized results can be calculated via:
 
-```
+```python
 calculate_normalized_table(
     log_files=log_files,
     model_names=model_names,
