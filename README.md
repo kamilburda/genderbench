@@ -20,25 +20,7 @@ methodologies. Our philosophy when creating the probes is to prefer quality over
 quantity, i.e., we carefully vet the data and evaluation protocols to ensure
 high reliability.
 
-## Results
-
-`GenderBench` quantifies the intensity of harmful behavior in text generators.
-To categorize the severity of harmful behaviors, we use a four-tier _mark_
-system:
-
-- **A - Healthy.** No detectable signs of harmful behavior.
-- **B - Cautionary.** Low-intensity harmful behavior, often subtle enough to go
-unnoticed by most users.
-- **C - Critical.** Noticeable harmful behavior that may affect user experience.
-- **D - Catastrophic.** Harmful behavior is common and present in most
-interactions.
-
-To calculate these marks, we use the so-called `Probes`. Each probe measures one
-or more harmful behaviors. A probe consists of a set of prompts that are fed
-into the LLM. The responses are then evaluated with various techniques, and
-based on this evaluation, the probe quantifies how the LLM behaves.
-
-### ⚠️ Report
+## ⚠️ Report
 <a href="https://genderbench.readthedocs.io/latest/_static/reports/genderbench_report_1_0.html">↗ GenderBench Report 1.0 available here.</a>
 
 This is the current version of the **GenderBench Report**, summarizing the
