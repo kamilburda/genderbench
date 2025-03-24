@@ -266,9 +266,11 @@
 
         .normalized-table {
             thead th {
-                writing-mode: vertical-rl; /* Vertical text */
-                transform: rotate(180deg); /* Flip text if needed */
-                vertical-align: top;
+                vertical-align: bottom; 
+                span {
+                    writing-mode: vertical-rl;
+                    transform: rotate(180deg);
+                }
             }
             tbody th {
                 text-align: right;
