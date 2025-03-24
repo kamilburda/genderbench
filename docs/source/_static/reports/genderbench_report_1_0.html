@@ -266,9 +266,11 @@
 
         .normalized-table {
             thead th {
-                writing-mode: vertical-rl; /* Vertical text */
-                transform: rotate(180deg); /* Flip text if needed */
-                vertical-align: top;
+                vertical-align: bottom; 
+                span {
+                    writing-mode: vertical-rl;
+                    transform: rotate(180deg);
+                }
             }
             tbody th {
                 text-align: right;
@@ -1007,26 +1009,26 @@ createChart("chart_2f6aecac-e8f5-4f0e-91d7-a9cdace11b23", ['claude-3-5-haiku', '
         <thead>
         <tr>
             <th class="blank level0" >&nbsp;</th>
-            <th id="T_e70d3_level0_col0" class="col_heading level0 col0" >DiscriminationTamkinProbe.max_diff</th>
-            <th id="T_e70d3_level0_col1" class="col_heading level0 col1" >HiringAnProbe.diff_acceptance_rate</th>
-            <th id="T_e70d3_level0_col2" class="col_heading level0 col2" >HiringAnProbe.diff_regression</th>
-            <th id="T_e70d3_level0_col3" class="col_heading level0 col3" >HiringBloombergProbe.masculine_rate</th>
-            <th id="T_e70d3_level0_col4" class="col_heading level0 col4" >HiringBloombergProbe.stereotype_rate</th>
-            <th id="T_e70d3_level0_col5" class="col_heading level0 col5" >DiversityMedQaProbe.diff_success_rate</th>
-            <th id="T_e70d3_level0_col6" class="col_heading level0 col6" >BusinessVocabularyProbe.mean_diff</th>
-            <th id="T_e70d3_level0_col7" class="col_heading level0 col7" >GestCreativeProbe.stereotype_rate</th>
-            <th id="T_e70d3_level0_col8" class="col_heading level0 col8" >InventoriesProbe.stereotype_rate</th>
-            <th id="T_e70d3_level0_col9" class="col_heading level0 col9" >JobsLumProbe.stereotype_rate</th>
-            <th id="T_e70d3_level0_col10" class="col_heading level0 col10" >GestCreativeProbe.masculine_rate</th>
-            <th id="T_e70d3_level0_col11" class="col_heading level0 col11" >InventoriesProbe.masculine_rate</th>
-            <th id="T_e70d3_level0_col12" class="col_heading level0 col12" >JobsLumProbe.masculine_rate</th>
-            <th id="T_e70d3_level0_col13" class="col_heading level0 col13" >DirectProbe.fail_rate</th>
-            <th id="T_e70d3_level0_col14" class="col_heading level0 col14" >RelationshipLevyProbe.diff_success_rate</th>
-            <th id="T_e70d3_level0_col15" class="col_heading level0 col15" >GestProbe.stereotype_rate</th>
-            <th id="T_e70d3_level0_col16" class="col_heading level0 col16" >BbqProbe.stereotype_rate</th>
-            <th id="T_e70d3_level0_col17" class="col_heading level0 col17" >DreadditProbe.max_diff_stress_rate</th>
-            <th id="T_e70d3_level0_col18" class="col_heading level0 col18" >IsearProbe.max_diff</th>
-            <th id="T_e70d3_level0_col19" class="col_heading level0 col19" >Average</th>
+            <th id="T_e70d3_level0_col0" class="col_heading level0 col0" ><span>DiscriminationTamkinProbe.max_diff</span></th>
+            <th id="T_e70d3_level0_col1" class="col_heading level0 col1" ><span>HiringAnProbe.diff_acceptance_rate</span></th>
+            <th id="T_e70d3_level0_col2" class="col_heading level0 col2" ><span>HiringAnProbe.diff_regression</span></th>
+            <th id="T_e70d3_level0_col3" class="col_heading level0 col3" ><span>HiringBloombergProbe.masculine_rate</span></th>
+            <th id="T_e70d3_level0_col4" class="col_heading level0 col4" ><span>HiringBloombergProbe.stereotype_rate</span></th>
+            <th id="T_e70d3_level0_col5" class="col_heading level0 col5" ><span>DiversityMedQaProbe.diff_success_rate</span></th>
+            <th id="T_e70d3_level0_col6" class="col_heading level0 col6" ><span>BusinessVocabularyProbe.mean_diff</span></th>
+            <th id="T_e70d3_level0_col7" class="col_heading level0 col7" ><span>GestCreativeProbe.stereotype_rate</span></th>
+            <th id="T_e70d3_level0_col8" class="col_heading level0 col8" ><span>InventoriesProbe.stereotype_rate</span></th>
+            <th id="T_e70d3_level0_col9" class="col_heading level0 col9" ><span>JobsLumProbe.stereotype_rate</span></th>
+            <th id="T_e70d3_level0_col10" class="col_heading level0 col10" ><span>GestCreativeProbe.masculine_rate</span></th>
+            <th id="T_e70d3_level0_col11" class="col_heading level0 col11" ><span>InventoriesProbe.masculine_rate</span></th>
+            <th id="T_e70d3_level0_col12" class="col_heading level0 col12" ><span>JobsLumProbe.masculine_rate</span></th>
+            <th id="T_e70d3_level0_col13" class="col_heading level0 col13" ><span>DirectProbe.fail_rate</span></th>
+            <th id="T_e70d3_level0_col14" class="col_heading level0 col14" ><span>RelationshipLevyProbe.diff_success_rate</span></th>
+            <th id="T_e70d3_level0_col15" class="col_heading level0 col15" ><span>GestProbe.stereotype_rate</span></th>
+            <th id="T_e70d3_level0_col16" class="col_heading level0 col16" ><span>BbqProbe.stereotype_rate</span></th>
+            <th id="T_e70d3_level0_col17" class="col_heading level0 col17" ><span>DreadditProbe.max_diff_stress_rate</span></th>
+            <th id="T_e70d3_level0_col18" class="col_heading level0 col18" ><span>IsearProbe.max_diff</span></th>
+            <th id="T_e70d3_level0_col19" class="col_heading level0 col19" ><span>Average</span></th>
         </tr>
         </thead>
         <tbody>

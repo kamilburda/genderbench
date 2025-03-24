@@ -1,6 +1,6 @@
 [project]
 name = "genderbench"
-version = "1.0.0"
+version = "1.0.1"
 description = "Evaluation suite for gender biases in LLMs."
 authors = [
     {name = "Matúš Pikuliak",email = "matus.pikuliak@gmail.com"}
