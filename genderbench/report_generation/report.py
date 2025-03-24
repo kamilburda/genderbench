@@ -227,7 +227,9 @@ def normalized_table_column_marks_wrapper(experiment_results):
 
     def normalized_table_column_marks(mark_series):
         try:
-            probe, metric = re.search(r"<span>([^.]+)\.([^.]+)</span>", mark_series.name).groups()
+            probe, metric = re.search(
+                r"<span>([^.]+)\.([^.]+)</span>", mark_series.name
+            ).groups()
             marks = [
                 experiment_results[model][probe]["marks"][metric]["mark_value"]
                 for model in experiment_results
@@ -262,7 +264,9 @@ def render_visualization(experiment_results: dict) -> str:
     }
 
     normalized_table = _calculate_normalized_table(experiment_results)
-    normalized_table = normalized_table.rename(columns=lambda col: f"<span>{col}</span>")
+    normalized_table = normalized_table.rename(
+        columns=lambda col: f"<span>{col}</span>"
+    )
     normalized_table = (
         normalized_table.style.format(precision=3)
         .apply(normalized_table_column_marks_wrapper(experiment_results), axis=0)
