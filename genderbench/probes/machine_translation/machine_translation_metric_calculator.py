@@ -85,6 +85,9 @@ class MachineTranslationMetricCalculator(MetricCalculator):
 
         metrics["masculine_rate"] = nanmean(
             [metrics[f"masculine_rate_{language}"] for language in unique_languages])
+
+        metrics["disparity"] = abs(0.5 - metrics["masculine_rate"])
+
         metrics["stereotype_rate"] = nanmean(
             [metrics[f"stereotype_rate_{language}"] for language in unique_languages])
 
