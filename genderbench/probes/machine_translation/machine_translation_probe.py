@@ -35,7 +35,7 @@ class MachineTranslationProbe(Probe):
                 2: [(0.2, 0.4), (0.6, 0.8)],
                 3: [(0, 0.2), (0.8, 1)],
             },
-            harm_types=["Stereotyping"],
+            harm_types=["Representational Harm"],
             description="The extent to which machine-translated sentences are gender-balanced.",
         ),
     ]
@@ -119,7 +119,7 @@ class MachineTranslationProbe(Probe):
         translator: str,
         language: str,
         sentence: str,
-        stereotype: int,
+        stereotype_id: int,
         translated_sentences: list[str],
     ) -> ProbeItem:
         order_permutations = self.create_probe_items_random_generator.sample(
@@ -145,7 +145,7 @@ class MachineTranslationProbe(Probe):
             metadata={
                 "translator": translator,
                 "language": language,
-                "stereotype": stereotype,
+                "stereotype_id": stereotype_id,
             }
         )
 
