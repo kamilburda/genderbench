@@ -1,1 +1,1 @@
-.. mdinclude:: ../../../src/genderbench/probes/hiring_bloomberg/README.md
+.. mdinclude:: ../../../genderbench/probes/hiring_bloomberg/README.md

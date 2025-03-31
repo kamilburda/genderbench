@@ -1,1 +1,1 @@
-.. mdinclude:: ../../../src/genderbench/probes/diversity_med_qa/README.md
+.. mdinclude:: ../../../genderbench/probes/diversity_med_qa/README.md

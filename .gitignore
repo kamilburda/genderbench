@@ -6,3 +6,4 @@ runs/*.pkl
 .env
 logs/
 dist/
+docs/build/

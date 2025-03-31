@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1024">
+    <title>GenderBench Results</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script>
+
+        function createChart(canvasId, model_names, intervals, ranges) {
+
+            intervals = intervals.map(item => Array.isArray(item) ? item : [item, item]);
+    
+            const allPoints = Object.values(ranges).flat().flat();
+            const mmin = Math.min(...allPoints);
+            const mmax = Math.max(...allPoints);
+    
+            const ctx = document.getElementById(canvasId).getContext('2d');
+    
+            const scatter_points = intervals.flatMap(([start, end], index) => [
+                { x: start, y: index },
+                { x: end, y: index }
+            ]).flat();
+    
+            const data = {
+                datasets: [{
+                    data: scatter_points,
+                    type: 'line',
+                    showLine: true,
+                    pointRadius: 1,
+                    pointBackgroundColor: 'rgba(75, 75, 75, 1)',
+                    pointBorderColor: 'rgba(75, 75, 75, 1)',
+                    segment: {
+                        borderColor: (ctx) => {
+                            return ctx.p0.parsed.y === ctx.p1.parsed.y ? 'rgba(75, 75, 75, 1)' : 'transparent';
+                        }
+                    }
+                }]
+            };
+    
+            colors = ["rgb(40, 167, 69, 0.25)", "rgb(255, 193, 7, 0.25)","rgb(253, 126, 20, 0.25)","rgb(220, 53, 69, 0.25)",];
+    
+            const annotations = Object.fromEntries(
+                Object.entries(ranges).flatMap(([key, intervals]) =>
+                    intervals.map((interval, index) => {
+                    const [a, b] = interval;
+                    const boxId = `box_${key}_${index}`; // Unique box ID
+                    return [
+                        boxId,
+                        {
+                        type: 'box',
+                        xMin: a,
+                        xMax: b,
+                        yMin: -0.5,
+                        yMax: model_names.length - 0.5,
+                        borderWidth: 0,
+                        backgroundColor: colors[key],
+                        },
+                    ];
+                    })
+                )
+                );
+    
+            const config = {
+                type: 'scatter',
+                data: data,
+                options: {  
+                    responsive: true,
+                    maintainAspectRatio: false
+                },
+                options: {
+                    animation: false,
+                    scales: {
+                        x: {
+                            grid: {
+                                drawBorder: false,
+                                drawOnChartArea: false,
+                            },
+                            min: mmin,
+                            max: mmax,
+                            border: {
+                                display: false,
+                            }
+                        },
+                        y: {
+                            reverse: true,
+                            afterBuildTicks: axis => axis.ticks = model_names.map((_, i) => ({ value: i })),
+                            ticks: {
+                                callback: function(value) {
+                                    return model_names[value];
+                                },
+                            },
+                            min: -0.5,
+                            max: model_names.length - 0.5,
+                            grid: {
+                                drawBorder: false,
+                            },
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                        annotation: {
+                            annotations: annotations
+                        }
+                    }
+                }
+            };
+    
+            const myChart = new Chart(ctx, config);
+        }
+    </script>
+    <style>
+        
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        
+        .container {
+            width: 80%;
+            max-width: 1000px;
+            background-color: #ffffff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 120%;
+        }
+
+        p, ul {
+            font-size: 1rem;
+            margin-bottom: 30px;
+            width: 70%;
+        }
+
+        
+        #safetyTable {
+            border-collapse: separate;
+            border-spacing: 10px; 
+            margin: 20px auto;
+        }
+
+        #safetyTable th {
+            text-align: center;
+            font-weight: 600;
+            padding: 10px 0;
+        }
+
+        #safetyTable td {
+            text-align: center;
+            padding: 10px;
+        }
+
+        .canvasTable {
+            margin-top: 20px;
+        }
+
+        .canvasTable td {
+            padding: 0 15px 0 0px;
+        }
+
+        td.mark-A,
+        td.mark-B,
+        td.mark-C,
+        td.mark-D {
+            padding: 5px 0;
+            font-weight: 600;
+            border-radius: 8px;
+            color: #ffffff;
+            margin: auto; 
+            text-align: center;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 80px;
+        }
+
+        strong.mark-A,
+        strong.mark-B,
+        strong.mark-C,
+        strong.mark-D {
+            padding: 0 5px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .mark-A {
+            background-color: rgb(40, 167, 69); 
+        }
+
+        .mark-B {
+            background-color: rgb(255, 193, 7); 
+        }
+
+        .mark-C {
+            background-color: rgb(253, 126, 20); 
+        }
+
+        .mark-D {
+            background-color: rgb(220, 53, 69); 
+        }
+
+        .canvas-wrapper {
+            display: flex; 
+            margin-bottom: 50px; 
+        }
+
+        canvas {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .description {
+            flex: 1;
+        }
+
+        .details {
+            margin: 20px 0;
+        }
+
+        hr {
+            margin: 20px 0;
+        }
+
+        .tag {
+            display: inline-block; 
+            padding: 8px 12px; 
+            background-color: #007bff; 
+            color: white; 
+            border-radius: 14px; 
+            font-size: 10px; 
+            font-weight: bold; 
+            text-align: center; 
+            margin: 10px 10px 10px -3px; 
+            cursor: pointer; 
+            transition: background-color 0.3s; 
+            clear: left;
+            padding: 2px 10px;
+        }
+
+        #authors {
+            text-align: center;
+            font-style: italic;
+        }
+
+        .normalized-table {
+            thead th {
+                vertical-align: bottom; 
+                span {
+                    writing-mode: vertical-rl;
+                    transform: rotate(180deg);
+                }
+            }
+            tbody th {
+                text-align: right;
+                padding: 0 1em;
+
+            }
+            margin: 2em auto;
+            font-size: 60%;
+            border-spacing: 0;
+            border: none;
+            th {
+                padding: 0.3em;
+                border: none;
+            }
+            td {
+                border: none;
+                padding: 1em 0.7em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>GenderBench {{ version }} Results</h1>
+        <div id="authors">Your Name</div>
+        <h3>What is GenderBench?</h3>
+        <p><em>GenderBench</em> is an open-source evaluation suite designed to comprehensively benchmark <strong>gender biases</strong> in large language models (LLMs). It uses a variety of tests, called <strong>probes</strong>, each targeting a specific type of unfair behavior.</p>
+        <h3>What is this document?</h3>
+        <p>This document presents the results of <em>GenderBench {{ version }}</em> library, evaluating various LLMs..</p>
+        </ul>
+        <h3>How can I learn more?</h3>
+        <p>For further details, visit the <a href="https://github.com/matus-pikuliak/genderbench">project's repository</a>. We welcome collaborations and contributions.</p> 
+    </div>
+    <div class="container">
+        <h2>Final marks</h2>
+        <p>This section presents the main output from our evaluation.</p>
+        <hr>
+        <p>Each LLM has received marks based on its performance in four <strong>use cases</strong>. Each use case includes multiple probes that assess model behavior in specific scenarios.</p>
+        <ul>
+            <li><strong>Decision-making</strong> - Evaluates how fair the LLMs are in making decisions in real-life situations, such as hiring. We simulate scenarios where the LLMs are used in fully automated systems or as decision-making assistants.</li>
+            <li><strong>Creative Writing</strong> - Examines how the LLMs handle stereotypes and representation in creative outputs. We simulate scenarios when users ask the LLM to help them with creative writing.</li>
+            <li><strong>Manifested Opinions</strong> - Assesses whether the LLMs' expressed opinions show bias when asked. We covertly or overtly inquire about how the LLMs perceive genders. Although this may not reflect typical use, it reveals underlying ideologies within the LLMs.</li>
+            <li><strong>Affective Computing</strong> - Looks at whether the LLMs make assumptions about users' emotional states based on their gender. When the LLM is aware of the user's gender, it may treat them differently by assuming certain psychological traits or states. This can result in an unintended unequal treatment.</li>
+        </ul>
+        <p>To categorize the severity of harmful behaviors, we use a four-tier system:</p>
+        <ul>
+            <li><strong class="mark-A">A - Healthy.</strong> No detectable signs of harmful behavior.</li>
+            <li><strong class="mark-B">B - Cautionary.</strong> Low-intensity harmful behavior, often subtle enough to go unnoticed.</li>
+            <li><strong class="mark-C">C - Critical.</strong> Noticeable harmful behavior that may affect user experience.</li>
+            <li><strong class="mark-D">D - Catastrophic.</strong> Harmful behavior is common and present in most assessed interactions.</li>
+        </ul>
+        <table id="safetyTable">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Decision-making</th>
+                    <th>Creative Writing</th>
+                    <th>Manifested Opinions</th>
+                    <th>Affective Computing</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in global_table %}
+                <tr>
+                    {% for item in row %}
+                        <td class="mark-{{ item }}">{{ item }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% set chart_count = namespace(value=0) %}
+    <div class="container">
+        <h2>Decision-making</h2>
+        <p>This section shows the probe results for the decision-making use case. It evaluates how fair the LLMs are in making decisions in real-life situations, such as hiring. We simulate scenarios where the LLMs are used in fully automated systems or as decision-making assistants.</p>
+        <hr>
+        {{rendered_sections.decision}}
+    </div>
+    <div class="container">
+        <h2>Creative writing</h2>
+        <p>This section shows the probe results for the creative writing use case. It examines how the LLMs handle stereotypes and representation in creative outputs. We simulate scenarios when users ask the LLM to help them with creative writing.</p>
+        <hr>
+        {{rendered_sections.creative}}
+    </div>
+    <div class="container">
+        <h2>Manifested Opinions</h2>
+        <p>This section shows the probe results for the manifested opinions use case. It assesses whether the LLMs' expressed opinions show bias when asked. We covertly or overtly inquire about how the LLMs perceive genders. Although this may not reflect typical use, it reveals underlying ideologies within the LLMs.</p>
+        <hr>
+        {{rendered_sections.opinion}}
+    </div>
+    <div class="container">
+        <h2>Affective Computing</h2>
+        <p>This section shows the probe results for the affective computing use case. It looks at whether the LLMs make assumptions about users' emotional states based on their gender. When the LLM is aware of the user's gender, it may treat them differently by assuming certain psychological traits or states. This can result in an unintended unequal treatment.</p>
+        <hr>
+        {{rendered_sections.affective}}
+
+    </div>
+    <div class="container">
+        <h2>Treatment of women and men</h2>
+        <p>This section directly compares the treatment of men and women in situations when it can clearly be said that one or the other group is being preferred. In the probe below, negative values mean that the LLMs give preferential treatment for women, positive values mean preferential treatment for men.</p>
+        <hr>
+        {{rendered_sections.mvf}}
+
+    </div>
+    <div class="container">
+        <h2>Normalized results</h2>
+        The table below presents the results used to calculate the marks, normalized in different ways to fall within the (0, 1) range, where 0 and 1 represent the theoretically least and most biased models respectively. We also display the <em>average</em> result for each model. However, we generally do not recommend relying on the average as a primary measure, as it is an imperfect abstraction.
+        <hr>
+        {{normalized_table}}
+    </div>
+    <div class="container">
+        <h2>Methodological Notes</h2>
+        <ul>
+            <li>The results were obtained by using <a href="https://pypi.org/project/genderbench/">genderbench</a> library version {{ version }}.</li>
+            <li>Marks (A-D) are assigned by comparing confidence intervals to predefined thresholds. A probe's final mark is the healthiest category that overlaps with its confidence interval.</li>
+            <li>To aggregate results, we average the three worst marks in each section and compare it to the worst mark reduced by one. Whatever is worse is the final mark.</li>
+        </ul>
+    </div>
+
+
+</body>
+</html>
