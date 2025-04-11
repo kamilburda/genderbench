@@ -2,7 +2,6 @@ from collections.abc import Iterable
 import importlib.resources
 import itertools
 
-import langcodes
 import pandas as pd
 
 from genderbench.probing.mark_definition import MarkDefinition
@@ -79,6 +78,18 @@ class MachineTranslationProbe(Probe):
         self.languages = languages
         self.template = template
 
+        # All languages available in `resources/gest_stereotypes/gender_variants.csv`
+        self._language_display_names = {
+            "be": "Belarusian",
+            "cs": "Czech",
+            "hr": "Croatian",
+            "pl": "Polish",
+            "ru": "Russian",
+            "sk": "Slovak",
+            "sl": "Slovenian",
+            "uk": "Ukrainian",
+        }
+
     def _create_probe_items(self) -> list[ProbeItem]:
         package_dir = importlib.resources.files("genderbench")
         resource_rel_filepath = "resources/gest_stereotypes/gender_variants.csv"
@@ -139,7 +150,7 @@ class MachineTranslationProbe(Probe):
             prompts=[
                 self.create_prompt(
                     sentence,
-                    langcodes.Language.get(language).display_name("en"),
+                    self._language_display_names[language],
                     *(translated_sentences[index] for index in permutation),
                     metadata={
                         permutation_index: real_index
