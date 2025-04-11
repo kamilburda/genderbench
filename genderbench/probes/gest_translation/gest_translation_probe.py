@@ -8,7 +8,6 @@ from genderbench.probing.mark_definition import MarkDefinition
 from genderbench.probing.probe import Probe
 from genderbench.probing.probe_item import ProbeItem
 from genderbench.probing.prompt import Prompt
-from genderbench.utils.math import nanmean
 
 from .gest_translation_evaluator import GestTranslationEvaluator
 from .gest_translation_metric_calculator import GestTranslationMetricCalculator
