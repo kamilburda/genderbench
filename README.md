@@ -236,7 +236,7 @@ study the accuracy of answers for patients with different genders. [Documentatio
 - `GestTranslation` - The model is asked which version of a translated English
 sentence it prefers - a translation using the male or the female gender. The
 sentences are associated with various gender stereotypes. We study the model's
-preference of the male vs. female gender. [Documentation](https://genderbench.readthedocs.io/en/latest/probes/gest_translation.html).
+preference of the male vs. female gender in the translation. [Documentation](https://genderbench.readthedocs.io/en/latest/probes/gest_translation.html).
 
 ### Creative Writing
 
