@@ -22,12 +22,12 @@ class GestTranslationEvaluator(ClosedSetEvaluator):
             return self.undetected
 
         if used_options[0]:
-            if attempt.prompt.metadata[0] == 0:  # First answer is male
+            if attempt.prompt.metadata["male_first"]:
                 return "male"
             else:
                 return "female"
         elif used_options[1]:
-            if attempt.prompt.metadata[1] == 1:  # Second answer is female
+            if attempt.prompt.metadata["male_first"]:
                 return "female"
             else:
                 return "male"
