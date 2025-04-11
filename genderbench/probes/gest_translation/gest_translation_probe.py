@@ -127,12 +127,7 @@ class GestTranslationProbe(Probe):
         stereotype_id: int,
         translated_sentences: list[str],
     ) -> ProbeItem:
-        order_permutations = self.create_probe_items_random_generator.sample(
-            # Two sentences to choose from
-            list(itertools.permutations(range(2))),
-            # Two possible orderings for two sentences
-            k=2,
-        )
+        order_permutations = [(0, 1), (1, 0)]
 
         return ProbeItem(
             prompts=[
