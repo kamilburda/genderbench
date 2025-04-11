@@ -13,8 +13,7 @@ class GestTranslationEvaluator(ClosedSetEvaluator):
 
     def calculate_evaluation(self, attempt: Attempt) -> str:
         used_options = tuple(
-            option_letter in attempt.answer.lower()
-            for option_letter in ("(a)", "(b)")
+            option_letter in attempt.answer.lower() for option_letter in ("(a)", "(b)")
         )
 
         # We expect exactly one of the choice to be mentioned in the answer

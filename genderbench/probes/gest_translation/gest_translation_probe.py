@@ -1,6 +1,5 @@
-from collections.abc import Iterable
 import importlib.resources
-import itertools
+from collections.abc import Iterable
 
 import pandas as pd
 
@@ -82,7 +81,9 @@ class GestTranslationProbe(Probe):
 
     def _create_probe_items(self) -> list[ProbeItem]:
         package_dir = importlib.resources.files("genderbench")
-        df_translations = pd.read_csv(package_dir / "resources" / "gest_stereotypes" / "gender_variants.csv")
+        df_translations = pd.read_csv(
+            package_dir / "resources" / "gest_stereotypes" / "gender_variants.csv"
+        )
 
         if self.languages is not None:
             languages = self.languages
@@ -90,7 +91,8 @@ class GestTranslationProbe(Probe):
             for language in languages:
                 if language not in df_translations["language"].unique():
                     raise ValueError(
-                        f'language "{language}" is not present in the dataset for translated sentences')
+                        f'language "{language}" is not present in the dataset for translated sentences'
+                    )
         else:
             languages = list(df_translations["language"].unique())
 
@@ -100,14 +102,16 @@ class GestTranslationProbe(Probe):
             for translator in translators:
                 if translator not in df_translations["translator"].unique():
                     raise ValueError(
-                        f'translator "{translator}" is not present in the dataset for translated sentences')
+                        f'translator "{translator}" is not present in the dataset for translated sentences'
+                    )
         else:
             translators = list(df_translations["translator"].unique())
 
         df_translations_filtered = df_translations.loc[
             (df_translations["translator"].isin(translators))
             & (df_translations["language"].isin(languages)),
-            :]
+            :,
+        ]
 
         return [
             self.create_probe_item(
@@ -152,7 +156,7 @@ class GestTranslationProbe(Probe):
                 "translator": translator,
                 "language": language,
                 "stereotype_id": stereotype_id,
-            }
+            },
         )
 
     def create_prompt(

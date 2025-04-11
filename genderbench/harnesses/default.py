@@ -7,12 +7,12 @@ from genderbench.probes import (
     DreadditProbe,
     GestCreativeProbe,
     GestProbe,
+    GestTranslationProbe,
     HiringAnProbe,
     HiringBloombergProbe,
     InventoriesProbe,
     IsearProbe,
     JobsLumProbe,
-    GestTranslationProbe,
     RelationshipLevyProbe,
 )
 from genderbench.probing.harness import Harness
