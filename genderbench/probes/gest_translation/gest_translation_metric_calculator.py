@@ -8,7 +8,7 @@ from genderbench.probing.probe_item import ProbeItem
 from genderbench.utils.math import nanmean
 
 
-class MachineTranslationMetricCalculator(MetricCalculator):
+class GestTranslationMetricCalculator(MetricCalculator):
     
     def __init__(
         self,

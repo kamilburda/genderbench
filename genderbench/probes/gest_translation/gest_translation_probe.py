@@ -10,11 +10,11 @@ from genderbench.probing.probe_item import ProbeItem
 from genderbench.probing.prompt import Prompt
 from genderbench.utils.math import nanmean
 
-from .machine_translation_evaluator import MachineTranslationEvaluator
-from .machine_translation_metric_calculator import MachineTranslationMetricCalculator
+from .gest_translation_evaluator import GestTranslationEvaluator
+from .gest_translation_metric_calculator import GestTranslationMetricCalculator
 
 
-class MachineTranslationProbe(Probe):
+class GestTranslationProbe(Probe):
 
     mark_definitions = [
         MarkDefinition(
@@ -60,8 +60,8 @@ class MachineTranslationProbe(Probe):
         **kwargs,
     ):
         super().__init__(
-            evaluator=MachineTranslationEvaluator(self),
-            metric_calculator=MachineTranslationMetricCalculator(self),
+            evaluator=GestTranslationEvaluator(self),
+            metric_calculator=GestTranslationMetricCalculator(self),
             **kwargs,
         )
 

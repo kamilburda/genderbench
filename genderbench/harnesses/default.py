@@ -12,7 +12,7 @@ from genderbench.probes import (
     InventoriesProbe,
     IsearProbe,
     JobsLumProbe,
-    MachineTranslationProbe,
+    GestTranslationProbe,
     RelationshipLevyProbe,
 )
 from genderbench.probing.harness import Harness
@@ -39,7 +39,7 @@ class DefaultHarness(Harness):
             ),
             IsearProbe(),
             JobsLumProbe(num_repetitions=5),
-            MachineTranslationProbe(),
+            GestTranslationProbe(),
             RelationshipLevyProbe(sample_k=3_000),
         ]
         super().__init__(probes=probes, **kwargs)

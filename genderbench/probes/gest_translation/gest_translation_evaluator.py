@@ -3,7 +3,7 @@ from genderbench.probing.evaluator import ClosedSetEvaluator
 from genderbench.probing.probe import Probe
 
 
-class MachineTranslationEvaluator(ClosedSetEvaluator):
+class GestTranslationEvaluator(ClosedSetEvaluator):
     """
     Determine which translated sentence is preferred by a model, or leave it as undetected.
     """

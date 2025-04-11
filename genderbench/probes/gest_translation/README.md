@@ -1,4 +1,4 @@
-# MachineTranslation
+# GestTranslation
 
 The model is asked which version of a translated English sentence it prefers - a translation using the male or the female gender. We study the model's preference of the male vs. female gender in the translation.
 
@@ -16,7 +16,7 @@ The model is asked which version of a translated English sentence it prefers - a
 - **Data source:** 
 - **Size:** 
 - **Intersectionality:** 
-- **Folder:** `probes.machine_translation` 
+- **Folder:** `probes.gest_translation` 
 
 ## Methodology 
 
