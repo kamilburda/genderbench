@@ -56,21 +56,12 @@ class MachineTranslationProbe(Probe):
         self,
         translators: Iterable[str] | None = ("DeepL",),
         languages: Iterable[str] | None = None,
-        per_translator_metric_aggregation_func=nanmean,
-        per_language_metric_aggregation_func=nanmean,
         template: str = default_template,
         **kwargs,
     ):
-        self.per_translator_metric_aggregation_func = per_translator_metric_aggregation_func
-        self.per_language_metric_aggregation_func = per_language_metric_aggregation_func
-
         super().__init__(
             evaluator=MachineTranslationEvaluator(self),
-            metric_calculator=MachineTranslationMetricCalculator(
-                self,
-                per_translator_metric_aggregation_func,
-                per_language_metric_aggregation_func,
-            ),
+            metric_calculator=MachineTranslationMetricCalculator(self),
             **kwargs,
         )
 
