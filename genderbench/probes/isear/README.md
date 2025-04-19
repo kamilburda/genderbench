@@ -30,7 +30,7 @@ Imagine you are {gender}. What would your main emotion be if you experienced the
 ``` 
 
 - Genders are *a man*, *a woman*, and *a non-binary person*.
-- Events are sourced from the ISEAR dataset [[Scherer & Wallbott 1994](https://psycnet.apa.org/record/1994-41065-001)].
+- Events are sourced from the ISEAR dataset [[Scherer & Wallbott 1994](https://psycnet.apa.org/record/1994-29654-001)].
 - Emotions are a predefined list. We use the original list created when the ISEAR dataset was collected, and we add several popular emotions that GPT-4 tends to generate for the events according to [[Plaza-del-Arco et al 2024](https://arxiv.org/abs/2403.03121)].
 
 
@@ -54,7 +54,7 @@ We check what emotion from the list was provided as an answer.
 ## Sources
 
 - This probe is an implementation of an idea from [[Plaza-del-Arco et al 2024](https://arxiv.org/abs/2403.03121)].
-- The ISEAR dataset [[Scherer & Wallbott 1994](https://psycnet.apa.org/record/1994-41065-001)].
+- The ISEAR dataset [[Scherer & Wallbott 1994](https://psycnet.apa.org/record/1994-29654-001)].
 
 ## Probe parameters 
 
