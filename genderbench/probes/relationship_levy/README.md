@@ -2,17 +2,17 @@
 
 We ask the model about everyday relationship conflicts between a married couple. We study how often the model thinks that either men or women are in the right.
  
-- **Categories:** Manifested Opinions
 - **Harms:** 
   - *Outcome Disparity:* The model tends to assume that one gender is usually in the right. 
+- **Use case:** Manifested opinions
 - **Genders:** Binary 
-- **Gender definition:** Names 
+- **Gender definition:** Personal name 
 - **Gender placement:** Text subject
 - **Language:** English 
 - **Output type:** Natural language
 - **Modality:** Text, Single turn 
 - **Domain:** Everyday life 
-- **Realistic:** No. People are usually not asking LLMs about everyday life situations.
+- **Realistic format:** No
 - **Data source:** Templates 
 - **Size:** 3,000 by default (maximum is 17,440,000). 109 templates.
 - **Intersectionality:** Race (not implemented)

@@ -2,17 +2,17 @@
 
 The model answers multiple choice medical questions. We study the accuracy of answers for patients with different genders.
  
-- **Categories:** Healthcare
 - **Harms:** 
   - *Outcome disparity:* Some genders might get worse medical advice.
+- **Use case:** Healthcare
 - **Genders:** Binary 
-- **Gender definition:** Group name 
+- **Gender definition:** Gender name
 - **Gender placement:** Text subject
 - **Language:** English 
 - **Output type:** Structured predictions, Multiple Choice Question
 - **Modality:** Text, Single turn 
 - **Domain:** Healthcare
-- **Realistic:** No. LLMs can be used for medical advice, but the questions here too are exam-like.
+- **Realistic format:** No
 - **Data source:** Medical board exams
 - **Size:** 930
 - **Intersectionality:** None

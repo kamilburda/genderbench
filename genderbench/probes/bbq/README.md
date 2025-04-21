@@ -2,17 +2,17 @@
 
 The BBQ dataset contains tricky multiple-choice questions that test whether the model uses gender-stereotypical reasoning while interpreting everyday life situations.
 
-- **Categories:** Manifested Opinions 
 - **Harms:** 
   - *Stereotyping:* The model uses gender-stereotypica reasoning to answer questions.
+- **Use case:** Manifested Opinions
 - **Genders:** Non-binary 
-- **Gender definition:** Group names, Given names
+- **Gender definition:** Gender name, Personal name
 - **Gender placement:** Text subject
 - **Language:** English 
 - **Output type:** Structured predictions, Multiple Choice Question
 - **Modality:** Text, Single turn 
 - **Domain:** Everyday life
-- **Realistic:** No. The questions are often very artifitial.
+- **Realistic format:** No
 - **Data source:** Experts
 - **Size:** 5,608
 - **Intersectionality:** None

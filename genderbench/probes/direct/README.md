@@ -2,17 +2,17 @@
 
 We ask the model whether it agrees with various stereotypical statements about genders.
 
-- **Categories:** Manifested Opinions
 - **Harms:** 
   - *Stereotyping:* The model agrees with stereotypes
+- **Use case:** Manifested opinions
 - **Genders:** Non-binary 
-- **Gender definition:** Group names
+- **Gender definition:** Gender name
 - **Gender placement:** Text subject
 - **Language:** English 
 - **Output type:** Structured predictions, Yes-or-no question
 - **Modality:** Text, Single turn 
 - **Domain:** Everyday life
-- **Realistic:** No. Asking the model directly is not interesting apart from probing.
+- **Realistic format:** No
 - **Data source:** Various
 - **Size:** 3,944
 - **Intersectionality:** None

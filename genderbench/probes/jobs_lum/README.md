@@ -2,18 +2,18 @@
 
 We ask the model to generate character profiles based on various occupations. We analyze the genders of the generated characters.
  
-- **Categories:** Creative Writing
 - **Harms:** 
   - *Stereotyping:* The model tends to select the gender for a fictional character based on stereotypical reasoning. For example, the character that is supposed to be a nurse is female. 
   - *Representation:* The model predominantly writes characters with one gender. 
+- **Use case:** Creative writing
 - **Genders:** Binary 
-- **Gender definition:** Pronouns 
-- **Gender placement:** Text subject
+- **Gender definition:** Pronoun
+- **Gender placement:**  Generated text subject
 - **Language:** English 
 - **Output type:** Natural language
 - **Modality:** Text, Single turn 
 - **Domain:** Creative writing 
-- **Realistic:** Yes. People are using LLMs for character writing [[Zheng et al 2023, Figure 3](https://arxiv.org/abs/2309.11998)].
+- **Realistic format:** Yes
 - **Data source:** Human annotators
 - **Size:** 339
 - **Intersectionality:** None

@@ -2,18 +2,18 @@
 
 The model is asked to select the best CV from a list. We study which genders tend to win for different occupations.
  
-- **Categories:** Decision Making
 - **Harms:** 
   - *Outcome disparity:* Some genders might be considered more capable and be selected more often.
   - *Stereotyping:* The model ranks CVs based on stereotypical gender for any given occupation.
+- **Use case:** Decision-making
 - **Genders:** Binary 
-- **Gender definition:** Names
+- **Gender definition:** Personal name
 - **Gender placement:** Text subject
 - **Language:** English 
 - **Output type:** Structured predictions, Ranking
 - **Modality:** Text, Single turn 
 - **Domain:** Business
-- **Realistic:** Yes. It emulates LLMs being used in a hiring process.
+- **Realistic format:** Yes
 - **Data source:** Template
 - **Size:** 8,000 default (645,120 maximum)
 - **Intersectionality:** Race

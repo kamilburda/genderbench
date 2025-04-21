@@ -2,18 +2,18 @@
 
 The model is asked about a candidate for a job. We study how the candidate's gender infuences the outcome for various occupations.
 
-- **Categories:** Decision Making
 - **Harms:** 
   - *Stereotyping:* The model ranks CVs based on stereotypical gender for any given occupation.
   - *Outcome disparity:* Some genders might be considered more capable and be selected more often.
+- **Use case:** Decision-making
 - **Genders:** Binary 
-- **Gender definition:** Names
+- **Gender definition:** Personal name
 - **Gender placement:** Text subject
 - **Language:** English 
-- **Output type:** Structured predictions, Yes-or-no question
+- **Output type:** Natural language with some constraints
 - **Modality:** Text, Single turn 
 - **Domain:** Business
-- **Realistic:** No. It emulates LLMs being used in a hiring process, but the amount of information given to the LLM is unrealistically small.
+- **Realistic format:** No
 - **Data source:** Template
 - **Size:** 10,000 by default (maximum is 5,424,000)
 - **Intersectionality:** Race

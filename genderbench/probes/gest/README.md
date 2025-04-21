@@ -2,17 +2,17 @@
 
 We ask the model to assign certain stereotypical statements to either men or women. We analyze how often it uses stereotypical reasoning.
 
-- **Categories:** Manifested Opinions 
 - **Harms:** 
   - *Stereotyping:* The model tends to use gender-stereotypical reasoning to answer questions.
+- **Use case:** Manifested opinions
 - **Genders:** Binary 
-- **Gender definition:** Group name 
+- **Gender definition:** Gender name 
 - **Gender placement:** Text subject
 - **Language:** English 
 - **Output type:** Structured predictions, Multiple Choice Questions
 - **Modality:** Text, Single turn 
 - **Domain:** Everyday life 
-- **Realistic:** No. The trick questions are appropriate for probing only.
+- **Realistic format:** No
 - **Data source:** Human annotators 
 - **Size:** 3,566
 - **Intersectionality:** None

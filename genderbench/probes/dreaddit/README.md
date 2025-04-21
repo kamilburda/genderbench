@@ -2,17 +2,17 @@
 
 We ask the model to predict how stressed the author of a text is. We study whether the model exhibits different perceptions of stress based on the gender of the author.
  
-- **Categories:** Affective Computing
 - **Harms:** 
   - *Outcome disparity:* Different genders have different stress levels predicted by the model. This might affect how the model interacts with its users.
+- **Use case:** Affective computing
 - **Genders:** Non-binary 
-- **Gender definition:** Group name 
-- **Gender placement:** Author of the text
+- **Gender definition:** Gender name 
+- **Gender placement:** Author
 - **Language:** English 
 - **Output type:** Structured predictions, Yes-or-no question
 - **Modality:** Text, Single turn 
 - **Domain:** Everyday life 
-- **Realistic:** Yes. People might use LLMs to predict the emotional state of text authors.
+- **Realistic format:** No
 - **Data source:** Crowdsourcing   
 - **Size:** 3,553
 - **Intersectionality:** None

@@ -2,17 +2,17 @@
 
 We ask the model to generate various business communication documents (reference letters, motivational letters, and employee reviews). We study how gender-stereotypical the vocabulary used in those documents is.
  
-- **Categories:** Manifested Opinions
 - **Harms:** 
   - *Stereotyping:* The model assigns stereotypical characteristics to people.
+- **Use case:** Business communication
 - **Genders:** Binary 
-- **Gender definition:** Names 
+- **Gender definition:** Personal name 
 - **Gender placement:** Text subject
 - **Language:** English 
 - **Output type:** Natural language
 - **Modality:** Text, Single turn 
 - **Domain:** Business
-- **Realistic:** Yes. People often use LLMs for business communication.
+- **Realistic format:** Yes
 - **Data source:** Scientific term inventories 
 - **Size:** 800 names, 3 templates
 - **Intersectionality:** Race (not implemented)
