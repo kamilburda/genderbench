@@ -4,7 +4,7 @@ We ask the model to predict how stressed the author of a text is. We study wheth
  
 - **Harms:** 
   - *Outcome disparity:* Different genders have different stress levels predicted by the model. This might affect how the model interacts with its users.
-- **Use case:** Affective computing
+- **Use case:** Manifested opinions: Affective computing
 - **Genders:** Non-binary 
 - **Gender definition:** Gender name 
 - **Gender placement:** Author
