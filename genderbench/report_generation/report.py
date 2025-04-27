@@ -32,65 +32,64 @@ main_template = env.get_template("main.html")
 canvas_template = env.get_template("canvas.html")
 
 chart_config = {
-    "decision": [
+
+    "outcome": [
         (DiscriminationTamkinProbe, "max_diff"),
+        (DiversityMedQaProbe, "diff_success_rate"),
+        (DreadditProbe, "max_diff_stress_rate"),
         (HiringAnProbe, "diff_acceptance_rate"),
         (HiringAnProbe, "diff_regression"),
         (HiringBloombergProbe, "masculine_rate"),
         (HiringBloombergProbe, "stereotype_rate"),
-        (DiversityMedQaProbe, "diff_success_rate"),
+        (IsearProbe, "max_diff"),
+        (RelationshipLevyProbe, "diff_success_rate"),
     ],
-    "creative": [
+    "stereotyping": [
+        (BbqProbe, "stereotype_rate"),
         (BusinessVocabularyProbe, "mean_diff"),
+        (DirectProbe, "fail_rate"),
+        (GestProbe, "stereotype_rate"),
         (GestCreativeProbe, "stereotype_rate"),
         (InventoriesProbe, "stereotype_rate"),
         (JobsLumProbe, "stereotype_rate"),
+    ],
+    "representational": [
         (GestCreativeProbe, "masculine_rate"),
         (InventoriesProbe, "masculine_rate"),
         (JobsLumProbe, "masculine_rate"),
     ],
-    "opinion": [
-        (DirectProbe, "fail_rate"),
-        (RelationshipLevyProbe, "diff_success_rate"),
-        (GestProbe, "stereotype_rate"),
-        (BbqProbe, "stereotype_rate"),
-    ],
-    "affective": [
-        (DreadditProbe, "max_diff_stress_rate"),
-        (IsearProbe, "max_diff"),
-    ],
     "mvf": [
         (DiscriminationTamkinProbe, "diff_mvf_success_rate"),
+        (DiversityMedQaProbe, "diff_success_rate"),
         (HiringAnProbe, "diff_acceptance_rate"),
         (HiringBloombergProbe, "masculine_rate"),
-        (DiversityMedQaProbe, "diff_success_rate"),
         (JobsLumProbe, "masculine_rate"),
         (RelationshipLevyProbe, "diff_success_rate"),
     ],
+
 }
 
 metric_normalizations = [
     (DiscriminationTamkinProbe, "max_diff", None),
+    (DiversityMedQaProbe, "diff_success_rate", lambda x: abs(x)),
+    (DreadditProbe, "max_diff_stress_rate", None),
     (HiringAnProbe, "diff_acceptance_rate", lambda x: abs(x)),
     (HiringAnProbe, "diff_regression", lambda x: max(0, x) / 2),
     (HiringBloombergProbe, "masculine_rate", lambda x: abs(x - 0.5)),
     (HiringBloombergProbe, "stereotype_rate", lambda x: max(0, x)),
-    (DiversityMedQaProbe, "diff_success_rate", lambda x: abs(x)),
+    (IsearProbe, "max_diff", None),
+    (RelationshipLevyProbe, "diff_success_rate", lambda x: abs(x)),
+    (BbqProbe, "stereotype_rate", None),
     (BusinessVocabularyProbe, "mean_diff", lambda x: max(0, x)),
+    (DirectProbe, "fail_rate", None),
+    (GestProbe, "stereotype_rate", lambda x: max(0, x)),
     (GestCreativeProbe, "stereotype_rate", lambda x: max(0, x)),
     (InventoriesProbe, "stereotype_rate", lambda x: max(0, x)),
     (JobsLumProbe, "stereotype_rate", lambda x: max(0, x)),
-    (GestCreativeProbe, "masculine_rate", lambda x: abs(x - 0.5)),
     (InventoriesProbe, "masculine_rate", lambda x: abs(x - 0.5)),
     (JobsLumProbe, "masculine_rate", lambda x: abs(x - 0.5)),
-    (DirectProbe, "fail_rate", None),
-    (RelationshipLevyProbe, "diff_success_rate", lambda x: abs(x)),
-    (GestProbe, "stereotype_rate", lambda x: max(0, x)),
-    (BbqProbe, "stereotype_rate", None),
-    (DreadditProbe, "max_diff_stress_rate", None),
-    (IsearProbe, "max_diff", None),
+    (GestCreativeProbe, "masculine_rate", lambda x: abs(x - 0.5)),
 ]
-
 
 def aggregate_marks(marks: list[int]) -> int:
     """
