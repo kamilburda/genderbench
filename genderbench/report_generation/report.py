@@ -9,7 +9,22 @@ import numpy as np
 import pandas as pd
 from jinja2 import Environment, PackageLoader
 
-from genderbench.probes import *
+from genderbench.probes import (
+    BbqProbe,
+    BusinessVocabularyProbe,
+    DirectProbe,
+    DiscriminationTamkinProbe,
+    DiversityMedQaProbe,
+    DreadditProbe,
+    GestCreativeProbe,
+    GestProbe,
+    HiringAnProbe,
+    HiringBloombergProbe,
+    InventoriesProbe,
+    IsearProbe,
+    JobsLumProbe,
+    RelationshipLevyProbe,
+)
 from genderbench.probing.probe import Probe
 
 env = Environment(loader=PackageLoader("genderbench", "report_generation"))
@@ -17,7 +32,6 @@ main_template = env.get_template("main.html")
 canvas_template = env.get_template("canvas.html")
 
 chart_config = {
-
     "outcome_disparity": [
         (DiscriminationTamkinProbe, "max_diff"),
         (DiversityMedQaProbe, "diff_success_rate"),
@@ -72,7 +86,6 @@ chart_config = {
         (JobsLumProbe, "masculine_rate"),
         (RelationshipLevyProbe, "diff_success_rate"),
     ],
-
 }
 
 metric_normalizations = {
@@ -97,6 +110,7 @@ metric_normalizations = {
     (RelationshipLevyProbe, "diff_success_rate"): lambda x: abs(x),
 }
 
+
 def section_emojis(section_name: str, model_results: dict) -> int:
     """
     Aggregate marks of a model for the specified section.
@@ -115,8 +129,7 @@ def emoji_table_row(model_results: dict, section_names: list[str]) -> list[str]:
     Prepare row of aggregated marks for a single model's results.
     """
     row = [
-        section_emojis(section_name, model_results)
-        for section_name in section_names
+        section_emojis(section_name, model_results) for section_name in section_names
     ]
     return row
 
@@ -133,11 +146,15 @@ def prepare_chart_data(
     github_path = (
         f"https://genderbench.readthedocs.io/latest/probes/{probe_name_snake_case}.html"
     )
-    mark_definition = next(md for md in probe_class.mark_definitions if md.metric_name == metric)
+    mark_definition = next(
+        md for md in probe_class.mark_definitions if md.metric_name == metric
+    )
     return {
         "description": mark_definition.description,
         "model_names": list(experiment_results.keys()),
-        "ranges": {k: list(map(list, v)) for k, v in mark_definition.mark_ranges.items()},
+        "ranges": {
+            k: list(map(list, v)) for k, v in mark_definition.mark_ranges.items()
+        },
         "intervals": [
             results[probe_name]["marks"][metric]["metric_value"]
             for results in experiment_results.values()
@@ -177,7 +194,11 @@ def normalized_table_row(model_results):
             return function(mean(value))
 
     rows = []
-    for section in ("outcome_disparity", "stereotypical_reasoning", "representational_harms"):
+    for section in (
+        "outcome_disparity",
+        "stereotypical_reasoning",
+        "representational_harms",
+    ):
         for probe_class, metric_name in chart_config[section]:
             normalization_function = metric_normalizations[probe_class, metric_name]
             row = normalize(
@@ -186,6 +207,7 @@ def normalized_table_row(model_results):
             )
             rows.append(row)
     return rows
+
 
 def calculate_normalized_table(log_files: list[str], model_names: list[str]):
     experiment_results = load_experiment_results(log_files, model_names)
@@ -205,7 +227,11 @@ def _calculate_normalized_table(experiment_results):
 
     columns = [
         f"{probe_class.__name__.replace("Probe", "")}.{metric_name}"
-        for section in ("outcome_disparity", "stereotypical_reasoning", "representational_harms")
+        for section in (
+            "outcome_disparity",
+            "stereotypical_reasoning",
+            "representational_harms",
+        )
         for probe_class, metric_name in chart_config[section]
     ]
 
@@ -228,7 +254,9 @@ def normalized_table_column_marks_wrapper(experiment_results):
                 r"<span>([^.]+)\.([^.]+)</span>", mark_series.name
             ).groups()
             marks = [
-                experiment_results[model][probe+"Probe"]["marks"][metric]["mark_value"]
+                experiment_results[model][probe + "Probe"]["marks"][metric][
+                    "mark_value"
+                ]
                 for model in experiment_results
             ]
         except AttributeError:
@@ -251,7 +279,17 @@ def render_visualization(experiment_results: dict) -> str:
     """
 
     emoji_table_1 = [
-        [model_name, *emoji_table_row(model_results, ["outcome_disparity", "stereotypical_reasoning", "representational_harms"])]
+        [
+            model_name,
+            *emoji_table_row(
+                model_results,
+                [
+                    "outcome_disparity",
+                    "stereotypical_reasoning",
+                    "representational_harms",
+                ],
+            ),
+        ]
         for model_name, model_results in experiment_results.items()
     ]
     emoji_table_2 = [
