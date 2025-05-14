@@ -9,22 +9,7 @@ import numpy as np
 import pandas as pd
 from jinja2 import Environment, PackageLoader
 
-from genderbench.probes import (
-    BbqProbe,
-    BusinessVocabularyProbe,
-    DirectProbe,
-    DiscriminationTamkinProbe,
-    DiversityMedQaProbe,
-    DreadditProbe,
-    GestCreativeProbe,
-    GestProbe,
-    HiringAnProbe,
-    HiringBloombergProbe,
-    InventoriesProbe,
-    IsearProbe,
-    JobsLumProbe,
-    RelationshipLevyProbe,
-)
+from genderbench.probes import *
 from genderbench.probing.probe import Probe
 
 env = Environment(loader=PackageLoader("genderbench", "report_generation"))
@@ -33,30 +18,51 @@ canvas_template = env.get_template("canvas.html")
 
 chart_config = {
 
-    "outcome": [
+    "outcome_disparity": [
         (DiscriminationTamkinProbe, "max_diff"),
         (DiversityMedQaProbe, "diff_success_rate"),
-        (DreadditProbe, "max_diff_stress_rate"),
         (HiringAnProbe, "diff_acceptance_rate"),
         (HiringAnProbe, "diff_regression"),
         (HiringBloombergProbe, "masculine_rate"),
         (HiringBloombergProbe, "stereotype_rate"),
-        (IsearProbe, "max_diff"),
         (RelationshipLevyProbe, "diff_success_rate"),
     ],
-    "stereotyping": [
+    "stereotypical_reasoning": [
         (BbqProbe, "stereotype_rate"),
         (BusinessVocabularyProbe, "mean_diff"),
         (DirectProbe, "fail_rate"),
+        (DreadditProbe, "max_diff_stress_rate"),
         (GestProbe, "stereotype_rate"),
         (GestCreativeProbe, "stereotype_rate"),
         (InventoriesProbe, "stereotype_rate"),
+        (IsearProbe, "max_diff"),
         (JobsLumProbe, "stereotype_rate"),
     ],
-    "representational": [
+    "representational_harms": [
         (GestCreativeProbe, "masculine_rate"),
         (InventoriesProbe, "masculine_rate"),
         (JobsLumProbe, "masculine_rate"),
+    ],
+    "all": [
+        (BbqProbe, "stereotype_rate"),
+        (BusinessVocabularyProbe, "mean_diff"),
+        (DirectProbe, "fail_rate"),
+        (DiscriminationTamkinProbe, "max_diff"),
+        (DiversityMedQaProbe, "diff_success_rate"),
+        (DreadditProbe, "max_diff_stress_rate"),
+        (GestProbe, "stereotype_rate"),
+        (GestCreativeProbe, "masculine_rate"),
+        (GestCreativeProbe, "stereotype_rate"),
+        (HiringAnProbe, "diff_acceptance_rate"),
+        (HiringAnProbe, "diff_regression"),
+        (HiringBloombergProbe, "masculine_rate"),
+        (HiringBloombergProbe, "stereotype_rate"),
+        (InventoriesProbe, "masculine_rate"),
+        (InventoriesProbe, "stereotype_rate"),
+        (IsearProbe, "max_diff"),
+        (JobsLumProbe, "masculine_rate"),
+        (JobsLumProbe, "stereotype_rate"),
+        (RelationshipLevyProbe, "diff_success_rate"),
     ],
     "mvf": [
         (DiscriminationTamkinProbe, "diff_mvf_success_rate"),
@@ -69,59 +75,49 @@ chart_config = {
 
 }
 
-metric_normalizations = [
-    (DiscriminationTamkinProbe, "max_diff", None),
-    (DiversityMedQaProbe, "diff_success_rate", lambda x: abs(x)),
-    (DreadditProbe, "max_diff_stress_rate", None),
-    (HiringAnProbe, "diff_acceptance_rate", lambda x: abs(x)),
-    (HiringAnProbe, "diff_regression", lambda x: max(0, x) / 2),
-    (HiringBloombergProbe, "masculine_rate", lambda x: abs(x - 0.5)),
-    (HiringBloombergProbe, "stereotype_rate", lambda x: max(0, x)),
-    (IsearProbe, "max_diff", None),
-    (RelationshipLevyProbe, "diff_success_rate", lambda x: abs(x)),
-    (BbqProbe, "stereotype_rate", None),
-    (BusinessVocabularyProbe, "mean_diff", lambda x: max(0, x)),
-    (DirectProbe, "fail_rate", None),
-    (GestProbe, "stereotype_rate", lambda x: max(0, x)),
-    (GestCreativeProbe, "stereotype_rate", lambda x: max(0, x)),
-    (InventoriesProbe, "stereotype_rate", lambda x: max(0, x)),
-    (JobsLumProbe, "stereotype_rate", lambda x: max(0, x)),
-    (InventoriesProbe, "masculine_rate", lambda x: abs(x - 0.5)),
-    (JobsLumProbe, "masculine_rate", lambda x: abs(x - 0.5)),
-    (GestCreativeProbe, "masculine_rate", lambda x: abs(x - 0.5)),
-]
+metric_normalizations = {
+    (BbqProbe, "stereotype_rate"): None,
+    (BusinessVocabularyProbe, "mean_diff"): lambda x: max(0, x),
+    (DirectProbe, "fail_rate"): None,
+    (DiscriminationTamkinProbe, "max_diff"): None,
+    (DiversityMedQaProbe, "diff_success_rate"): lambda x: abs(x),
+    (DreadditProbe, "max_diff_stress_rate"): None,
+    (GestProbe, "stereotype_rate"): lambda x: max(0, x),
+    (GestCreativeProbe, "masculine_rate"): lambda x: abs(x - 0.5),
+    (GestCreativeProbe, "stereotype_rate"): lambda x: max(0, x),
+    (HiringAnProbe, "diff_acceptance_rate"): lambda x: abs(x),
+    (HiringAnProbe, "diff_regression"): lambda x: max(0, x) / 2,
+    (HiringBloombergProbe, "masculine_rate"): lambda x: abs(x - 0.5),
+    (HiringBloombergProbe, "stereotype_rate"): lambda x: max(0, x),
+    (InventoriesProbe, "masculine_rate"): lambda x: abs(x - 0.5),
+    (InventoriesProbe, "stereotype_rate"): lambda x: max(0, x),
+    (IsearProbe, "max_diff"): None,
+    (JobsLumProbe, "masculine_rate"): lambda x: abs(x - 0.5),
+    (JobsLumProbe, "stereotype_rate"): lambda x: max(0, x),
+    (RelationshipLevyProbe, "diff_success_rate"): lambda x: abs(x),
+}
 
-def aggregate_marks(marks: list[int]) -> int:
-    """
-    Logic for mark aggregation. Currently we average the worst three results.
-    """
-    marks = [mark for mark in marks if isinstance(mark, int)]
-    worst_3_avg = round(sum(sorted(marks)[-3:]) / 3)
-    return max(worst_3_avg, max(marks) - 1)
-
-
-def section_mark(section_name: str, model_results: dict) -> int:
+def section_emojis(section_name: str, model_results: dict) -> int:
     """
     Aggregate marks of a model for the specified section.
     """
-    return aggregate_marks(
-        [
-            model_results[probe_class.__name__]["marks"][metric]["mark_value"]
-            for probe_class, metric in chart_config[section_name]
-        ]
-    )
+    emojis = "🟩🟨🟧🟥"
+    marks = [
+        model_results[probe_class.__name__]["marks"][metric]["mark_value"]
+        for probe_class, metric in chart_config[section_name]
+    ]
+    marks = sorted(mark for mark in marks if isinstance(mark, int))
+    return "".join(emojis[mark] for mark in marks)
 
 
-def global_table_row(model_results: dict) -> list[str]:
+def emoji_table_row(model_results: dict, section_names: list[str]) -> list[str]:
     """
     Prepare row of aggregated marks for a single model's results.
     """
     row = [
-        section_mark(section_name, model_results)
-        for section_name in ["decision", "creative", "opinion", "affective"]
+        section_emojis(section_name, model_results)
+        for section_name in section_names
     ]
-    # row.append(aggregate_marks(row))
-    row = [chr(mark + 65) for mark in row]
     return row
 
 
@@ -137,12 +133,11 @@ def prepare_chart_data(
     github_path = (
         f"https://genderbench.readthedocs.io/latest/probes/{probe_name_snake_case}.html"
     )
-    first_result = list(experiment_results.values())[0]
+    mark_definition = next(md for md in probe_class.mark_definitions if md.metric_name == metric)
     return {
-        "description": first_result[probe_name]["marks"][metric]["description"],
-        "tags": first_result[probe_name]["marks"][metric]["harm_types"],
+        "description": mark_definition.description,
         "model_names": list(experiment_results.keys()),
-        "ranges": first_result[probe_name]["marks"][metric]["mark_ranges"],
+        "ranges": {k: list(map(list, v)) for k, v in mark_definition.mark_ranges.items()},
         "intervals": [
             results[probe_name]["marks"][metric]["metric_value"]
             for results in experiment_results.values()
@@ -181,14 +176,16 @@ def normalized_table_row(model_results):
         elif isinstance(value, list):
             return function(mean(value))
 
-    return [
-        normalize(
-            model_results[probe_class.__name__]["metrics"][metric_name],
-            normalization_function,
-        )
-        for probe_class, metric_name, normalization_function in metric_normalizations
-    ]
-
+    rows = []
+    for section in ("outcome_disparity", "stereotypical_reasoning", "representational_harms"):
+        for probe_class, metric_name in chart_config[section]:
+            normalization_function = metric_normalizations[probe_class, metric_name]
+            row = normalize(
+                model_results[probe_class.__name__]["metrics"][metric_name],
+                normalization_function,
+            )
+            rows.append(row)
+    return rows
 
 def calculate_normalized_table(log_files: list[str], model_names: list[str]):
     experiment_results = load_experiment_results(log_files, model_names)
@@ -207,8 +204,9 @@ def _calculate_normalized_table(experiment_results):
     )
 
     columns = [
-        f"{probe_class.__name__}.{metric_name}"
-        for probe_class, metric_name, _ in metric_normalizations
+        f"{probe_class.__name__.replace("Probe", "")}.{metric_name}"
+        for section in ("outcome_disparity", "stereotypical_reasoning", "representational_harms")
+        for probe_class, metric_name in chart_config[section]
     ]
 
     # Add "average" column
@@ -230,7 +228,7 @@ def normalized_table_column_marks_wrapper(experiment_results):
                 r"<span>([^.]+)\.([^.]+)</span>", mark_series.name
             ).groups()
             marks = [
-                experiment_results[model][probe]["marks"][metric]["mark_value"]
+                experiment_results[model][probe+"Probe"]["marks"][metric]["mark_value"]
                 for model in experiment_results
             ]
         except AttributeError:
@@ -252,8 +250,12 @@ def render_visualization(experiment_results: dict) -> str:
     must also be provided.
     """
 
-    global_table = [
-        [model_name, *global_table_row(model_results)]
+    emoji_table_1 = [
+        [model_name, *emoji_table_row(model_results, ["outcome_disparity", "stereotypical_reasoning", "representational_harms"])]
+        for model_name, model_results in experiment_results.items()
+    ]
+    emoji_table_2 = [
+        [model_name, *emoji_table_row(model_results, ["all"])]
         for model_name, model_results in experiment_results.items()
     ]
 
@@ -273,7 +275,8 @@ def render_visualization(experiment_results: dict) -> str:
     )
 
     rendered_html = main_template.render(
-        global_table=global_table,
+        emoji_table_1=emoji_table_1,
+        emoji_table_2=emoji_table_2,
         rendered_sections=rendered_sections,
         normalized_table=normalized_table,
         version=version("genderbench"),

@@ -4,9 +4,6 @@
         <table class="canvasTable">
             <tr><td><strong>Probe</strong></td><td><code>{{data.probe}}</code></td></tr>
             <tr><td><strong>Metric</strong></td><td><code>{{data.metric}}</code></td></tr>
-            <tr><td><strong>Harms</strong></td><td>{% for tag in data.tags %}
-                {{tag}}
-            {% endfor %}</td></tr>
         </table>
     </div>
     <div class="description" style="height: {{data.model_names|length * 30 + 50}}px; position:relative;">
