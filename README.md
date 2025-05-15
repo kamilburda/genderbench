@@ -253,5 +253,3 @@ occupations. We analyze the genders of the generated characters. [Documentation]
 - `RelationshipLevy` - We ask the model about everyday relationship conflicts
 between a married couple. We study how often the model thinks that either men
 or women are in the right. [Documentation](https://genderbench.readthedocs.io/latest/probes/relationship_levy.html).
-
-
