@@ -156,28 +156,28 @@
         }
 
         
-        #emojiTable1, #emojiTable2 {
+        #emoji-table1, #emoji-table2 {
             border-collapse: separate;
             border-spacing: 10px; 
             margin-bottom: 20px;
         }
 
-        #emojiTable1 th, #emojiTable2 th {
+        #emoji-table1 th, #emoji-table2 th {
             text-align: center;
             font-weight: 600;
             padding-bottom: 10px;
         }
 
-        #emojiTable1 td, #emojiTable2 td {
+        #emoji-table1 td, #emoji-table2 td {
             text-align: center;
             padding: 10px;
         }
 
-        #emojiTable1 {
+        #emoji-table1 {
             display: none;
         }
 
-        #emojiTable2 {
+        #emoji-table2 {
             display: table;
         }
 
@@ -191,11 +191,11 @@
             margin-bottom: 10px;
         }
 
-        .canvasTable {
+        .canvas-table {
             margin-top: 20px;
         }
 
-        .canvasTable td {
+        .canvas-table td {
             padding: 0 15px 0 0px;
         }
 
@@ -299,6 +299,7 @@
             font-size: 60%;
             border-spacing: 0;
             border: none;
+            max-width: 100%;
             th {
                 padding: 0.3em;
                 border: none;
@@ -347,10 +348,10 @@
         <h3>Comprehensive table</h3>
         <p>Below is a table that summarizes all the marks received by the evaluated models. It is also possible to categorize the marks by harm. The marks are sorted by their value.</p>
         <label for="emojiToggle"><input type="checkbox" id="emojiToggle" onchange="
-            document.getElementById('emojiTable1').style.display = this.checked ? 'table' : 'none';
-            document.getElementById('emojiTable2').style.display = this.checked ? 'none' : 'table';
+            document.getElementById('emoji-table1').style.display = this.checked ? 'table' : 'none';
+            document.getElementById('emoji-table2').style.display = this.checked ? 'none' : 'table';
         "> Categorize by harm</label>
-        <table id="emojiTable1">
+        <table id="emoji-table1">
             <thead>
                 <tr>
                     <th></th>
@@ -369,7 +370,7 @@
                 {% endfor %}
             </tbody>
         </table>
-        <table id="emojiTable2">
+        <table id="emoji-table2">
             <thead>
                 <tr>
                     <th></th>

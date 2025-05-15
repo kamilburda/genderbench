@@ -156,28 +156,28 @@
         }
 
         
-        #emojiTable1, #emojiTable2 {
+        #emoji-table1, #emoji-table2 {
             border-collapse: separate;
             border-spacing: 10px; 
             margin-bottom: 20px;
         }
 
-        #emojiTable1 th, #emojiTable2 th {
+        #emoji-table1 th, #emoji-table2 th {
             text-align: center;
             font-weight: 600;
             padding-bottom: 10px;
         }
 
-        #emojiTable1 td, #emojiTable2 td {
+        #emoji-table1 td, #emoji-table2 td {
             text-align: center;
             padding: 10px;
         }
 
-        #emojiTable1 {
+        #emoji-table1 {
             display: none;
         }
 
-        #emojiTable2 {
+        #emoji-table2 {
             display: table;
         }
 
@@ -191,11 +191,11 @@
             margin-bottom: 10px;
         }
 
-        .canvasTable {
+        .canvas-table {
             margin-top: 20px;
         }
 
-        .canvasTable td {
+        .canvas-table td {
             padding: 0 15px 0 0px;
         }
 
@@ -299,6 +299,7 @@
             font-size: 60%;
             border-spacing: 0;
             border: none;
+            max-width: 100%;
             th {
                 padding: 0.3em;
                 border: none;
@@ -351,10 +352,10 @@
         <h3>Comprehensive table</h3>
         <p>Below is a table that summarizes all the marks received by the evaluated models. It is also possible to categorize the marks by harm. The marks are sorted by their value.</p>
         <label for="emojiToggle"><input type="checkbox" id="emojiToggle" onchange="
-            document.getElementById('emojiTable1').style.display = this.checked ? 'table' : 'none';
-            document.getElementById('emojiTable2').style.display = this.checked ? 'none' : 'table';
+            document.getElementById('emoji-table1').style.display = this.checked ? 'table' : 'none';
+            document.getElementById('emoji-table2').style.display = this.checked ? 'none' : 'table';
         "> Categorize by harm</label>
-        <table id="emojiTable1">
+        <table id="emoji-table1">
             <thead>
                 <tr>
                     <th></th>
@@ -511,7 +512,7 @@
                 
             </tbody>
         </table>
-        <table id="emojiTable2">
+        <table id="emoji-table2">
             <thead>
                 <tr>
                     <th></th>
@@ -644,7 +645,7 @@
         <div class="canvas-wrapper">
     <div class="description details">
         Difference in success rates between genders when the model makes decisions in high-stakes scenarios.<br><a href="https://genderbench.readthedocs.io/latest/probes/discrimination_tamkin.html">Read documentation.</a>
-        <table class="canvasTable">
+        <table class="canvas-table">
             <tr><td><strong>Probe</strong></td><td><code>DiscriminationTamkinProbe</code></td></tr>
             <tr><td><strong>Metric</strong></td><td><code>max_diff</code></td></tr>
         </table>
@@ -658,7 +659,7 @@ createChart("chart_0348bd0e-bece-4437-b4d4-b87c0aadceb5", ['claude-3-5-haiku', '
 </script><div class="canvas-wrapper">
     <div class="description details">
         Difference in correct answer rates based on patient gender in medical scenarios.<br><a href="https://genderbench.readthedocs.io/latest/probes/diversity_med_qa.html">Read documentation.</a>
-        <table class="canvasTable">
+        <table class="canvas-table">
             <tr><td><strong>Probe</strong></td><td><code>DiversityMedQaProbe</code></td></tr>
             <tr><td><strong>Metric</strong></td><td><code>diff_success_rate</code></td></tr>
         </table>
@@ -672,7 +673,7 @@ createChart("chart_414ae2d8-e64b-4d54-b84f-5dcb08b032ee", ['claude-3-5-haiku', '
 </script><div class="canvas-wrapper">
     <div class="description details">
         Difference in success rates between genders when the model makes hiring decisions.<br><a href="https://genderbench.readthedocs.io/latest/probes/hiring_an.html">Read documentation.</a>
-        <table class="canvasTable">
+        <table class="canvas-table">
             <tr><td><strong>Probe</strong></td><td><code>HiringAnProbe</code></td></tr>
             <tr><td><strong>Metric</strong></td><td><code>diff_acceptance_rate</code></td></tr>
         </table>
@@ -686,7 +687,7 @@ createChart("chart_b983313b-4882-4fa0-9c38-4b9656db5b37", ['claude-3-5-haiku', '
 </script><div class="canvas-wrapper">
     <div class="description details">
         The extent to which gender stereotypes about certain occupations influence the model's hiring decisions.<br><a href="https://genderbench.readthedocs.io/latest/probes/hiring_an.html">Read documentation.</a>
-        <table class="canvasTable">
+        <table class="canvas-table">
             <tr><td><strong>Probe</strong></td><td><code>HiringAnProbe</code></td></tr>
             <tr><td><strong>Metric</strong></td><td><code>diff_regression</code></td></tr>
         </table>
@@ -700,7 +701,7 @@ createChart("chart_573dd30d-8b4b-460d-bbe0-d2ffd6555a1e", ['claude-3-5-haiku', '
 </script><div class="canvas-wrapper">
     <div class="description details">
         Frequency at which the model selects a male candidate from a balanced list of CVs.<br><a href="https://genderbench.readthedocs.io/latest/probes/hiring_bloomberg.html">Read documentation.</a>
-        <table class="canvasTable">
+        <table class="canvas-table">
             <tr><td><strong>Probe</strong></td><td><code>HiringBloombergProbe</code></td></tr>
             <tr><td><strong>Metric</strong></td><td><code>masculine_rate</code></td></tr>
         </table>
@@ -714,7 +715,7 @@ createChart("chart_20865603-f666-4880-94bf-1e9fbe0c73b1", ['claude-3-5-haiku', '
 </script><div class="canvas-wrapper">
     <div class="description details">
         The extent to which gender stereotypes about certain occupations influence the model's hiring decisions.<br><a href="https://genderbench.readthedocs.io/latest/probes/hiring_bloomberg.html">Read documentation.</a>
-        <table class="canvasTable">
+        <table class="canvas-table">
             <tr><td><strong>Probe</strong></td><td><code>HiringBloombergProbe</code></td></tr>
             <tr><td><strong>Metric</strong></td><td><code>stereotype_rate</code></td></tr>
         </table>
@@ -728,7 +729,7 @@ createChart("chart_df6550b5-1244-4128-8a71-e455f89c892f", ['claude-3-5-haiku', '
 </script><div class="canvas-wrapper">
     <div class="description details">
         Difference in how likely each gender is considered to be “in the right” in relationship conflicts.<br><a href="https://genderbench.readthedocs.io/latest/probes/relationship_levy.html">Read documentation.</a>
-        <table class="canvasTable">
+        <table class="canvas-table">
             <tr><td><strong>Probe</strong></td><td><code>RelationshipLevyProbe</code></td></tr>
             <tr><td><strong>Metric</strong></td><td><code>diff_success_rate</code></td></tr>
         </table>
@@ -748,7 +749,7 @@ createChart("chart_2c9f4f8f-f673-44b8-8c76-4ffa2de71e17", ['claude-3-5-haiku', '
         <div class="canvas-wrapper">
     <div class="description details">
         Likelihood of the model attributing stereotypical behaviors to their associated genders.<br><a href="https://genderbench.readthedocs.io/latest/probes/bbq.html">Read documentation.</a>
-        <table class="canvasTable">
+        <table class="canvas-table">
             <tr><td><strong>Probe</strong></td><td><code>BbqProbe</code></td></tr>
             <tr><td><strong>Metric</strong></td><td><code>stereotype_rate</code></td></tr>
         </table>
@@ -762,7 +763,7 @@ createChart("chart_602b2e67-3431-48ee-be5d-a741763ad4d3", ['claude-3-5-haiku', '
 </script><div class="canvas-wrapper">
     <div class="description details">
         The extent to which business communication contains stereotypical vocabulary.<br><a href="https://genderbench.readthedocs.io/latest/probes/business_vocabulary.html">Read documentation.</a>
-        <table class="canvasTable">
+        <table class="canvas-table">
             <tr><td><strong>Probe</strong></td><td><code>BusinessVocabularyProbe</code></td></tr>
             <tr><td><strong>Metric</strong></td><td><code>mean_diff</code></td></tr>
         </table>
@@ -776,7 +777,7 @@ createChart("chart_ef0f0de1-f3c9-4253-a159-2631e897cdba", ['claude-3-5-haiku', '
 </script><div class="canvas-wrapper">
     <div class="description details">
         Likelihood of the model agreeing with stereotypical statements about genders.<br><a href="https://genderbench.readthedocs.io/latest/probes/direct.html">Read documentation.</a>
-        <table class="canvasTable">
+        <table class="canvas-table">
             <tr><td><strong>Probe</strong></td><td><code>DirectProbe</code></td></tr>
             <tr><td><strong>Metric</strong></td><td><code>fail_rate</code></td></tr>
         </table>
@@ -790,7 +791,7 @@ createChart("chart_e3ab66e2-a597-48c8-82e7-296fa48fb4c7", ['claude-3-5-haiku', '
 </script><div class="canvas-wrapper">
     <div class="description details">
         Difference in perceived stress levels between genders.<br><a href="https://genderbench.readthedocs.io/latest/probes/dreaddit.html">Read documentation.</a>
-        <table class="canvasTable">
+        <table class="canvas-table">
             <tr><td><strong>Probe</strong></td><td><code>DreadditProbe</code></td></tr>
             <tr><td><strong>Metric</strong></td><td><code>max_diff_stress_rate</code></td></tr>
         </table>
@@ -804,7 +805,7 @@ createChart("chart_0d590f7f-9737-4ae3-a84c-fe0853a974b0", ['claude-3-5-haiku', '
 </script><div class="canvas-wrapper">
     <div class="description details">
         Likelihood of the model attributing stereotypical quotes to their associated genders.<br><a href="https://genderbench.readthedocs.io/latest/probes/gest.html">Read documentation.</a>
-        <table class="canvasTable">
+        <table class="canvas-table">
             <tr><td><strong>Probe</strong></td><td><code>GestProbe</code></td></tr>
             <tr><td><strong>Metric</strong></td><td><code>stereotype_rate</code></td></tr>
         </table>
@@ -818,7 +819,7 @@ createChart("chart_4e0a3160-4899-46f3-a9cc-27734ac3292e", ['claude-3-5-haiku', '
 </script><div class="canvas-wrapper">
     <div class="description details">
         The extent to which protagonists generated by the model based on specific traits reflect stereotypical norms.<br><a href="https://genderbench.readthedocs.io/latest/probes/gest_creative.html">Read documentation.</a>
-        <table class="canvasTable">
+        <table class="canvas-table">
             <tr><td><strong>Probe</strong></td><td><code>GestCreativeProbe</code></td></tr>
             <tr><td><strong>Metric</strong></td><td><code>stereotype_rate</code></td></tr>
         </table>
@@ -832,7 +833,7 @@ createChart("chart_4b5d0323-1ddc-4439-b32f-fb3e588af567", ['claude-3-5-haiku', '
 </script><div class="canvas-wrapper">
     <div class="description details">
         The extent to which protagonists generated by the model based on specific traits reflect stereotypical norms.<br><a href="https://genderbench.readthedocs.io/latest/probes/inventories.html">Read documentation.</a>
-        <table class="canvasTable">
+        <table class="canvas-table">
             <tr><td><strong>Probe</strong></td><td><code>InventoriesProbe</code></td></tr>
             <tr><td><strong>Metric</strong></td><td><code>stereotype_rate</code></td></tr>
         </table>
@@ -846,7 +847,7 @@ createChart("chart_5e671f4a-8d17-44f7-a68f-62ca75a31cc8", ['claude-3-5-haiku', '
 </script><div class="canvas-wrapper">
     <div class="description details">
         Difference in perceived emotions, such as anger or joy, between genders.<br><a href="https://genderbench.readthedocs.io/latest/probes/isear.html">Read documentation.</a>
-        <table class="canvasTable">
+        <table class="canvas-table">
             <tr><td><strong>Probe</strong></td><td><code>IsearProbe</code></td></tr>
             <tr><td><strong>Metric</strong></td><td><code>max_diff</code></td></tr>
         </table>
@@ -860,7 +861,7 @@ createChart("chart_71da6f86-e5bb-4872-856f-76f16492df53", ['claude-3-5-haiku', '
 </script><div class="canvas-wrapper">
     <div class="description details">
         The extent to which protagonists generated by the model based on specific occupations reflect stereotypical norms.<br><a href="https://genderbench.readthedocs.io/latest/probes/jobs_lum.html">Read documentation.</a>
-        <table class="canvasTable">
+        <table class="canvas-table">
             <tr><td><strong>Probe</strong></td><td><code>JobsLumProbe</code></td></tr>
             <tr><td><strong>Metric</strong></td><td><code>stereotype_rate</code></td></tr>
         </table>
@@ -880,7 +881,7 @@ createChart("chart_7a4b6345-bbb0-4b4c-900e-b06d554c2134", ['claude-3-5-haiku', '
         <div class="canvas-wrapper">
     <div class="description details">
         The extent to which protagonists generated based on various traits are gender-balanced.<br><a href="https://genderbench.readthedocs.io/latest/probes/gest_creative.html">Read documentation.</a>
-        <table class="canvasTable">
+        <table class="canvas-table">
             <tr><td><strong>Probe</strong></td><td><code>GestCreativeProbe</code></td></tr>
             <tr><td><strong>Metric</strong></td><td><code>masculine_rate</code></td></tr>
         </table>
@@ -894,7 +895,7 @@ createChart("chart_c349c260-25fb-4cfb-8903-250cd4d9910d", ['claude-3-5-haiku', '
 </script><div class="canvas-wrapper">
     <div class="description details">
         The extent to which protagonists generated based on various traits are gender-balanced.<br><a href="https://genderbench.readthedocs.io/latest/probes/inventories.html">Read documentation.</a>
-        <table class="canvasTable">
+        <table class="canvas-table">
             <tr><td><strong>Probe</strong></td><td><code>InventoriesProbe</code></td></tr>
             <tr><td><strong>Metric</strong></td><td><code>masculine_rate</code></td></tr>
         </table>
@@ -908,7 +909,7 @@ createChart("chart_689b097c-0857-432d-a392-c0835b342313", ['claude-3-5-haiku', '
 </script><div class="canvas-wrapper">
     <div class="description details">
         The extent to which protagonists generated based on various occupations are gender-balanced.<br><a href="https://genderbench.readthedocs.io/latest/probes/jobs_lum.html">Read documentation.</a>
-        <table class="canvasTable">
+        <table class="canvas-table">
             <tr><td><strong>Probe</strong></td><td><code>JobsLumProbe</code></td></tr>
             <tr><td><strong>Metric</strong></td><td><code>masculine_rate</code></td></tr>
         </table>
@@ -928,7 +929,7 @@ createChart("chart_9aea5774-71d8-4fc5-8c16-46b133e7c84a", ['claude-3-5-haiku', '
         <div class="canvas-wrapper">
     <div class="description details">
         Difference in success rates between men and women when the model makes decisions in high-stakes scenarios.<br><a href="https://genderbench.readthedocs.io/latest/probes/discrimination_tamkin.html">Read documentation.</a>
-        <table class="canvasTable">
+        <table class="canvas-table">
             <tr><td><strong>Probe</strong></td><td><code>DiscriminationTamkinProbe</code></td></tr>
             <tr><td><strong>Metric</strong></td><td><code>diff_mvf_success_rate</code></td></tr>
         </table>
@@ -942,7 +943,7 @@ createChart("chart_0a2ac28e-62a5-4d20-855c-f1d1dc1665a0", ['claude-3-5-haiku', '
 </script><div class="canvas-wrapper">
     <div class="description details">
         Difference in correct answer rates based on patient gender in medical scenarios.<br><a href="https://genderbench.readthedocs.io/latest/probes/diversity_med_qa.html">Read documentation.</a>
-        <table class="canvasTable">
+        <table class="canvas-table">
             <tr><td><strong>Probe</strong></td><td><code>DiversityMedQaProbe</code></td></tr>
             <tr><td><strong>Metric</strong></td><td><code>diff_success_rate</code></td></tr>
         </table>
@@ -956,7 +957,7 @@ createChart("chart_3a4119a3-cded-438d-a68a-7fa65c0d0a4a", ['claude-3-5-haiku', '
 </script><div class="canvas-wrapper">
     <div class="description details">
         Difference in success rates between genders when the model makes hiring decisions.<br><a href="https://genderbench.readthedocs.io/latest/probes/hiring_an.html">Read documentation.</a>
-        <table class="canvasTable">
+        <table class="canvas-table">
             <tr><td><strong>Probe</strong></td><td><code>HiringAnProbe</code></td></tr>
             <tr><td><strong>Metric</strong></td><td><code>diff_acceptance_rate</code></td></tr>
         </table>
@@ -970,7 +971,7 @@ createChart("chart_bb71478b-5f0e-44d5-8f76-29c1b76b78fc", ['claude-3-5-haiku', '
 </script><div class="canvas-wrapper">
     <div class="description details">
         Frequency at which the model selects a male candidate from a balanced list of CVs.<br><a href="https://genderbench.readthedocs.io/latest/probes/hiring_bloomberg.html">Read documentation.</a>
-        <table class="canvasTable">
+        <table class="canvas-table">
             <tr><td><strong>Probe</strong></td><td><code>HiringBloombergProbe</code></td></tr>
             <tr><td><strong>Metric</strong></td><td><code>masculine_rate</code></td></tr>
         </table>
@@ -984,7 +985,7 @@ createChart("chart_a7f83170-cebe-4d8a-bca6-37782a9f0edb", ['claude-3-5-haiku', '
 </script><div class="canvas-wrapper">
     <div class="description details">
         The extent to which protagonists generated based on various occupations are gender-balanced.<br><a href="https://genderbench.readthedocs.io/latest/probes/jobs_lum.html">Read documentation.</a>
-        <table class="canvasTable">
+        <table class="canvas-table">
             <tr><td><strong>Probe</strong></td><td><code>JobsLumProbe</code></td></tr>
             <tr><td><strong>Metric</strong></td><td><code>masculine_rate</code></td></tr>
         </table>
@@ -998,7 +999,7 @@ createChart("chart_62dc692a-2a7b-432e-b052-05a3a039a1ba", ['claude-3-5-haiku', '
 </script><div class="canvas-wrapper">
     <div class="description details">
         Difference in how likely each gender is considered to be “in the right” in relationship conflicts.<br><a href="https://genderbench.readthedocs.io/latest/probes/relationship_levy.html">Read documentation.</a>
-        <table class="canvasTable">
+        <table class="canvas-table">
             <tr><td><strong>Probe</strong></td><td><code>RelationshipLevyProbe</code></td></tr>
             <tr><td><strong>Metric</strong></td><td><code>diff_success_rate</code></td></tr>
         </table>
