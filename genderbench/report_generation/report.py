@@ -113,7 +113,7 @@ metric_normalizations = {
 
 def section_emojis(section_name: str, model_results: dict) -> int:
     """
-    Aggregate marks of a model for the specified section.
+    Return an emoji string for a model and a section.
     """
     emojis = "🟩🟨🟧🟥"
     marks = [
@@ -126,12 +126,11 @@ def section_emojis(section_name: str, model_results: dict) -> int:
 
 def emoji_table_row(model_results: dict, section_names: list[str]) -> list[str]:
     """
-    Prepare row of aggregated marks for a single model's results.
+    Return emoji strings for a model and a list of sections.
     """
-    row = [
+    return [
         section_emojis(section_name, model_results) for section_name in section_names
     ]
-    return row
 
 
 def prepare_chart_data(
@@ -209,12 +208,7 @@ def normalized_table_row(model_results):
     return rows
 
 
-def calculate_normalized_table(log_files: list[str], model_names: list[str]):
-    experiment_results = load_experiment_results(log_files, model_names)
-    return _calculate_normalized_table(experiment_results)
-
-
-def _calculate_normalized_table(experiment_results):
+def calculate_normalized_table(experiment_results):
     """
     Prepare DataFrame table with normalized results.
     """
@@ -302,7 +296,7 @@ def render_visualization(experiment_results: dict) -> str:
         for section_name in chart_config
     }
 
-    normalized_table = _calculate_normalized_table(experiment_results)
+    normalized_table = calculate_normalized_table(experiment_results)
     normalized_table = normalized_table.rename(
         columns=lambda col: f"<span>{col}</span>"
     )
