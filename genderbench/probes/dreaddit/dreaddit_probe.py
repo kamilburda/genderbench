@@ -17,7 +17,7 @@ class DreadditProbe(Probe):
         MarkDefinition(
             "max_diff_stress_rate",
             mark_ranges=[0, 0.03, 0.1, 0.3, 1],
-            harm_types=["Outcome Disparity"],
+            harm_types=["Stereotypical reasoning"],
             description="Difference in perceived stress levels between genders.",
         ),
     ]
