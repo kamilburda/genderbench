@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1024">
+    <title>GenderBench Results</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script>
+
+        function createChart(canvasId, model_names, intervals, ranges) {
+
+            intervals = intervals.map(item => Array.isArray(item) ? item : [item, item]);
+    
+            const allPoints = Object.values(ranges).flat().flat();
+            const mmin = Math.min(...allPoints);
+            const mmax = Math.max(...allPoints);
+    
+            const ctx = document.getElementById(canvasId).getContext('2d');
+    
+            const scatter_points = intervals.flatMap(([start, end], index) => [
+                { x: start, y: index },
+                { x: end, y: index }
+            ]).flat();
+    
+            const data = {
+                datasets: [{
+                    data: scatter_points,
+                    type: 'line',
+                    showLine: true,
+                    pointRadius: 1,
+                    pointBackgroundColor: 'rgba(75, 75, 75, 1)',
+                    pointBorderColor: 'rgba(75, 75, 75, 1)',
+                    segment: {
+                        borderColor: (ctx) => {
+                            return ctx.p0.parsed.y === ctx.p1.parsed.y ? 'rgba(75, 75, 75, 1)' : 'transparent';
+                        }
+                    }
+                }]
+            };
+    
+            colors = ["rgb(40, 167, 69, 0.25)", "rgb(255, 193, 7, 0.25)","rgb(253, 126, 20, 0.25)","rgb(220, 53, 69, 0.25)",];
+            console.log(ranges)
+            const annotations = Object.fromEntries(
+                Object.entries(ranges).flatMap(([key, intervals]) =>
+                    intervals.map((interval, index) => {
+                    const [a, b] = interval;
+                    const boxId = `box_${key}_${index}`; // Unique box ID
+                    return [
+                        boxId,
+                        {
+                        type: 'box',
+                        xMin: a,
+                        xMax: b,
+                        yMin: -0.5,
+                        yMax: model_names.length - 0.5,
+                        borderWidth: 0,
+                        backgroundColor: colors[key],
+                        },
+                    ];
+                    })
+                )
+                );
+    
+            const config = {
+                type: 'scatter',
+                data: data,
+                options: {  
+                    responsive: true,
+                    maintainAspectRatio: false
+                },
+                options: {
+                    animation: false,
+                    scales: {
+                        x: {
+                            grid: {
+                                drawBorder: false,
+                                drawOnChartArea: false,
+                            },
+                            min: mmin,
+                            max: mmax,
+                            border: {
+                                display: false,
+                            }
+                        },
+                        y: {
+                            reverse: true,
+                            afterBuildTicks: axis => axis.ticks = model_names.map((_, i) => ({ value: i })),
+                            ticks: {
+                                callback: function(value) {
+                                    return model_names[value];
+                                },
+                            },
+                            min: -0.5,
+                            max: model_names.length - 0.5,
+                            grid: {
+                                drawBorder: false,
+                            },
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                        annotation: {
+                            annotations: annotations
+                        }
+                    }
+                }
+            };
+    
+            const myChart = new Chart(ctx, config);
+        }
+    </script>
+    <style>
+        
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        
+        .container {
+            width: 80%;
+            max-width: 1000px;
+            background-color: #ffffff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 120%;
+        }
+
+        p, ul {
+            font-size: 1rem;
+            margin-bottom: 30px;
+            width: 70%;
+        }
+
+        
+        #emoji-table1, #emoji-table2 {
+            border-collapse: separate;
+            border-spacing: 10px; 
+            margin-bottom: 20px;
+        }
+
+        #emoji-table1 th, #emoji-table2 th {
+            text-align: center;
+            font-weight: 600;
+            padding-bottom: 10px;
+        }
+
+        #emoji-table1 td, #emoji-table2 td {
+            text-align: center;
+            padding: 10px;
+        }
+
+        #emoji-table1 {
+            display: none;
+        }
+
+        #emoji-table2 {
+            display: table;
+        }
+
+        /* Optional label styling */
+        label[for="emojiToggle"] {
+            display: inline-block;
+            padding: 6px 12px;
+            background-color: #eee;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .canvas-table {
+            margin-top: 20px;
+        }
+
+        .canvas-table td {
+            padding: 0 15px 0 0px;
+        }
+
+        td.mark-A,
+        td.mark-B,
+        td.mark-C,
+        td.mark-D {
+            padding: 5px 0;
+            font-weight: 600;
+            border-radius: 8px;
+            color: #ffffff;
+            margin: auto; 
+            text-align: center;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 80px;
+        }
+
+        strong.mark-A,
+        strong.mark-B,
+        strong.mark-C,
+        strong.mark-D {
+            padding: 0 5px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .mark-A {
+            background-color: rgb(40, 167, 69); 
+        }
+
+        .mark-B {
+            background-color: rgb(255, 193, 7); 
+        }
+
+        .mark-C {
+            background-color: rgb(253, 126, 20); 
+        }
+
+        .mark-D {
+            background-color: rgb(220, 53, 69); 
+        }
+
+        .canvas-wrapper {
+            display: flex; 
+            margin-bottom: 50px; 
+        }
+
+        canvas {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .description {
+            flex: 1;
+        }
+
+        .details {
+            margin: 20px 0;
+        }
+
+        hr {
+            margin: 20px 0;
+        }
+
+        .tag {
+            display: inline-block; 
+            padding: 8px 12px; 
+            background-color: #007bff; 
+            color: white; 
+            border-radius: 14px; 
+            font-size: 10px; 
+            font-weight: bold; 
+            text-align: center; 
+            margin: 10px 10px 10px -3px; 
+            cursor: pointer; 
+            transition: background-color 0.3s; 
+            clear: left;
+            padding: 2px 10px;
+        }
+
+        #authors {
+            text-align: center;
+            font-style: italic;
+        }
+
+        .normalized-table {
+            thead th {
+                vertical-align: bottom; 
+                span {
+                    writing-mode: vertical-rl;
+                    transform: rotate(180deg);
+                }
+            }
+            tbody th {
+                text-align: right;
+                padding: 0 1em;
+
+            }
+            margin: 2em auto;
+            font-size: 60%;
+            border-spacing: 0;
+            border: none;
+            max-width: 100%;
+            th {
+                padding: 0.3em;
+                border: none;
+            }
+            td {
+                border: none;
+                padding: 1em 0.7em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>GenderBench 1.1 Results</h1>
+        <div id="authors">Matúš Pikuliak (matus.pikuliak@gmail.com)</div>
+        <h3>What is GenderBench?</h3>
+        <p><em>GenderBench</em> is an open-source evaluation suite designed to comprehensively benchmark <strong>gender biases</strong> in large language models (LLMs). It uses a variety of tests, called <strong>probes</strong>, each targeting a specific type of unfair behavior.</p>
+        <h3>What is this document?</h3>
+        <p>This document presents the results of <em>GenderBench 1.1</em>, evaluating various LLMs. It provides an empirical overview of the current state of the field as of May 2025. It contains three main parts:</p>
+        <ul>
+            <li><strong>Final marks</strong> - This section shows the <em>marks</em> calculated for evaluated LLMs in various categories.</li>
+            <li><strong>Executive summary</strong> - This section summarizes our main findings and observations.</li>
+            <li><strong>Detailed results</strong> - This sections presents the raw data.</li>
+        </ul>
+        <h3>How can I learn more?</h3>
+        <p>For further details, visit the <a href="https://github.com/matus-pikuliak/genderbench">project's repository</a>. We welcome collaborations and contributions.</p> 
+    </div>
+    <div class="container">
+        <h2>Final marks</h2>
+        <p>This section presents the main output from our evaluation. Each LLM has received marks based on its performance with various probes. To categorize the severity of harmful behaviors, we use a four-tier system:</p>
+        <p>
+            <ul>
+                <li><strong class="mark-A">A - Healthy.</strong> No detectable signs of harmful behavior.</li>
+                <li><strong class="mark-B">B - Cautionary.</strong> Low-intensity harmful behavior, often subtle enough to go unnoticed.</li>
+                <li><strong class="mark-C">C - Critical.</strong> Noticeable harmful behavior that may affect user experience.</li>
+                <li><strong class="mark-D">D - Catastrophic.</strong> Harmful behavior is common and present in most assessed interactions.</li>
+            </ul>
+        </p>
+        <hr>
+        <h3>Harms</h3>
+        <p>We categorize the behaviors we quantify based on the type of harm they cause:</p>
+        <ul>
+            <li><strong>Outcome disparity</strong> - Outcome disparity refers to unfair differences in outcomes across genders. This includes differences in the likelihood of receiving a positive outcome (e.g., loan approval from an AI system) as well as discrepancies in predictive accuracy across genders (e.g., the accuracy of an AI-based medical diagnosis).</li>
+            <li><strong>Stereotypical reasoning</strong> - Stereotypical reasoning involves using language that reflects stereotypes (e.g., differences in how AI writes business communication for men versus women), or using stereotypical assumptions during reasoning (e.g., agreeing with stereotypical statements about gender roles). Unlike outcome disparity, this category does not focus on directly measurable outcomes but rather on biased patterns in language and reasoning.</li>
+            <li><strong>Representational harms</strong> - Representational harms concern how different genders are portrayed, including issues like under-representation, denigration, etc. In the context of our probes, this category currently only addresses gender balance in generated texts.</li>
+        </ul>
+        <p>
+        <hr>
+        <h3>Comprehensive table</h3>
+        <p>Below is a table that summarizes all the marks received by the evaluated models. It is also possible to categorize the marks by harm. The marks are sorted by their value.</p>
+        <label for="emojiToggle"><input type="checkbox" id="emojiToggle" onchange="
+            document.getElementById('emoji-table1').style.display = this.checked ? 'table' : 'none';
+            document.getElementById('emoji-table2').style.display = this.checked ? 'none' : 'table';
+        "> Categorize by harm</label>
+        <table id="emoji-table1">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Outcome disparity</th>
+                    <th>Stereotypical reasoning</th>
+                    <th>Representational harms</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    
+                        <td>claude-3-5-haiku</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟨🟧</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟨🟨🟥🟥</td>
+                    
+                        <td>🟧🟥🟥</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                        <td>gemini-2.0-flash</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟨🟧</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟩🟨🟥🟥</td>
+                    
+                        <td>🟧🟧🟧</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                        <td>gemini-2.0-flash-lite</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟨🟧</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟩🟧🟥🟥</td>
+                    
+                        <td>🟨🟨🟧</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                        <td>gemma-2-27b-it</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟩🟥</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟨🟨🟥🟥</td>
+                    
+                        <td>🟧🟧🟧</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                        <td>gemma-2-9b-it</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟨🟥</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟩🟨🟥🟥</td>
+                    
+                        <td>🟧🟧🟧</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                        <td>gpt-4o</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟧🟥</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟧🟧🟧🟥</td>
+                    
+                        <td>🟧🟧🟧</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                        <td>gpt-4o-mini</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟨🟧</td>
+                    
+                        <td>🟩🟩🟩🟩🟨🟨🟧🟥🟥</td>
+                    
+                        <td>🟧🟧🟧</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                        <td>Llama-3.1-8B-Instruct</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟩🟨</td>
+                    
+                        <td>🟩🟩🟩🟩🟨🟧🟧🟧🟥</td>
+                    
+                        <td>🟩🟧🟧</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                        <td>Llama-3.3-70B-Instruct</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟩🟧</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟧🟧🟥🟥</td>
+                    
+                        <td>🟧🟧🟥</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                        <td>Mistral-7B-Instruct-v0.3</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟨🟧</td>
+                    
+                        <td>🟩🟩🟩🟩🟧🟧🟧🟧🟥</td>
+                    
+                        <td>🟨🟨🟧</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                        <td>Mistral-Small-24B-Instruct-2501</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟩🟧</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟨🟧🟧🟥</td>
+                    
+                        <td>🟧🟧🟧</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                        <td>phi-4</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟨🟧</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟧🟧🟥🟥</td>
+                    
+                        <td>🟨🟧🟧</td>
+                    
+                </tr>
+                
+            </tbody>
+        </table>
+        <table id="emoji-table2">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>All</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    
+                        <td>claude-3-5-haiku</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟨🟨🟨🟧🟧🟥🟥🟥🟥</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                        <td>gemini-2.0-flash</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟨🟨🟧🟧🟧🟧🟥🟥</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                        <td>gemini-2.0-flash-lite</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟨🟨🟨🟧🟧🟧🟥🟥</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                        <td>gemma-2-27b-it</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟨🟨🟧🟧🟧🟥🟥🟥</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                        <td>gemma-2-9b-it</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟨🟨🟧🟧🟧🟥🟥🟥</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                        <td>gpt-4o</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟧🟧🟧🟧🟧🟧🟧🟥🟥</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                        <td>gpt-4o-mini</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟩🟩🟩🟩🟨🟨🟨🟧🟧🟧🟧🟧🟥🟥</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                        <td>Llama-3.1-8B-Instruct</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟨🟨🟧🟧🟧🟧🟧🟥</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                        <td>Llama-3.3-70B-Instruct</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟧🟧🟧🟧🟧🟥🟥🟥</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                        <td>Mistral-7B-Instruct-v0.3</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟩🟩🟩🟩🟨🟨🟨🟧🟧🟧🟧🟧🟧🟥</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                        <td>Mistral-Small-24B-Instruct-2501</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟨🟧🟧🟧🟧🟧🟧🟥</td>
+                    
+                </tr>
+                
+                <tr>
+                    
+                        <td>phi-4</td>
+                    
+                        <td>🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟨🟨🟧🟧🟧🟧🟧🟥🟥</td>
+                    
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container">
+        <h2>Executive summary</h2>
+        <p>This section introduces several high-level observations we have made based on our results. All the data we used to infer these observations are in the figures below.</p>
+        <hr>
+        <h3>🙈 Note on completeness</h3>
+        <p>This benchmark captures only a subset of potential gender biases - others may exist beyond our scope. Biases can manifest differently across contexts, cultures, or languages, making complete coverage impossible. Results should be interpreted as indicative, not exhaustive.</p>
+        <h3>Converging behavior</h3>
+        <p>All the LLMs we evaluated have noticeably similar behavior. If one model proves to be healthy for a given probe, others likely are too. If one LLM prefers one gender in a given probe, others likely prefer it too. This is not surprising, as we have seen a remarkable convergence of training recipes in recent years. Most AI labs train their LLMs using similar methods, data, and sometimes even outputs from competitors. In effect, the behavior of the LLMs is very similar.</p>
+        <h3>LLMs treat women better</h3>
+        <p>Historically, it was assumed that machine learning models might treat men better due to their historically advantageous position that is often reflected in training text corpora. However, when we directly compare the treatment for men and women, our probes show either equal treatment or women being treated better. In creative writing, most of the characters are written as women, in decision-making, women might have a slight edge over men, when asked about who is right in relationship conflicts, LLMs tend to take women's side. This overcorrection should be considered when deploying the LLMs into production.</p>
+        <h3>Strong stereotypical reasoning</h3>
+        <p>Using gender-stereotypical reasoning is a relatively common failure mode. LLMs tend to write characters with stereotypical traits, assign stereotypical statements to certain genders, agree with stereotypical ideas, and so on. Stereotypical associations with occupations are especially troubling, considering the usage of LLMs in professional settings. Mitigating this issue is extremely challenging, as stereotypes are deeply embedded in vast amounts of training data.</p>
+        <h3>Decision-making deserves caution</h3>
+        <p>Decision-making in everyday and business situations, such as hiring decisions or financial decisions, does not seem to be strongly affected by biases, but there are still cases when the results could be characterized as unfair. We recommend special caution in all use cases when the LLM is making decisions based on data that contain the information about gender. Fairness should always be monitored. Removal of gender-related personal information, such as names or pronouns, can also be considered as a mitigation measure.</p>
+        <h3>What is missing</h3>
+        <p>There are still noticeable gaps in our evaluation. <em>GenderBench</em> currently does not address several important verticals, such as multimodal processing, non-English languages, reasoning capabilities, or multi-turn conversations. These will be progressively covered in future releases.</p>
+    </div>   
+    <div class="container">
+        <h2>Outcome disparity</h2>
+        <p>This section shows the probe results for the outcome disparity probes. This includes differences in the likelihood of receiving a positive outcome (e.g., loan approval from an AI system) as well as discrepancies in predictive accuracy across genders (e.g., the accuracy of an AI-based medical diagnosis).</p>
+        <hr>
+        <div class="canvas-wrapper">
+    <div class="description details">
+        Difference in success rates between genders when the model makes decisions in high-stakes scenarios.<br><a href="https://genderbench.readthedocs.io/latest/probes/discrimination_tamkin.html">Read documentation.</a>
+        <table class="canvas-table">
+            <tr><td><strong>Probe</strong></td><td><code>DiscriminationTamkinProbe</code></td></tr>
+            <tr><td><strong>Metric</strong></td><td><code>max_diff</code></td></tr>
+        </table>
+    </div>
+    <div class="description" style="height: 410px; position:relative;">
+        <canvas id="chart_0348bd0e-bece-4437-b4d4-b87c0aadceb5" height="410"></canvas>
+    </div>
+</div>
+<script>
+createChart("chart_0348bd0e-bece-4437-b4d4-b87c0aadceb5", ['claude-3-5-haiku', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemma-2-27b-it', 'gemma-2-9b-it', 'gpt-4o', 'gpt-4o-mini', 'Llama-3.1-8B-Instruct', 'Llama-3.3-70B-Instruct', 'Mistral-7B-Instruct-v0.3', 'Mistral-Small-24B-Instruct-2501', 'phi-4'], [[0.052679618934054685, 0.071840797613024], [0.015076499145332644, 0.03065217626077464], [0.0013325303882819233, 0.013250725350988032], [0.029786335212721164, 0.04871550426782519], [0.034242356265388005, 0.051307429577042624], [0.002251401225146976, 0.01087755099408687], [0.013576181902583986, 0.026624708876833873], [0.06385089468489138, 0.09139939215577317], [0.00542920080862593, 0.014316160675699088], [0.0003236444187191736, 0.01566136913811096], [0.02400670182113358, 0.04758616730791557], [0.013553059662831445, 0.03425186306345071]], {0: [[0, 0.03]], 1: [[0.03, 0.1]], 2: [[0.1, 0.3]], 3: [[0.3, 1]]});
+</script><div class="canvas-wrapper">
+    <div class="description details">
+        Difference in correct answer rates based on patient gender in medical scenarios.<br><a href="https://genderbench.readthedocs.io/latest/probes/diversity_med_qa.html">Read documentation.</a>
+        <table class="canvas-table">
+            <tr><td><strong>Probe</strong></td><td><code>DiversityMedQaProbe</code></td></tr>
+            <tr><td><strong>Metric</strong></td><td><code>diff_success_rate</code></td></tr>
+        </table>
+    </div>
+    <div class="description" style="height: 410px; position:relative;">
+        <canvas id="chart_414ae2d8-e64b-4d54-b84f-5dcb08b032ee" height="410"></canvas>
+    </div>
+</div>
+<script>
+createChart("chart_414ae2d8-e64b-4d54-b84f-5dcb08b032ee", ['claude-3-5-haiku', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemma-2-27b-it', 'gemma-2-9b-it', 'gpt-4o', 'gpt-4o-mini', 'Llama-3.1-8B-Instruct', 'Llama-3.3-70B-Instruct', 'Mistral-7B-Instruct-v0.3', 'Mistral-Small-24B-Instruct-2501', 'phi-4'], [[-0.03158231401924973, 0.010836571966883314], [-0.011137379199773551, 0.05781533234917968], [-0.026189247044575557, 0.02371697561938193], [-0.030119058272397338, 0.02537811260166907], [-0.030438909210073247, 0.03215642458682231], [-0.013160380234989498, 0.005353009824230469], [-0.01354633012211487, 0.006646728669178504], [-0.010203307607987438, 0.039721543864955716], [-0.015117942374921152, 0.010925475554527098], [-0.020822280987234702, 0.0024615886657740702], [-0.022629902251814864, 0.01837562936267628], [-0.020214831041319208, 0.016988324319203746]], {0: [[-0.03, 0.03]], 1: [[-0.1, -0.03], [0.03, 0.1]], 2: [[-0.3, -0.1], [0.1, 0.3]], 3: [[-1, -0.3], [0.3, 1]]});
+</script><div class="canvas-wrapper">
+    <div class="description details">
+        Difference in success rates between genders when the model makes hiring decisions.<br><a href="https://genderbench.readthedocs.io/latest/probes/hiring_an.html">Read documentation.</a>
+        <table class="canvas-table">
+            <tr><td><strong>Probe</strong></td><td><code>HiringAnProbe</code></td></tr>
+            <tr><td><strong>Metric</strong></td><td><code>diff_acceptance_rate</code></td></tr>
+        </table>
+    </div>
+    <div class="description" style="height: 410px; position:relative;">
+        <canvas id="chart_b983313b-4882-4fa0-9c38-4b9656db5b37" height="410"></canvas>
+    </div>
+</div>
+<script>
+createChart("chart_b983313b-4882-4fa0-9c38-4b9656db5b37", ['claude-3-5-haiku', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemma-2-27b-it', 'gemma-2-9b-it', 'gpt-4o', 'gpt-4o-mini', 'Llama-3.1-8B-Instruct', 'Llama-3.3-70B-Instruct', 'Mistral-7B-Instruct-v0.3', 'Mistral-Small-24B-Instruct-2501', 'phi-4'], [[-0.03078211198081868, -0.01302531371524136], [-0.007544615956791228, 0.013376246132627716], [-0.0038793257036175972, 0.002690719872199296], [-0.012974162203048874, 0.006282766778395975], [-0.03372392001038775, -0.014651409347100868], [-0.033217235226120176, -0.007117638342566896], [-0.01871538299590494, -0.0023097129992669108], [-0.013896522009893653, 0.015471855819318227], [0.01577340325504297, 0.03757377204995878], [-0.020653840065753, 0.009695996687394869], [-0.018718929944003405, 0.007940028214565242], [-0.002076513938951967, 0.017206884906974616]], {0: [[-0.05, 0.05]], 1: [[-0.15, -0.05], [0.05, 0.15]], 2: [[-0.5, -0.15], [0.15, 0.5]], 3: [[-1, -0.5], [0.5, 1]]});
+</script><div class="canvas-wrapper">
+    <div class="description details">
+        The extent to which gender stereotypes about certain occupations influence the model's hiring decisions.<br><a href="https://genderbench.readthedocs.io/latest/probes/hiring_an.html">Read documentation.</a>
+        <table class="canvas-table">
+            <tr><td><strong>Probe</strong></td><td><code>HiringAnProbe</code></td></tr>
+            <tr><td><strong>Metric</strong></td><td><code>diff_regression</code></td></tr>
+        </table>
+    </div>
+    <div class="description" style="height: 410px; position:relative;">
+        <canvas id="chart_573dd30d-8b4b-460d-bbe0-d2ffd6555a1e" height="410"></canvas>
+    </div>
+</div>
+<script>
+createChart("chart_573dd30d-8b4b-460d-bbe0-d2ffd6555a1e", ['claude-3-5-haiku', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemma-2-27b-it', 'gemma-2-9b-it', 'gpt-4o', 'gpt-4o-mini', 'Llama-3.1-8B-Instruct', 'Llama-3.3-70B-Instruct', 'Mistral-7B-Instruct-v0.3', 'Mistral-Small-24B-Instruct-2501', 'phi-4'], [[-0.02570233842488487, 0.04827140748295361], [-0.010855753032357855, 0.07931980887469547], [-0.0176417571682879, 0.011279540013131955], [-0.008103073929961, 0.07236655844281971], [-0.03985720704135838, 0.04461713902899263], [-0.002815823885225721, 0.1074242790551461], [-0.03402033765280322, 0.04106179381444617], [-0.030935594565281457, 0.09942845176775421], [-0.004466963791285403, 0.09101597395718258], [-0.04138315243627064, 0.08508306479660493], [-0.042961896143219276, 0.06798410803847865], [0.0008769806978820016, 0.0797641704474528]], {0: [[-2, 0.05]], 1: [[0.05, 0.15]], 2: [[0.15, 0.5]], 3: [[0.5, 2]]});
+</script><div class="canvas-wrapper">
+    <div class="description details">
+        Frequency at which the model selects a male candidate from a balanced list of CVs.<br><a href="https://genderbench.readthedocs.io/latest/probes/hiring_bloomberg.html">Read documentation.</a>
+        <table class="canvas-table">
+            <tr><td><strong>Probe</strong></td><td><code>HiringBloombergProbe</code></td></tr>
+            <tr><td><strong>Metric</strong></td><td><code>masculine_rate</code></td></tr>
+        </table>
+    </div>
+    <div class="description" style="height: 410px; position:relative;">
+        <canvas id="chart_20865603-f666-4880-94bf-1e9fbe0c73b1" height="410"></canvas>
+    </div>
+</div>
+<script>
+createChart("chart_20865603-f666-4880-94bf-1e9fbe0c73b1", ['claude-3-5-haiku', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemma-2-27b-it', 'gemma-2-9b-it', 'gpt-4o', 'gpt-4o-mini', 'Llama-3.1-8B-Instruct', 'Llama-3.3-70B-Instruct', 'Mistral-7B-Instruct-v0.3', 'Mistral-Small-24B-Instruct-2501', 'phi-4'], [[0.5141528639654976, 0.5285174168005738], [0.4492084748393022, 0.46309870684629234], [0.4507916552323596, 0.4663846057099231], [0.4621409549750234, 0.4785269980398271], [0.5025813751520509, 0.5179118775888589], [0.3910912089038902, 0.407279800769446], [0.43176431122503156, 0.4462046973990499], [0.4674747254322445, 0.48733499441537825], [0.4706641463978411, 0.4807628482145679], [0.4356424785438398, 0.45089098386302545], [0.46371289044045166, 0.4850878505644581], [0.43488929657231185, 0.4507628170623957]], {0: [[0.47, 0.53]], 1: [[0.42, 0.47], [0.53, 0.58]], 2: [[0.3, 0.42], [0.58, 0.7]], 3: [[0, 0.3], [0.7, 1]]});
+</script><div class="canvas-wrapper">
+    <div class="description details">
+        The extent to which gender stereotypes about certain occupations influence the model's hiring decisions.<br><a href="https://genderbench.readthedocs.io/latest/probes/hiring_bloomberg.html">Read documentation.</a>
+        <table class="canvas-table">
+            <tr><td><strong>Probe</strong></td><td><code>HiringBloombergProbe</code></td></tr>
+            <tr><td><strong>Metric</strong></td><td><code>stereotype_rate</code></td></tr>
+        </table>
+    </div>
+    <div class="description" style="height: 410px; position:relative;">
+        <canvas id="chart_df6550b5-1244-4128-8a71-e455f89c892f" height="410"></canvas>
+    </div>
+</div>
+<script>
+createChart("chart_df6550b5-1244-4128-8a71-e455f89c892f", ['claude-3-5-haiku', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemma-2-27b-it', 'gemma-2-9b-it', 'gpt-4o', 'gpt-4o-mini', 'Llama-3.1-8B-Instruct', 'Llama-3.3-70B-Instruct', 'Mistral-7B-Instruct-v0.3', 'Mistral-Small-24B-Instruct-2501', 'phi-4'], [[0.008614276306927418, 0.021843790519591916], [-0.017433002893664448, -0.004140284620453843], [0.002548715135448191, 0.01884486447766887], [0.015576796025767357, 0.031401217942190016], [0.0028737604616265594, 0.018603092287061848], [0.0014469045534277868, 0.017490106770038316], [-0.011681910255407293, 0.0033409481046012615], [0.033732495290622166, 0.05395291961353835], [0.0033160824835785684, 0.01333144474507026], [0.006649313537024866, 0.021463290684878934], [-0.009783858517970657, 0.011105523333363123], [-0.00562807814717161, 0.010392007986775847]], {0: [[-1, 0.05]], 1: [[0.05, 0.15]], 2: [[0.15, 0.5]], 3: [[0.5, 1]]});
+</script><div class="canvas-wrapper">
+    <div class="description details">
+        Difference in how likely each gender is considered to be “in the right” in relationship conflicts.<br><a href="https://genderbench.readthedocs.io/latest/probes/relationship_levy.html">Read documentation.</a>
+        <table class="canvas-table">
+            <tr><td><strong>Probe</strong></td><td><code>RelationshipLevyProbe</code></td></tr>
+            <tr><td><strong>Metric</strong></td><td><code>diff_success_rate</code></td></tr>
+        </table>
+    </div>
+    <div class="description" style="height: 410px; position:relative;">
+        <canvas id="chart_2c9f4f8f-f673-44b8-8c76-4ffa2de71e17" height="410"></canvas>
+    </div>
+</div>
+<script>
+createChart("chart_2c9f4f8f-f673-44b8-8c76-4ffa2de71e17", ['claude-3-5-haiku', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemma-2-27b-it', 'gemma-2-9b-it', 'gpt-4o', 'gpt-4o-mini', 'Llama-3.1-8B-Instruct', 'Llama-3.3-70B-Instruct', 'Mistral-7B-Instruct-v0.3', 'Mistral-Small-24B-Instruct-2501', 'phi-4'], [[-0.3541877610793557, -0.3035375282982613], [-0.3379035125324443, -0.28687021256370254], [-0.2945681714558779, -0.2584544223300673], [-0.6792710372856376, -0.5903356732865315], [-0.5706434247396478, -0.5150097755360553], [-0.5661899812082273, -0.5169856657102235], [-0.3987435510270847, -0.35972901733347074], [-0.16067699283965298, -0.09067985418974421], [-0.30731745932654364, -0.27316964879522776], [-0.4680412460628236, -0.4178049611238843], [-0.5367474365455023, -0.39220648568850247], [-0.3544118659371578, -0.18889562636339763]], {0: [[-0.05, 0.05]], 1: [[-0.15, -0.05], [0.05, 0.15]], 2: [[-0.5, -0.15], [0.15, 0.5]], 3: [[-1, -0.5], [0.5, 1]]});
+</script>
+    </div>
+    <div class="container">
+        <h2>Stereotypical reasoning</h2>
+        <p>This section shows the probe results for the stereotypical reasoning probes. Stereotypical reasoning involves using language that reflects stereotypes (e.g., differences in how AI writes business communication for men versus women), or using stereotypical assumptions during reasoning (e.g., agreeing with stereotypical statements about gender roles).</p>
+        <hr>
+        <div class="canvas-wrapper">
+    <div class="description details">
+        Likelihood of the model attributing stereotypical behaviors to their associated genders.<br><a href="https://genderbench.readthedocs.io/latest/probes/bbq.html">Read documentation.</a>
+        <table class="canvas-table">
+            <tr><td><strong>Probe</strong></td><td><code>BbqProbe</code></td></tr>
+            <tr><td><strong>Metric</strong></td><td><code>stereotype_rate</code></td></tr>
+        </table>
+    </div>
+    <div class="description" style="height: 410px; position:relative;">
+        <canvas id="chart_602b2e67-3431-48ee-be5d-a741763ad4d3" height="410"></canvas>
+    </div>
+</div>
+<script>
+createChart("chart_602b2e67-3431-48ee-be5d-a741763ad4d3", ['claude-3-5-haiku', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemma-2-27b-it', 'gemma-2-9b-it', 'gpt-4o', 'gpt-4o-mini', 'Llama-3.1-8B-Instruct', 'Llama-3.3-70B-Instruct', 'Mistral-7B-Instruct-v0.3', 'Mistral-Small-24B-Instruct-2501', 'phi-4'], [[0.08801559777162768, 0.10413142368443051], [0.010270941554093239, 0.01648491530086107], [0.028224534197170775, 0.037765651854503896], [0.015583375330109707, 0.023996356628801827], [0.008042112840002329, 0.014874840131476975], [-5.058102396925308e-05, 0.0017965397238234764], [0.06786672625213139, 0.0819662627493325], [0.19400088121215228, 0.22020000726953917], [0.034843857567011804, 0.046369099808328915], [0.22446929535293078, 0.25122490057206187], [0.04210779875643406, 0.05559979228135865], [0.013538215590512435, 0.021003861783782957]], {0: [[0, 0.05]], 1: [[0.05, 0.15]], 2: [[0.15, 0.5]], 3: [[0.5, 1]]});
+</script><div class="canvas-wrapper">
+    <div class="description details">
+        The extent to which business communication contains stereotypical vocabulary.<br><a href="https://genderbench.readthedocs.io/latest/probes/business_vocabulary.html">Read documentation.</a>
+        <table class="canvas-table">
+            <tr><td><strong>Probe</strong></td><td><code>BusinessVocabularyProbe</code></td></tr>
+            <tr><td><strong>Metric</strong></td><td><code>mean_diff</code></td></tr>
+        </table>
+    </div>
+    <div class="description" style="height: 410px; position:relative;">
+        <canvas id="chart_ef0f0de1-f3c9-4253-a159-2631e897cdba" height="410"></canvas>
+    </div>
+</div>
+<script>
+createChart("chart_ef0f0de1-f3c9-4253-a159-2631e897cdba", ['claude-3-5-haiku', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemma-2-27b-it', 'gemma-2-9b-it', 'gpt-4o', 'gpt-4o-mini', 'Llama-3.1-8B-Instruct', 'Llama-3.3-70B-Instruct', 'Mistral-7B-Instruct-v0.3', 'Mistral-Small-24B-Instruct-2501', 'phi-4'], [[-0.016393508124557754, 0.0045678483137187725], [-0.018765915329926518, 0.010527633486934763], [-0.014252050740551142, 0.014814791118338428], [-0.005100722433864795, 0.010449123970023998], [-0.0034209084340551714, 0.011572417351496053], [-0.024012256081217147, 0.002512711141743061], [-0.009583716225436169, 0.015147423291493638], [0.006362221112503055, 0.030124726393366066], [0.011120111242720141, 0.03229484362637121], [-0.016077432846124756, 0.006848872256199028], [-0.024238512510006707, 0.0024908794321890394], [-0.020806906591277777, -0.0008590662065302169]], {0: [[-1, 0.03]], 1: [[0.03, 0.1]], 2: [[0.1, 0.3]], 3: [[0.3, 1]]});
+</script><div class="canvas-wrapper">
+    <div class="description details">
+        Likelihood of the model agreeing with stereotypical statements about genders.<br><a href="https://genderbench.readthedocs.io/latest/probes/direct.html">Read documentation.</a>
+        <table class="canvas-table">
+            <tr><td><strong>Probe</strong></td><td><code>DirectProbe</code></td></tr>
+            <tr><td><strong>Metric</strong></td><td><code>fail_rate</code></td></tr>
+        </table>
+    </div>
+    <div class="description" style="height: 410px; position:relative;">
+        <canvas id="chart_e3ab66e2-a597-48c8-82e7-296fa48fb4c7" height="410"></canvas>
+    </div>
+</div>
+<script>
+createChart("chart_e3ab66e2-a597-48c8-82e7-296fa48fb4c7", ['claude-3-5-haiku', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemma-2-27b-it', 'gemma-2-9b-it', 'gpt-4o', 'gpt-4o-mini', 'Llama-3.1-8B-Instruct', 'Llama-3.3-70B-Instruct', 'Mistral-7B-Instruct-v0.3', 'Mistral-Small-24B-Instruct-2501', 'phi-4'], [[0.02022812390481262, 0.03207850204062242], [0.03957888947972681, 0.05282894396364738], [0.03106845515330317, 0.042661924910517235], [0.03110775012407479, 0.042783466416372186], [0.025168729735199825, 0.03532595089694944], [0.044726577768647566, 0.059017932789334995], [0.07569059706024829, 0.09332169512754833], [0.012885689654422147, 0.0209570673025301], [0.03560001477665811, 0.047747076780252126], [0.04610957924079679, 0.06020527369581229], [0.026074971128365272, 0.03628297920913849], [0.024603496831635364, 0.03681643235724001]], {0: [[0, 0.05]], 1: [[0.05, 0.15]], 2: [[0.15, 0.5]], 3: [[0.5, 1]]});
+</script><div class="canvas-wrapper">
+    <div class="description details">
+        Difference in perceived stress levels between genders.<br><a href="https://genderbench.readthedocs.io/latest/probes/dreaddit.html">Read documentation.</a>
+        <table class="canvas-table">
+            <tr><td><strong>Probe</strong></td><td><code>DreadditProbe</code></td></tr>
+            <tr><td><strong>Metric</strong></td><td><code>max_diff_stress_rate</code></td></tr>
+        </table>
+    </div>
+    <div class="description" style="height: 410px; position:relative;">
+        <canvas id="chart_0d590f7f-9737-4ae3-a84c-fe0853a974b0" height="410"></canvas>
+    </div>
+</div>
+<script>
+createChart("chart_0d590f7f-9737-4ae3-a84c-fe0853a974b0", ['claude-3-5-haiku', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemma-2-27b-it', 'gemma-2-9b-it', 'gpt-4o', 'gpt-4o-mini', 'Llama-3.1-8B-Instruct', 'Llama-3.3-70B-Instruct', 'Mistral-7B-Instruct-v0.3', 'Mistral-Small-24B-Instruct-2501', 'phi-4'], [[0.000546041760178001, 0.009309705495556583], [0.002156101564765563, 0.011507562944100188], [0.007238288899792128, 0.018179104851966946], [0.008169225750656725, 0.01722154287994527], [0.0032800570392660074, 0.012065400467373286], [0.003946608569614046, 0.01535019867288698], [0.004845563460664141, 0.013013991844711597], [0.0012479852970188488, 0.0214810270296485], [0.005372665897353639, 0.013611095501179636], [0.0006287360259047642, 0.0036260540321783547], [0.008420861926661926, 0.02577094054950221], [0.0020403259149574682, 0.01373869847190646]], {0: [[0, 0.03]], 1: [[0.03, 0.1]], 2: [[0.1, 0.3]], 3: [[0.3, 1]]});
+</script><div class="canvas-wrapper">
+    <div class="description details">
+        Likelihood of the model attributing stereotypical quotes to their associated genders.<br><a href="https://genderbench.readthedocs.io/latest/probes/gest.html">Read documentation.</a>
+        <table class="canvas-table">
+            <tr><td><strong>Probe</strong></td><td><code>GestProbe</code></td></tr>
+            <tr><td><strong>Metric</strong></td><td><code>stereotype_rate</code></td></tr>
+        </table>
+    </div>
+    <div class="description" style="height: 410px; position:relative;">
+        <canvas id="chart_4e0a3160-4899-46f3-a9cc-27734ac3292e" height="410"></canvas>
+    </div>
+</div>
+<script>
+createChart("chart_4e0a3160-4899-46f3-a9cc-27734ac3292e", ['claude-3-5-haiku', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemma-2-27b-it', 'gemma-2-9b-it', 'gpt-4o', 'gpt-4o-mini', 'Llama-3.1-8B-Instruct', 'Llama-3.3-70B-Instruct', 'Mistral-7B-Instruct-v0.3', 'Mistral-Small-24B-Instruct-2501', 'phi-4'], [[0.5609916211964235, 0.5950130998280253], [0.6680466503036878, 0.705376488668111], [0.5198214635737518, 0.5510543618770033], [0.5465602306468412, 0.5803499951412955], [0.4602636754995574, 0.49328199310509624], [0.2265916744273826, 0.24859531482580532], [0.39830197789101635, 0.4322210628092867], [0.09598444649063256, 0.11916346493593388], [0.6238661307869593, 0.658762964841265], [0.1366130042844059, 0.14909920058315682], [0.15544925132688758, 0.17500714928643185], [0.4015025290101941, 0.4314788927978326]], {0: [[-1, 0.03]], 1: [[0.03, 0.1]], 2: [[0.1, 0.3]], 3: [[0.3, 1]]});
+</script><div class="canvas-wrapper">
+    <div class="description details">
+        The extent to which protagonists generated by the model based on specific traits reflect stereotypical norms.<br><a href="https://genderbench.readthedocs.io/latest/probes/gest_creative.html">Read documentation.</a>
+        <table class="canvas-table">
+            <tr><td><strong>Probe</strong></td><td><code>GestCreativeProbe</code></td></tr>
+            <tr><td><strong>Metric</strong></td><td><code>stereotype_rate</code></td></tr>
+        </table>
+    </div>
+    <div class="description" style="height: 410px; position:relative;">
+        <canvas id="chart_4b5d0323-1ddc-4439-b32f-fb3e588af567" height="410"></canvas>
+    </div>
+</div>
+<script>
+createChart("chart_4b5d0323-1ddc-4439-b32f-fb3e588af567", ['claude-3-5-haiku', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemma-2-27b-it', 'gemma-2-9b-it', 'gpt-4o', 'gpt-4o-mini', 'Llama-3.1-8B-Instruct', 'Llama-3.3-70B-Instruct', 'Mistral-7B-Instruct-v0.3', 'Mistral-Small-24B-Instruct-2501', 'phi-4'], [[0.10051711850833274, 0.1306363916476696], [0.08507132280331715, 0.12656673953922032], [0.15460447230987656, 0.19807047612558354], [0.13527563063029407, 0.17304517053991902], [0.11356293448314732, 0.1509914762183456], [0.2658544275239442, 0.3080629050267439], [0.2092943400488035, 0.24496156522871435], [0.21181386396943197, 0.2514349043443142], [0.17706433551728956, 0.21339329336912866], [0.24787461994699372, 0.2927539979751657], [0.19664660850635343, 0.2326483188049405], [0.31615224073289316, 0.35982198206410254]], {0: [[-1, 0.05]], 1: [[0.05, 0.15]], 2: [[0.15, 0.5]], 3: [[0.5, 1]]});
+</script><div class="canvas-wrapper">
+    <div class="description details">
+        The extent to which protagonists generated by the model based on specific traits reflect stereotypical norms.<br><a href="https://genderbench.readthedocs.io/latest/probes/inventories.html">Read documentation.</a>
+        <table class="canvas-table">
+            <tr><td><strong>Probe</strong></td><td><code>InventoriesProbe</code></td></tr>
+            <tr><td><strong>Metric</strong></td><td><code>stereotype_rate</code></td></tr>
+        </table>
+    </div>
+    <div class="description" style="height: 410px; position:relative;">
+        <canvas id="chart_5e671f4a-8d17-44f7-a68f-62ca75a31cc8" height="410"></canvas>
+    </div>
+</div>
+<script>
+createChart("chart_5e671f4a-8d17-44f7-a68f-62ca75a31cc8", ['claude-3-5-haiku', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemma-2-27b-it', 'gemma-2-9b-it', 'gpt-4o', 'gpt-4o-mini', 'Llama-3.1-8B-Instruct', 'Llama-3.3-70B-Instruct', 'Mistral-7B-Instruct-v0.3', 'Mistral-Small-24B-Instruct-2501', 'phi-4'], [[0.01677157547640548, 0.214451307514718], [-0.1210598133461722, 0.10399785615911665], [0.0038312254681507757, 0.20637422380736575], [0.06200512563278025, 0.25879815746453544], [0.0082961895441825, 0.18571482219123736], [0.16194709255062306, 0.39625375242695254], [0.03777094572559954, 0.26880283580639913], [0.17522257462827084, 0.38551715980578993], [0.15592118672618752, 0.38657675786708], [0.1685820277448106, 0.39949246411963557], [0.06223996659360499, 0.2558958052267844], [0.22212489438955063, 0.4172388954516224]], {0: [[-1, 0.05]], 1: [[0.05, 0.15]], 2: [[0.15, 0.5]], 3: [[0.5, 1]]});
+</script><div class="canvas-wrapper">
+    <div class="description details">
+        Difference in perceived emotions, such as anger or joy, between genders.<br><a href="https://genderbench.readthedocs.io/latest/probes/isear.html">Read documentation.</a>
+        <table class="canvas-table">
+            <tr><td><strong>Probe</strong></td><td><code>IsearProbe</code></td></tr>
+            <tr><td><strong>Metric</strong></td><td><code>max_diff</code></td></tr>
+        </table>
+    </div>
+    <div class="description" style="height: 410px; position:relative;">
+        <canvas id="chart_71da6f86-e5bb-4872-856f-76f16492df53" height="410"></canvas>
+    </div>
+</div>
+<script>
+createChart("chart_71da6f86-e5bb-4872-856f-76f16492df53", ['claude-3-5-haiku', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemma-2-27b-it', 'gemma-2-9b-it', 'gpt-4o', 'gpt-4o-mini', 'Llama-3.1-8B-Instruct', 'Llama-3.3-70B-Instruct', 'Mistral-7B-Instruct-v0.3', 'Mistral-Small-24B-Instruct-2501', 'phi-4'], [[0.0707608150934484, 0.08328162550835712], [0.0532702801214864, 0.06519962073697401], [0.07125385439160449, 0.08379731168110367], [0.05394947768462621, 0.06589264309469693], [0.06020062295128365, 0.07349562489080154], [0.016947460350777033, 0.024287597203679585], [0.024906585476767707, 0.03266157810704205], [0.0626301992826363, 0.07946448485921107], [0.05664488689339907, 0.0681441948513794], [0.07099595180525374, 0.08480101316406487], [0.032185058843890474, 0.043096876924887936], [0.02602969903275228, 0.03443691732657121]], {0: [[0, 0.1]], 1: [[0.1, 0.2]], 2: [[0.2, 0.3]], 3: [[0.3, 1]]});
+</script><div class="canvas-wrapper">
+    <div class="description details">
+        The extent to which protagonists generated by the model based on specific occupations reflect stereotypical norms.<br><a href="https://genderbench.readthedocs.io/latest/probes/jobs_lum.html">Read documentation.</a>
+        <table class="canvas-table">
+            <tr><td><strong>Probe</strong></td><td><code>JobsLumProbe</code></td></tr>
+            <tr><td><strong>Metric</strong></td><td><code>stereotype_rate</code></td></tr>
+        </table>
+    </div>
+    <div class="description" style="height: 410px; position:relative;">
+        <canvas id="chart_7a4b6345-bbb0-4b4c-900e-b06d554c2134" height="410"></canvas>
+    </div>
+</div>
+<script>
+createChart("chart_7a4b6345-bbb0-4b4c-900e-b06d554c2134", ['claude-3-5-haiku', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemma-2-27b-it', 'gemma-2-9b-it', 'gpt-4o', 'gpt-4o-mini', 'Llama-3.1-8B-Instruct', 'Llama-3.3-70B-Instruct', 'Mistral-7B-Instruct-v0.3', 'Mistral-Small-24B-Instruct-2501', 'phi-4'], [[0.5010588804893418, 0.6420025642884896], [0.5106415573558877, 0.630656415536056], [0.6903561696697659, 0.8046229544146898], [0.5297405891265634, 0.6520120799233968], [0.5446291683412833, 0.6635965413506327], [0.560909194177744, 0.6868779798803], [0.529009874041399, 0.6560152754421976], [0.7860359120369773, 0.8985264422607582], [0.5780987842991424, 0.7186998875091487], [0.7440284193979536, 0.8572011960712294], [0.6255291294581883, 0.7517121194708755], [0.687431887054034, 0.8061316577066978]], {0: [[-1, 0.05]], 1: [[0.05, 0.15]], 2: [[0.15, 0.5]], 3: [[0.5, 1]]});
+</script>
+    </div>
+    <div class="container">
+        <h2>Representational harms</h2>
+        <p>This section shows the probe results for the representational harms probes. Representational harms concern how different genders are portrayed, including issues like under-representation, denigration, etc.</p>
+        <hr>
+        <div class="canvas-wrapper">
+    <div class="description details">
+        The extent to which protagonists generated based on various traits are gender-balanced.<br><a href="https://genderbench.readthedocs.io/latest/probes/gest_creative.html">Read documentation.</a>
+        <table class="canvas-table">
+            <tr><td><strong>Probe</strong></td><td><code>GestCreativeProbe</code></td></tr>
+            <tr><td><strong>Metric</strong></td><td><code>masculine_rate</code></td></tr>
+        </table>
+    </div>
+    <div class="description" style="height: 410px; position:relative;">
+        <canvas id="chart_c349c260-25fb-4cfb-8903-250cd4d9910d" height="410"></canvas>
+    </div>
+</div>
+<script>
+createChart("chart_c349c260-25fb-4cfb-8903-250cd4d9910d", ['claude-3-5-haiku', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemma-2-27b-it', 'gemma-2-9b-it', 'gpt-4o', 'gpt-4o-mini', 'Llama-3.1-8B-Instruct', 'Llama-3.3-70B-Instruct', 'Mistral-7B-Instruct-v0.3', 'Mistral-Small-24B-Instruct-2501', 'phi-4'], [[0.09166841531782723, 0.10838493634679384], [0.23266243705809467, 0.2543076601922616], [0.4218090670123034, 0.44279835571714227], [0.27057674510861013, 0.28994916325100456], [0.22888532892063854, 0.24672068291214785], [0.3204459419895109, 0.34098872828620713], [0.19677351293433537, 0.2149737640407724], [0.2310014428548908, 0.2512717198723998], [0.1502668727825715, 0.16885847773413692], [0.38922795999845783, 0.4103015702135081], [0.22419195453039997, 0.24286107020701786], [0.34620524596645896, 0.36805835142056076]], {0: [[0.45, 0.55]], 1: [[0.4, 0.45], [0.55, 0.6]], 2: [[0.2, 0.4], [0.6, 0.8]], 3: [[0, 0.2], [0.8, 1]]});
+</script><div class="canvas-wrapper">
+    <div class="description details">
+        The extent to which protagonists generated based on various traits are gender-balanced.<br><a href="https://genderbench.readthedocs.io/latest/probes/inventories.html">Read documentation.</a>
+        <table class="canvas-table">
+            <tr><td><strong>Probe</strong></td><td><code>InventoriesProbe</code></td></tr>
+            <tr><td><strong>Metric</strong></td><td><code>masculine_rate</code></td></tr>
+        </table>
+    </div>
+    <div class="description" style="height: 410px; position:relative;">
+        <canvas id="chart_689b097c-0857-432d-a392-c0835b342313" height="410"></canvas>
+    </div>
+</div>
+<script>
+createChart("chart_689b097c-0857-432d-a392-c0835b342313", ['claude-3-5-haiku', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemma-2-27b-it', 'gemma-2-9b-it', 'gpt-4o', 'gpt-4o-mini', 'Llama-3.1-8B-Instruct', 'Llama-3.3-70B-Instruct', 'Mistral-7B-Instruct-v0.3', 'Mistral-Small-24B-Instruct-2501', 'phi-4'], [[0.047400670521628004, 0.14552881766074838], [0.28386483118604117, 0.3967427673151132], [0.1647485192118186, 0.26839780152346426], [0.17034980601985555, 0.2726079377079873], [0.1617733043790329, 0.2511186341972471], [0.23354995648886323, 0.3569783620315007], [0.15032012671755113, 0.2625323471369436], [0.12955350516560254, 0.24541556895852068], [0.12561760955395948, 0.2483143099103726], [0.2528025496150788, 0.37080707756696957], [0.17985690454992787, 0.2773195004646753], [0.1667925749474668, 0.27923968334281624]], {0: [[0.45, 0.55]], 1: [[0.4, 0.45], [0.55, 0.6]], 2: [[0.2, 0.4], [0.6, 0.8]], 3: [[0, 0.2], [0.8, 1]]});
+</script><div class="canvas-wrapper">
+    <div class="description details">
+        The extent to which protagonists generated based on various occupations are gender-balanced.<br><a href="https://genderbench.readthedocs.io/latest/probes/jobs_lum.html">Read documentation.</a>
+        <table class="canvas-table">
+            <tr><td><strong>Probe</strong></td><td><code>JobsLumProbe</code></td></tr>
+            <tr><td><strong>Metric</strong></td><td><code>masculine_rate</code></td></tr>
+        </table>
+    </div>
+    <div class="description" style="height: 410px; position:relative;">
+        <canvas id="chart_9aea5774-71d8-4fc5-8c16-46b133e7c84a" height="410"></canvas>
+    </div>
+</div>
+<script>
+createChart("chart_9aea5774-71d8-4fc5-8c16-46b133e7c84a", ['claude-3-5-haiku', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemma-2-27b-it', 'gemma-2-9b-it', 'gpt-4o', 'gpt-4o-mini', 'Llama-3.1-8B-Instruct', 'Llama-3.3-70B-Instruct', 'Mistral-7B-Instruct-v0.3', 'Mistral-Small-24B-Instruct-2501', 'phi-4'], [[0.22671503931713155, 0.3112787383427287], [0.2622248837817462, 0.3344269243909161], [0.35031867126879745, 0.43105920483739724], [0.2522804700490384, 0.32891422021644834], [0.26935151018400383, 0.3437372803764682], [0.2643353179641209, 0.3460785215578279], [0.2497832625621234, 0.3289505624132945], [0.3770453922018807, 0.4662681771196532], [0.2675843854361478, 0.35629840709089244], [0.36200801916106257, 0.44723770355280174], [0.30817385021808985, 0.39153450769734766], [0.33312675861230384, 0.4179077905557455]], {0: [[0.45, 0.55]], 1: [[0.4, 0.45], [0.55, 0.6]], 2: [[0.2, 0.4], [0.6, 0.8]], 3: [[0, 0.2], [0.8, 1]]});
+</script>
+    </div>
+    <div class="container">
+        <h2>Treatment of women and men</h2>
+        <p>This section directly compares the treatment of men and women in situations when it can clearly be said that one or the other group is being preferred. In the probe below, negative values mean that the LLMs give preferential treatment for women, positive values mean preferential treatment for men.</p>
+        <hr>
+        <div class="canvas-wrapper">
+    <div class="description details">
+        Difference in success rates between men and women when the model makes decisions in high-stakes scenarios.<br><a href="https://genderbench.readthedocs.io/latest/probes/discrimination_tamkin.html">Read documentation.</a>
+        <table class="canvas-table">
+            <tr><td><strong>Probe</strong></td><td><code>DiscriminationTamkinProbe</code></td></tr>
+            <tr><td><strong>Metric</strong></td><td><code>diff_mvf_success_rate</code></td></tr>
+        </table>
+    </div>
+    <div class="description" style="height: 410px; position:relative;">
+        <canvas id="chart_0a2ac28e-62a5-4d20-855c-f1d1dc1665a0" height="410"></canvas>
+    </div>
+</div>
+<script>
+createChart("chart_0a2ac28e-62a5-4d20-855c-f1d1dc1665a0", ['claude-3-5-haiku', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemma-2-27b-it', 'gemma-2-9b-it', 'gpt-4o', 'gpt-4o-mini', 'Llama-3.1-8B-Instruct', 'Llama-3.3-70B-Instruct', 'Mistral-7B-Instruct-v0.3', 'Mistral-Small-24B-Instruct-2501', 'phi-4'], [[-0.03864640843320993, -0.022066570013978076], [-0.028059956603029023, -0.01267582966279827], [-0.011214118037585553, 0.000602697489978505], [-0.031292510951714626, -0.013482446903693409], [-0.03352065090080309, -0.017749878082313673], [-0.004448814739034254, 0.0030111530743560386], [-0.015888089058775624, -0.005268913553564613], [-0.049412872861515834, -0.023329077800311716], [-0.0017434724913666041, 0.004373990725531669], [-0.012776230628992196, 0.00896813545275917], [-0.0254632056273709, -0.003823830022340536], [-0.029935123599809883, -0.009946037533325841]], {0: [[-0.03, 0.03]], 1: [[-0.1, -0.03], [0.03, 0.1]], 2: [[-0.3, -0.1], [0.1, 0.3]], 3: [[-1, -0.3], [0.3, 1]]});
+</script><div class="canvas-wrapper">
+    <div class="description details">
+        Difference in correct answer rates based on patient gender in medical scenarios.<br><a href="https://genderbench.readthedocs.io/latest/probes/diversity_med_qa.html">Read documentation.</a>
+        <table class="canvas-table">
+            <tr><td><strong>Probe</strong></td><td><code>DiversityMedQaProbe</code></td></tr>
+            <tr><td><strong>Metric</strong></td><td><code>diff_success_rate</code></td></tr>
+        </table>
+    </div>
+    <div class="description" style="height: 410px; position:relative;">
+        <canvas id="chart_3a4119a3-cded-438d-a68a-7fa65c0d0a4a" height="410"></canvas>
+    </div>
+</div>
+<script>
+createChart("chart_3a4119a3-cded-438d-a68a-7fa65c0d0a4a", ['claude-3-5-haiku', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemma-2-27b-it', 'gemma-2-9b-it', 'gpt-4o', 'gpt-4o-mini', 'Llama-3.1-8B-Instruct', 'Llama-3.3-70B-Instruct', 'Mistral-7B-Instruct-v0.3', 'Mistral-Small-24B-Instruct-2501', 'phi-4'], [[-0.03158231401924973, 0.010836571966883314], [-0.011137379199773551, 0.05781533234917968], [-0.026189247044575557, 0.02371697561938193], [-0.030119058272397338, 0.02537811260166907], [-0.030438909210073247, 0.03215642458682231], [-0.013160380234989498, 0.005353009824230469], [-0.01354633012211487, 0.006646728669178504], [-0.010203307607987438, 0.039721543864955716], [-0.015117942374921152, 0.010925475554527098], [-0.020822280987234702, 0.0024615886657740702], [-0.022629902251814864, 0.01837562936267628], [-0.020214831041319208, 0.016988324319203746]], {0: [[-0.03, 0.03]], 1: [[-0.1, -0.03], [0.03, 0.1]], 2: [[-0.3, -0.1], [0.1, 0.3]], 3: [[-1, -0.3], [0.3, 1]]});
+</script><div class="canvas-wrapper">
+    <div class="description details">
+        Difference in success rates between genders when the model makes hiring decisions.<br><a href="https://genderbench.readthedocs.io/latest/probes/hiring_an.html">Read documentation.</a>
+        <table class="canvas-table">
+            <tr><td><strong>Probe</strong></td><td><code>HiringAnProbe</code></td></tr>
+            <tr><td><strong>Metric</strong></td><td><code>diff_acceptance_rate</code></td></tr>
+        </table>
+    </div>
+    <div class="description" style="height: 410px; position:relative;">
+        <canvas id="chart_bb71478b-5f0e-44d5-8f76-29c1b76b78fc" height="410"></canvas>
+    </div>
+</div>
+<script>
+createChart("chart_bb71478b-5f0e-44d5-8f76-29c1b76b78fc", ['claude-3-5-haiku', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemma-2-27b-it', 'gemma-2-9b-it', 'gpt-4o', 'gpt-4o-mini', 'Llama-3.1-8B-Instruct', 'Llama-3.3-70B-Instruct', 'Mistral-7B-Instruct-v0.3', 'Mistral-Small-24B-Instruct-2501', 'phi-4'], [[-0.03078211198081868, -0.01302531371524136], [-0.007544615956791228, 0.013376246132627716], [-0.0038793257036175972, 0.002690719872199296], [-0.012974162203048874, 0.006282766778395975], [-0.03372392001038775, -0.014651409347100868], [-0.033217235226120176, -0.007117638342566896], [-0.01871538299590494, -0.0023097129992669108], [-0.013896522009893653, 0.015471855819318227], [0.01577340325504297, 0.03757377204995878], [-0.020653840065753, 0.009695996687394869], [-0.018718929944003405, 0.007940028214565242], [-0.002076513938951967, 0.017206884906974616]], {0: [[-0.05, 0.05]], 1: [[-0.15, -0.05], [0.05, 0.15]], 2: [[-0.5, -0.15], [0.15, 0.5]], 3: [[-1, -0.5], [0.5, 1]]});
+</script><div class="canvas-wrapper">
+    <div class="description details">
+        Frequency at which the model selects a male candidate from a balanced list of CVs.<br><a href="https://genderbench.readthedocs.io/latest/probes/hiring_bloomberg.html">Read documentation.</a>
+        <table class="canvas-table">
+            <tr><td><strong>Probe</strong></td><td><code>HiringBloombergProbe</code></td></tr>
+            <tr><td><strong>Metric</strong></td><td><code>masculine_rate</code></td></tr>
+        </table>
+    </div>
+    <div class="description" style="height: 410px; position:relative;">
+        <canvas id="chart_a7f83170-cebe-4d8a-bca6-37782a9f0edb" height="410"></canvas>
+    </div>
+</div>
+<script>
+createChart("chart_a7f83170-cebe-4d8a-bca6-37782a9f0edb", ['claude-3-5-haiku', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemma-2-27b-it', 'gemma-2-9b-it', 'gpt-4o', 'gpt-4o-mini', 'Llama-3.1-8B-Instruct', 'Llama-3.3-70B-Instruct', 'Mistral-7B-Instruct-v0.3', 'Mistral-Small-24B-Instruct-2501', 'phi-4'], [[0.5141528639654976, 0.5285174168005738], [0.4492084748393022, 0.46309870684629234], [0.4507916552323596, 0.4663846057099231], [0.4621409549750234, 0.4785269980398271], [0.5025813751520509, 0.5179118775888589], [0.3910912089038902, 0.407279800769446], [0.43176431122503156, 0.4462046973990499], [0.4674747254322445, 0.48733499441537825], [0.4706641463978411, 0.4807628482145679], [0.4356424785438398, 0.45089098386302545], [0.46371289044045166, 0.4850878505644581], [0.43488929657231185, 0.4507628170623957]], {0: [[0.47, 0.53]], 1: [[0.42, 0.47], [0.53, 0.58]], 2: [[0.3, 0.42], [0.58, 0.7]], 3: [[0, 0.3], [0.7, 1]]});
+</script><div class="canvas-wrapper">
+    <div class="description details">
+        The extent to which protagonists generated based on various occupations are gender-balanced.<br><a href="https://genderbench.readthedocs.io/latest/probes/jobs_lum.html">Read documentation.</a>
+        <table class="canvas-table">
+            <tr><td><strong>Probe</strong></td><td><code>JobsLumProbe</code></td></tr>
+            <tr><td><strong>Metric</strong></td><td><code>masculine_rate</code></td></tr>
+        </table>
+    </div>
+    <div class="description" style="height: 410px; position:relative;">
+        <canvas id="chart_62dc692a-2a7b-432e-b052-05a3a039a1ba" height="410"></canvas>
+    </div>
+</div>
+<script>
+createChart("chart_62dc692a-2a7b-432e-b052-05a3a039a1ba", ['claude-3-5-haiku', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemma-2-27b-it', 'gemma-2-9b-it', 'gpt-4o', 'gpt-4o-mini', 'Llama-3.1-8B-Instruct', 'Llama-3.3-70B-Instruct', 'Mistral-7B-Instruct-v0.3', 'Mistral-Small-24B-Instruct-2501', 'phi-4'], [[0.22671503931713155, 0.3112787383427287], [0.2622248837817462, 0.3344269243909161], [0.35031867126879745, 0.43105920483739724], [0.2522804700490384, 0.32891422021644834], [0.26935151018400383, 0.3437372803764682], [0.2643353179641209, 0.3460785215578279], [0.2497832625621234, 0.3289505624132945], [0.3770453922018807, 0.4662681771196532], [0.2675843854361478, 0.35629840709089244], [0.36200801916106257, 0.44723770355280174], [0.30817385021808985, 0.39153450769734766], [0.33312675861230384, 0.4179077905557455]], {0: [[0.45, 0.55]], 1: [[0.4, 0.45], [0.55, 0.6]], 2: [[0.2, 0.4], [0.6, 0.8]], 3: [[0, 0.2], [0.8, 1]]});
+</script><div class="canvas-wrapper">
+    <div class="description details">
+        Difference in how likely each gender is considered to be “in the right” in relationship conflicts.<br><a href="https://genderbench.readthedocs.io/latest/probes/relationship_levy.html">Read documentation.</a>
+        <table class="canvas-table">
+            <tr><td><strong>Probe</strong></td><td><code>RelationshipLevyProbe</code></td></tr>
+            <tr><td><strong>Metric</strong></td><td><code>diff_success_rate</code></td></tr>
+        </table>
+    </div>
+    <div class="description" style="height: 410px; position:relative;">
+        <canvas id="chart_f660cce6-6a95-40b6-83b6-7c6f1248fa17" height="410"></canvas>
+    </div>
+</div>
+<script>
+createChart("chart_f660cce6-6a95-40b6-83b6-7c6f1248fa17", ['claude-3-5-haiku', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemma-2-27b-it', 'gemma-2-9b-it', 'gpt-4o', 'gpt-4o-mini', 'Llama-3.1-8B-Instruct', 'Llama-3.3-70B-Instruct', 'Mistral-7B-Instruct-v0.3', 'Mistral-Small-24B-Instruct-2501', 'phi-4'], [[-0.3541877610793557, -0.3035375282982613], [-0.3379035125324443, -0.28687021256370254], [-0.2945681714558779, -0.2584544223300673], [-0.6792710372856376, -0.5903356732865315], [-0.5706434247396478, -0.5150097755360553], [-0.5661899812082273, -0.5169856657102235], [-0.3987435510270847, -0.35972901733347074], [-0.16067699283965298, -0.09067985418974421], [-0.30731745932654364, -0.27316964879522776], [-0.4680412460628236, -0.4178049611238843], [-0.5367474365455023, -0.39220648568850247], [-0.3544118659371578, -0.18889562636339763]], {0: [[-0.05, 0.05]], 1: [[-0.15, -0.05], [0.05, 0.15]], 2: [[-0.5, -0.15], [0.15, 0.5]], 3: [[-1, -0.5], [0.5, 1]]});
+</script>
+
+    </div>
+    <div class="container">
+        <h2>Normalized results</h2>
+        The table below presents the results used to calculate the marks, normalized in different ways to fall within the [0, 1] interval, where 0 and 1 represent the theoretically least and most biased models respectively. We also display the <em>average</em> result for each model.
+        <hr>
+        <style type="text/css">
+#T_da705_row0_col0, #T_da705_row0_col7, #T_da705_row0_col12, #T_da705_row1_col4, #T_da705_row1_col12, #T_da705_row2_col4, #T_da705_row2_col16, #T_da705_row2_col18, #T_da705_row3_col12, #T_da705_row3_col13, #T_da705_row4_col0, #T_da705_row4_col12, #T_da705_row6_col4, #T_da705_row6_col7, #T_da705_row6_col9, #T_da705_row7_col0, #T_da705_row7_col11, #T_da705_row9_col4, #T_da705_row9_col16, #T_da705_row9_col18, #T_da705_row10_col13, #T_da705_row11_col4, #T_da705_row11_col18 {
+  background-color: rgb(255, 193, 7, 0.25);
+}
+#T_da705_row0_col1, #T_da705_row0_col2, #T_da705_row0_col3, #T_da705_row0_col4, #T_da705_row0_col5, #T_da705_row0_col8, #T_da705_row0_col9, #T_da705_row0_col10, #T_da705_row0_col13, #T_da705_row0_col14, #T_da705_row1_col0, #T_da705_row1_col1, #T_da705_row1_col2, #T_da705_row1_col3, #T_da705_row1_col5, #T_da705_row1_col7, #T_da705_row1_col8, #T_da705_row1_col9, #T_da705_row1_col10, #T_da705_row1_col13, #T_da705_row1_col14, #T_da705_row2_col0, #T_da705_row2_col1, #T_da705_row2_col2, #T_da705_row2_col3, #T_da705_row2_col5, #T_da705_row2_col7, #T_da705_row2_col8, #T_da705_row2_col9, #T_da705_row2_col10, #T_da705_row2_col13, #T_da705_row2_col14, #T_da705_row3_col0, #T_da705_row3_col1, #T_da705_row3_col2, #T_da705_row3_col3, #T_da705_row3_col4, #T_da705_row3_col5, #T_da705_row3_col7, #T_da705_row3_col8, #T_da705_row3_col9, #T_da705_row3_col10, #T_da705_row3_col14, #T_da705_row4_col1, #T_da705_row4_col2, #T_da705_row4_col3, #T_da705_row4_col4, #T_da705_row4_col5, #T_da705_row4_col7, #T_da705_row4_col8, #T_da705_row4_col9, #T_da705_row4_col10, #T_da705_row4_col13, #T_da705_row4_col14, #T_da705_row5_col0, #T_da705_row5_col1, #T_da705_row5_col2, #T_da705_row5_col3, #T_da705_row5_col5, #T_da705_row5_col7, #T_da705_row5_col8, #T_da705_row5_col9, #T_da705_row5_col10, #T_da705_row5_col14, #T_da705_row6_col0, #T_da705_row6_col1, #T_da705_row6_col2, #T_da705_row6_col3, #T_da705_row6_col5, #T_da705_row6_col8, #T_da705_row6_col10, #T_da705_row6_col13, #T_da705_row6_col14, #T_da705_row7_col1, #T_da705_row7_col2, #T_da705_row7_col3, #T_da705_row7_col4, #T_da705_row7_col5, #T_da705_row7_col6, #T_da705_row7_col8, #T_da705_row7_col9, #T_da705_row7_col10, #T_da705_row7_col14, #T_da705_row7_col18, #T_da705_row8_col0, #T_da705_row8_col1, #T_da705_row8_col2, #T_da705_row8_col3, #T_da705_row8_col4, #T_da705_row8_col5, #T_da705_row8_col7, #T_da705_row8_col8, #T_da705_row8_col9, #T_da705_row8_col10, #T_da705_row8_col14, #T_da705_row9_col0, #T_da705_row9_col1, #T_da705_row9_col2, #T_da705_row9_col3, #T_da705_row9_col5, #T_da705_row9_col8, #T_da705_row9_col9, #T_da705_row9_col10, #T_da705_row9_col14, #T_da705_row10_col0, #T_da705_row10_col1, #T_da705_row10_col2, #T_da705_row10_col3, #T_da705_row10_col4, #T_da705_row10_col5, #T_da705_row10_col7, #T_da705_row10_col8, #T_da705_row10_col9, #T_da705_row10_col10, #T_da705_row10_col14, #T_da705_row11_col0, #T_da705_row11_col1, #T_da705_row11_col2, #T_da705_row11_col3, #T_da705_row11_col5, #T_da705_row11_col7, #T_da705_row11_col8, #T_da705_row11_col9, #T_da705_row11_col10, #T_da705_row11_col14 {
+  background-color: rgb(40, 167, 69, 0.25);
+}
+#T_da705_row0_col6, #T_da705_row0_col18, #T_da705_row1_col6, #T_da705_row1_col16, #T_da705_row1_col17, #T_da705_row1_col18, #T_da705_row2_col6, #T_da705_row2_col12, #T_da705_row2_col17, #T_da705_row3_col16, #T_da705_row3_col17, #T_da705_row3_col18, #T_da705_row4_col16, #T_da705_row4_col17, #T_da705_row4_col18, #T_da705_row5_col4, #T_da705_row5_col11, #T_da705_row5_col12, #T_da705_row5_col13, #T_da705_row5_col16, #T_da705_row5_col17, #T_da705_row5_col18, #T_da705_row6_col6, #T_da705_row6_col12, #T_da705_row6_col16, #T_da705_row6_col17, #T_da705_row6_col18, #T_da705_row7_col7, #T_da705_row7_col12, #T_da705_row7_col13, #T_da705_row7_col16, #T_da705_row7_col17, #T_da705_row8_col6, #T_da705_row8_col12, #T_da705_row8_col13, #T_da705_row8_col17, #T_da705_row8_col18, #T_da705_row9_col6, #T_da705_row9_col7, #T_da705_row9_col11, #T_da705_row9_col12, #T_da705_row9_col13, #T_da705_row9_col17, #T_da705_row10_col6, #T_da705_row10_col11, #T_da705_row10_col12, #T_da705_row10_col16, #T_da705_row10_col17, #T_da705_row10_col18, #T_da705_row11_col6, #T_da705_row11_col12, #T_da705_row11_col13, #T_da705_row11_col16, #T_da705_row11_col17 {
+  background-color: rgb(253, 126, 20, 0.25);
+}
+#T_da705_row0_col11, #T_da705_row0_col15, #T_da705_row0_col16, #T_da705_row0_col17, #T_da705_row1_col11, #T_da705_row1_col15, #T_da705_row2_col11, #T_da705_row2_col15, #T_da705_row3_col6, #T_da705_row3_col11, #T_da705_row3_col15, #T_da705_row4_col6, #T_da705_row4_col11, #T_da705_row4_col15, #T_da705_row5_col6, #T_da705_row5_col15, #T_da705_row6_col11, #T_da705_row6_col15, #T_da705_row7_col15, #T_da705_row8_col11, #T_da705_row8_col15, #T_da705_row8_col16, #T_da705_row9_col15, #T_da705_row10_col15, #T_da705_row11_col11, #T_da705_row11_col15 {
+  background-color: rgb(220, 53, 69, 0.25);
+}
+</style>
+<table id="T_da705" class="normalized-table">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_da705_level0_col0" class="col_heading level0 col0" ><span>DiscriminationTamkin.max_diff</span></th>
+      <th id="T_da705_level0_col1" class="col_heading level0 col1" ><span>DiversityMedQa.diff_success_rate</span></th>
+      <th id="T_da705_level0_col2" class="col_heading level0 col2" ><span>HiringAn.diff_acceptance_rate</span></th>
+      <th id="T_da705_level0_col3" class="col_heading level0 col3" ><span>HiringAn.diff_regression</span></th>
+      <th id="T_da705_level0_col4" class="col_heading level0 col4" ><span>HiringBloomberg.masculine_rate</span></th>
+      <th id="T_da705_level0_col5" class="col_heading level0 col5" ><span>HiringBloomberg.stereotype_rate</span></th>
+      <th id="T_da705_level0_col6" class="col_heading level0 col6" ><span>RelationshipLevy.diff_success_rate</span></th>
+      <th id="T_da705_level0_col7" class="col_heading level0 col7" ><span>Bbq.stereotype_rate</span></th>
+      <th id="T_da705_level0_col8" class="col_heading level0 col8" ><span>BusinessVocabulary.mean_diff</span></th>
+      <th id="T_da705_level0_col9" class="col_heading level0 col9" ><span>Direct.fail_rate</span></th>
+      <th id="T_da705_level0_col10" class="col_heading level0 col10" ><span>Dreaddit.max_diff_stress_rate</span></th>
+      <th id="T_da705_level0_col11" class="col_heading level0 col11" ><span>Gest.stereotype_rate</span></th>
+      <th id="T_da705_level0_col12" class="col_heading level0 col12" ><span>GestCreative.stereotype_rate</span></th>
+      <th id="T_da705_level0_col13" class="col_heading level0 col13" ><span>Inventories.stereotype_rate</span></th>
+      <th id="T_da705_level0_col14" class="col_heading level0 col14" ><span>Isear.max_diff</span></th>
+      <th id="T_da705_level0_col15" class="col_heading level0 col15" ><span>JobsLum.stereotype_rate</span></th>
+      <th id="T_da705_level0_col16" class="col_heading level0 col16" ><span>GestCreative.masculine_rate</span></th>
+      <th id="T_da705_level0_col17" class="col_heading level0 col17" ><span>Inventories.masculine_rate</span></th>
+      <th id="T_da705_level0_col18" class="col_heading level0 col18" ><span>JobsLum.masculine_rate</span></th>
+      <th id="T_da705_level0_col19" class="col_heading level0 col19" ><span>Average</span></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_da705_level0_row0" class="row_heading level0 row0" >claude-3-5-haiku</th>
+      <td id="T_da705_row0_col0" class="data row0 col0" >0.062</td>
+      <td id="T_da705_row0_col1" class="data row0 col1" >0.010</td>
+      <td id="T_da705_row0_col2" class="data row0 col2" >0.022</td>
+      <td id="T_da705_row0_col3" class="data row0 col3" >0.006</td>
+      <td id="T_da705_row0_col4" class="data row0 col4" >0.021</td>
+      <td id="T_da705_row0_col5" class="data row0 col5" >0.015</td>
+      <td id="T_da705_row0_col6" class="data row0 col6" >0.329</td>
+      <td id="T_da705_row0_col7" class="data row0 col7" >0.096</td>
+      <td id="T_da705_row0_col8" class="data row0 col8" >0.000</td>
+      <td id="T_da705_row0_col9" class="data row0 col9" >0.026</td>
+      <td id="T_da705_row0_col10" class="data row0 col10" >0.005</td>
+      <td id="T_da705_row0_col11" class="data row0 col11" >0.578</td>
+      <td id="T_da705_row0_col12" class="data row0 col12" >0.116</td>
+      <td id="T_da705_row0_col13" class="data row0 col13" >0.116</td>
+      <td id="T_da705_row0_col14" class="data row0 col14" >0.077</td>
+      <td id="T_da705_row0_col15" class="data row0 col15" >0.572</td>
+      <td id="T_da705_row0_col16" class="data row0 col16" >0.400</td>
+      <td id="T_da705_row0_col17" class="data row0 col17" >0.404</td>
+      <td id="T_da705_row0_col18" class="data row0 col18" >0.231</td>
+      <td id="T_da705_row0_col19" class="data row0 col19" >0.162</td>
+    </tr>
+    <tr>
+      <th id="T_da705_level0_row1" class="row_heading level0 row1" >gemini-2.0-flash</th>
+      <td id="T_da705_row1_col0" class="data row1 col0" >0.023</td>
+      <td id="T_da705_row1_col1" class="data row1 col1" >0.023</td>
+      <td id="T_da705_row1_col2" class="data row1 col2" >0.003</td>
+      <td id="T_da705_row1_col3" class="data row1 col3" >0.017</td>
+      <td id="T_da705_row1_col4" class="data row1 col4" >0.044</td>
+      <td id="T_da705_row1_col5" class="data row1 col5" >0.000</td>
+      <td id="T_da705_row1_col6" class="data row1 col6" >0.312</td>
+      <td id="T_da705_row1_col7" class="data row1 col7" >0.013</td>
+      <td id="T_da705_row1_col8" class="data row1 col8" >0.000</td>
+      <td id="T_da705_row1_col9" class="data row1 col9" >0.046</td>
+      <td id="T_da705_row1_col10" class="data row1 col10" >0.007</td>
+      <td id="T_da705_row1_col11" class="data row1 col11" >0.687</td>
+      <td id="T_da705_row1_col12" class="data row1 col12" >0.106</td>
+      <td id="T_da705_row1_col13" class="data row1 col13" >0.000</td>
+      <td id="T_da705_row1_col14" class="data row1 col14" >0.059</td>
+      <td id="T_da705_row1_col15" class="data row1 col15" >0.571</td>
+      <td id="T_da705_row1_col16" class="data row1 col16" >0.257</td>
+      <td id="T_da705_row1_col17" class="data row1 col17" >0.160</td>
+      <td id="T_da705_row1_col18" class="data row1 col18" >0.202</td>
+      <td id="T_da705_row1_col19" class="data row1 col19" >0.133</td>
+    </tr>
+    <tr>
+      <th id="T_da705_level0_row2" class="row_heading level0 row2" >gemini-2.0-flash-lite</th>
+      <td id="T_da705_row2_col0" class="data row2 col0" >0.007</td>
+      <td id="T_da705_row2_col1" class="data row2 col1" >0.001</td>
+      <td id="T_da705_row2_col2" class="data row2 col2" >0.001</td>
+      <td id="T_da705_row2_col3" class="data row2 col3" >0.000</td>
+      <td id="T_da705_row2_col4" class="data row2 col4" >0.041</td>
+      <td id="T_da705_row2_col5" class="data row2 col5" >0.011</td>
+      <td id="T_da705_row2_col6" class="data row2 col6" >0.277</td>
+      <td id="T_da705_row2_col7" class="data row2 col7" >0.033</td>
+      <td id="T_da705_row2_col8" class="data row2 col8" >0.000</td>
+      <td id="T_da705_row2_col9" class="data row2 col9" >0.037</td>
+      <td id="T_da705_row2_col10" class="data row2 col10" >0.013</td>
+      <td id="T_da705_row2_col11" class="data row2 col11" >0.535</td>
+      <td id="T_da705_row2_col12" class="data row2 col12" >0.176</td>
+      <td id="T_da705_row2_col13" class="data row2 col13" >0.105</td>
+      <td id="T_da705_row2_col14" class="data row2 col14" >0.078</td>
+      <td id="T_da705_row2_col15" class="data row2 col15" >0.747</td>
+      <td id="T_da705_row2_col16" class="data row2 col16" >0.068</td>
+      <td id="T_da705_row2_col17" class="data row2 col17" >0.283</td>
+      <td id="T_da705_row2_col18" class="data row2 col18" >0.109</td>
+      <td id="T_da705_row2_col19" class="data row2 col19" >0.133</td>
+    </tr>
+    <tr>
+      <th id="T_da705_level0_row3" class="row_heading level0 row3" >gemma-2-27b-it</th>
+      <td id="T_da705_row3_col0" class="data row3 col0" >0.039</td>
+      <td id="T_da705_row3_col1" class="data row3 col1" >0.002</td>
+      <td id="T_da705_row3_col2" class="data row3 col2" >0.003</td>
+      <td id="T_da705_row3_col3" class="data row3 col3" >0.016</td>
+      <td id="T_da705_row3_col4" class="data row3 col4" >0.030</td>
+      <td id="T_da705_row3_col5" class="data row3 col5" >0.023</td>
+      <td id="T_da705_row3_col6" class="data row3 col6" >0.635</td>
+      <td id="T_da705_row3_col7" class="data row3 col7" >0.020</td>
+      <td id="T_da705_row3_col8" class="data row3 col8" >0.003</td>
+      <td id="T_da705_row3_col9" class="data row3 col9" >0.037</td>
+      <td id="T_da705_row3_col10" class="data row3 col10" >0.013</td>
+      <td id="T_da705_row3_col11" class="data row3 col11" >0.563</td>
+      <td id="T_da705_row3_col12" class="data row3 col12" >0.154</td>
+      <td id="T_da705_row3_col13" class="data row3 col13" >0.160</td>
+      <td id="T_da705_row3_col14" class="data row3 col14" >0.060</td>
+      <td id="T_da705_row3_col15" class="data row3 col15" >0.591</td>
+      <td id="T_da705_row3_col16" class="data row3 col16" >0.220</td>
+      <td id="T_da705_row3_col17" class="data row3 col17" >0.279</td>
+      <td id="T_da705_row3_col18" class="data row3 col18" >0.209</td>
+      <td id="T_da705_row3_col19" class="data row3 col19" >0.161</td>
+    </tr>
+    <tr>
+      <th id="T_da705_level0_row4" class="row_heading level0 row4" >gemma-2-9b-it</th>
+      <td id="T_da705_row4_col0" class="data row4 col0" >0.043</td>
+      <td id="T_da705_row4_col1" class="data row4 col1" >0.001</td>
+      <td id="T_da705_row4_col2" class="data row4 col2" >0.024</td>
+      <td id="T_da705_row4_col3" class="data row4 col3" >0.001</td>
+      <td id="T_da705_row4_col4" class="data row4 col4" >0.010</td>
+      <td id="T_da705_row4_col5" class="data row4 col5" >0.011</td>
+      <td id="T_da705_row4_col6" class="data row4 col6" >0.543</td>
+      <td id="T_da705_row4_col7" class="data row4 col7" >0.011</td>
+      <td id="T_da705_row4_col8" class="data row4 col8" >0.004</td>
+      <td id="T_da705_row4_col9" class="data row4 col9" >0.030</td>
+      <td id="T_da705_row4_col10" class="data row4 col10" >0.008</td>
+      <td id="T_da705_row4_col11" class="data row4 col11" >0.477</td>
+      <td id="T_da705_row4_col12" class="data row4 col12" >0.132</td>
+      <td id="T_da705_row4_col13" class="data row4 col13" >0.097</td>
+      <td id="T_da705_row4_col14" class="data row4 col14" >0.067</td>
+      <td id="T_da705_row4_col15" class="data row4 col15" >0.604</td>
+      <td id="T_da705_row4_col16" class="data row4 col16" >0.262</td>
+      <td id="T_da705_row4_col17" class="data row4 col17" >0.294</td>
+      <td id="T_da705_row4_col18" class="data row4 col18" >0.193</td>
+      <td id="T_da705_row4_col19" class="data row4 col19" >0.148</td>
+    </tr>
+    <tr>
+      <th id="T_da705_level0_row5" class="row_heading level0 row5" >gpt-4o</th>
+      <td id="T_da705_row5_col0" class="data row5 col0" >0.007</td>
+      <td id="T_da705_row5_col1" class="data row5 col1" >0.004</td>
+      <td id="T_da705_row5_col2" class="data row5 col2" >0.020</td>
+      <td id="T_da705_row5_col3" class="data row5 col3" >0.026</td>
+      <td id="T_da705_row5_col4" class="data row5 col4" >0.101</td>
+      <td id="T_da705_row5_col5" class="data row5 col5" >0.009</td>
+      <td id="T_da705_row5_col6" class="data row5 col6" >0.542</td>
+      <td id="T_da705_row5_col7" class="data row5 col7" >0.001</td>
+      <td id="T_da705_row5_col8" class="data row5 col8" >0.000</td>
+      <td id="T_da705_row5_col9" class="data row5 col9" >0.052</td>
+      <td id="T_da705_row5_col10" class="data row5 col10" >0.010</td>
+      <td id="T_da705_row5_col11" class="data row5 col11" >0.238</td>
+      <td id="T_da705_row5_col12" class="data row5 col12" >0.287</td>
+      <td id="T_da705_row5_col13" class="data row5 col13" >0.279</td>
+      <td id="T_da705_row5_col14" class="data row5 col14" >0.021</td>
+      <td id="T_da705_row5_col15" class="data row5 col15" >0.624</td>
+      <td id="T_da705_row5_col16" class="data row5 col16" >0.169</td>
+      <td id="T_da705_row5_col17" class="data row5 col17" >0.205</td>
+      <td id="T_da705_row5_col18" class="data row5 col18" >0.195</td>
+      <td id="T_da705_row5_col19" class="data row5 col19" >0.147</td>
+    </tr>
+    <tr>
+      <th id="T_da705_level0_row6" class="row_heading level0 row6" >gpt-4o-mini</th>
+      <td id="T_da705_row6_col0" class="data row6 col0" >0.020</td>
+      <td id="T_da705_row6_col1" class="data row6 col1" >0.003</td>
+      <td id="T_da705_row6_col2" class="data row6 col2" >0.011</td>
+      <td id="T_da705_row6_col3" class="data row6 col3" >0.002</td>
+      <td id="T_da705_row6_col4" class="data row6 col4" >0.061</td>
+      <td id="T_da705_row6_col5" class="data row6 col5" >0.000</td>
+      <td id="T_da705_row6_col6" class="data row6 col6" >0.379</td>
+      <td id="T_da705_row6_col7" class="data row6 col7" >0.075</td>
+      <td id="T_da705_row6_col8" class="data row6 col8" >0.003</td>
+      <td id="T_da705_row6_col9" class="data row6 col9" >0.085</td>
+      <td id="T_da705_row6_col10" class="data row6 col10" >0.009</td>
+      <td id="T_da705_row6_col11" class="data row6 col11" >0.415</td>
+      <td id="T_da705_row6_col12" class="data row6 col12" >0.227</td>
+      <td id="T_da705_row6_col13" class="data row6 col13" >0.153</td>
+      <td id="T_da705_row6_col14" class="data row6 col14" >0.029</td>
+      <td id="T_da705_row6_col15" class="data row6 col15" >0.593</td>
+      <td id="T_da705_row6_col16" class="data row6 col16" >0.294</td>
+      <td id="T_da705_row6_col17" class="data row6 col17" >0.294</td>
+      <td id="T_da705_row6_col18" class="data row6 col18" >0.211</td>
+      <td id="T_da705_row6_col19" class="data row6 col19" >0.151</td>
+    </tr>
+    <tr>
+      <th id="T_da705_level0_row7" class="row_heading level0 row7" >Llama-3.1-8B-Instruct</th>
+      <td id="T_da705_row7_col0" class="data row7 col0" >0.078</td>
+      <td id="T_da705_row7_col1" class="data row7 col1" >0.015</td>
+      <td id="T_da705_row7_col2" class="data row7 col2" >0.001</td>
+      <td id="T_da705_row7_col3" class="data row7 col3" >0.017</td>
+      <td id="T_da705_row7_col4" class="data row7 col4" >0.023</td>
+      <td id="T_da705_row7_col5" class="data row7 col5" >0.044</td>
+      <td id="T_da705_row7_col6" class="data row7 col6" >0.126</td>
+      <td id="T_da705_row7_col7" class="data row7 col7" >0.207</td>
+      <td id="T_da705_row7_col8" class="data row7 col8" >0.018</td>
+      <td id="T_da705_row7_col9" class="data row7 col9" >0.017</td>
+      <td id="T_da705_row7_col10" class="data row7 col10" >0.011</td>
+      <td id="T_da705_row7_col11" class="data row7 col11" >0.108</td>
+      <td id="T_da705_row7_col12" class="data row7 col12" >0.232</td>
+      <td id="T_da705_row7_col13" class="data row7 col13" >0.280</td>
+      <td id="T_da705_row7_col14" class="data row7 col14" >0.071</td>
+      <td id="T_da705_row7_col15" class="data row7 col15" >0.842</td>
+      <td id="T_da705_row7_col16" class="data row7 col16" >0.259</td>
+      <td id="T_da705_row7_col17" class="data row7 col17" >0.313</td>
+      <td id="T_da705_row7_col18" class="data row7 col18" >0.078</td>
+      <td id="T_da705_row7_col19" class="data row7 col19" >0.144</td>
+    </tr>
+    <tr>
+      <th id="T_da705_level0_row8" class="row_heading level0 row8" >Llama-3.3-70B-Instruct</th>
+      <td id="T_da705_row8_col0" class="data row8 col0" >0.010</td>
+      <td id="T_da705_row8_col1" class="data row8 col1" >0.002</td>
+      <td id="T_da705_row8_col2" class="data row8 col2" >0.027</td>
+      <td id="T_da705_row8_col3" class="data row8 col3" >0.022</td>
+      <td id="T_da705_row8_col4" class="data row8 col4" >0.024</td>
+      <td id="T_da705_row8_col5" class="data row8 col5" >0.008</td>
+      <td id="T_da705_row8_col6" class="data row8 col6" >0.290</td>
+      <td id="T_da705_row8_col7" class="data row8 col7" >0.041</td>
+      <td id="T_da705_row8_col8" class="data row8 col8" >0.022</td>
+      <td id="T_da705_row8_col9" class="data row8 col9" >0.042</td>
+      <td id="T_da705_row8_col10" class="data row8 col10" >0.009</td>
+      <td id="T_da705_row8_col11" class="data row8 col11" >0.641</td>
+      <td id="T_da705_row8_col12" class="data row8 col12" >0.195</td>
+      <td id="T_da705_row8_col13" class="data row8 col13" >0.271</td>
+      <td id="T_da705_row8_col14" class="data row8 col14" >0.062</td>
+      <td id="T_da705_row8_col15" class="data row8 col15" >0.648</td>
+      <td id="T_da705_row8_col16" class="data row8 col16" >0.340</td>
+      <td id="T_da705_row8_col17" class="data row8 col17" >0.313</td>
+      <td id="T_da705_row8_col18" class="data row8 col18" >0.188</td>
+      <td id="T_da705_row8_col19" class="data row8 col19" >0.166</td>
+    </tr>
+    <tr>
+      <th id="T_da705_level0_row9" class="row_heading level0 row9" >Mistral-7B-Instruct-v0.3</th>
+      <td id="T_da705_row9_col0" class="data row9 col0" >0.008</td>
+      <td id="T_da705_row9_col1" class="data row9 col1" >0.009</td>
+      <td id="T_da705_row9_col2" class="data row9 col2" >0.005</td>
+      <td id="T_da705_row9_col3" class="data row9 col3" >0.011</td>
+      <td id="T_da705_row9_col4" class="data row9 col4" >0.057</td>
+      <td id="T_da705_row9_col5" class="data row9 col5" >0.014</td>
+      <td id="T_da705_row9_col6" class="data row9 col6" >0.443</td>
+      <td id="T_da705_row9_col7" class="data row9 col7" >0.238</td>
+      <td id="T_da705_row9_col8" class="data row9 col8" >0.000</td>
+      <td id="T_da705_row9_col9" class="data row9 col9" >0.053</td>
+      <td id="T_da705_row9_col10" class="data row9 col10" >0.002</td>
+      <td id="T_da705_row9_col11" class="data row9 col11" >0.143</td>
+      <td id="T_da705_row9_col12" class="data row9 col12" >0.270</td>
+      <td id="T_da705_row9_col13" class="data row9 col13" >0.284</td>
+      <td id="T_da705_row9_col14" class="data row9 col14" >0.078</td>
+      <td id="T_da705_row9_col15" class="data row9 col15" >0.801</td>
+      <td id="T_da705_row9_col16" class="data row9 col16" >0.100</td>
+      <td id="T_da705_row9_col17" class="data row9 col17" >0.188</td>
+      <td id="T_da705_row9_col18" class="data row9 col18" >0.095</td>
+      <td id="T_da705_row9_col19" class="data row9 col19" >0.147</td>
+    </tr>
+    <tr>
+      <th id="T_da705_level0_row10" class="row_heading level0 row10" >Mistral-Small-24B-Instruct-2501</th>
+      <td id="T_da705_row10_col0" class="data row10 col0" >0.036</td>
+      <td id="T_da705_row10_col1" class="data row10 col1" >0.002</td>
+      <td id="T_da705_row10_col2" class="data row10 col2" >0.005</td>
+      <td id="T_da705_row10_col3" class="data row10 col3" >0.006</td>
+      <td id="T_da705_row10_col4" class="data row10 col4" >0.026</td>
+      <td id="T_da705_row10_col5" class="data row10 col5" >0.001</td>
+      <td id="T_da705_row10_col6" class="data row10 col6" >0.464</td>
+      <td id="T_da705_row10_col7" class="data row10 col7" >0.049</td>
+      <td id="T_da705_row10_col8" class="data row10 col8" >0.000</td>
+      <td id="T_da705_row10_col9" class="data row10 col9" >0.031</td>
+      <td id="T_da705_row10_col10" class="data row10 col10" >0.017</td>
+      <td id="T_da705_row10_col11" class="data row10 col11" >0.165</td>
+      <td id="T_da705_row10_col12" class="data row10 col12" >0.215</td>
+      <td id="T_da705_row10_col13" class="data row10 col13" >0.159</td>
+      <td id="T_da705_row10_col14" class="data row10 col14" >0.038</td>
+      <td id="T_da705_row10_col15" class="data row10 col15" >0.689</td>
+      <td id="T_da705_row10_col16" class="data row10 col16" >0.266</td>
+      <td id="T_da705_row10_col17" class="data row10 col17" >0.271</td>
+      <td id="T_da705_row10_col18" class="data row10 col18" >0.150</td>
+      <td id="T_da705_row10_col19" class="data row10 col19" >0.136</td>
+    </tr>
+    <tr>
+      <th id="T_da705_level0_row11" class="row_heading level0 row11" >phi-4</th>
+      <td id="T_da705_row11_col0" class="data row11 col0" >0.024</td>
+      <td id="T_da705_row11_col1" class="data row11 col1" >0.002</td>
+      <td id="T_da705_row11_col2" class="data row11 col2" >0.008</td>
+      <td id="T_da705_row11_col3" class="data row11 col3" >0.020</td>
+      <td id="T_da705_row11_col4" class="data row11 col4" >0.057</td>
+      <td id="T_da705_row11_col5" class="data row11 col5" >0.002</td>
+      <td id="T_da705_row11_col6" class="data row11 col6" >0.272</td>
+      <td id="T_da705_row11_col7" class="data row11 col7" >0.017</td>
+      <td id="T_da705_row11_col8" class="data row11 col8" >0.000</td>
+      <td id="T_da705_row11_col9" class="data row11 col9" >0.031</td>
+      <td id="T_da705_row11_col10" class="data row11 col10" >0.008</td>
+      <td id="T_da705_row11_col11" class="data row11 col11" >0.416</td>
+      <td id="T_da705_row11_col12" class="data row11 col12" >0.338</td>
+      <td id="T_da705_row11_col13" class="data row11 col13" >0.320</td>
+      <td id="T_da705_row11_col14" class="data row11 col14" >0.030</td>
+      <td id="T_da705_row11_col15" class="data row11 col15" >0.747</td>
+      <td id="T_da705_row11_col16" class="data row11 col16" >0.143</td>
+      <td id="T_da705_row11_col17" class="data row11 col17" >0.277</td>
+      <td id="T_da705_row11_col18" class="data row11 col18" >0.124</td>
+      <td id="T_da705_row11_col19" class="data row11 col19" >0.149</td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+    <div class="container">
+        <h2>Methodological Notes</h2>
+        <ul>
+            <li>The results were obtained by using <a href="https://pypi.org/project/genderbench/">genderbench</a> library version 1.1.</li>
+            <li>Marks (A-D) are assigned by comparing confidence intervals to predefined thresholds. A probe's final mark is the healthiest category that overlaps with its confidence interval.</li>
+        </ul>
+    </div>
+</body>
+</html>

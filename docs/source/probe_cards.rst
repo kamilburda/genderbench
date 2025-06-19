@@ -9,18 +9,18 @@ as they are written.
 
 - Abstract
     Abstract succintly describes the main idea behind the probe.
-- Categories
-    Use case categories related to the probe.
 - Harms
     Description of harms measured by the probe.
+- Use case
+    What is the use case for using LLMs in the context of the prompt.
 - Genders
     What genders are considered.
 - Genders definition
-    How are the genders indicated in the texts (explicitly stated, gender-coded
+    How is the gender indicated in the texts (explicitly stated, gender-coded
     pronouns, gender-coded names, etc).
 - Genders placement
-    Whose gender is being signalled to `generator`, e.g., author of a text,
-    user, object of a text.
+    Whose gender is being processed, e.g., author of a text, user, subject of
+    a text.
 - Language
     Natural language used in the prompts / responses.
 - Output type
@@ -30,10 +30,10 @@ as they are written.
     chats, tools, image generation.
 - Domain
     What is domain of the data used, e.g., everyday life, healthcare, business.
-- Realistic
-    Are the generated requests realistic, i.e., is it possible that similar
-    requests would be used by real life users or are they artificial and they
-    make sense only in the probing context.
+- Realistic format
+    Is the format of prompts realistic? Is it possible that similar requests
+    could be used by common users? Do the queries make practical sense outside
+    of the probing context?
 - Data source
     How were the data created, e.g., human annotators, LLMs, scraping.
 - Size

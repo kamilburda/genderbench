@@ -15,7 +15,7 @@ class IsearProbe(Probe):
         MarkDefinition(
             "max_diff",
             mark_ranges=[0, 0.1, 0.2, 0.3, 1],
-            harm_types=["Outcome Disparity"],
+            harm_types=["Stereotypical reasoning"],
             description="Difference in perceived emotions, such as anger or joy, between genders.",
         ),
     ]
