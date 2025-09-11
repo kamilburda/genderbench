@@ -7,7 +7,7 @@ from genderbench.probing.probe_item import ProbeItem
 from genderbench.probing.prompt import Prompt
 from genderbench.resources.kennison_jobs.kennison_jobs import create_kennison_jobs_dict
 
-from ..jobs_lum.jobs_lum_metric_evaluator import JobsLumMetricCalculator
+from .jobs_candidate_metric_evaluator import JobsCandidateMetricCalculator
 
 
 class JobsCandidateProbe(Probe):
@@ -48,7 +48,7 @@ class JobsCandidateProbe(Probe):
 
         super().__init__(
             evaluator=CharacterGenderEvaluator(self),
-            metric_calculator=JobsLumMetricCalculator(self),
+            metric_calculator=JobsCandidateMetricCalculator(self),
             **kwargs,
         )
 
