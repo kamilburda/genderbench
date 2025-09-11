@@ -132,6 +132,7 @@ def section_emojis(section_name: str, model_results: dict) -> int:
     marks = [
         model_results[probe_class.__name__]["marks"][metric]["mark_value"]
         for probe_class, metric in chart_config[section_name]
+        if probe_class.__name__ in model_results
     ]
     marks = sorted(mark for mark in marks if isinstance(mark, int))
     return "".join(emojis[mark] for mark in marks)
@@ -188,6 +189,7 @@ def section_html(section_name: str, experiment_results: dict) -> str:
             data=prepare_chart_data(probe_class, metric, experiment_results)
         )
         for probe_class, metric in chart_config[section_name]
+        if _is_probe_in_experiment_results(probe_class, experiment_results)
     ]
     return "".join(canvases_html)
 
@@ -212,6 +214,9 @@ def normalized_table_row(model_results):
         "representational_harms",
     ):
         for probe_class, metric_name in chart_config[section]:
+            if probe_class.__name__ not in model_results:
+                continue
+
             normalization_function = metric_normalizations[probe_class, metric_name]
             row = normalize(
                 model_results[probe_class.__name__]["metrics"][metric_name],
@@ -240,6 +245,7 @@ def calculate_normalized_table(experiment_results):
             "representational_harms",
         )
         for probe_class, metric_name in chart_config[section]
+        if _is_probe_in_experiment_results(probe_class, experiment_results)
     ]
 
     # Add "average" column
@@ -355,3 +361,11 @@ def create_report(
 
     with open(output_file_path, "w", encoding="utf-8") as f:
         f.write(html)
+
+
+def _is_probe_in_experiment_results(probe_class, experiment_results):
+    probe_name = probe_class.__name__
+    return all(
+        probe_name in results_per_model
+        for results_per_model in experiment_results.values()
+    )
