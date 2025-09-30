@@ -27,6 +27,9 @@ class AsyncApiGenerator(ABC):
             between retries initially. Defaults to 1.0.
         retry_backoff (float, optional): How much does the delay increases after
             each failed retry. Defaults to 2.0.
+        initialize_client_kwargs: Additional keyword arguments for model
+            initialization passed to the ``initialize_client`` method.
+            Any arguments not supported by the model will result in an exception.
 
     Attributes:
         client: A client object that is used to make requests.
@@ -44,9 +47,10 @@ class AsyncApiGenerator(ABC):
         retry_count: int = 10,
         retry_delay: float = 1.0,
         retry_backoff: float = 2.0,
+        **initialize_client_kwargs,
     ):
         self.base_url = base_url
-        self.client = self.initialize_client(base_url=base_url, api_key=api_key)
+        self.client = self.initialize_client(base_url=base_url, api_key=api_key, **initialize_client_kwargs)
         self.max_concurrent_tasks = max_concurrent_tasks
         self.model = model
         self.max_tokens = max_tokens
@@ -100,7 +104,7 @@ class AsyncApiGenerator(ABC):
                     current_delay *= self.retry_backoff
 
     @abstractmethod
-    def initialize_client(self, base_url, api_key):
+    def initialize_client(self, base_url, api_key, **kwargs):
         raise NotImplementedError
 
     @abstractmethod

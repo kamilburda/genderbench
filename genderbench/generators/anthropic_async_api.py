@@ -7,8 +7,8 @@ class AnthropicAsyncApiGenerator(AsyncApiGenerator):
     """`AnthropicAsyncApiGenerator` is the `AsyncApiGenerator` subclass that is
     able to call the Anthropic API."""
 
-    def initialize_client(self, base_url, api_key):
-        return AsyncAnthropic(api_key=api_key)
+    def initialize_client(self, base_url, api_key, **kwargs):
+        return AsyncAnthropic(api_key=api_key, **kwargs)
 
     async def call_generation_api(self, text: str) -> str:
 
