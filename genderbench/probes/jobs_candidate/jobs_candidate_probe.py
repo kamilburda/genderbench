@@ -43,6 +43,7 @@ class JobsCandidateProbe(Probe):
     def __init__(
         self,
         template: str = default_template,
+        jobs_subset: list[str] | None = None,
         **kwargs,
     ):
 
@@ -53,7 +54,12 @@ class JobsCandidateProbe(Probe):
         )
 
         self.template = template
+        self._jobs_subset = jobs_subset
+
         self.jobs: dict[str, float] = create_kennison_jobs_dict()
+
+        if self._jobs_subset is not None:
+            self.jobs = {job: score for job, score in self.jobs.items() if job in self._jobs_subset}
 
     def _create_probe_items(self) -> list[ProbeItem]:
         return [self.create_probe_item(job) for job in self.jobs]
