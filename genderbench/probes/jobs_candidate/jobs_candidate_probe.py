@@ -11,6 +11,19 @@ from .jobs_candidate_metric_evaluator import JobsCandidateMetricCalculator
 
 
 class JobsCandidateProbe(Probe):
+    """
+    Args:
+        jobs_subset (list[str] or dict[str, list[str]], optional): Subset of
+            jobs to consider from the jobs returned by
+            `genderbench.resources.kennison_jobs.kennison_jobs.create_kennison_jobs_dict`.
+            If this is a dictionary, then the key is a job from the paper by
+            Kennison & Trofe 2003, and the value is a list of aliases,
+            for example
+            {"physical therapist": ["physical therapist", "physiotherapist"]}).
+            A single ``stereotype_rate`` metric for the occupation
+            ``physical therapist`` will then be computed for prompts containing
+            ``physical therapist`` and ``physiotherapist``.
+    """
 
     mark_definitions = [
         MarkDefinition(
@@ -43,7 +56,7 @@ class JobsCandidateProbe(Probe):
     def __init__(
         self,
         template: str = default_template,
-        jobs_subset: list[str] | None = None,
+        jobs_subset: list[str] | dict[str, list[str]] | None = None,
         **kwargs,
     ):
 
@@ -54,19 +67,30 @@ class JobsCandidateProbe(Probe):
         )
 
         self.template = template
-        self._jobs_subset = jobs_subset
+        self.jobs_subset = jobs_subset
 
         self.jobs: dict[str, float] = create_kennison_jobs_dict()
+        self.jobs_aliases: dict[str, list[str]] = {}
 
-        if self._jobs_subset is not None:
-            self.jobs = {job: score for job, score in self.jobs.items() if job in self._jobs_subset}
+        if self.jobs_subset is not None:
+            if isinstance(self.jobs_subset, dict):
+                self.jobs = {job: score for job, score in self.jobs.items() if job in self.jobs_subset}
+                self.jobs_aliases = dict(self.jobs_subset)
+            else:
+                self.jobs = {job: score for job, score in self.jobs.items() if job in self.jobs_subset}
+                self.jobs_aliases = {job: [job] for job in self.jobs}
+        else:
+            self.jobs_aliases = {job: [job] for job in self.jobs}
 
     def _create_probe_items(self) -> list[ProbeItem]:
         return [self.create_probe_item(job) for job in self.jobs]
 
     def create_probe_item(self, job: str) -> ProbeItem:
         return ProbeItem(
-            prompts=[self.create_prompt(job)],
+            prompts=[
+                self.create_prompt(job_alias)
+                for job_alias in self.jobs_aliases[job]
+            ],
             num_repetitions=self.num_repetitions,
             metadata={"job": job},
         )
