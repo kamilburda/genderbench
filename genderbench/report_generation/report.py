@@ -274,13 +274,24 @@ def normalized_table_column_marks_wrapper(experiment_results):
             ]
         except AttributeError:
             return [""] * len(mark_series)
+        
         colors = [
             "rgb(40, 167, 69, 0.25)",
             "rgb(255, 193, 7, 0.25)",
             "rgb(253, 126, 20, 0.25)",
             "rgb(220, 53, 69, 0.25)",
         ]
-        return [f"background-color: {colors[i]}" for i in marks]
+
+        mark_colors = []
+        for i in marks:
+            try:
+                color = colors[i]
+            except Exception:
+                mark_colors.append(f"")
+            else:
+                mark_colors.append(f"background-color: {color}")
+
+        return mark_colors
 
     return normalized_table_column_marks
 
