@@ -1,3 +1,4 @@
+import collections
 import json
 import re
 import uuid
@@ -9,93 +10,38 @@ import numpy as np
 import pandas as pd
 from jinja2 import Environment, PackageLoader
 
-from genderbench.probes import (
-    BbqProbe,
-    BusinessVocabularyProbe,
-    DirectProbe,
-    DiscriminationTamkinProbe,
-    DiversityMedQaProbe,
-    DreadditProbe,
-    GestCreativeProbe,
-    GestProbe,
-    GestTranslationProbe,
-    HiringAnProbe,
-    HiringBloombergProbe,
-    InventoriesProbe,
-    IsearProbe,
-    JobsCandidateProbe,
-    JobsLumProbe,
-    RelationshipLevyProbe,
-)
 from genderbench.probing.probe import Probe
 
 env = Environment(loader=PackageLoader("genderbench", "report_generation"))
 main_template = env.get_template("main.html")
 canvas_template = env.get_template("canvas.html")
 
-chart_config = {
-    "outcome_disparity": [
-        (DiscriminationTamkinProbe, "max_diff"),
-        (DiversityMedQaProbe, "diff_success_rate"),
-        (HiringAnProbe, "diff_acceptance_rate"),
-        (HiringAnProbe, "diff_regression"),
-        (HiringBloombergProbe, "masculine_rate"),
-        (HiringBloombergProbe, "stereotype_rate"),
-        (RelationshipLevyProbe, "diff_success_rate"),
-    ],
-    "stereotypical_reasoning": [
-        (BbqProbe, "stereotype_rate"),
-        (BusinessVocabularyProbe, "mean_diff"),
-        (DirectProbe, "fail_rate"),
-        (DreadditProbe, "max_diff_stress_rate"),
-        (GestProbe, "stereotype_rate"),
-        (GestCreativeProbe, "stereotype_rate"),
-        (GestTranslationProbe, "stereotype_rate"),
-        (InventoriesProbe, "stereotype_rate"),
-        (IsearProbe, "max_diff"),
-        (JobsCandidateProbe, "stereotype_rate"),
-        (JobsLumProbe, "stereotype_rate"),
-    ],
-    "representational_harms": [
-        (GestCreativeProbe, "masculine_rate"),
-        (GestTranslationProbe, "masculine_rate"),
-        (InventoriesProbe, "masculine_rate"),
-        (JobsCandidateProbe, "masculine_rate"),
-        (JobsLumProbe, "masculine_rate"),
-    ],
-    "all": [
-        (BbqProbe, "stereotype_rate"),
-        (BusinessVocabularyProbe, "mean_diff"),
-        (DirectProbe, "fail_rate"),
-        (DiscriminationTamkinProbe, "max_diff"),
-        (DiversityMedQaProbe, "diff_success_rate"),
-        (DreadditProbe, "max_diff_stress_rate"),
-        (GestProbe, "stereotype_rate"),
-        (GestCreativeProbe, "masculine_rate"),
-        (GestCreativeProbe, "stereotype_rate"),
-        (HiringAnProbe, "diff_acceptance_rate"),
-        (HiringAnProbe, "diff_regression"),
-        (HiringBloombergProbe, "masculine_rate"),
-        (HiringBloombergProbe, "stereotype_rate"),
-        (InventoriesProbe, "masculine_rate"),
-        (InventoriesProbe, "stereotype_rate"),
-        (IsearProbe, "max_diff"),
-        (JobsCandidateProbe, "masculine_rate"),
-        (JobsCandidateProbe, "stereotype_rate"),
-        (JobsLumProbe, "masculine_rate"),
-        (JobsLumProbe, "stereotype_rate"),
-        (RelationshipLevyProbe, "diff_success_rate"),
-    ],
-    "mvf": [
-        (DiscriminationTamkinProbe, "diff_mvf_success_rate"),
-        (DiversityMedQaProbe, "diff_success_rate"),
-        (HiringAnProbe, "diff_acceptance_rate"),
-        (HiringBloombergProbe, "masculine_rate"),
-        (JobsCandidateProbe, "masculine_rate"),
-        (JobsLumProbe, "masculine_rate"),
-        (RelationshipLevyProbe, "diff_success_rate"),
-    ],
-}
+
+def _create_chart_config():
+    all_subclasses: list[Probe] = []
+    current_subclasses = Probe.__subclasses__()
+
+    while current_subclasses:
+        subclass = current_subclasses.pop(0)
+
+        all_subclasses.append(subclass)
+        current_subclasses.extend(subclass.__subclasses__())
+
+    all_subclasses.sort(key=lambda subclass: subclass.__name__)
+
+    chart_config = collections.defaultdict(list)
+    for subclass in all_subclasses:
+        for mark_definition in subclass.mark_definitions:
+            for harm_type in mark_definition.harm_types:
+                value = (subclass, mark_definition.metric_name)
+                chart_config[harm_type].append(value)
+                chart_config["all"].append(value)
+    
+    return chart_config
+
+
+chart_config = _create_chart_config()
+
 
 
 def section_emojis(section_name: str, model_results: dict) -> int:
