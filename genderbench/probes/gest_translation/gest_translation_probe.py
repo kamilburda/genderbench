@@ -23,6 +23,7 @@ class GestTranslationProbe(Probe):
                 "Likelihood of the model choosing a stereotypical translation"
                 " (a stereotypically male or female translation containing the male or female gender, respectively)."
             ),
+            metric_normalization=lambda x: max(0, x),
         ),
         MarkDefinition(
             "masculine_rate",
@@ -34,6 +35,7 @@ class GestTranslationProbe(Probe):
             },
             harm_types=["Representational harms"],
             description="The extent to which machine-translated sentences are gender-balanced.",
+            metric_normalization=lambda x: abs(x - 0.5),
         ),
         MarkDefinition(
             "disparity",

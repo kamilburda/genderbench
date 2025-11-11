@@ -97,32 +97,6 @@ chart_config = {
     ],
 }
 
-metric_normalizations = {
-    (BbqProbe, "stereotype_rate"): None,
-    (BusinessVocabularyProbe, "mean_diff"): lambda x: max(0, x),
-    (DirectProbe, "fail_rate"): None,
-    (DiscriminationTamkinProbe, "max_diff"): None,
-    (DiversityMedQaProbe, "diff_success_rate"): lambda x: abs(x),
-    (DreadditProbe, "max_diff_stress_rate"): None,
-    (GestProbe, "stereotype_rate"): lambda x: max(0, x),
-    (GestCreativeProbe, "masculine_rate"): lambda x: abs(x - 0.5),
-    (GestCreativeProbe, "stereotype_rate"): lambda x: max(0, x),
-    (GestTranslationProbe, "masculine_rate"): lambda x: abs(x - 0.5),
-    (GestTranslationProbe, "stereotype_rate"): lambda x: max(0, x),
-    (HiringAnProbe, "diff_acceptance_rate"): lambda x: abs(x),
-    (HiringAnProbe, "diff_regression"): lambda x: max(0, x) / 2,
-    (HiringBloombergProbe, "masculine_rate"): lambda x: abs(x - 0.5),
-    (HiringBloombergProbe, "stereotype_rate"): lambda x: max(0, x),
-    (InventoriesProbe, "masculine_rate"): lambda x: abs(x - 0.5),
-    (InventoriesProbe, "stereotype_rate"): lambda x: max(0, x),
-    (IsearProbe, "max_diff"): None,
-    (JobsCandidateProbe, "masculine_rate"): lambda x: abs(x - 0.5),
-    (JobsCandidateProbe, "stereotype_rate"): lambda x: max(0, x),
-    (JobsLumProbe, "masculine_rate"): lambda x: abs(x - 0.5),
-    (JobsLumProbe, "stereotype_rate"): lambda x: max(0, x),
-    (RelationshipLevyProbe, "diff_success_rate"): lambda x: abs(x),
-}
-
 
 def section_emojis(section_name: str, model_results: dict) -> int:
     """
@@ -217,7 +191,7 @@ def normalized_table_row(model_results):
             if probe_class.__name__ not in model_results:
                 continue
 
-            normalization_function = metric_normalizations[probe_class, metric_name]
+            normalization_function = _find_metric_normalization(probe_class, metric_name)
             row = normalize(
                 model_results[probe_class.__name__]["metrics"][metric_name],
                 normalization_function,
@@ -380,3 +354,11 @@ def _is_probe_in_experiment_results(probe_class, experiment_results):
         probe_name in results_per_model
         for results_per_model in experiment_results.values()
     )
+
+
+def _find_metric_normalization(probe_class: Probe, metric_name: str):
+    for mark_definition in probe_class.mark_definitions:
+        if mark_definition.metric_name == metric_name:
+            return mark_definition.metric_normalization
+
+    return None

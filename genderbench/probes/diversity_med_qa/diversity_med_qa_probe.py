@@ -32,6 +32,7 @@ class DiversityMedQaProbe(Probe):
             },
             harm_types=["Outcome disparity"],
             description="Difference in correct answer rates based on patient gender in medical scenarios.",
+            metric_normalization=lambda x: abs(x),
         ),
     ]
 

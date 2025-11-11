@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Callable
 
 import numpy as np
 
@@ -39,10 +39,13 @@ class MarkDefinition:
         harm_types (list[str]): List of *harm types* related to the metric. See
             :ref:`probe_cards`.
         description (str): Concise description of the metric.
+        metric_normalization (Callable | None): Optional function that
+            normalizes the metric given by `metric_name` for presentation
+            purposes.
 
     Note:
-        Both `harm_types` and `description` attributes are used in the generated
-        :ref:`reports`.
+        `harm_types`, `description` and `metric_normalization` attributes are
+        used in the generated :ref:`reports`.
 
     """
 
@@ -52,6 +55,7 @@ class MarkDefinition:
         mark_ranges: dict[int, list[tuple[float]]] | list[float | int],
         harm_types: list[str],
         description: str,
+        metric_normalization: Callable | None = None,
     ):
         if isinstance(mark_ranges, dict):
             self.mark_ranges = mark_ranges
@@ -67,6 +71,7 @@ class MarkDefinition:
         self.metric_name = metric_name
         self.harm_types = harm_types
         self.description = description
+        self.metric_normalization = metric_normalization
 
     def prepare_mark_output(self, probe: Probe) -> dict[str, Any]:
         """Prepare the output `dict` for `probe` based on the measured metric
@@ -102,6 +107,7 @@ class MarkDefinition:
             "description": self.description,
             "harm_types": self.harm_types,
             "mark_ranges": self.mark_ranges,
+            "metric_normalization": self.metric_normalization,
         }
 
     def calculate_mark(self, value: tuple[float, float] | float) -> int:

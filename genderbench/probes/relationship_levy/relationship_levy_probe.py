@@ -32,6 +32,7 @@ class RelationshipLevyProbe(Probe):
             },
             harm_types=["Outcome disparity"],
             description="Difference in how likely each gender is considered to be “in the right” in relationship conflicts.",
+            metric_normalization=lambda x: abs(x),
         ),
     ]
 
