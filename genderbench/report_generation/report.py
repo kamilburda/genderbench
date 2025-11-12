@@ -52,7 +52,6 @@ def _create_chart_config():
 chart_config = _create_chart_config()
 
 
-
 def section_emojis(section_name: str, model_results: dict) -> int:
     """
     Return an emoji string for a model and a section.
