@@ -21,9 +21,18 @@ def _create_chart_config():
     all_subclasses: list[Probe] = []
     current_subclasses = Probe.__subclasses__()
 
+    unique_classes = set()
+
     while current_subclasses:
         subclass = current_subclasses.pop(0)
 
+        # This is used to prevent errors in pandas dataframes in case dynamic
+        # classes with the same name were created multiple times.
+        subclass_path = f'{subclass.__module__}{subclass.__qualname__}'
+        if subclass_path in unique_classes:
+            continue
+
+        unique_classes.add(subclass_path)
         all_subclasses.append(subclass)
         current_subclasses.extend(subclass.__subclasses__())
 
