@@ -60,7 +60,7 @@ def section_emojis(section_name: str, model_results: dict) -> int:
     marks = [
         model_results[probe_class.__name__]["marks"][metric]["mark_value"]
         for probe_class, metric in chart_config[section_name]
-        if probe_class.__name__ in model_results
+        if probe_class.__name__ in model_results and metric in model_results[probe_class.__name__]["marks"]
     ]
     marks = sorted(mark for mark in marks if isinstance(mark, int))
     return "".join(emojis[mark] for mark in marks)
@@ -76,7 +76,7 @@ def emoji_table_row(model_results: dict, section_names: list[str]) -> list[str]:
 
 
 def prepare_chart_data(
-    probe_class: Type[Probe], metric: str, experiment_results: dict
+    probe_class: Type[Probe], metric_name: str, experiment_results: dict
 ) -> dict:
     """
     Create a structure that is used to populate a single chart.
@@ -88,7 +88,7 @@ def prepare_chart_data(
         f"https://genderbench.readthedocs.io/latest/probes/{probe_name_snake_case}.html"
     )
     mark_definition = next(
-        md for md in probe_class.mark_definitions if md.metric_name == metric
+        md for md in probe_class.mark_definitions if md.metric_name == metric_name
     )
     return {
         "description": mark_definition.description,
@@ -97,11 +97,11 @@ def prepare_chart_data(
             k: list(map(list, v)) for k, v in mark_definition.mark_ranges.items()
         },
         "intervals": [
-            results[probe_name]["marks"][metric]["metric_value"]
+            results[probe_name]["marks"][metric_name]["metric_value"]
             for results in experiment_results.values()
         ],
         "probe": probe_name,
-        "metric": metric,
+        "metric": metric_name,
         "path": github_path,
         "uuid": uuid.uuid4(),
     }
@@ -114,10 +114,10 @@ def section_html(section_name: str, experiment_results: dict) -> str:
     canvases_html = list()
     canvases_html = [
         canvas_template.render(
-            data=prepare_chart_data(probe_class, metric, experiment_results)
+            data=prepare_chart_data(probe_class, metric_name, experiment_results)
         )
-        for probe_class, metric in chart_config[section_name]
-        if _is_probe_in_experiment_results(probe_class, experiment_results)
+        for probe_class, metric_name in chart_config[section_name]
+        if _is_probe_and_metric_in_experiment_results(probe_class, metric_name, experiment_results)
     ]
     return "".join(canvases_html)
 
@@ -142,7 +142,8 @@ def normalized_table_row(model_results):
         "representational_harms",
     ):
         for probe_class, metric_name in chart_config[section]:
-            if probe_class.__name__ not in model_results:
+            if (probe_class.__name__ not in model_results
+                or metric_name not in model_results[probe_class.__name__]["marks"]):
                 continue
 
             normalization_function = _find_metric_normalization(probe_class, metric_name)
@@ -173,7 +174,7 @@ def calculate_normalized_table(experiment_results):
             "representational_harms",
         )
         for probe_class, metric_name in chart_config[section]
-        if _is_probe_in_experiment_results(probe_class, experiment_results)
+        if _is_probe_and_metric_in_experiment_results(probe_class, metric_name, experiment_results)
     ]
 
     # Add "average" column
@@ -275,26 +276,43 @@ def render_visualization(experiment_results: dict) -> str:
     return rendered_html
 
 
-def load_experiment_results(log_files: list[str], model_names: list[str]) -> dict:
+def load_experiment_results(
+        log_files: list[str],
+        model_names: list[str],
+        metric_names_to_ignore: list[str] | None = None,
+) -> dict:
     """
     Load results from JSON files into a dictionary.
     """
+    if metric_names_to_ignore is None:
+        metric_names_to_ignore = []
+
     experiment_results = dict()
     for model_name, log_file in zip(model_names, log_files):
         probe_results = [json.loads(line) for line in open(log_file)]
-        probe_results = {result["class"]: result for result in probe_results}
-        experiment_results[model_name] = probe_results
+
+        processed_probe_results = {}
+        for result in probe_results:
+            processed_probe_results[result["class"]] = result
+            for metric_name in metric_names_to_ignore:
+                result["marks"].pop(metric_name, None)
+
+        experiment_results[model_name] = processed_probe_results
     return experiment_results
 
 
 def create_report(
-    output_file_path: str, log_files: list[str], model_names: list[str]
+    output_file_path: str,
+    log_files: list[str],
+    model_names: list[str],
+    metric_names_to_ignore: list[str] | None = None,
 ) -> str:
     """
     Save an HTML render based on DefaultHarness log files. Models' names
     must also be provided.
     """
-    experiment_results = load_experiment_results(log_files, model_names)
+    experiment_results = load_experiment_results(
+        log_files, model_names, metric_names_to_ignore)
 
     html = render_visualization(experiment_results)
 
@@ -302,10 +320,11 @@ def create_report(
         f.write(html)
 
 
-def _is_probe_in_experiment_results(probe_class, experiment_results):
+def _is_probe_and_metric_in_experiment_results(probe_class, metric_name, experiment_results):
     probe_name = probe_class.__name__
     return all(
-        probe_name in results_per_model
+        (probe_name in results_per_model
+         and metric_name in results_per_model[probe_name]["marks"])
         for results_per_model in experiment_results.values()
     )
 
