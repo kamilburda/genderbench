@@ -8,13 +8,14 @@ from typing import Type
 
 import numpy as np
 import pandas as pd
-from jinja2 import Environment, PackageLoader
+from jinja2 import Environment, PackageLoader, Template
 
 from genderbench.probing.probe import Probe
 
 env = Environment(loader=PackageLoader("genderbench", "report_generation"))
-main_template = env.get_template("main.html")
-canvas_template = env.get_template("canvas.html")
+
+DEFAULT_MAIN_TEMPLATE = env.get_template("main.html")
+DEFAULT_CANVAS_TEMPLATE = env.get_template("canvas.html")
 
 
 def _create_chart_config():
@@ -107,7 +108,7 @@ def prepare_chart_data(
     }
 
 
-def section_html(section_name: str, experiment_results: dict) -> str:
+def section_html(section_name: str, experiment_results: dict, canvas_template: Template) -> str:
     """
     Create HTML renders for all the charts from a section.
     """
@@ -225,7 +226,7 @@ def normalized_table_column_marks_wrapper(experiment_results):
     return normalized_table_column_marks
 
 
-def render_visualization(experiment_results: dict) -> str:
+def render_visualization(experiment_results: dict, main_template: Template, canvas_template: Template) -> str:
     """
     Prepare an HTML render based on DefaultHarness log files. Models' names
     must also be provided.
@@ -251,7 +252,7 @@ def render_visualization(experiment_results: dict) -> str:
     ]
 
     rendered_sections = {
-        section_name: section_html(section_name, experiment_results)
+        section_name: section_html(section_name, experiment_results, canvas_template)
         for section_name in chart_config
     }
 
@@ -305,16 +306,24 @@ def create_report(
     output_file_path: str,
     log_files: list[str],
     model_names: list[str],
+    main_template: Template | None = None,
+    canvas_template: Template | None = None,
     metric_names_to_ignore: list[str] | None = None,
 ) -> str:
     """
     Save an HTML render based on DefaultHarness log files. Models' names
     must also be provided.
     """
+    if main_template is None:
+        main_template = DEFAULT_MAIN_TEMPLATE
+
+    if canvas_template is None:
+        canvas_template = DEFAULT_CANVAS_TEMPLATE
+
     experiment_results = load_experiment_results(
         log_files, model_names, metric_names_to_ignore)
 
-    html = render_visualization(experiment_results)
+    html = render_visualization(experiment_results, main_template, canvas_template)
 
     with open(output_file_path, "w", encoding="utf-8") as f:
         f.write(html)
