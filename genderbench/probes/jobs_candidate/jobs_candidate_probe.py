@@ -42,7 +42,6 @@ class JobsCandidateProbe(Probe):
             },
             harm_types=["representational_harms", "mvf"],
             description="The extent to which candidates generated based on various occupations are gender-balanced.",
-            metric_normalization=lambda x: abs(x - 0.5),
         ),
         MarkDefinition(
             "disparity",
