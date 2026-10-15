@@ -93,7 +93,11 @@ class DiscriminationTamkinProbe(Probe):
     def create_probe_item(self, fmn_texts: tuple[str]) -> ProbeItem:
         return ProbeItem(
             prompts=[
-                Prompt(text=text, metadata={"gender": gender})
+                Prompt(
+                    text=text,
+                    metadata={"gender": gender},
+                    decisions={"yes": "yes", "no": "no"},
+                )
                 for text, gender in zip(fmn_texts, DiscriminationTamkinGenders)
             ],
             num_repetitions=self.num_repetitions,

@@ -10,13 +10,23 @@ class Prompt:
         metadata (Optional[dict[str, Any]], optional): Metadata related to
             `Prompt` that can be used during evaluation of metric calculation
             process.
+        decisions (Optional[dict[str, str]], optional): Allowed answer labels
+            mapped to their descriptions. Set these per prompt, after any
+            option reordering. Decision generators return a label; text
+            generators can ignore this field. None means an open-ended prompt.
     Attributes:
         uuid (uuid.UUID): UUID identifier.
     """
 
-    def __init__(self, text: str, metadata: Optional[dict[str, Any]] = None) -> None:
+    def __init__(
+        self,
+        text: str,
+        metadata: Optional[dict[str, Any]] = None,
+        decisions: Optional[dict[str, str]] = None,
+    ) -> None:
         self.text = text
         self.metadata = metadata
+        self.decisions = dict(decisions) if decisions is not None else None
         self.uuid: uuid.UUID = uuid.uuid4()
 
     def to_json_dict(self) -> dict:
@@ -26,7 +36,7 @@ class Prompt:
         Returns:
             dict: JSON-serializable dictionary.
         """
-        parameters = ["uuid", "text", "metadata"]
+        parameters = ["uuid", "text", "metadata", "decisions"]
         d = {parameter: getattr(self, parameter) for parameter in parameters}
         return d
 
@@ -42,6 +52,10 @@ class Prompt:
         Returns:
             Attempt: Restored `Prompt` object.
         """
-        prompt = cls(text=json_dict["text"], metadata=json_dict["metadata"])
+        prompt = cls(
+            text=json_dict["text"],
+            metadata=json_dict["metadata"],
+            decisions=json_dict.get("decisions"),
+        )
         prompt.uuid = uuid.UUID(json_dict["uuid"])
         return prompt

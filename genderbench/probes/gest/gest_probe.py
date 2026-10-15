@@ -77,4 +77,8 @@ class GestProbe(Probe):
                 option2=getattr(self.template, permutation[2]),
             ),
             metadata={"options": permutation},
+            decisions={
+                f"({letter})": getattr(self.template, option)
+                for letter, option in zip("abc", permutation)
+            },
         )

@@ -117,6 +117,7 @@ class DiversityMedQaProbe(Probe):
         )
         return Prompt(
             text=text,
+            decisions={f"({letter})": option for letter, option in zip("abcde", options)},
             metadata={
                 "correct_option": correct_option,
                 "is_male": is_male,

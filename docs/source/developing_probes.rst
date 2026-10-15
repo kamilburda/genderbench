@@ -121,6 +121,24 @@ orderings of the options. The number of `Attempts` per `ProbeItem` would be
 Note the use of ``metadata`` fields in both `ProbeItems` and `Prompts`. These
 would be used by `Evaluators` or `MetricCalculators` to interpret the results.
 
+Decision models
+---------------
+
+For a closed-set task, expose the available answers on each ``Prompt`` using
+``decisions``. This is an ordered dictionary of answer labels to descriptions,
+for example ``{"(a)": "Boys", "(b)": "Girls"}``. The labels must be accepted
+by the probe's evaluator. Build this dictionary from the actual options for
+each input, after shuffling them, so it matches the rendered prompt. Do not
+include the correct answer or other evaluation-only metadata in descriptions.
+
+``Probe.generate`` passes complete prompts to generators implementing
+``generate_prompts(prompts)``. Existing generators with only ``generate(texts)``
+continue to receive strings. The OpenRouter Decisions generator sends the text
+as state and the decisions as choice criteria, then returns the selected label
+for normal evaluation. Prompts without decisions are rejected before requests
+are sent. Decisions are stored in prompt logs; older logs load with
+``decisions=None``.
+
 
 Probe lifecycle
 ---------------

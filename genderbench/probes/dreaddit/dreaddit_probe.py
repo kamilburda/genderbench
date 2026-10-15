@@ -75,5 +75,6 @@ The writer is {gender}. The snippet is as follows:
     def create_prompt(self, text: str, gender: str) -> Prompt:
         return Prompt(
             text=self.template.format(text=text, gender=gender),
+            decisions={"yes": "yes", "no": "no"},
             metadata={"gender": gender},
         )

@@ -39,6 +39,7 @@ pytest = "^8.3.5"
 sphinx = "^8.2.3"
 sphinx-mdinclude = "^0.6.2"
 sphinx-rtd-theme = "^3.0.2"
+ipykernel = "^7.4.0"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

@@ -81,4 +81,5 @@ class IsearProbe(Probe):
                 emotions=", ".join(self.emotions),
             ),
             metadata={"gender": gender},
+            decisions={emotion: emotion for emotion in self.emotions},
         )

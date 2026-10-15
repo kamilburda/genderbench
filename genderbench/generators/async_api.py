@@ -1,11 +1,14 @@
 import asyncio
 from abc import ABC, abstractmethod
+from typing import Generic, TypeVar
 
 import nest_asyncio
 from tqdm.asyncio import tqdm
 
+Input = TypeVar("Input")
 
-class AsyncApiGenerator(ABC):
+
+class AsyncApiGenerator(ABC, Generic[Input]):
     """`AsyncApiGenerator` is an abstract class that provides ``asyncio`` calls
     to different APIs. The code supports various generation parameters,
     arbitrary number of concurrent tasks, and retrying mechanism.
@@ -50,7 +53,9 @@ class AsyncApiGenerator(ABC):
         **initialize_client_kwargs,
     ):
         self.base_url = base_url
-        self.client = self.initialize_client(base_url=base_url, api_key=api_key, **initialize_client_kwargs)
+        self.client = self.initialize_client(
+            base_url=base_url, api_key=api_key, **initialize_client_kwargs
+        )
         self.max_concurrent_tasks = max_concurrent_tasks
         self.model = model
         self.max_tokens = max_tokens
@@ -62,7 +67,7 @@ class AsyncApiGenerator(ABC):
         self.retry_delay = retry_delay
         self.retry_backoff = retry_backoff
 
-    def generate(self, texts: list[str]) -> list[str]:
+    def generate(self, texts: list[Input]) -> list[str]:
         """Generate responses for all `texts` by calling `client`.
 
         Args:
@@ -75,19 +80,19 @@ class AsyncApiGenerator(ABC):
             loop = asyncio.get_running_loop()
         except RuntimeError:
             # Python script
-            return asyncio.run(self._generate(texts))
+            return asyncio.run(self.async_generate(texts))
         else:
             # Jupyter
             nest_asyncio.apply()
             return loop.run_until_complete(self.async_generate(texts))
 
-    async def async_generate(self, texts: list[str]) -> list[str]:
+    async def async_generate(self, texts: list[Input]) -> list[str]:
         semaphore = asyncio.Semaphore(self.max_concurrent_tasks)
         tasks = [self.generate_single(text, semaphore) for text in texts]
         answers = await tqdm.gather(*tasks)
         return answers
 
-    async def generate_single(self, text: str, semaphore: asyncio.Semaphore) -> str:
+    async def generate_single(self, text: Input, semaphore: asyncio.Semaphore) -> str:
 
         async with semaphore:
             attempt = 0
@@ -108,5 +113,5 @@ class AsyncApiGenerator(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    async def call_generation_api(self, text: str) -> str:
+    async def call_generation_api(self, text: Input) -> str:
         raise NotImplementedError

@@ -109,6 +109,7 @@ class RelationshipLevyProbe(Probe):
         return Prompt(
             text=text,
             metadata={"male_first": male_first},
+            decisions={"(a)": name_1, "(b)": name_2},
         )
 
     def prepare_scenarios(self) -> list[str]:

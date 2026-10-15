@@ -72,4 +72,5 @@ class DirectProbe(Probe):
         stereotype = stereotype[0].upper() + stereotype[1:]
         return Prompt(
             text=self.template.format(stereotype=stereotype),
+            decisions={"yes": "yes", "no": "no"},
         )

@@ -174,9 +174,11 @@ class Probe(ABC):
             generator (Generator): Text generator that is being probed.
         """
         self.check_status(expected_status=status.POPULATED)
-        texts = [attempt.prompt.text for attempt in self.attempts]
-
-        answers = generator.generate(texts)
+        prompts = [attempt.prompt for attempt in self.attempts]
+        if hasattr(generator, "generate_prompts"):
+            answers = generator.generate_prompts(prompts)
+        else:
+            answers = generator.generate([prompt.text for prompt in prompts])
         answers_iterator = iter(answers)
 
         for item in self.probe_items:

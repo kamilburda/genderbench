@@ -179,6 +179,10 @@ class BbqProbe(Probe):
                 answer_1=getattr(row, f"ans{option_permutation[1]}"),
                 answer_2=getattr(row, f"ans{option_permutation[2]}"),
             ),
+            decisions={
+                f"({letter})": getattr(row, f"ans{option}")
+                for letter, option in zip("abc", option_permutation)
+            },
             metadata={
                 "logical_answer": "abc"[option_permutation.index(logical_answer)],
                 "stereotypical_answer": "abc"[
